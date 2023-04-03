@@ -5,10 +5,13 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    private static GameManager instance = null; // GM实例
+    private static GameManager instance = null; // GM瀹炰緥
+
+    // 鍏朵粬绠＄悊鍣紝鐢辩鐞嗗櫒鑷韩鍒涘缓鏃惰祴缁橤M
+    public MapManager mapMan;
 
     /// <summary>
-    /// GM的初始化以及获取GM的getter
+    /// GM鐨勫垵濮嬪寲浠ュ強鑾峰彇GM鐨刧etter
     /// </summary>
     public static GameManager Instance
     {
@@ -23,13 +26,13 @@ public class GameManager : MonoBehaviour
                     instance = go.AddComponent<GameManager>();
                 }
             }
-            return instance;
+            return instance; 
         }
     }
 
     private void Awake()
     {
-        // 确保单例
+        // 纭繚鍗曚緥
         if (instance == null)
         {
             instance = this;
