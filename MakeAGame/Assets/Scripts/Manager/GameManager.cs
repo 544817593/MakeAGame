@@ -9,6 +9,8 @@ public class GameManager : MonoBehaviour
 
     // 其他管理器，由管理器自身创建时赋给GM
     public MapManager mapMan;
+    public CameraManager camMan;
+    public PlayerManager playerMan;
 
     /// <summary>
     /// GM的初始化以及获取GM的getter

@@ -16,3 +16,17 @@ public enum TimeMultiplier
 {
     NORMAL, FAST, SUPERFAST, SLOW, SUPERSLOW
 }
+
+/// <summary>
+/// 玩家属性
+/// </summary>
+public enum PlayerStats
+{
+    STRENGTH, SPIRIT, SKILL, STAMINA, CHRISMA
+}
+
+public enum SkillName
+{
+    NONE, ALIENATION1, EARTHQUAKE1, DARKARRIVAL, FOCUS1,
+    ALIENATION2, FOCUS2
+}

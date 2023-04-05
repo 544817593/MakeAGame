@@ -20,7 +20,6 @@ public class MapManager : MonoBehaviour
 
     private void Awake()
     {
-
         // 确保单例
         if (instance != null && instance != this)
         {

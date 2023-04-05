@@ -9,8 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: be1bddbe7205ff546b4033bdf5889867, type: 3}
-  m_Name: CombatMap1-1a
+  m_Script: {fileID: 11500000, guid: 71c5afa0ccd586245a0cebb285f04dab, type: 3}
+  m_Name: Player
   m_EditorClassIdentifier: 
-  rows: 5
-  cols: 7
+  gold: 0
+  goldAcquisitionMultiplier: 0
