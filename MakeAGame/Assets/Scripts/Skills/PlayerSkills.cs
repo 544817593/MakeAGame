@@ -5,8 +5,8 @@ using UnityEngine;
 
 public class PlayerSkills
 {
-    public event EventHandler<MsgSkillUnlocked> OnSkillUnlocked;
-    public event EventHandler<MsgEquippedSkillsChange> OnEquippedSkillsChange;
+    // public event EventHandler<MsgSkillUnlocked> OnSkillUnlocked;
+    // public event EventHandler<MsgEquippedSkillsChange> OnEquippedSkillsChange;
 
 
     private List<SkillName> unlockedSkillsList; // 已解锁的技能
