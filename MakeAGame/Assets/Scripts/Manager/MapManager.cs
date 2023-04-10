@@ -37,7 +37,7 @@ public class MapManager : MonoBehaviour
     private void Start()
     {
         // 暂时测试用，场景管理器发送切换到战斗场景并加载完毕后调动InitMap
-        InitMap();
+        // InitMap();
     }
 
     /// <summary>

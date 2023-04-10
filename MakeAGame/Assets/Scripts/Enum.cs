@@ -25,6 +25,9 @@ public enum PlayerStats
     STRENGTH, SPIRIT, SKILL, STAMINA, CHRISMA
 }
 
+/// <summary>
+/// 技能名称
+/// </summary>
 public enum SkillName
 {
     NONE, ALIENATION1, EARTHQUAKE1, DARKARRIVAL, FOCUS1,

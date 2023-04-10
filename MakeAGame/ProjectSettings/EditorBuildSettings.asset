@@ -4,5 +4,17 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/DoNotDestroy.unity
+    guid: 483784c3076086c41966517df48d73b0
+  - enabled: 1
+    path: Assets/Scenes/Main.unity
+    guid: 5e425a2ea610029479e9e56f1afc1609
+  - enabled: 1
+    path: Assets/Scenes/Intro.unity
+    guid: 61c9f5b5920512d43a0eb23d827625f5
+  - enabled: 1
+    path: Assets/Scenes/Combat.unity
+    guid: 2bb3e09afefdaa8499928dea2ef0a1da
   m_configObjects: {}
