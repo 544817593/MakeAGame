@@ -31,7 +31,7 @@ namespace Game
         public BoxGrid CreateGrid(int r, int c, Transform root)
         {
             var gridGO = GameObject.Instantiate(mGridPrefab, root);
-            gridGO.transform.localPosition = new Vector3(c * mSpacing, r * mSpacing);
+            gridGO.transform.localPosition = new Vector3(c * mSpacing, (-1) * r * mSpacing);
 
             var grid = gridGO.GetComponent<BoxGrid>();
             grid.row = r;

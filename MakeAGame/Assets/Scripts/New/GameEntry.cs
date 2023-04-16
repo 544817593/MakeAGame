@@ -15,6 +15,11 @@ namespace Game
             RegisterSystem<IGridGeneratorSystem>(new GridGeneratorSystem());
             RegisterUtility<ICSVImportUtility>(new CSVImportUtility());
             
+            // 初始化
+            ResKit.Init();
+            // 开启控制台
+            UIKit.OpenPanel<UIConsolePanel>();
+
             Debug.Log("GameEntry: Init");
         }
     }
