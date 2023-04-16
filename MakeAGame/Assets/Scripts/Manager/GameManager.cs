@@ -11,6 +11,8 @@ public class GameManager : MonoBehaviour
     public MapManager mapMan;
     public CameraManager camMan;
     public PlayerManager playerMan;
+    public GameSceneManager gameSceneMan;
+    public MonsterManager monsterMan;
 
     /// <summary>
     /// GM的初始化以及获取GM的getter
