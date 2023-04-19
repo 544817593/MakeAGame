@@ -5,21 +5,24 @@ using UnityEngine;
 namespace Game
 {
     /// <summary>
-    /// 读取CSV文件相关
+    /// 读取CSV文件相关，之后可能不用CSV存储数据了，但仍然先写着
     /// </summary>
     public interface ICSVImportUtility : IUtility
-    {
-        void ParseCSV(string resPath, ref Dictionary<string, int> attribute_idx, ref List<List<string>> data_list);
-    }
-    
-    public class CSVImportUtility: ICSVImportUtility
     {
         /// <summary>
         /// 传入CSV文件路径，读出属性列表、每行数据列表
         /// </summary>
-        /// <param name="resPath"></param>
-        /// <param name="attribute_idx"></param>
-        /// <param name="data_list"></param>
+        /// <param name="resPath">资源路径</param>
+        /// <param name="attribute_idx">属性列表</param>
+        /// <param name="data_list">数据列表</param>
+        void ParseCSV(string resPath, ref Dictionary<string, int> attribute_idx, ref List<List<string>> data_list);
+    }
+    
+    /// <summary>
+    /// CSV解析器
+    /// </summary>
+    public class CSVImportUtility: ICSVImportUtility
+    {
         public void ParseCSV(string resPath, ref Dictionary<string, int> attribute_idx, ref List<List<string>> data_list)
         {
             TextAsset table = Resources.Load<TextAsset>(resPath);

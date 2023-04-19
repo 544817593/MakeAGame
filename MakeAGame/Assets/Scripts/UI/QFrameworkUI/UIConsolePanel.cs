@@ -7,6 +7,9 @@ namespace Game
 	{
 	}
 
+	/// <summary>
+	/// 内部控制台
+	/// </summary>
 	public partial class UIConsolePanel : UIPanel
 	{
 		protected override void OnInit(IUIData uiData = null)
@@ -14,6 +17,7 @@ namespace Game
 			mData = uiData as UIConsolePanelData ?? new UIConsolePanelData();
 			
 			// please add init code here
+			// 初始化为小窗口模式
 			crtMode = WindowMode.Window;
 			SetMode(WindowMode.Window);
 			InputField.ActivateInputField();
@@ -26,8 +30,7 @@ namespace Game
 
 		private void Update()
 		{
-			// 要是hide了根本不会走update
-			// if (State == PanelState.Opening && Input.GetKeyDown(KeyCode.Return))
+			// 回车完成指令输入
 			if (Input.GetKeyDown(KeyCode.Return))
 			{
 				TextOutput.text += $">>{Console.Input(InputField.text)}\n";
@@ -35,9 +38,9 @@ namespace Game
 				InputField.ActivateInputField();
 			}
 
+			// tab切换窗口或全屏显示
 			if (Input.GetKeyDown(KeyCode.Tab))
 			{
-				Debug.Log("tab");
 				if(crtMode == WindowMode.Window)
 					SetMode(WindowMode.FullScreen);
 				else
@@ -45,6 +48,9 @@ namespace Game
 			}
 		}
 
+		/// <summary>
+		/// 控制台窗口的显示模式
+		/// </summary>
 		private enum WindowMode
 		{
 			FullScreen,
@@ -52,6 +58,10 @@ namespace Game
 		}
 
 		private WindowMode crtMode;
+		/// <summary>
+		/// 设置显示模式
+		/// </summary>
+		/// <param name="mode"></param>
 		private void SetMode(WindowMode mode)
 		{
 			crtMode = mode;

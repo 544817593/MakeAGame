@@ -1,17 +1,27 @@
 ﻿using System;
 using System.Collections.Generic;
-using UnityEngine;
 using UnityEngine.SceneManagement;
 
 namespace Game
 {
+    /// <summary>
+    /// 内部控制台（静态类）
+    /// </summary>
     public static class Console
     {
+        // 所有命令
         private static string[] Commands = new string[]
         {
-            "CrtScene", "GenerateMap", "Test"
+            "CrtScene", // 获取当前场景名称
+            "GenerateMap",  // todo
+            "Test"  // todo
         };
         
+        /// <summary>
+        /// 处理控制台输入
+        /// </summary>
+        /// <param name="input">输入文本</param>
+        /// <returns></returns>
         public static string Input(string input)
         {
             string output = null;
@@ -20,10 +30,10 @@ namespace Game
             switch (args[0])
             {
                 case "CrtScene":
-                    output = CrtScene();
+                    output = CrtScene();    // 每个命令的处理对应一个方法
                     break;
                 
-                // case more
+                // todo 更多命令写在这里
                 
                 default:
                     output = "<color=\"red\">Unvalid command!</color>";

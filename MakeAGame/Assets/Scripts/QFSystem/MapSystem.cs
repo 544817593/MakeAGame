@@ -9,15 +9,25 @@ namespace Game
     /// </summary>
     public interface IMapSystem : ISystem
     {
+        /// <summary>
+        /// 通过CSV文件初始化
+        /// </summary>
+        /// <param name="row"></param>
+        /// <param name="col"></param>
+        /// <param name="mapDataResPath"></param>
         void CreateMapByCSV(int row, int col, string mapDataResPath);
+        /// <summary>
+        /// 通过SO文件初始化
+        /// </summary>
+        /// <param name="SOResPath"></param>
         void CreateMapBySO(string SOResPath);
     }
 
     public class MapSystem: AbstractSystem, IMapSystem
     {
-        private BoxGrid[,] mGrids;
-        private int mRow => mGrids.GetLength(0);
-        private int mCol => mGrids.GetLength(1);
+        private BoxGrid[,] mGrids;  // 地图格子数组
+        private int mRow => mGrids.GetLength(0);    // 总行数
+        private int mCol => mGrids.GetLength(1);    // 总列数
 
         protected override void OnInit()
         {
@@ -53,9 +63,10 @@ namespace Game
                 {
                     var newGrid = gridGenerator.CreateGrid(i, j, root);
                     
-                    // todo 真正赋值数据的地方
+                    // todo 地图格子真正赋值数据的地方
                     newGrid.terrain.Value = data.mapTerrain[i, j];
                     newGrid.timeMultiplier.Value = data.mapTimeMultiplier[i, j];
+                    
                     
                     mGrids[i, j] = newGrid;
                     Debug.Log(mGrids[i, j]);

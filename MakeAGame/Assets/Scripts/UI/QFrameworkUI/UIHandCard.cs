@@ -7,6 +7,9 @@ namespace Game
 	public class UIHandCardData : UIPanelData
 	{
 	}
+	/// <summary>
+	/// 手牌区域
+	/// </summary>
 	public partial class UIHandCard : UIPanel
 	{
 		protected override void OnInit(IUIData uiData = null)

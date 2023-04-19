@@ -3,14 +3,14 @@ using UnityEngine;
 
 namespace Game
 {
-    /// <summary>
-    /// 实例化地图格子相关
-    /// </summary>
     public interface IGridGeneratorSystem : ISystem
     {
         BoxGrid CreateGrid(int r, int c, Transform root);
     }
     
+    /// <summary>
+    /// 实例化地图格子相关
+    /// </summary>
     public class GridGeneratorSystem : AbstractSystem, IGridGeneratorSystem
     {
         private GameObject mGridPrefab; // 格子prefab
@@ -22,11 +22,11 @@ namespace Game
         }
 
         /// <summary>
-        /// 实例化格子
+        /// 实例化格子，赋值部分属性
         /// </summary>
-        /// <param name="r"></param>
-        /// <param name="c"></param>
-        /// <param name="root"></param>
+        /// <param name="r">行</param>
+        /// <param name="c">列</param>
+        /// <param name="root">地图父节点</param>
         /// <returns></returns>
         public BoxGrid CreateGrid(int r, int c, Transform root)
         {

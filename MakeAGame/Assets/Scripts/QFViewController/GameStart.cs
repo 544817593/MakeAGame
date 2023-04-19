@@ -4,10 +4,12 @@ using UnityEngine;
 
 namespace Game
 {
+    /// <summary>
+    /// 测试用，模拟进入局内，游戏开始
+    /// </summary>
     public class GameStart: MonoBehaviour, IController
     {
-        // 地图数据文件路径
-        public string mapDataResPath = "Data/MapTable1";
+        public string mapDataResPath = "Data/MapTable1";    // 地图数据资源路径
         
         
         private void Start()

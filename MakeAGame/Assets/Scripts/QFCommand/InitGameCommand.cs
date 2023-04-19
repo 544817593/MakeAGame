@@ -8,7 +8,7 @@ namespace Game
     /// </summary>
     public class InitGameCommand: AbstractCommand
     {
-        private GameStart info;
+        private GameStart info; // 初始化需要的信息
         
         public InitGameCommand(GameStart startInfo)
         {
@@ -17,6 +17,7 @@ namespace Game
         
         protected override void OnExecute()
         {
+            // 地图
             var mapSystem = this.GetSystem<IMapSystem>();
             mapSystem.CreateMapBySO(info.mapDataResPath);
         }
