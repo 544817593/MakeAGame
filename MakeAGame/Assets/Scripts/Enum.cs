@@ -41,3 +41,11 @@ public enum Property
 {
 
 }
+
+/// <summary>
+/// 地形
+/// </summary>
+public enum TerrainEnum
+{
+    Empty, Road, Wall, Water, Fire, Poision
+}
