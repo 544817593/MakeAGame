@@ -17,6 +17,7 @@ namespace Game
             
             // 初始化资源管理
             ResKit.Init();
+
             // 开启控制台
             UIKit.OpenPanel<UIConsolePanel>();
 

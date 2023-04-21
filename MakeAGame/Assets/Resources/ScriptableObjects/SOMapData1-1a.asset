@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1bb4836f70b64a299917f6863d014cb9, type: 3}
-  m_Name: SOMapDataTest
+  m_Name: SOMapData1-1a
   m_EditorClassIdentifier: 
   serializationData:
     SerializedFormat: 2

@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Game
 {
-    [CreateAssetMenu(fileName = "SOMapData", menuName = "New")]
+    [CreateAssetMenu(fileName = "SOMapData", menuName = "ScriptableObjects/MapData")]
     public class SOMapData: SerializedScriptableObject
     {
         public int row; // 地图总行数

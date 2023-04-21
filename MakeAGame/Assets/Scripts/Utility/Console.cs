@@ -14,7 +14,8 @@ namespace Game
         {
             "CrtScene", // 获取当前场景名称
             "GenerateMap",  // todo
-            "Test"  // todo
+            "Test",  // todo
+            "ChangeScene" // 转到战斗场景
         };
         
         /// <summary>
@@ -32,7 +33,11 @@ namespace Game
                 case "CrtScene":
                     output = CrtScene();    // 每个命令的处理对应一个方法
                     break;
-                
+
+                case "ChangeScene":
+                    SceneManager.LoadScene(args[1]);
+                    return output;
+
                 // todo 更多命令写在这里
                 
                 default:

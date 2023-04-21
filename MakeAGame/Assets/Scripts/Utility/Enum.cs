@@ -47,5 +47,5 @@ public enum Property
 /// </summary>
 public enum TerrainEnum
 {
-    Empty, Road, Wall, Water, Fire, Poision
+    Empty, Road, Wall, Water, Fire, Poison
 }
