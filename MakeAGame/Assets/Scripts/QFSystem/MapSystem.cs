@@ -16,16 +16,18 @@ namespace Game
         /// <param name="col"></param>
         /// <param name="mapDataResPath"></param>
         void CreateMapByCSV(int row, int col, string mapDataResPath);
+
         /// <summary>
         /// 通过SO文件初始化
         /// </summary>
         /// <param name="SOResPath"></param>
         void CreateMapBySO(string SOResPath);
+
     }
 
-    public class MapSystem: AbstractSystem, IMapSystem
+    public class MapSystem : AbstractSystem, IMapSystem
     {
-        private BoxGrid[,] mGrids;  // 地图格子数组
+        public BoxGrid[,] mGrids; // 地图格子数组
         private int mRow => mGrids.GetLength(0);    // 总行数
         private int mCol => mGrids.GetLength(1);    // 总列数
 
@@ -126,5 +128,7 @@ namespace Game
         }
 
         #endregion
+
+
     }
 }

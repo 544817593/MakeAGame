@@ -49,7 +49,10 @@ namespace Game
             
         }
 
-        // 获取Architecture 每个IController都要写
+        /// <summary>
+        /// 获取Architecture 每个IController都要写
+        /// </summary>
+        /// <returns></returns>
         public IArchitecture GetArchitecture()
         {
             return GameEntry.Interface;
@@ -60,6 +63,15 @@ namespace Game
         {
             return $"row: {row} col: {col} statusType: {statusType.Value} timeMultiplier: {timeMultiplier.Value} " +
                    $"status: {status} terrain: {terrain}";
+        }
+
+        /// <summary>
+        /// 检查格子是否为空
+        /// </summary>
+        /// <returns></returns>
+        public bool IsEmpty()
+        {
+            return true;
         }
     }
 }

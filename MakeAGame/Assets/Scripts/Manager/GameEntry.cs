@@ -13,7 +13,10 @@ namespace Game
             // 注册各模块
             RegisterSystem<IMapSystem>(new MapSystem());
             RegisterSystem<IGridGeneratorSystem>(new GridGeneratorSystem());
+            RegisterSystem<ISpawnSystem>(new SpawnSystem());
+
             RegisterUtility<ICSVImportUtility>(new CSVImportUtility());
+
             
             // 初始化资源管理
             ResKit.Init();
