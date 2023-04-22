@@ -23,6 +23,12 @@ namespace Game
         /// <param name="SOResPath"></param>
         void CreateMapBySO(string SOResPath);
 
+        /// <summary>
+        /// 地图格子数组Getter
+        /// </summary>
+        /// <returns></returns>
+        BoxGrid[,] Grids();
+
     }
 
     public class MapSystem : AbstractSystem, IMapSystem
@@ -35,6 +41,8 @@ namespace Game
         {
             
         }
+
+        public BoxGrid[,] Grids() { return mGrids; }
 
         #region 通过SO初始化
 

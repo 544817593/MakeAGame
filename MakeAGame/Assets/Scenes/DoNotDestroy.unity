@@ -201,7 +201,6 @@ MonoBehaviour:
   camMan: {fileID: 0}
   playerMan: {fileID: 0}
   gameSceneMan: {fileID: 0}
-  monsterMan: {fileID: 0}
 --- !u!4 &409175259
 Transform:
   m_ObjectHideFlags: 0

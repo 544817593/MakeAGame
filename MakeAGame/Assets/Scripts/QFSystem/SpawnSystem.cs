@@ -37,9 +37,11 @@ namespace Game
 
         public void SpawnMonster(int row, int col, string name)
         {
-            var grid = this.GetSystem<MapSystem>().mGrids;
+            Debug.LogWarning("SpawnSystem.SpawnMonster");
+            var grid = this.GetSystem<IMapSystem>().Grids();
             if (grid[row,col].IsEmpty())
             {
+                Debug.LogWarning("SpawnSystem.SpawnMonster.IsEmpty");
                 var spawnMonsterEvent = new SpawnMonsterEvent {row = row, col = col, name = name};
                 this.SendEvent(spawnMonsterEvent);
             }
@@ -54,7 +56,7 @@ namespace Game
     /// <summary>
     /// 由SpawnSystem发出的怪物生成事件
     /// </summary>
-    public class SpawnMonsterEvent : EnumEventSystem
+    public struct SpawnMonsterEvent
     {
         public int row;
         public int col;
