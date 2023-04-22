@@ -1,6 +1,10 @@
 fileFormatVersion: 2
+<<<<<<<< Updated upstream:MakeAGame/Assets/Scripts/Utility.meta
 guid: d4edac28c19ec7d48867723b1801205f
 folderAsset: yes
+========
+guid: f785b1293feab554cb559a02b3d17f1c
+>>>>>>>> Stashed changes:MakeAGame/Assets/Scripts/Dialogue/Bard.ink.meta
 DefaultImporter:
   externalObjects: {}
   userData: 

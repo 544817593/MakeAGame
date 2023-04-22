@@ -1,0 +1,92 @@
+using Ink.Runtime;
+using System.Collections;
+using System.Collections.Generic;
+using TMPro;
+using UnityEngine;
+using UnityEngine.UI;
+
+public class Dialogue : MonoBehaviour
+{
+    public TextAsset ink_file;
+    private Story story;
+    public TextMeshProUGUI text_Pre;
+    public Button btn;
+    public TextMeshProUGUI name_text;
+    public GameObject DialogueP;
+    private const string SPEAKER_TAG = "speaker";
+    // Start is called before the first frame update
+    void Start()
+    {
+        story = new Story(ink_file.text);
+
+        StoryUI();
+    }
+
+    void StoryUI()
+    {
+        eraseUI();
+        TextMeshProUGUI story_text = Instantiate(text_Pre) as TextMeshProUGUI;
+        story_text.text = loadStory();
+        story_text.transform.SetParent(DialogueP.transform, false);
+        foreach (Choice choice in story.currentChoices)
+        {
+            Button conBtn = Instantiate(btn) as Button;
+            TextMeshProUGUI conText = btn.GetComponentInChildren<TextMeshProUGUI>();
+            conText.text = choice.text;
+            conBtn.transform.SetParent(DialogueP.transform, false);
+            conBtn.onClick.AddListener(delegate { ChooseChoice(choice); });
+        }
+
+    }
+
+    void eraseUI()
+    {
+        for (int i = 0; i < DialogueP.transform.childCount; i++)
+        {
+            Destroy(DialogueP.transform.GetChild(i).gameObject);
+        }
+    }
+    void ChooseChoice(Choice choice)
+    {
+        story.ChooseChoiceIndex(choice.index);
+        StoryUI();
+    }
+    string loadStory()
+    {
+        string text = "";
+        if (story.canContinue)
+        {
+            text = story.ContinueMaximally();
+            HandleTags(story.currentTags);
+        }
+        return text;
+    }
+
+    void HandleTags(List<string> current_Tag)
+    {
+        foreach (string tag in current_Tag)
+        {
+            string[] splitTag = tag.Split(":");
+            if (splitTag.Length != 2)
+            {
+                Debug.LogError("wrong tag" + tag);
+            }
+            string tagK = splitTag[0].Trim();
+            string tagV = splitTag[1].Trim();
+
+            switch (tagK)
+            {
+                case SPEAKER_TAG:
+                    TextMeshProUGUI nameText = Instantiate(name_text) as TextMeshProUGUI;
+                    nameText.text = tagV;
+                    nameText.transform.SetParent(DialogueP.transform, false);
+                    break;
+            }
+        }
+    }
+    // Update is called once per frame
+    void Update()
+    {
+
+    }
+}
