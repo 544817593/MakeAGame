@@ -1,0 +1,66 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class CheckBag : MonoBehaviour
+{
+    public static CheckBag instance;
+    public CapsuleCollider2D m_Col;
+    public GameObject dialogueP;
+    public Texture2D defaultCursor;
+    public Texture2D checkCursor;
+    public GameObject _bag;
+    public GameObject _slot;
+    Dialogue m_Dialogue;
+    public bool isOpen = false;
+    // Start is called before the first frame update
+    void Start()
+    {
+        isOpen = false;
+        m_Dialogue = dialogueP.GetComponent<Dialogue>();
+        m_Col.enabled = false;
+        Cursor.SetCursor(defaultCursor, Vector2.zero, CursorMode.ForceSoftware);
+    }
+
+    void ActiveCheck()
+    {
+        if (m_Dialogue.d_finish == true&& isOpen ==false)
+        {
+            m_Col.enabled = true;
+        }
+        else { m_Col.enabled = false; }
+    }
+    private void OnMouseDown()
+    {
+        Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
+        OpenBag();
+
+
+    }
+
+    private void OnMouseEnter()
+    {
+        Cursor.SetCursor(checkCursor, Vector2.zero, CursorMode.ForceSoftware);
+    }
+
+    private void OnMouseExit()
+    {
+        Cursor.SetCursor(defaultCursor, Vector2.zero, CursorMode.ForceSoftware);
+    }
+    public void OpenBag()
+    {
+       // GameManager.Instance.StartBagMan();
+        isOpen = true;
+        _bag.SetActive(true);
+        _slot.SetActive(true);
+    }
+    public void SetIsOpenFalse()
+    {
+        isOpen = false;
+    }
+    // Update is called once per frame
+    void Update()
+    {
+        ActiveCheck();
+    }
+}
