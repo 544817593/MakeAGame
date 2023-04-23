@@ -42,11 +42,11 @@ public class SOPlayer : ScriptableObject
     {
         switch (stats)
         {
-            case PlayerStats.STRENGTH: return strength;
-            case PlayerStats.SPIRIT: return spirit;
-            case PlayerStats.SKILL: return skill;
-            case PlayerStats.STAMINA: return stamina;
-            case PlayerStats.CHRISMA: return chrisma;
+            case PlayerStats.Strength: return strength;
+            case PlayerStats.Spirit: return spirit;
+            case PlayerStats.Skill: return skill;
+            case PlayerStats.Stamina: return stamina;
+            case PlayerStats.Charisma: return chrisma;
         }
         return -1;
     }
@@ -60,11 +60,11 @@ public class SOPlayer : ScriptableObject
     {
         switch (stats)
         {
-            case PlayerStats.STRENGTH: strength += amount; return;
-            case PlayerStats.SPIRIT: spirit += amount; return;
-            case PlayerStats.SKILL: skill += amount;  return;
-            case PlayerStats.STAMINA: stamina += amount; return;
-            case PlayerStats.CHRISMA: chrisma += amount; return;
+            case PlayerStats.Strength: strength += amount; return;
+            case PlayerStats.Spirit: spirit += amount; return;
+            case PlayerStats.Skill: skill += amount;  return;
+            case PlayerStats.Stamina: stamina += amount; return;
+            case PlayerStats.Charisma: chrisma += amount; return;
         }
     }
 }

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c36cf2797a74f044b880c1f446d8350, type: 3}
   m_Name: MoonBeast
   m_EditorClassIdentifier: 
-  monsterSprite: {fileID: 0}
+  monsterSprite: {fileID: 21300000, guid: 780d367d89721a443b94eef4c5604029, type: 3}
   moveSpeed: 0
   hp: 0
   maxHp: 0

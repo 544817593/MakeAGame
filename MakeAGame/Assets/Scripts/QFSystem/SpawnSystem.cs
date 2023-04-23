@@ -23,34 +23,35 @@ namespace Game
         /// <param name="row">行</param>
         /// <param name="col">列</param>
         void SpawnDoor(int row, int col);
-
        
     }
 
 
     public class SpawnSystem : AbstractSystem, ISpawnSystem
     {
+        private int pieceIdCounter; // 棋子ID，每个棋子独一份
+
         protected override void OnInit()
         {
-
+            
         }
 
         public void SpawnMonster(int row, int col, string name)
         {
-            Debug.LogWarning("SpawnSystem.SpawnMonster");
             var grid = this.GetSystem<IMapSystem>().Grids();
             if (grid[row,col].IsEmpty())
             {
-                Debug.LogWarning("SpawnSystem.SpawnMonster.IsEmpty");
-                var spawnMonsterEvent = new SpawnMonsterEvent {row = row, col = col, name = name};
+                var spawnMonsterEvent = new SpawnMonsterEvent 
+                    {row = row, col = col, name = name, pieceId = pieceIdCounter};
+                pieceIdCounter++;
                 this.SendEvent(spawnMonsterEvent);
             }
         }
+
         public void SpawnDoor(int row, int col)
         {
             throw new System.NotImplementedException();
         }
-
     }
 
     /// <summary>
@@ -61,5 +62,6 @@ namespace Game
         public int row;
         public int col;
         public string name;
+        public int pieceId;
     }
 }

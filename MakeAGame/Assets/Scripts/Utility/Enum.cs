@@ -3,10 +3,7 @@
 /// </summary>
 public enum Dir
 {
-    TOP, RIGHT, DOWN, LEFT,
-    TOPLEFT, TOPRIGHT,
-    DOWNRIGHT, DOWNLEFT,
-    NONE
+    Top, Right, Down, Left, Topleft, Topright, Downright, Downleft, None
 }
 
 /// <summary>
@@ -14,7 +11,7 @@ public enum Dir
 /// </summary>
 public enum TimeMultiplier
 {
-    NORMAL, FAST, SUPERFAST, SLOW, SUPERSLOW
+    Normal, Fast, Superfast, Slow, Superslow
 }
 
 /// <summary>
@@ -22,7 +19,7 @@ public enum TimeMultiplier
 /// </summary>
 public enum PlayerStats
 {
-    STRENGTH, SPIRIT, SKILL, STAMINA, CHRISMA
+    Strength, Spirit, Skill, Stamina, Charisma
 }
 
 /// <summary>
@@ -30,8 +27,8 @@ public enum PlayerStats
 /// </summary>
 public enum SkillName
 {
-    NONE, ALIENATION1, EARTHQUAKE1, DARKARRIVAL, FOCUS1,
-    ALIENATION2, FOCUS2
+    None, Alienation1, Earthquake1, Darkarrival, Focus1,
+    Alienation2, Focus2
 }
 
 /// <summary>
@@ -39,7 +36,7 @@ public enum SkillName
 /// </summary>
 public enum Property
 {
-
+    None
 }
 
 /// <summary>

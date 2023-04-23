@@ -65,12 +65,12 @@ public class PlayerSkills
     {
         switch (skillname)
         {
-            case SkillName.FOCUS2:
-                return SkillName.FOCUS1;
-            case SkillName.ALIENATION2:
-                return SkillName.ALIENATION1;
+            case SkillName.Focus2:
+                return SkillName.Focus1;
+            case SkillName.Alienation2:
+                return SkillName.Alienation1;
         }
-        return SkillName.NONE;
+        return SkillName.None;
     }
 
     /// <summary>
@@ -99,7 +99,7 @@ public class PlayerSkills
     public bool CanUnlock(SkillName skillName)
     {
         SkillName skillRequirement = GetSkillRequirement(skillName);
-        if (skillRequirement != SkillName.NONE)
+        if (skillRequirement != SkillName.None)
         {
             if (IsSkillUnlocked(skillRequirement))
             {
@@ -203,19 +203,19 @@ public class PlayerSkills
     {
         switch (id)
         {
-            case SkillName.NONE:
+            case SkillName.None:
                 return "无";
-            case SkillName.ALIENATION1:
+            case SkillName.Alienation1:
                 return "异化I";
-            case SkillName.EARTHQUAKE1:
+            case SkillName.Earthquake1:
                 return "地震I";
-            case SkillName.DARKARRIVAL:
+            case SkillName.Darkarrival:
                 return "黑暗降临";
-            case SkillName.FOCUS1:
+            case SkillName.Focus1:
                 return "聚焦I";
-            case SkillName.ALIENATION2:
+            case SkillName.Alienation2:
                 return "异化II";
-            case SkillName.FOCUS2:
+            case SkillName.Focus2:
                 return "聚焦II";
             default:
                 return "";
