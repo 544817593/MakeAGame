@@ -18,13 +18,13 @@ namespace Game
 		private Animator anim;
 
 		private List<ViewCard> viewCardsList;	// 手牌列表
-		private List<Transform> cardPosList = new List<Transform>();	// 
+		private List<Transform> cardPosList = new List<Transform>();	// 手牌默认位置列表
 
 		private int focusIndex;	// 鼠标选中卡牌在列表中序号
 
-		public float normalScale = 0.15f;   // 普通缩放系数
-		public float zoomScale = 0.4f;      // 放大系数
-		private float detailOffsetY = 453f;	// 卡牌放大时的位置偏移y
+		public const float normalScale = 0.15f;   // 普通缩放系数
+		private const float zoomScale = 0.4f;      // 放大系数
+		private const float detailOffsetY = 453f;	// 卡牌放大时的位置偏移y
 
 		protected override void OnInit(IUIData uiData = null)
 		{
@@ -48,7 +48,11 @@ namespace Game
 			{
 				GameEntry.Interface.SendCommand<AddHandCardCommand>(new AddHandCardCommand(0));
 			});
-			// todo 动画事件
+			ButtonSubCardTest.onClick.AddListener(() =>
+			{
+				GameEntry.Interface.SendCommand<SubHandCardCommand>(new SubHandCardCommand(0));
+			});
+
 			ButtonOpenAnim.onClick.AddListener(() =>
 			{
 				anim.Play("Open");
@@ -67,6 +71,13 @@ namespace Game
 
 			viewCardsList[index].transform.localScale = new Vector3(normalScale, normalScale, 1f);
 
+			UpdateLayout();
+		}
+
+		public void SubCard(int index)
+		{
+			Debug.Log($"handcard ui sub card {index}");
+			
 			UpdateLayout();
 		}
 

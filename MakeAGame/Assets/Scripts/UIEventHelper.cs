@@ -23,7 +23,7 @@ namespace Game
 
         public void OnPointerExit(PointerEventData pointerEventData)
         {
-            OnUIPointExit.Invoke();
+            OnUIPointExit?.Invoke();
         }
         
         public void OnPointerClick(PointerEventData pointerEventData)

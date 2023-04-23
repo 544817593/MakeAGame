@@ -1,5 +1,6 @@
 using System;
 using QFramework;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,49 +8,49 @@ namespace Game
 {
     public class ViewCard: MonoBehaviour
     {
+        public Transform nodeFeature;   // feature根结点
+        public GameObject[] featureTouchArea = new GameObject[3];   // feature UI响应区域
+
         public GameObject touchArea;    // UI响应区域
-        public Canvas canvas;
-        public float normalScale = 0.15f;   // 普通缩放系数
-        public float zoomScale = 0.4f;      // 放大系数
+        public Canvas canvas;   // 用于调整层级
+        
         public int handCardIndexTest;   // 在手牌中的顺序
 
         private void Start()
         {
-            transform.localScale = new Vector3(normalScale, normalScale, 1f);
-            
             touchArea = transform.Find("Root/UIEventArea").gameObject;
             var uiHelper = touchArea.AddComponent<UIEventHelper>();
             gameObject.AddComponent<GraphicRaycaster>();
             canvas = gameObject.GetComponent<Canvas>();
             canvas.overrideSorting = true;
             canvas.sortingOrder = 100;
-            // uiHelper.OnUIPointEnter = OnMouseEnter;
-            // uiHelper.OnUIPointExit = OnMouseExit;
             
+            nodeFeature = transform.Find("Root/NodeFeature");
+            for (int i = 0; i < 3; i++)
+            {
+                var tmpTrans = nodeFeature.GetChild(i).gameObject;
+                var uiFeatureHelper = tmpTrans.AddComponent<UIEventHelper>();
+                // tmpTrans.AddComponent<GraphicRaycaster>();
+                // var tmpCanvas = tmpTrans.GetComponent<Canvas>();
+                uiFeatureHelper.OnUIPointEnter = () =>
+                {
+                    Debug.Log("ui feature enter");
+                };
+
+                featureTouchArea[i] = tmpTrans;
+            }
+
             var uiHandCard = UIKit.GetPanel<UIHandCard>();
             uiHelper.OnUIPointEnter = () => uiHandCard.OnFocusCard(this);
             uiHelper.OnUIPointExit = uiHandCard.OnUnfocusCard;
+            uiHelper.OnUIDrag += OnDrag;
+            // uiHelper.OnUIDrag += uiHandCard.OnDragCard;  // todo 看拖拽手牌时手牌ui是否需要响应
+            transform.localScale = new Vector3(UIHandCard.normalScale, UIHandCard.normalScale, 1f);
         }
 
-        /// <summary>
-        /// 鼠标悬浮
-        /// </summary>
-        private void OnMouseEnter()
+        void OnDrag()
         {
-            Debug.Log("enter");
-            // transform.localScale = Vector3.one * zoomScale;
-
-            // transform.SetAsLastSibling();
-        }
-
-        /// <summary>
-        /// 鼠标移出
-        /// </summary>
-        private void OnMouseExit()
-        {
-            Debug.Log("exit");
-            // transform.localScale = Vector3.one * normalScale;
-            
+            Debug.Log("is dragging");
         }
     }
 }

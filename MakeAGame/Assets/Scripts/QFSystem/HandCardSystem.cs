@@ -12,7 +12,7 @@ namespace Game
         UIHandCard ui { set; }
         
         bool AddCard(int cardID);
-        bool SubCard();
+        bool SubCard(int index);
     }
     
     public class HandCardSystem: AbstractSystem, IHandCardSystem
@@ -23,12 +23,17 @@ namespace Game
         public UIHandCard ui {private get; set; }   // 对应UI
 
         private EasyEvent<int> OnAddCardTest = new EasyEvent<int>();   // 逻辑上卡牌已经添加，要求ui进行更新的事件
+        private EasyEvent<int> OnSubCardTest = new EasyEvent<int>();
 
         protected override void OnInit()
         {
             OnAddCardTest.Register((index) =>
             {
                 ui.AddCard(index);
+            });
+            OnSubCardTest.Register((index) =>
+            {
+                ui.SubCard(index);
             });
         }
         
@@ -58,9 +63,20 @@ namespace Game
             return true;
         }
 
-        public bool SubCard()
+        public bool SubCard(int index)
         {
-            throw new System.NotImplementedException();
+            if (index >= handCardList.Count) return false;
+            
+            Debug.Log($"HandCardSystem: SubCard {index}");
+
+            var cardGO = handCardList[index].gameObject;
+            handCardList.RemoveAt(index);
+            
+            OnSubCardTest.Trigger(index);
+            
+            cardGO.DestroySelf();
+
+            return true;
         }
 
         public IArchitecture GetArchitecture()
