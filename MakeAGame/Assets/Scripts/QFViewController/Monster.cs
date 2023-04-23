@@ -27,7 +27,7 @@ public class Monster : MonoBehaviour, IController
     public BindableProperty<float> defense; // 防御力
     public BindableProperty<float> accuracy; // 命中率
     public BindableProperty<int> atkRange; // 射程
-    public BindableProperty<List<Property>> properties; // 特性
+    public BindableProperty<List<PropertyEnum>> properties; // 特性
     public BindableProperty<bool> inCombat; // 是否在战斗中
     public BindableProperty<bool> isAttacking; // 是否在发起攻击
     public BindableProperty<bool> isDying; // 是否正在死亡中                         
@@ -67,7 +67,7 @@ public class Monster : MonoBehaviour, IController
 public class MonsterEditor : Editor
 {
     private SerializedProperty _data;
-    public List<Property> _properties;
+    public List<PropertyEnum> _properties;
     private (int,int) _leftTopGridPos;
 
     private void OnEnable()
@@ -101,7 +101,7 @@ public class MonsterEditor : Editor
         // 特性
         for (int i = 0; i < _properties.Count; i++)
         {
-            _properties[i] = (Property)EditorGUILayout.EnumPopup("Property " + i, _properties[i]);
+            _properties[i] = (PropertyEnum)EditorGUILayout.EnumPopup("Property " + i, _properties[i]);
         }
 
         // 怪物坐标

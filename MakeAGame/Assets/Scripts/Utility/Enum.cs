@@ -1,7 +1,7 @@
 /// <summary>
 /// 移动方向
 /// </summary>
-public enum Dir
+public enum DirEnum
 {
     Top, Right, Down, Left, Topleft, Topright, Downright, Downleft, None
 }
@@ -9,7 +9,7 @@ public enum Dir
 /// <summary>
 /// 时间流逝速度
 /// </summary>
-public enum TimeMultiplier
+public enum TimeMultiplierEnum
 {
     Normal, Fast, Superfast, Slow, Superslow
 }
@@ -17,7 +17,7 @@ public enum TimeMultiplier
 /// <summary>
 /// 玩家属性
 /// </summary>
-public enum PlayerStats
+public enum PlayerStatsEnum
 {
     Strength, Spirit, Skill, Stamina, Charisma
 }
@@ -25,7 +25,7 @@ public enum PlayerStats
 /// <summary>
 /// 技能名称
 /// </summary>
-public enum SkillName
+public enum SkillNameEnum
 {
     None, Alienation1, Earthquake1, Darkarrival, Focus1,
     Alienation2, Focus2
@@ -34,7 +34,7 @@ public enum SkillName
 /// <summary>
 /// 特性
 /// </summary>
-public enum Property
+public enum PropertyEnum
 {
     None
 }
@@ -45,4 +45,17 @@ public enum Property
 public enum TerrainEnum
 {
     Empty, Road, Wall, Water, Fire, Poison
+}
+
+/// <summary>
+/// 不同房间类型
+/// </summary>
+public enum RoomEnum
+{
+    Explore, // 探索房
+    Combat, // 战斗房
+    NPC, // NPC房间
+    Merchant, // 商人房
+    Rest, // 休息房
+    Boss // Boss房
 }

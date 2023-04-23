@@ -72,7 +72,7 @@ namespace Game
             monster.defense = new BindableProperty<float>(somb.defense);
             monster.accuracy = new BindableProperty<float>(somb.accuracy);
             monster.atkRange = new BindableProperty<int>(somb.atkRange);
-            monster.properties = new BindableProperty<List<Property>>(somb.properties);
+            monster.properties = new BindableProperty<List<PropertyEnum>>(somb.properties);
             monster.inCombat = new BindableProperty<bool>(false);
             monster.isAttacking = new BindableProperty<bool>(false);
             monster.isDying = new BindableProperty<bool>(false);
