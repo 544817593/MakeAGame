@@ -21,6 +21,7 @@ namespace Game
 		private List<Transform> cardPosList = new List<Transform>();	// 手牌默认位置列表
 
 		private int focusIndex;	// 鼠标选中卡牌在列表中序号
+		private bool isDragging;	// 是否正在拖拽，此时屏蔽其他操作
 
 		public const float normalScale = 0.15f;   // 普通缩放系数
 		private const float zoomScale = 0.4f;      // 放大系数
@@ -83,6 +84,8 @@ namespace Game
 
 		public void OnFocusCard(ViewCard viewCard)
 		{
+			if (isDragging) return;
+			
 			focusIndex = viewCardsList.IndexOf(viewCard);
 			Debug.Log($"UIHandCard: OnFocusCard {focusIndex}");
 
@@ -97,12 +100,27 @@ namespace Game
 
 		public void OnUnfocusCard()
 		{
+			if (isDragging) return;
+			
 			viewCardsList[focusIndex].canvas.sortingOrder = 100;
 			
 			Debug.Log($"UIHandCard: OnUnfocusCard {focusIndex}");
 
 			focusIndex = -1;
 			
+			UpdateLayout();
+		}
+
+		public void OnDragCardStart()
+		{
+			
+			// transform.DOLocalMoveY(-60, 0.5f);
+		}
+
+		public void OnDragCardEnd()
+		{
+			// transform.DOLocalMoveY(160, 0.5f);
+
 			UpdateLayout();
 		}
 		
