@@ -14,6 +14,7 @@ namespace Game
             RegisterSystem<IMapSystem>(new MapSystem());
             RegisterSystem<IGridGeneratorSystem>(new GridGeneratorSystem());
             RegisterSystem<ISpawnSystem>(new SpawnSystem());
+            RegisterSystem<IRoomSelectorSystem>(new RoomSelectorSystem());
 
             RegisterUtility<ICSVImportUtility>(new CSVImportUtility());
 
