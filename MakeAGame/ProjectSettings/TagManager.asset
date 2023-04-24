@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Enemy
   - cardPositions
+  - m_Choice
   layers:
   - Default
   - TransparentFX

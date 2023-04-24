@@ -6,6 +6,7 @@ namespace DialogueUI
 {
 	public class DialoguePanelData : UIPanelData
 	{
+
 	}
 	public partial class DialoguePanel : UIPanel
 	{
@@ -13,6 +14,8 @@ namespace DialogueUI
 		{
 			mData = uiData as DialoguePanelData ?? new DialoguePanelData();
 			// please add init code here
+			
+			
 		}
 		
 		protected override void OnOpen(IUIData uiData = null)
