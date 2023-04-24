@@ -14,6 +14,7 @@ namespace Game
         public List<GameObject> featureTouchArea = new List<GameObject>();   // feature UI响应区域
         public GameObject touchArea;    // UI响应区域
         public Canvas canvas;   // 用于调整层级
+        public CanvasGroup canvasGroup; // 用于调整透明度
         public Transform tooltipTrans;
         
         public int handCardIndexTest;   // 在手牌中的顺序
@@ -28,7 +29,8 @@ namespace Game
             canvas = gameObject.GetComponent<Canvas>();
             canvas.overrideSorting = true;
             canvas.sortingOrder = 100;
-            
+            canvasGroup = gameObject.GetComponent<CanvasGroup>();
+
             var uiHandCard = UIKit.GetPanel<UIHandCard>();
 
             // todo 二级浮窗好像并不好写，暂时搁置
@@ -80,6 +82,7 @@ namespace Game
         void OnDrag()
         {
             Debug.Log("is dragging");
+            canvasGroup.alpha = 0.5f;
         }
 
         void ShowTooltip()
@@ -95,6 +98,7 @@ namespace Game
                 // Debug.Log(ret.ToString());
                 if (featureTouchArea.Contains(ret.gameObject))
                 {
+                    // Debug.Log($"mouse in feature with tooltipTrans active: {tooltipTrans.gameObject.activeSelf}");
                     if (!tooltipTrans.gameObject.activeSelf)
                     {
                         OnShowTooltip.Invoke(featureTouchArea.IndexOf(ret.gameObject));

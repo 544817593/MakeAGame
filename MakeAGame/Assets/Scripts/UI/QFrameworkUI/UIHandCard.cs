@@ -52,7 +52,9 @@ namespace Game
 			handCardSystem.ui = this;
 			viewCardsList = handCardSystem.handCardList;
 			focusIndex = -1;
-			
+
+			#region 测试按钮
+
 			ButtonAddCardTest.onClick.AddListener(() =>
 			{
 				GameEntry.Interface.SendCommand<AddHandCardCommand>(new AddHandCardCommand(0));
@@ -71,6 +73,8 @@ namespace Game
 			{
 				anim.Play("Close");
 			});
+
+			#endregion
 		}
 
 
@@ -119,6 +123,10 @@ namespace Game
 			Debug.Log($"UIHandCard: OnUnfocusCard {focusIndex}");
 
 			focusIndex = -1;
+			
+			nodeTooltip.SetParent(transform.Find("Root"));
+			nodeTooltip.localScale = Vector3.one;
+			nodeTooltip.gameObject.SetActive(false);
 			
 			UpdateLayout();
 		}
