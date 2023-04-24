@@ -3,6 +3,7 @@ using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
 using QFramework;
+using TMPro;
 using Unity.VisualScripting;
 
 namespace Game
@@ -15,6 +16,9 @@ namespace Game
 	/// </summary>
 	public partial class UIHandCard : UIPanel
 	{
+		private Transform nodeTooltip;
+		private TextMeshProUGUI tmpTooltip;
+		
 		private Animator anim;
 
 		private List<ViewCard> viewCardsList;	// 手牌列表
@@ -32,6 +36,10 @@ namespace Game
 			mData = uiData as UIHandCardData ?? new UIHandCardData();
 			// please add init code here
 
+			nodeTooltip = transform.Find("Root/Tooltip");
+			nodeTooltip.gameObject.SetActive(false);
+			tmpTooltip = nodeTooltip.GetChild(0).GetComponent<TextMeshProUGUI>();
+			
 			anim = GetComponent<Animator>();
 			foreach (Transform cardPos in CardRoot)
 			{
@@ -95,6 +103,10 @@ namespace Game
 			viewCard.transform.localPosition = tmpPos;
 			viewCard.canvas.sortingOrder = 110;
 			
+			nodeTooltip.SetParent(viewCard.tooltipTrans);
+			nodeTooltip.localPosition = Vector3.zero;
+			nodeTooltip.gameObject.SetActive(true);
+
 			UpdateLayout();
 		}
 
@@ -166,6 +178,13 @@ namespace Game
 					crtCard.transform.DOScale(newScale, 0.3f);
 				}
 			}
+		}
+
+		public void UpdateTooltip(int featureID)
+		{
+			Debug.Log($"handcard ui show feature {featureID}");
+
+			tmpTooltip.text = $"这是一段关于特性的介绍，test id = {featureID}";
 		}
 
 		private void OnAnimEvent(string eventName)
