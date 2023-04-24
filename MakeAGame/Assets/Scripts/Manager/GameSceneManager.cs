@@ -38,14 +38,14 @@ public class GameSceneManager : MonoBehaviour
         StartCoroutine(LoadScene("Main", false)); // 加载初始场景
     }
 
-
     /// <summary>
     /// 实际加载场景的协程
     /// </summary>
-    /// <param name="oldSceneName">旧场景名</param>
+    /// <param name="sceneName">场景名</param>
     /// <param name="loadingScreenOn">是否显示加载页面</param>
-    IEnumerator LoadScene(string sceneName, bool loadingScreenOn = true)
+    public IEnumerator LoadScene(string sceneName, bool loadingScreenOn = true)
     {
+
         if (loadingScreenOn)
         {
             loadingScreen.SetActive(true);
@@ -68,7 +68,7 @@ public class GameSceneManager : MonoBehaviour
         }
         else
         {
-            yield return new WaitForSeconds(0.5f);
+            //yield return new WaitForSeconds(0.5f);           
             AsyncOperation operation = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
             operation.allowSceneActivation = false;
             while (!operation.isDone)
@@ -92,7 +92,7 @@ public class GameSceneManager : MonoBehaviour
     /// </summary>
     /// <param name="sceneName">想要卸载的场景名</param>
     /// <returns></returns>
-    IEnumerator UnloadScene(string sceneName)
+    public IEnumerator UnloadScene(string sceneName)
     {
         // 退出局内场景时的处理
         if (sceneName == "Combat")

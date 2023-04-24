@@ -8,11 +8,9 @@ public class GameManager : MonoBehaviour
     private static GameManager instance = null; // GM实例
 
     // 其他管理器，由管理器自身创建时赋给GM
-    public MapManager mapMan;
     public CameraManager camMan;
     public PlayerManager playerMan;
     public GameSceneManager gameSceneMan;
-    public MonsterManager monsterMan;
 
     /// <summary>
     /// GM的初始化以及获取GM的getter
@@ -31,19 +29,6 @@ public class GameManager : MonoBehaviour
                 }
             }
             return instance; 
-        }
-    }
-
-    private void Awake()
-    {
-        // 确保单例
-        if (instance == null)
-        {
-            instance = this;
-        }
-        else
-        {
-            Destroy(gameObject);
         }
     }
 }

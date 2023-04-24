@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f4af20ac08f62d4f80f9d81c7ce0f90, type: 3}
   m_Name: UprightRat
   m_EditorClassIdentifier: 
-  monsterSprite: {fileID: 0}
+  monsterSprite: {fileID: 21300000, guid: 4104dfa448167344a8143443654f24a7, type: 3}
   moveSpeed: 0
   hp: 0
   maxHp: 0

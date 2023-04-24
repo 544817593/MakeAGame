@@ -9,25 +9,25 @@ public class PlayerSkills
     // public event EventHandler<MsgEquippedSkillsChange> OnEquippedSkillsChange;
 
 
-    private List<SkillName> unlockedSkillsList; // 已解锁的技能
-    private List<SkillName> equippedSkillsList; // 装备中的技能
-    private List<SkillName> availableSkillsList; // 可使用的技能
+    private List<SkillNameEnum> unlockedSkillsList; // 已解锁的技能
+    private List<SkillNameEnum> equippedSkillsList; // 装备中的技能
+    private List<SkillNameEnum> availableSkillsList; // 可使用的技能
 
     /// <summary>
     /// PlayerSkills构造函数
     /// </summary>
     public PlayerSkills()
     {
-        unlockedSkillsList = new List<SkillName>();
-        equippedSkillsList = new List<SkillName>(2); // 只可以携带两个技能
-        availableSkillsList = new List<SkillName>();
+        unlockedSkillsList = new List<SkillNameEnum>();
+        equippedSkillsList = new List<SkillNameEnum>(2); // 只可以携带两个技能
+        availableSkillsList = new List<SkillNameEnum>();
     }
 
     /// <summary>
     /// 获取已解锁的技能列表
     /// </summary>
     /// <returns>已解锁的技能列表</returns>
-    public List<SkillName> GetUnlockedSkills()
+    public List<SkillNameEnum> GetUnlockedSkills()
     {
         return unlockedSkillsList;
     }
@@ -36,7 +36,7 @@ public class PlayerSkills
     /// 解锁一个技能
     /// </summary>
     /// <param name="skillName">技能名</param>
-    private void UnlockSkill(SkillName skillName)
+    private void UnlockSkill(SkillNameEnum skillName)
     {
         if (!IsSkillUnlocked(skillName))
         {
@@ -51,7 +51,7 @@ public class PlayerSkills
     /// </summary>
     /// <param name="skillName">技能名</param>
     /// <returns>返回是否解锁</returns>
-    public bool IsSkillUnlocked(SkillName skillName)
+    public bool IsSkillUnlocked(SkillNameEnum skillName)
     {
         return unlockedSkillsList.Contains(skillName);
     }
@@ -61,16 +61,16 @@ public class PlayerSkills
     /// </summary>
     /// <param name="skillname">技能名</param>
     /// <returns>需要解锁的前置技能</returns>
-    public SkillName GetSkillRequirement(SkillName skillname)
+    public SkillNameEnum GetSkillRequirement(SkillNameEnum skillname)
     {
         switch (skillname)
         {
-            case SkillName.FOCUS2:
-                return SkillName.FOCUS1;
-            case SkillName.ALIENATION2:
-                return SkillName.ALIENATION1;
+            case SkillNameEnum.Focus2:
+                return SkillNameEnum.Focus1;
+            case SkillNameEnum.Alienation2:
+                return SkillNameEnum.Alienation1;
         }
-        return SkillName.NONE;
+        return SkillNameEnum.None;
     }
 
     /// <summary>
@@ -78,7 +78,7 @@ public class PlayerSkills
     /// </summary>
     /// <param name="skillName"></param>
     /// <returns>解锁技能成功或者失败</returns>
-    public bool TryUnlockSkill(SkillName skillName)
+    public bool TryUnlockSkill(SkillNameEnum skillName)
     {
         if (CanUnlock(skillName))
         {
@@ -96,10 +96,10 @@ public class PlayerSkills
     /// </summary>
     /// <param name="skillName">技能名字</param>
     /// <returns>是否可解锁</returns>
-    public bool CanUnlock(SkillName skillName)
+    public bool CanUnlock(SkillNameEnum skillName)
     {
-        SkillName skillRequirement = GetSkillRequirement(skillName);
-        if (skillRequirement != SkillName.NONE)
+        SkillNameEnum skillRequirement = GetSkillRequirement(skillName);
+        if (skillRequirement != SkillNameEnum.None)
         {
             if (IsSkillUnlocked(skillRequirement))
             {
@@ -120,7 +120,7 @@ public class PlayerSkills
     /// 获取可使用技能列表
     /// </summary>
     /// <returns>可使用的技能</returns>
-    public List<SkillName> GetAvailableSkillsList()
+    public List<SkillNameEnum> GetAvailableSkillsList()
     {
         return availableSkillsList;
     }
@@ -129,7 +129,7 @@ public class PlayerSkills
     /// 设置可使用的技能列表
     /// </summary>
     /// <param name="skillNames"></param>
-    public void SetAvailableSkillsList(List<SkillName> skillNames)
+    public void SetAvailableSkillsList(List<SkillNameEnum> skillNames)
     {
         availableSkillsList = skillNames;
     }
@@ -138,7 +138,7 @@ public class PlayerSkills
     /// 获得已装备的技能列表
     /// </summary>
     /// <returns>已装备的技能列表</returns>
-    public List<SkillName> GetEquippedSkillsList()
+    public List<SkillNameEnum> GetEquippedSkillsList()
     {
         return equippedSkillsList;
     }
@@ -147,7 +147,7 @@ public class PlayerSkills
     /// 添加一个技能到已装备技能栏
     /// </summary>
     /// <param name="skillName">技能名</param>
-    public void AddEquippedSkills(SkillName skillName)
+    public void AddEquippedSkills(SkillNameEnum skillName)
     {
         equippedSkillsList.Add(skillName);
         //OnEquippedSkillsChange?.Invoke(this, new MsgEquippedSkillsChange { });
@@ -158,7 +158,7 @@ public class PlayerSkills
     /// </summary>
     /// <param name="position">位置，1或者2</param>
     /// <param name="skillName">技能名</param>
-    public void ChangeEquippedSkillsList(int position, SkillName skillName)
+    public void ChangeEquippedSkillsList(int position, SkillNameEnum skillName)
     {
         if (!IsSkillUnlocked(skillName)) return;
 
@@ -168,14 +168,14 @@ public class PlayerSkills
             // 技能装备在技能栏1中但是想换到0
             if (position == 0 && (int)GetEquippedSkillsList()[1] == (int)skillName)
             {
-                SkillName temp = GetEquippedSkillsList()[0];
+                SkillNameEnum temp = GetEquippedSkillsList()[0];
                 equippedSkillsList[position] = skillName;
                 equippedSkillsList[1] = temp;
             }
             // 反过来同理
             else if (position == 1 && (int)GetEquippedSkillsList()[0] == (int)skillName)
             {
-                SkillName temp = GetEquippedSkillsList()[1];
+                SkillNameEnum temp = GetEquippedSkillsList()[1];
                 equippedSkillsList[position] = skillName;
                 equippedSkillsList[0] = temp;
             }
@@ -199,23 +199,23 @@ public class PlayerSkills
     /// </summary>
     /// <param name="id">要转换的技能名</param>
     /// <returns>技能的实际文字</returns>
-    public string SkillIdToName(SkillName id)
+    public string SkillIdToName(SkillNameEnum id)
     {
         switch (id)
         {
-            case SkillName.NONE:
+            case SkillNameEnum.None:
                 return "无";
-            case SkillName.ALIENATION1:
+            case SkillNameEnum.Alienation1:
                 return "异化I";
-            case SkillName.EARTHQUAKE1:
+            case SkillNameEnum.Earthquake1:
                 return "地震I";
-            case SkillName.DARKARRIVAL:
+            case SkillNameEnum.Darkarrival:
                 return "黑暗降临";
-            case SkillName.FOCUS1:
+            case SkillNameEnum.Focus1:
                 return "聚焦I";
-            case SkillName.ALIENATION2:
+            case SkillNameEnum.Alienation2:
                 return "异化II";
-            case SkillName.FOCUS2:
+            case SkillNameEnum.Focus2:
                 return "聚焦II";
             default:
                 return "";

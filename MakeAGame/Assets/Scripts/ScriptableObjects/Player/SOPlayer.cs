@@ -38,15 +38,15 @@ public class SOPlayer : ScriptableObject
     /// </summary>
     /// <param name="stats">需要返回的属性，力量，精神，技巧，体力，魅力</param>
     /// <returns>五维其中之一，错误时返回-1</returns>
-    public int GetStats(PlayerStats stats)
+    public int GetStats(PlayerStatsEnum stats)
     {
         switch (stats)
         {
-            case PlayerStats.STRENGTH: return strength;
-            case PlayerStats.SPIRIT: return spirit;
-            case PlayerStats.SKILL: return skill;
-            case PlayerStats.STAMINA: return stamina;
-            case PlayerStats.CHRISMA: return chrisma;
+            case PlayerStatsEnum.Strength: return strength;
+            case PlayerStatsEnum.Spirit: return spirit;
+            case PlayerStatsEnum.Skill: return skill;
+            case PlayerStatsEnum.Stamina: return stamina;
+            case PlayerStatsEnum.Charisma: return chrisma;
         }
         return -1;
     }
@@ -56,15 +56,15 @@ public class SOPlayer : ScriptableObject
     /// </summary>
     /// <param name="stats">需要改变的属性，力量，精神，技巧，体力，魅力</param>
     /// <param name="amount">要改变的数值</param>
-    public void ModifyStats(PlayerStats stats, int amount)
+    public void ModifyStats(PlayerStatsEnum stats, int amount)
     {
         switch (stats)
         {
-            case PlayerStats.STRENGTH: strength += amount; return;
-            case PlayerStats.SPIRIT: spirit += amount; return;
-            case PlayerStats.SKILL: skill += amount;  return;
-            case PlayerStats.STAMINA: stamina += amount; return;
-            case PlayerStats.CHRISMA: chrisma += amount; return;
+            case PlayerStatsEnum.Strength: strength += amount; return;
+            case PlayerStatsEnum.Spirit: spirit += amount; return;
+            case PlayerStatsEnum.Skill: skill += amount;  return;
+            case PlayerStatsEnum.Stamina: stamina += amount; return;
+            case PlayerStatsEnum.Charisma: chrisma += amount; return;
         }
     }
 }

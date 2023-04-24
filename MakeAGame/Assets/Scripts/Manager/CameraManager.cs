@@ -27,20 +27,20 @@ public class CameraManager : MonoBehaviour
         GameManager.Instance.camMan = this;
     }
 
-    float camMoveSpeed = 25f; // 相机移动速度
+    float camMoveSpeed = 12f; // 相机移动速度
     float borderOffset = 10f; // 鼠标要贴近边缘多少才可以移动相机
 
     // 相机移动上下限
-    float minBorderLimitX = -30f;
-    float maxBorderLimitX = 30f;
-    float minBorderLimitZ = -30f;
-    float maxBorderLimitZ = 0f;
+    float minBorderLimitX = 3f;
+    float maxBorderLimitX = 17f;
+    float minBorderLimitZ = -10f;
+    float maxBorderLimitZ = -3f;
 
     // 相机缩放上下限
-    float minScrollLimit = 30f;
-    float maxScrollLimit = 70f;
+    float minScrollLimit = 4f;
+    float maxScrollLimit = 15f;
 
-    float scrollSpeed = 3000f; // 缩放速度
+    float scrollSpeed = 500; // 缩放速度
 
     public bool cameraLock = false; // 相机锁定，不可移动
 
