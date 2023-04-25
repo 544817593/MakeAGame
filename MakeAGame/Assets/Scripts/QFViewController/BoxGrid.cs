@@ -39,8 +39,17 @@ namespace Game
         private void OnTerrainChanged(int terr)
         {
             // 改变地形图片
-            var sprite = Resources.Load<Sprite>(GridConst.TerrainResPathPrefix + terr);
-            srFloor.sprite = sprite;
+            if (terr == (int) TerrainEnum.Empty)
+            {
+                Color tmpColor = srFloor.color;
+                tmpColor.a = 0f;
+                srFloor.color = tmpColor;
+            }
+            else
+            {
+                var sprite = Resources.Load<Sprite>(GridConst.TerrainResPathPrefix + terr);
+                srFloor.sprite = sprite;   
+            }
         }
 
         private void OnTimeMultiplierChanged(float time)
