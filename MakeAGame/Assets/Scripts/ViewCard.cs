@@ -52,9 +52,11 @@ namespace Game
             uiHelper.OnUIPointEnter += () => uiHandCard.OnFocusCard(this);
             uiHelper.OnUIPointExit += OnUnfocus;
             uiHelper.OnUIPointExit += uiHandCard.OnUnfocusCard;
-            uiHelper.OnUIBeginDrag = uiHandCard.OnDragCardStart;
+            uiHelper.OnUIBeginDrag += OnDragStart;
+            uiHelper.OnUIBeginDrag += uiHandCard.OnDragCardStart;
             uiHelper.OnUIDrag = OnDrag;
-            uiHelper.OnUIEndDrag = uiHandCard.OnDragCardEnd;
+            uiHelper.OnUIEndDrag += uiHandCard.OnDragCardEnd;
+            uiHelper.OnUIEndDrag += OnDragEnd;
             // uiHelper.OnUIDrag += uiHandCard.OnDragCard;  // todo 看拖拽手牌时手牌ui是否需要响应
             transform.localScale = new Vector3(UIHandCard.normalScale, UIHandCard.normalScale, 1f);
         }
@@ -79,10 +81,21 @@ namespace Game
             OnUpdate.Remove(ShowTooltip);
         }
 
+        void OnDragStart()
+        {
+            Debug.Log("ViewCard: OnDragStart");
+            canvasGroup.alpha = 0.5f;
+        }
+
         void OnDrag()
         {
-            Debug.Log("is dragging");
-            canvasGroup.alpha = 0.5f;
+            // Debug.Log("is dragging");
+        }
+
+        void OnDragEnd()
+        {
+            Debug.Log("ViewCard: OnDragEnd");
+            canvasGroup.alpha = 1f;
         }
 
         void ShowTooltip()

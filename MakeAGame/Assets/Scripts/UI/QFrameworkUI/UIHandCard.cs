@@ -133,14 +133,14 @@ namespace Game
 
 		public void OnDragCardStart()
 		{
-			
+			anim.Play("Down", -1, 0);
 			// transform.DOLocalMoveY(-60, 0.5f);
 		}
 
 		public void OnDragCardEnd()
 		{
 			// transform.DOLocalMoveY(160, 0.5f);
-
+			anim.Play("Up", -1, 0);
 			UpdateLayout();
 		}
 		
