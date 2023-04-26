@@ -14,7 +14,6 @@ public class Monster : MonoBehaviour, IController
     public SOMonsterBase data;
 
     #region 怪物数据
-    public Sprite monsterSprite; // 立绘
     public int rarity; // 稀有度 0 白 -- 4 橙
     public int monsterId; // 怪物的ID，辨认品种
     public int pieceId; // 棋子ID，每个棋子独一份
@@ -50,12 +49,12 @@ public class Monster : MonoBehaviour, IController
 
     void Start()
     {
-        leftTopGridPos.Register(newPosition => OnMonsterPositionChanged());
+        leftTopGridPos.RegisterWithInitValue(newPosition => OnMonsterPositionChanged(newPosition));
     }
 
-    private void OnMonsterPositionChanged()
+    private void OnMonsterPositionChanged((int,int) newPosition)
     {
-
+        this.GetSystem<IMapSystem>().Grids()[newPosition.Item1, newPosition.Item2].occupation = pieceId;
     }
 
 }

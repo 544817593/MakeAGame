@@ -375,7 +375,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d009c6d42bf84f18bbab77e8fde56d84, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mapDataResPath: ScriptableObjects/SOMapData1-1a
+  mapDataResPath: ScriptableObjects/Maps/SOMapData1-1a
+  monsterSpawnSettings: {fileID: 11400000, guid: 48d9fb7568ea09d4fa73b2d854b4dc3d, type: 2}
 --- !u!4 &728681810
 Transform:
   m_ObjectHideFlags: 0

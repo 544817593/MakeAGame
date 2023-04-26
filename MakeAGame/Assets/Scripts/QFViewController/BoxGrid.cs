@@ -23,6 +23,7 @@ namespace Game
         public BindableProperty<int> terrain = new BindableProperty<int>((int)TerrainEnum.Road);    // 地形类型
         public BindableProperty<float> timeMultiplier = new BindableProperty<float>();  // 时间流逝倍数
         public (int, int) status;   // todo 应该会删除
+        public int occupation; // 当前格子上的单位的ID
         
         // components
         private SpriteRenderer srFloor; // 地形图片
@@ -71,7 +72,7 @@ namespace Game
         /// <returns></returns>
         public bool IsEmpty()
         {
-            return true;
+            return occupation == 0;
         }
     }
 }
