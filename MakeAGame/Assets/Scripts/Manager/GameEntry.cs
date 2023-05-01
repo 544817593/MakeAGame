@@ -14,11 +14,10 @@ namespace Game
             RegisterSystem<IMapSystem>(new MapSystem());
             RegisterSystem<IGridGeneratorSystem>(new GridGeneratorSystem());
             RegisterSystem<ISpawnSystem>(new SpawnSystem());
-            RegisterSystem<IRoomSelectorSystem>(new RoomSelectorSystem());
+            RegisterSystem<IMovementSystem>(new MovementSystem());
 
             RegisterUtility<ICSVImportUtility>(new CSVImportUtility());
 
-           
             
             // 初始化资源管理
             ResKit.Init();

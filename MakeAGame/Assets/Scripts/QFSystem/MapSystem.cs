@@ -29,6 +29,13 @@ namespace Game
         /// <returns></returns>
         BoxGrid[,] Grids();
 
+        /// <summary>
+        /// 检查格子可否被单位移动到此
+        /// </summary>
+        /// <param name="boxgrid">需要被检查的格子</param>
+        /// <returns></returns>
+        bool GridCanMoveTo(BoxGrid boxgrid);
+
     }
 
     public class MapSystem : AbstractSystem, IMapSystem
@@ -132,11 +139,18 @@ namespace Game
             // 默认表内数据按顺序排列
             boxGrid.timeMultiplier.Value = float.Parse(dataRow[attri["timeMultiplier"]]);
             boxGrid.terrain.Value = int.Parse(dataRow[attri["terrain"]]);
-            boxGrid.statusType.Value = int.Parse(dataRow[attri["statusType"]]);
         }
 
         #endregion
 
+        public bool GridCanMoveTo(BoxGrid boxgrid)
+        {
+            if (boxgrid.terrain.Value == (int)TerrainEnum.Invalid) return false;
+            if (boxgrid.terrain.Value == (int)TerrainEnum.Wall) return false;
+            if (boxgrid.gridStatus.Value == GridStatus.AllyPiece) return false;
+            if (boxgrid.gridStatus.Value == GridStatus.MonsterPiece) return false;
 
+            return true;
+        }
     }
 }

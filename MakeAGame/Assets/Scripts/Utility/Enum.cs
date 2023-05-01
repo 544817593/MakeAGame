@@ -44,7 +44,7 @@ public enum PropertyEnum
 /// </summary>
 public enum TerrainEnum
 {
-    Empty, Road, Wall, Water, Fire, Poison
+    Invalid, Road, Wall, Water, Fire, Poison
 }
 
 /// <summary>
@@ -58,4 +58,15 @@ public enum RoomEnum
     Merchant, // 商人房
     Rest, // 休息房
     Boss // Boss房
+}
+
+/// <summary>
+/// 格子的状态
+/// </summary>
+public enum GridStatus
+{
+    Unoccupied, // 没有被占用
+    AllyPiece, // 友方棋子
+    MonsterPiece, // 怪物棋子
+    Interactable // 可交互物
 }

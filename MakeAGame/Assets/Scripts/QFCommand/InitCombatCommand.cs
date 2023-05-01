@@ -12,7 +12,7 @@ namespace Game
         
         public InitCombatCommand(CombatStart startInfo)
         {
-            info = startInfo;
+            this.info = startInfo;
         }
         
         protected override void OnExecute()

@@ -42,7 +42,11 @@ namespace Game
         /// </summary>
         void IncrementPieceIdCounter();
 
-       
+        List<Monster> GetMonsterList();
+
+        List<TempAllyScript> GetAllyList();
+
+
     }
 
 
@@ -50,6 +54,11 @@ namespace Game
     {
         // 棋子ID，每个棋子独一份，设置为从1开始，因为BoxGrid.isEmpty()插空为格子上的occupation是否为0
         private int pieceIdCounter = 1; 
+
+        // 怪物和友军的列表
+        private List<Monster> monsterList = new List<Monster>();
+        private List<TempAllyScript> allyList = new List<TempAllyScript>();
+        // interactableList待添加
 
         protected override void OnInit()
         {
@@ -97,6 +106,16 @@ namespace Game
         public void IncrementPieceIdCounter()
         {
             pieceIdCounter++;
+        }
+
+        public List<Monster> GetMonsterList()
+        {
+            return monsterList;
+        }
+
+        public List<TempAllyScript> GetAllyList()
+        {
+            return allyList;
         }
     }
 

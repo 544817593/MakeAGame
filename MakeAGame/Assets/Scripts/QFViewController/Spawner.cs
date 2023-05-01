@@ -58,7 +58,8 @@ namespace Game
                 ("Assets/Resources/ScriptableObjects/Monsters/" + data.name + ".asset");
             piece.transform.Find("image").GetComponent<SpriteRenderer>().sprite = monster.data.monsterSprite;
             InitialiseMonsterValues(monster, data);
-            //enemyList.Add(piece.GetComponent<Monster>());
+            grid[data.row, data.col].gridStatus.Value = GridStatus.MonsterPiece;
+            this.GetSystem<ISpawnSystem>().GetMonsterList().Add(piece.GetComponent<Monster>());
         }
 
         /// <summary>
@@ -105,11 +106,14 @@ namespace Game
             monster.accuracy = new BindableProperty<float>(somb.accuracy);
             monster.atkRange = new BindableProperty<int>(somb.atkRange);
             monster.properties = new BindableProperty<List<PropertyEnum>>(somb.properties);
+            monster.dirs = new BindableProperty<List<DirEnum>>(somb.dirs);
             monster.inCombat = new BindableProperty<bool>(false);
             monster.isAttacking = new BindableProperty<bool>(false);
             monster.isDying = new BindableProperty<bool>(false);
             (int, int) temp = (data.row, data.col);
             monster.leftTopGridPos = new BindableProperty<(int, int)>(temp);
+            (int, int) temp2 = (data.row + somb.pieceSize.Item1 - 1, data.col + somb.pieceSize.Item2 - 1);
+            monster.botRightGridPos = new BindableProperty<(int, int)>(temp2);
         }
     }
 }
