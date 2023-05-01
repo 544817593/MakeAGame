@@ -30,6 +30,13 @@ namespace Game
             // 监听怪物生成事件
             this.RegisterEvent<SpawnMonsterEvent>(OnSpawnMonsterEvent)
                 .UnRegisterWhenGameObjectDestroyed(gameObject);
+
+            // 监听怪物持续生成事件
+            this.RegisterEvent<ConstantSpawnMonsterEvent>(data => 
+            { 
+                StartCoroutine(OnConstantSpawnMonsterEvent(data)); 
+            })
+                .UnRegisterWhenGameObjectDestroyed(gameObject);
         }
 
 
@@ -48,9 +55,35 @@ namespace Game
             piece.transform.Rotate(90, 0, 0);
             Monster monster = piece.GetComponent<Monster>();
             monster.data = AssetDatabase.LoadAssetAtPath<SOMonsterBase>
-                ("Assets/Resources/ScriptableObjects/Monsters/" + data.name + ".asset");           
+                ("Assets/Resources/ScriptableObjects/Monsters/" + data.name + ".asset");
+            piece.transform.Find("image").GetComponent<SpriteRenderer>().sprite = monster.data.monsterSprite;
             InitialiseMonsterValues(monster, data);
             //enemyList.Add(piece.GetComponent<Monster>());
+        }
+
+        /// <summary>
+        /// 收到怪物持续生成事件后处理
+        /// </summary>
+        /// <param name="data"></param>
+        private IEnumerator OnConstantSpawnMonsterEvent(ConstantSpawnMonsterEvent data)
+        {
+            int x = data.spawnPoint.x;
+            int y = data.spawnPoint.y;
+            ISpawnSystem spawnSystem = this.GetSystem<ISpawnSystem>();
+            var grid = this.GetSystem<IMapSystem>().Grids()[x, y];
+            float startTime = Time.time;
+            while (Time.time - startTime <= data.duration)
+            {
+                int rng = UnityEngine.Random.Range(1, 101);
+                if (grid.IsEmpty() && rng < data.spawnProbability)
+                {
+                    var spawnMonsterEvent = new SpawnMonsterEvent
+                    { col = y, row = x, name = data.name, pieceId = spawnSystem.GetPieceIdCounter() };
+                    spawnSystem.IncrementPieceIdCounter();
+                    OnSpawnMonsterEvent(spawnMonsterEvent);
+                }
+                yield return new WaitForSeconds(data.cooldown);
+            }
         }
 
         /// <summary>
@@ -61,7 +94,6 @@ namespace Game
         {
             SOMonsterBase somb = monster.data;
             monster.pieceId = data.pieceId;           
-            monster.monsterSprite = somb.monsterSprite;
             monster.rarity = somb.rarity;
             monster.monsterId = somb.monsterId;
             monster.moveSpeed = new BindableProperty<float>(somb.moveSpeed);

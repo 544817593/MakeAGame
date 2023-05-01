@@ -23,7 +23,7 @@ namespace Game
 
             // 怪物
             var spawnSystem = this.GetSystem<ISpawnSystem>();
-            spawnSystem.SpawnMonster(3, 3, "Ghast");
+            spawnSystem.ConstantSpawnMonster(info.monsterSpawnSettings);
         }
     }
 }

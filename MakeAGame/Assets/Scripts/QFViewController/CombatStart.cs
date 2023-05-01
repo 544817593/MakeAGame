@@ -10,12 +10,14 @@ namespace Game
     public class CombatStart: MonoBehaviour, IController
     {
         public string mapDataResPath = "Data/MapTable1";    // 地图数据资源路径
+        public SOMonsterSpawnSettings monsterSpawnSettings; // 怪物初始生成参数
         
         
         private void Start()
         {
             // IController通过Command与其他模块通信
             this.SendCommand(new InitCombatCommand(this));
+            
         }
 
         /// <summary>

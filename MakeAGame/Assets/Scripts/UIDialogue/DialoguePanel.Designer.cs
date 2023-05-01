@@ -5,7 +5,7 @@ using QFramework;
 
 namespace DialogueUI
 {
-	// Generate Id:9c912580-ff2b-46d2-bf86-b68e14f03aa8
+	// Generate Id:29201322-fe05-4153-aae7-943ea97e62e5
 	public partial class DialoguePanel
 	{
 		public const string Name = "DialoguePanel";

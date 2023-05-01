@@ -15,7 +15,7 @@ public class Dialogue : ViewController
     public TextAsset ink_file; 
     public Story story;
     public TextMeshProUGUI text_Pre;
-    public DialogueUI.Choice[] ChoiceP;
+    public Button[] ChoiceP ;
     public TextMeshProUGUI[] choicesText;
     private float typingSpeed = 0.04f;
     public GameObject name_text;
@@ -30,8 +30,8 @@ public class Dialogue : ViewController
     private const string SHOWNPC_TAG = "showNPC";
     private const string PLAYER_TAG = "player";
     private const string NPC_TAG = "NPC";
-    
 
+    
 
     private Coroutine displayCoroutine;
 
@@ -55,18 +55,24 @@ public class Dialogue : ViewController
         story = new Story(ink_file.text);
 
         //ChoiceP = DialogueUI.Choice.;
+
+
        
-        
         npc.SetActive(false);
         backGround.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("UI/MainUI/Background");
-        choicesText = new TextMeshProUGUI[ChoiceP.Length];
-        int index = 0;
-        foreach (DialogueUI.Choice choice_p in ChoiceP)
-        {
-            choicesText[index] = choice_p.GetComponentInChildren<TextMeshProUGUI>();
-            index++;
-        }
+        
         StoryUI();
+        for (int i = 0; i < ChoiceP.Length; i++)
+        {
+            int m_i = i;
+            ChoiceP[i].onClick.AddListener(() =>
+            {
+                Debug.Log(m_i);
+                ChooseChoice(m_i);
+
+            });
+
+        }
 
     }
 
@@ -78,7 +84,10 @@ public class Dialogue : ViewController
         {
             StoryUI();
         }
+       
         
+
+
         //StoryUI();
 
 
@@ -128,11 +137,20 @@ public class Dialogue : ViewController
     }
     void StoryUI()
     {
-       
-        eraseUI();
         UIKit.OpenPanel<DialoguePanel>();
-        story_text = Instantiate(text_Pre) as TextMeshProUGUI;
+        eraseUI();
        
+        story_text = Instantiate(text_Pre) as TextMeshProUGUI;
+        ChoiceP = UIKit.GetPanel<DialoguePanel>().choice.GetComponentsInChildren<Button>(true);
+        choicesText = new TextMeshProUGUI[ChoiceP.Length];
+        int index = 0;
+        foreach (Button choice_p in ChoiceP)
+        {
+            choicesText[index] = choice_p.GetComponentInChildren<TextMeshProUGUI>();
+            index++;
+        }
+
+
         loadStory();
 
         story_text.transform.SetParent(UIKit.GetPanel<DialoguePanel>().dialogue, false);
@@ -142,10 +160,10 @@ public class Dialogue : ViewController
 
     void eraseUI()
     {
-        //for(int i=0; i< UIKit.GetPanel<DialoguePanel>().dialogue.childCount; i++)
-        //{
-        //    Destroy(UIKit.GetPanel<DialoguePanel>().dialogue.GetChild(i).gameObject);
-        //}
+        for(int i=0; i< UIKit.GetPanel<DialoguePanel>().dialogue.childCount; i++)
+        {
+            Destroy(UIKit.GetPanel<DialoguePanel>().dialogue.GetChild(i).gameObject);
+        }
     }
 
     private void DisplayChoices()
@@ -174,15 +192,19 @@ public class Dialogue : ViewController
         }
         
         
+
+
     }
 
     
-    public void ChooseChoice(int choiceIndex)
+    public void ChooseChoice(int i)
     {
-     
-        story.ChooseChoiceIndex(choiceIndex);
-        waitForChoice = false;
-        StoryUI();
+
+        Debug.Log(i);
+            story.ChooseChoiceIndex(i);
+            waitForChoice = false;
+            StoryUI();
+       
 
 
     }
@@ -205,6 +227,7 @@ public class Dialogue : ViewController
            
             HandleTags(story.currentTags);
             DisplayChoices();
+           
         }
         
 
