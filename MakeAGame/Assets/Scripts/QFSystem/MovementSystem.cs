@@ -83,7 +83,7 @@ namespace Game
             }
 
             // 已有棋子或者地形不可通过
-            if (this.GetSystem<IMapSystem>().GridCanMoveTo(grid2DList[intendPos.Item1, intendPos.Item2]))
+            if (!this.GetSystem<IMapSystem>().GridCanMoveTo(grid2DList[intendPos.Item1, intendPos.Item2]))
             {
                 return false;
             }
@@ -94,55 +94,55 @@ namespace Game
 
         public DirEnum NeighbourBoxGridsToDir(BoxGrid start, BoxGrid target)
         {
-            // Target is to the right of start (with diagonal)
+            // 目标在右边
             if (target.col > start.col)
             {
-                // DOWNRIGHT
+                // 右下
                 if (target.row > start.row)
                 {
                     return DirEnum.Downright;               
                 }
-                // TOPRIGHT
+                // 右上
                 else if (target.row < start.row)
                 {
                     return DirEnum.Topright;
                 }
             }
-            // Target is to the left of start (with diagonal)
+            // 目标在左边
             else if (target.col < start.col)
             {
-                // Downleft
+                // 左下
                 if (target.row > start.row)
                 {
                     return DirEnum.Downleft;
-                // Topleft
+                // 左上
                 }
                 else if (target.row < start.row)
                 {
                     return DirEnum.Topleft;
                 }
             }
-            // Target is to the bottom of start
+            // 目标在正下面
             if ((target.col == start.col) && (target.row > start.row))
             {
                 return DirEnum.Down;
             }
-            // Target is to the top of start
+            // 目标在正上面
             if ((target.col == start.col) && (target.row < start.row))
             {
                 return DirEnum.Top;
             }
-            // Target is to the left of start
+            // 目标在正左面
             if ((target.row == start.row) && (target.col < start.col))
             {
                 return DirEnum.Left;
             }
-            // Target is to the right of start
+            // 目标在正右面
             if ((target.row == start.row) && (target.col > start.col))
             {
                 return DirEnum.Right;
             }
-            Debug.LogError("PathFinding.BoxGridsToDir: No valid direction, returned default value: Top.");
+            Debug.LogError("错误：目标无法直达，返回默认值Top");
             return DirEnum.Top;
 
         }

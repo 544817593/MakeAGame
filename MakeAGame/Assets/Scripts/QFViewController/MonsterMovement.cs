@@ -11,12 +11,22 @@ public class MonsterMovement : MonoBehaviour, IController
     IMovementSystem movementSystem; // 移动系统
     private Monster monster; // 怪物引用
     private (int, int) nextPos; // 下一次移动即将去到的位置
+    private float lastMoveTime; // 上一次移动的时间
 
     void Start()
     {
         monster = gameObject.GetComponent<Monster>();
         movementSystem = this.GetSystem<IMovementSystem>();
-        FindMovementDir();
+        
+    }
+
+    void Update()
+    {
+        if (Time.time - lastMoveTime > monster.moveSpeed)
+        {
+            FindMovementDir();
+            lastMoveTime = Time.time;
+        }
     }
 
     /// <summary>
@@ -55,12 +65,11 @@ public class MonsterMovement : MonoBehaviour, IController
     /// </summary>
     private void FindMovementDir()
     {
-        (int, int) original = monster.leftTopGridPos; // 当前左上坐标
-        (int, int) positionAfterMovement = monster.leftTopGridPos; // 怪物移动后的坐标
-
+        (int, int) original = monster.leftTopGridPos.Value; // 当前左上坐标
+        (int, int) positionAfterMovement = monster.leftTopGridPos.Value; // 怪物移动后的坐标
 
         // A star path finding
-        List<BoxGrid> aStarPath = PathFinding.FindPath(monster.leftTopGridPos.Value.Item1, monster.leftTopGridPos.Value.Item2,
+        List<BoxGrid> aStarPath = PathFinding.FindPath(original.Item1, original.Item2,
             monster.currentTarget.leftTopGridPos.Item1, monster.currentTarget.leftTopGridPos.Item2, monster);
 
         // A path to the target exists

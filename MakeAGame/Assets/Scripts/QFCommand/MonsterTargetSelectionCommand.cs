@@ -19,11 +19,10 @@ public class MonsterTargetSelectionCommand : AbstractCommand
 
     protected override void OnExecute()
     {
-        TempAllyScript targetAlly = new TempAllyScript(); // 怪物的当前目标
+        TempAllyScript targetAlly = GameObject.Find("TestAlly").GetComponent<TempAllyScript>(); // 怪物的当前目标
 
         List<TempAllyScript> allyList = this.GetSystem<ISpawnSystem>().GetAllyList(); // Current ally pieces
         List<TempAllyScript> targetList = new List<TempAllyScript>(); // Ally pieces that direct monster's movement (investigator/undead)
-        
         monster.currentTarget = targetAlly;
     }
 
