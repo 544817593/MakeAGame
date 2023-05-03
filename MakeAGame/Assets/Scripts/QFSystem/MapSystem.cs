@@ -29,6 +29,10 @@ namespace Game
         /// <returns></returns>
         BoxGrid[,] Grids();
 
+        /// <summary>
+        /// 地图中央位置，用于摄像头设置
+        /// </summary>
+        BoxGrid centerGrid { get; }
     }
 
     public class MapSystem : AbstractSystem, IMapSystem
@@ -43,6 +47,7 @@ namespace Game
         }
 
         public BoxGrid[,] Grids() { return mGrids; }
+        public BoxGrid centerGrid { get; private set; }
 
         #region 通过SO初始化
 
@@ -83,6 +88,9 @@ namespace Game
                 }
             }
             
+            // 获取地图中央坐标（若为双数行列，则以左边、上边格子中心为中央）
+            centerGrid = mGrids[row / 2, col / 2];
+
             Debug.Log("CreateMap finished");
         }
 

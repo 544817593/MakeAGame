@@ -20,10 +20,17 @@ namespace Game
             // 地图
             var mapSystem = this.GetSystem<IMapSystem>();
             mapSystem.CreateMapBySO(info.mapDataResPath);
+            
+            // 镜头位置
+            ChangeCameraTargetEvent setCameraCenterEvent = new ChangeCameraTargetEvent()
+            {
+                target = mapSystem.centerGrid.transform
+            };
+            this.SendEvent<ChangeCameraTargetEvent>(setCameraCenterEvent);
 
-            // 怪物
-            var spawnSystem = this.GetSystem<ISpawnSystem>();
-            spawnSystem.ConstantSpawnMonster(info.monsterSpawnSettings);
+            // // 怪物
+            // var spawnSystem = this.GetSystem<ISpawnSystem>();
+            // spawnSystem.ConstantSpawnMonster(info.monsterSpawnSettings);
         }
     }
 }
