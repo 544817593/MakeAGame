@@ -2,14 +2,17 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using QFramework;
+using ShootingEditor2D;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace Game
 {
-    public class ViewCard: MonoBehaviour
+    public class ViewCard: MonoBehaviour, IController
     {
+        public SOCharacterInfo characterInfo;
+        
         public Transform nodeFeature;   // feature根结点
         public List<GameObject> featureTouchArea = new List<GameObject>();   // feature UI响应区域
         public GameObject touchArea;    // UI响应区域
@@ -59,6 +62,9 @@ namespace Game
             uiHelper.OnUIEndDrag += OnDragEnd;
             // uiHelper.OnUIDrag += uiHandCard.OnDragCard;  // todo 看拖拽手牌时手牌ui是否需要响应
             transform.localScale = new Vector3(UIHandCard.normalScale, UIHandCard.normalScale, 1f);
+            
+            // todo test
+            characterInfo = Resources.Load<SOCharacterInfo>("ScriptableObjects/Characters/SOCharacterInfo_1");
         }
 
         private List<Action> OnUpdate = new List<Action>();
@@ -85,6 +91,10 @@ namespace Game
         {
             Debug.Log("ViewCard: OnDragStart");
             canvasGroup.alpha = 0.5f;
+
+            SelectMapStartCommand comm = new SelectMapStartCommand();
+            comm.area = new SelectArea() {width = 1, height = 1};
+            this.SendCommand<SelectMapStartCommand>(comm);
         }
 
         void OnDrag()
@@ -96,6 +106,7 @@ namespace Game
         {
             Debug.Log("ViewCard: OnDragEnd");
             canvasGroup.alpha = 1f;
+            this.SendCommand<SelectMapEndCommand>();
         }
 
         void ShowTooltip()
@@ -135,6 +146,11 @@ namespace Game
             // {
             //     Debug.Log("ray hit nothing");
             // }
+        }
+
+        public IArchitecture GetArchitecture()
+        {
+            return GameEntry.Interface;
         }
     }
 }

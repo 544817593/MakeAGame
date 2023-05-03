@@ -252,7 +252,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d009c6d42bf84f18bbab77e8fde56d84, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mapDataResPath: ScriptableObjects/SOMapDataTest
+  mapDataResPath: ScriptableObjects/SOMapDataTest2
   monsterSpawnSettings: {fileID: 0}
 --- !u!4 &1351751550
 Transform:

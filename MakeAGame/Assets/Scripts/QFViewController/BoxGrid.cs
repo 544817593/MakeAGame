@@ -1,4 +1,5 @@
-﻿using QFramework;
+﻿using System;
+using QFramework;
 using UnityEngine;
 
 namespace Game
@@ -27,14 +28,31 @@ namespace Game
         
         // components
         private SpriteRenderer srFloor; // 地形图片
+        private SpriteRenderer srHint;  // 提示颜色图片
+        public GameObject touchArea;    // 鼠标响应区域
+        public TriggerHelper mouseHelper;
 
         private void Start()
         {
             srFloor = transform.Find("Root/SpriteFloor").GetComponent<SpriteRenderer>();
+            srHint = transform.Find("Root/SpriteHint").GetComponent<SpriteRenderer>();
+            HideHint();
             
+            touchArea = transform.Find("Root/TriggerArea").gameObject;
+            mouseHelper = touchArea.AddComponent<TriggerHelper>();
+            mouseHelper.OnMouseEnterEvent = OnEnter;
+            mouseHelper.OnMouseExitEvent = OnExit;
+            // mouseHelper.enabled = false; // 无效，invoke还是会执行
+            touchArea.gameObject.SetActive(false);
+
             // 注册属性改变时会触发的方法
             terrain.RegisterWithInitValue(terr => OnTerrainChanged(terr));
             timeMultiplier.RegisterWithInitValue(time => OnTimeMultiplierChanged(time));
+            
+            // 开始选择格子时
+            this.RegisterEvent<SelectMapStartEvent>(e => OnSelectStart(e));
+            // 结束选择格子
+            this.RegisterEvent<SelectMapEndEvent>(e => OnSelectEnd(e));
         }
         
         private void OnTerrainChanged(int terr)
@@ -57,6 +75,50 @@ namespace Game
         {
             // todo 速度变化触发的效果
             
+        }
+
+        void OnEnter()
+        {
+            Debug.Log($">>boxgrid enter, {this.ToString()}");
+            ShowHint("selected");
+        }
+
+        void OnExit()
+        {
+            HideHint();
+        }
+
+        void ShowHint(string hintType)
+        {
+            if(!srHint.gameObject.activeSelf)
+                srHint.gameObject.SetActive(true);
+            
+            switch (hintType)
+            {
+                case "selected":
+                    srHint.color = Color.yellow;
+                    break;
+                case "attackRange":
+                    srHint.color = Color.blue;
+                    break;
+            }
+        }
+
+        void HideHint()
+        {
+            srHint.gameObject.SetActive(false);
+        }
+
+        void OnSelectStart(SelectMapStartEvent e)
+        {
+            // mouseHelper.enabled = true;
+            touchArea.gameObject.SetActive(true);
+        }
+
+        void OnSelectEnd(SelectMapEndEvent e)
+        {
+            HideHint();
+            touchArea.gameObject.SetActive(false);
         }
 
         /// <summary>

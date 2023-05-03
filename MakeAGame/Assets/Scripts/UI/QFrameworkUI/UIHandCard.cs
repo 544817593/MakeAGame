@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine;
@@ -116,7 +117,7 @@ namespace Game
 
 		public void OnUnfocusCard()
 		{
-			if (isDragging) return;
+			// if (isDragging) return;
 			
 			viewCardsList[focusIndex].canvas.sortingOrder = 100;
 			
@@ -133,12 +134,34 @@ namespace Game
 
 		public void OnDragCardStart()
 		{
+			isDragging = true;
+			// mouseImg = (GameObject) Instantiate(Resources.Load("Prefabs/Piece"));
+			mouseImg = transform.Find("Root/PieceIcon");
 			anim.Play("Down", -1, 0);
 			// transform.DOLocalMoveY(-60, 0.5f);
 		}
 
+		private Transform mouseImg;
+		private void Update()
+		{
+			// todo 优化 不要在update里写if
+			if (isDragging)
+			{
+				if (mouseImg != null)
+				{
+					// var pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+					var pos = Input.mousePosition;
+					// pos = new Vector3(pos.x, pos.y, 0);
+					Debug.Log($"mouse pos: {pos}");
+					// pos = new Vector3(pos.x-Screen.width/2f,pos.y-Screen.height/2f);
+					mouseImg.localPosition = pos;
+				}
+			}
+		}
+
 		public void OnDragCardEnd()
 		{
+			isDragging = false;
 			// transform.DOLocalMoveY(160, 0.5f);
 			anim.Play("Up", -1, 0);
 			UpdateLayout();

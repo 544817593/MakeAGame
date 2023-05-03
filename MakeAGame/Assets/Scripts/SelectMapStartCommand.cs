@@ -3,14 +3,16 @@ using QFramework;
 
 namespace Game
 {
-    public class SelectMapEndCommand: AbstractCommand
+    public class SelectMapStartCommand: AbstractCommand
     {
+        public SelectArea area;
+        
         protected override void OnExecute()
         {
             var mapSelectSystem = this.GetSystem<IMapSelectSystem>();
-            mapSelectSystem.SelectMapEnd();
+            mapSelectSystem.SelectMapStart(area);
             
-            this.SendEvent<SelectMapEndEvent>();
+            this.SendEvent<SelectMapStartEvent>();
         }
         
     }

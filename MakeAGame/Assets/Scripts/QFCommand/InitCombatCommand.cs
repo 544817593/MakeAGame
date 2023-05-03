@@ -28,6 +28,9 @@ namespace Game
             };
             this.SendEvent<ChangeCameraTargetEvent>(setCameraCenterEvent);
 
+            // test
+            UIKit.OpenPanel<UIHandCard>();
+
             // // 怪物
             // var spawnSystem = this.GetSystem<ISpawnSystem>();
             // spawnSystem.ConstantSpawnMonster(info.monsterSpawnSettings);

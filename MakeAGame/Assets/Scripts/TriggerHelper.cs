@@ -5,58 +5,22 @@ using UnityEngine.EventSystems;
 namespace Game
 {
     /// <summary>
-    /// 需要对点击、拖拽等操作作出响应的UI挂载此组件
+    /// 挂载有作为trigger的collier组件的，用此脚本管理鼠标等事件
     /// </summary>
-    public class UIEventHelper : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler, 
-        IPointerDownHandler, IPointerUpHandler, IDragHandler, IBeginDragHandler, IEndDragHandler
+    public class TriggerHelper : MonoBehaviour
     {
-        public Action OnUIPointEnter;   // 鼠标进入回调
-        public Action OnUIPointExit;    // 鼠标离开回调
-        public Action OnUIPointClick;   // 鼠标点击回调
-        public Action OnUIPointDown;    // 鼠标按下回调
-        public Action OnUIPpintUp;      // 鼠标抬起回调
-        public Action OnUIDrag;         // 鼠标拖拽回调
-        public Action OnUIBeginDrag;    // 鼠标开始拖拽回调
-        public Action OnUIEndDrag;      // 鼠标结束拖拽回调
-
-        public void OnPointerEnter(PointerEventData pointerEventData)
-        {
-            OnUIPointEnter?.Invoke();
-        }
-
-        public void OnPointerExit(PointerEventData pointerEventData)
-        {
-            OnUIPointExit?.Invoke();
-        }
+        public Action OnMouseEnterEvent;
+        public Action OnMouseExitEvent;
         
-        public void OnPointerClick(PointerEventData pointerEventData)
+        
+        private void OnMouseEnter()
         {
-            OnUIPointClick?.Invoke();
+            OnMouseEnterEvent?.Invoke();
         }
 
-        public void OnPointerDown(PointerEventData pointerEventData)
+        private void OnMouseExit()
         {
-            OnUIPointDown?.Invoke();
-        }
-
-        public void OnPointerUp(PointerEventData pointerEventData)
-        {
-            OnUIPpintUp?.Invoke();
-        }
-
-        public void OnDrag(PointerEventData eventData)
-        {
-            OnUIDrag?.Invoke();
-        }
-
-        public void OnBeginDrag(PointerEventData eventData)
-        {
-            OnUIBeginDrag?.Invoke();
-        }
-
-        public void OnEndDrag(PointerEventData eventData)
-        {
-            OnUIEndDrag?.Invoke();
+            OnMouseExitEvent?.Invoke();
         }
     }
 }
