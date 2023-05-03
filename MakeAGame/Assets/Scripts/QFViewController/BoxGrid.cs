@@ -22,7 +22,7 @@ namespace Game
         public BindableProperty<int> terrain = new BindableProperty<int>((int)TerrainEnum.Road);    // 地形类型
         public BindableProperty<float> timeMultiplier = new BindableProperty<float>();  // 时间流逝倍数
         public int occupation; // 当前格子上的单位的ID
-        public BindableProperty<GridStatus> gridStatus = new BindableProperty<GridStatus>(); // 格子状态
+        public BindableProperty<GridStatusEnum> gridStatus = new BindableProperty<GridStatusEnum>(); // 格子状态
         
         // components
         private SpriteRenderer srFloor; // 地形图片
@@ -36,7 +36,7 @@ namespace Game
         private void Start()
         {
             srFloor = transform.Find("Root/SpriteFloor").GetComponent<SpriteRenderer>();
-            gridStatus.Value = GridStatus.Unoccupied;
+            gridStatus.Value = GridStatusEnum.Unoccupied;
             
             // 注册属性改变时会触发的方法
             terrain.RegisterWithInitValue(terr => OnTerrainChanged(terr));

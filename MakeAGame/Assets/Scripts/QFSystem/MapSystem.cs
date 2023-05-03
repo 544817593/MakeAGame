@@ -147,8 +147,8 @@ namespace Game
         {
             if (boxgrid.terrain.Value == (int)TerrainEnum.Invalid) return false;
             if (boxgrid.terrain.Value == (int)TerrainEnum.Wall) return false;
-            if (boxgrid.gridStatus.Value == GridStatus.AllyPiece) return false;
-            if (boxgrid.gridStatus.Value == GridStatus.MonsterPiece) return false;
+            if (boxgrid.gridStatus.Value == GridStatusEnum.AllyPiece) return false;
+            if (boxgrid.gridStatus.Value == GridStatusEnum.MonsterPiece) return false;
 
             return true;
         }

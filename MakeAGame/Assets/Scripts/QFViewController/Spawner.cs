@@ -58,7 +58,7 @@ namespace Game
                 ("Assets/Resources/ScriptableObjects/Monsters/" + data.name + ".asset");
             piece.transform.Find("image").GetComponent<SpriteRenderer>().sprite = monster.data.monsterSprite;
             InitialiseMonsterValues(monster, data);
-            grid[data.row, data.col].gridStatus.Value = GridStatus.MonsterPiece;
+            grid[data.row, data.col].gridStatus.Value = GridStatusEnum.MonsterPiece;
             this.GetSystem<ISpawnSystem>().GetMonsterList().Add(piece.GetComponent<Monster>());
         }
 

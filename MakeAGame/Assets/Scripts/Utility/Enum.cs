@@ -63,10 +63,21 @@ public enum RoomEnum
 /// <summary>
 /// 格子的状态
 /// </summary>
-public enum GridStatus
+public enum GridStatusEnum
 {
     Unoccupied, // 没有被占用
     AllyPiece, // 友方棋子
     MonsterPiece, // 怪物棋子
     Interactable // 可交互物
+}
+
+/// <summary>
+/// 道具类型
+/// </summary>
+public enum ItemTypeEnum
+{
+    Enhancement, // 卡牌强化道具
+    Coin, // 金币
+    Potion, // 药剂
+    Utility // 功能性道具
 }

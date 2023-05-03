@@ -15,6 +15,7 @@ namespace Game
             RegisterSystem<IGridGeneratorSystem>(new GridGeneratorSystem());
             RegisterSystem<ISpawnSystem>(new SpawnSystem());
             RegisterSystem<IMovementSystem>(new MovementSystem());
+            RegisterSystem<IInventorySystem>(new InventorySystem());
 
             RegisterUtility<ICSVImportUtility>(new CSVImportUtility());
 
