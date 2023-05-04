@@ -13,10 +13,13 @@ namespace Game
             // 注册各模块
             RegisterSystem<IMapSystem>(new MapSystem());
             RegisterSystem<IGridGeneratorSystem>(new GridGeneratorSystem());
+            RegisterSystem<IMapSelectSystem>(new MapSelectSystem());
+            RegisterSystem<IHandCardSystem>(new HandCardSystem());
+            RegisterSystem<ICardGeneratorSystem>(new CardGeneratorSystem());
             RegisterSystem<ISpawnSystem>(new SpawnSystem());
             RegisterSystem<IMovementSystem>(new MovementSystem());
             RegisterSystem<IInventorySystem>(new InventorySystem());
-
+            RegisterSystem<IRoomSelectorSystem>(new RoomSelectorSystem());
             RegisterUtility<ICSVImportUtility>(new CSVImportUtility());
 
             
