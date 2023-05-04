@@ -47,3 +47,6 @@ TagManager:
   - name: Game
     uniqueID: 1152440149
     locked: 0
+  - name: Hint
+    uniqueID: 1326150115
+    locked: 0
