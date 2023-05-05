@@ -7,7 +7,7 @@ namespace Game
     public interface IHandCardSystem : ISystem
     {
         int maxCardCount { get; } // 最大手牌数
-        List<ViewCard> handCardList { get; }    // 手牌列表
+        List<Card> handCardList { get; }    // 手牌列表
         
         UIHandCard ui { set; }
         
@@ -17,7 +17,7 @@ namespace Game
     
     public class HandCardSystem: AbstractSystem, IHandCardSystem
     {
-        public List<ViewCard> handCardList { get; } = new List<ViewCard>(); // 手牌列表
+        public List<Card> handCardList { get; } = new List<Card>(); // 手牌列表
         public int maxCardCount { get; } = 7;
         
         public UIHandCard ui {private get; set; }   // 对应UI
@@ -50,7 +50,7 @@ namespace Game
             
             // 卡牌实例化，挂载组件，部分初始化
             GameObject cardGO = this.GetSystem<ICardGeneratorSystem>().CreateCard(cardID);
-            var viewCard = cardGO.AddComponent<ViewCard>();
+            var viewCard = cardGO.AddComponent<Card>();
             cardGO.transform.SetParent(ui.CardRoot);
 
             // 数值变化

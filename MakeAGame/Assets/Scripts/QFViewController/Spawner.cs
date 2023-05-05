@@ -37,6 +37,22 @@ namespace Game
                 StartCoroutine(OnConstantSpawnMonsterEvent(data)); 
             })
                 .UnRegisterWhenGameObjectDestroyed(gameObject);
+
+            // 监听创建卡牌事件
+            this.RegisterEvent<SpawnCardEvent>(cardId =>
+            {
+                GameObject cardItem = OnSpawnCardEvent();
+                return cardItem;
+            }).UnRegisterWhenGameObjectDestroyed(gameObject);
+        }
+
+        /// <summary>
+        /// 收到卡牌生成事件后处理
+        /// </summary>
+        /// <exception cref="NotImplementedException"></exception>
+        private GameObject OnSpawnCardEvent()
+        {
+            throw new NotImplementedException();
         }
 
 

@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using static UnityEditor.PlayerSettings;
+using static UnityEditor.Timeline.Actions.MenuPriority;
 
 namespace Game
 {
@@ -25,6 +26,12 @@ namespace Game
         void SpawnDoor(int row, int col);
 
         /// <summary>
+        /// 生成一张卡牌
+        /// </summary>
+        /// <param name="info">卡牌基础SO信息</param>
+        GameObject SpawnCard(SOCharacterInfo info);
+
+        /// <summary>
         /// 在区域内随机生成怪物，持续一段时间
         /// </summary>
         /// <param name="settings">该地图的初始怪物生成SO数据</param>
@@ -42,8 +49,16 @@ namespace Game
         /// </summary>
         void IncrementPieceIdCounter();
 
+        /// <summary>
+        /// 返回怪物列表
+        /// </summary>
+        /// <returns></returns>
         List<Monster> GetMonsterList();
 
+        /// <summary>
+        /// 返回友军棋子列表
+        /// </summary>
+        /// <returns></returns>
         List<TempAllyScript> GetAllyList();
 
 
@@ -117,6 +132,13 @@ namespace Game
         {
             return allyList;
         }
+
+        public GameObject SpawnCard(int cardId)
+        {
+            var spawnCardEvent = new SpawnCardEvent { cardId = cardId };
+            GameObject cardItem = this.SendEvent(spawnCardEvent);
+            return cardItem;
+        }
     }
 
     /// <summary>
@@ -140,5 +162,13 @@ namespace Game
         public int duration;
         public int cooldown;
         public string name;
+    }
+
+    /// <summary>
+    /// 由SpawnSystem发出的生成卡牌事件
+    /// </summary>
+    public struct SpawnCardEvent
+    {
+        public int cardId;
     }
 }

@@ -9,7 +9,7 @@ using UnityEngine.UI;
 
 namespace Game
 {
-    public class ViewCard: MonoBehaviour, IController
+    public class Card: MonoBehaviour, IController
     {
         public SOCharacterInfo characterInfo;
         

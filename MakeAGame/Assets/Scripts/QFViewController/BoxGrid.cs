@@ -64,7 +64,7 @@ namespace Game
         private void OnTerrainChanged(int terr)
         {
             // 改变地形图片
-            if (terr == (int) TerrainEnum.Empty)
+            if (terr == (int) TerrainEnum.Invalid)
             {
                 Color tmpColor = srFloor.color;
                 tmpColor.a = 0f;

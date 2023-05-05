@@ -7,7 +7,7 @@ namespace InventoryQuickslotUI
 {
 	public class UIInventoryQuickSlotData : UIPanelData
 	{
-		public InventorySystem inventory = GameEntry.Interface.GetSystem<InventorySystem>();
+		public IInventorySystem inventory = GameEntry.Interface.GetSystem<IInventorySystem>();
 
 
 	}
@@ -42,14 +42,15 @@ namespace InventoryQuickslotUI
 		{
 			int x = 0;
 			int y = 0;
-			float itemSlotCellSize = 30f;
-			Debug.LogWarning(mData.inventory);
+			float itemSlotCellSize = -120f;
 			foreach (Item item in mData.inventory.GetItemList())
 			{
 				RectTransform itemSlotRectTransform = Instantiate(itemSlotTemplate, itemSlotContainer)
 					.GetComponent<RectTransform>();
 				itemSlotRectTransform.gameObject.SetActive(true);
 				itemSlotRectTransform.anchoredPosition = new Vector2(x * itemSlotCellSize, y * itemSlotCellSize);
+				Image image = itemSlotRectTransform.Find("Image").GetComponent<Image>();
+				image.sprite = item.data.sprite;
 				y++;
 			}
 		}

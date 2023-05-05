@@ -2,10 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Item
+public class Item : MonoBehaviour
 {
-    public SOItemBase data;
-    public ItemTypeEnum itemType;
-    public string name;
+    public SOItemBase data; // 物品数据
     public int amount;
+
 }

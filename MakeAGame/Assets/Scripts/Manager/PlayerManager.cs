@@ -44,6 +44,6 @@ public class PlayerManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        UIKit.GetPanel("UIInventoryQuickSlot").Invoke("RefreshInventoryItems", 0f);
+       
     }
 }
