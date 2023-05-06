@@ -14,7 +14,7 @@ namespace Game
         // 卡牌数据
         public Card card;
 
-        private Action<int> OnShowTooltip;
+        private Action<SOFeature> OnShowTooltip;
 
         private void Start()
         {
@@ -124,7 +124,8 @@ namespace Game
                     // Debug.Log($"mouse in feature with tooltipTrans active: {tooltipTrans.gameObject.activeSelf}");
                     if (!tooltipTrans.gameObject.activeSelf)
                     {
-                        OnShowTooltip.Invoke(featureTouchArea.IndexOf(ret.gameObject));
+                        int index = featureTouchArea.IndexOf(ret.gameObject);
+                        OnShowTooltip.Invoke(card.features[index]);
                         tooltipTrans.gameObject.SetActive(true);
                     }
                     return;

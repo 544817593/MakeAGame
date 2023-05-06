@@ -210,11 +210,9 @@ namespace Game
 			}
 		}
 
-		public void UpdateTooltip(int featureID)
+		public void UpdateTooltip(SOFeature so)
 		{
-			Debug.Log($"handcard ui show feature {featureID}");
-
-			tmpTooltip.text = $"这是一段关于特性的介绍，test id = {featureID}";
+			tmpTooltip.text = so.featureName + "\n" + so.featureDesc;
 		}
 
 		private void OnAnimEvent(string eventName)
