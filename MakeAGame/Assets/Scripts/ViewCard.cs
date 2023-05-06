@@ -9,48 +9,27 @@ using UnityEngine.UI;
 
 namespace Game
 {
-    public class ViewCard: MonoBehaviour, IController
+    public partial class ViewCard: MonoBehaviour, IController
     {
-        public SOCharacterInfo characterInfo;
-        
-        public Transform nodeFeature;   // feature根结点
-        public List<GameObject> featureTouchArea = new List<GameObject>();   // feature UI响应区域
-        public GameObject touchArea;    // UI响应区域
-        public Canvas canvas;   // 用于调整层级
-        public CanvasGroup canvasGroup; // 用于调整透明度
-        public Transform tooltipTrans;
-        
-        public int handCardIndexTest;   // 在手牌中的顺序
+        // 卡牌数据
+        public Card card;
 
         private Action<int> OnShowTooltip;
 
         private void Start()
         {
-            touchArea = transform.Find("Root/UIEventArea").gameObject;
+            gameObject.AddComponent<GraphicRaycaster>();    // 这个必须放在canvas绑定前面，因为它会连带创建canvas
+            
+            InitBind(); // 绑定各组件
+            
             var uiHelper = touchArea.AddComponent<UIEventHelper>();
-            gameObject.AddComponent<GraphicRaycaster>();
-            canvas = gameObject.GetComponent<Canvas>();
+            
             canvas.overrideSorting = true;
             canvas.sortingOrder = 100;
-            canvasGroup = gameObject.GetComponent<CanvasGroup>();
 
             var uiHandCard = UIKit.GetPanel<UIHandCard>();
-
-            // todo 二级浮窗好像并不好写，暂时搁置
-            #region feature二级浮窗
-
-            nodeFeature = transform.Find("Root/NodeFeature");
-            for (int i = 0; i < 3; i++)
-            {
-                var tmpTrans = nodeFeature.GetChild(i).gameObject;
-                featureTouchArea.Add(tmpTrans);
-            }
-
-            tooltipTrans = transform.Find("Root/TooltipPos");
             OnShowTooltip = uiHandCard.UpdateTooltip;
 
-            #endregion
-            
             uiHelper.OnUIPointEnter += OnFocus;
             uiHelper.OnUIPointEnter += () => uiHandCard.OnFocusCard(this);
             uiHelper.OnUIPointExit += OnUnfocus;
@@ -63,8 +42,28 @@ namespace Game
             // uiHelper.OnUIDrag += uiHandCard.OnDragCard;  // todo 看拖拽手牌时手牌ui是否需要响应
             transform.localScale = new Vector3(UIHandCard.normalScale, UIHandCard.normalScale, 1f);
             
-            // todo test
-            characterInfo = Resources.Load<SOCharacterInfo>("ScriptableObjects/Characters/SOCharacterInfo_1");
+            InitView();
+        }
+
+        public void InitView()
+        {
+            imgRarity.sprite = Extensions.GetRaritySprite(card.rarity);
+            imgCharacter.sprite = card.cardSprite;
+            tmpSanCost.text = card.sanCost.ToString();
+            tmpHP.text = card.hp.ToString();
+            tmpMoveSpd.text = card.moveSpd.ToString();
+            tmpDamage.text = card.damage.ToString();
+            tmpDefend.text = card.defend.ToString();
+            tmpName.text = card.charaName;
+            tmpDesc.text = card.deathFuncDesc;
+            for(int i = 0; i < card.features.Length; i++)
+            {
+                featureTouchArea[i].GetComponent<Image>().sprite = card.features[i].icon;
+            }
+            for (int i = card.features.Length; i < 3; i++)
+            {
+                featureTouchArea[i].gameObject.SetActive(false);
+            }
         }
 
         private List<Action> OnUpdate = new List<Action>();

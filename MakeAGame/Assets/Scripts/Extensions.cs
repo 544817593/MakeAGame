@@ -32,5 +32,16 @@ namespace Game
                 }
             }
         }
+
+        /// <summary>
+        /// 获取稀有度宝石图片
+        /// </summary>
+        /// <param name="rarity"></param>
+        /// <returns></returns>
+        public static Sprite GetRaritySprite(int rarity)
+        {
+            Sprite sp = Resources.Load<Sprite>($"Sprites/Card/Card_Rarity_{rarity}");
+            return sp;
+        }
     }
 }

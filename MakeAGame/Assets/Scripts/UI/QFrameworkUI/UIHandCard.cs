@@ -58,7 +58,7 @@ namespace Game
 
 			ButtonAddCardTest.onClick.AddListener(() =>
 			{
-				GameEntry.Interface.SendCommand<AddHandCardCommand>(new AddHandCardCommand(0));
+				GameEntry.Interface.SendCommand<AddHandCardCommand>(new AddHandCardCommand(new Card(1)));
 			});
 			ButtonSubCardTest.onClick.AddListener(() =>
 			{
@@ -81,7 +81,7 @@ namespace Game
 
 		public void AddCard(int index)
 		{
-			Debug.Log($"handcard ui add card {index}");
+			Debug.Log($"handcard ui add card index {index}");
 
 			viewCardsList[index].transform.localScale = new Vector3(normalScale, normalScale, 1f);
 
