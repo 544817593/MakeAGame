@@ -17,14 +17,14 @@ MonoBehaviour:
   rarity: 4
   sanCost: 90
   deathFuncDescription: "\u5728\u5F53\u524D\u4F4D\u7F6E\u653E\u7F6E\u4E00\u4E2A\u4E0D\u53EF\u6467\u6BC1\u7684\u969C\u788D\u7269\uFF0C\u83B7\u5F97\u4E00\u5F20\u5F17\u6717\u897F\u65AF\u3002"
-  cardSprite: {fileID: 0}
+  cardSprite: {fileID: 21300000, guid: 2da1960b576f6e34980355df6f66065a, type: 3}
   hp: 60
   attack: 5
   moveSpd: 4
   defend: 2
   features:
   - {fileID: 11400000, guid: 6b484ae509583457884cddc004ecc52b, type: 2}
-  specialFeature: 0
+  specialFeature: {fileID: 0}
   pieceSprite: {fileID: 0}
   width: 1
   height: 1

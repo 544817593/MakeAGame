@@ -8,5 +8,6 @@ namespace Game
         public int featureID;
         public string featureName;
         public string featureDesc;
+        public Sprite icon;
     }
 }
