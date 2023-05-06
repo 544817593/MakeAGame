@@ -136,7 +136,7 @@ namespace Game
 		{
 			isDragging = true;
 			// mouseImg = (GameObject) Instantiate(Resources.Load("Prefabs/Piece"));
-			mouseImg = transform.Find("Root/PieceIcon");
+			mouseImg = transform.Find("PieceIcon");
 			anim.Play("Down", -1, 0);
 			// transform.DOLocalMoveY(-60, 0.5f);
 		}
@@ -149,12 +149,11 @@ namespace Game
 			{
 				if (mouseImg != null)
 				{
-					// var pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 					var pos = Input.mousePosition;
-					// pos = new Vector3(pos.x, pos.y, 0);
-					Debug.Log($"mouse pos: {pos}");
-					// pos = new Vector3(pos.x-Screen.width/2f,pos.y-Screen.height/2f);
+					// Debug.Log($"mouse pos: {pos} screen width: {Screen.width} height: {Screen.height}");
+					pos -= new Vector3(Screen.width / 2f, Screen.height / 2f, 0f);
 					mouseImg.localPosition = pos;
+					// Debug.Log($"mouseImg localpos: {mouseImg.localPosition} pos: {mouseImg.position}");
 				}
 			}
 		}
