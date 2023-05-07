@@ -55,7 +55,7 @@ public static class PackProbability
             }
 
             // 卡牌id对应到卡牌稀有度，匹配需要的稀有度跳出循环
-            if (IdToSO.FindCardSOByID(cardId).rarity == drawResult) break;
+            if (IdToSO.FindCardSOByID(cardId)?.rarity == drawResult) break;
 
             break;
         }

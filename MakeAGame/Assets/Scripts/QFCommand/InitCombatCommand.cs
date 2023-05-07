@@ -32,6 +32,7 @@ namespace Game
             // test
             UIKit.OpenPanel<UIHandCard>();
             UIKit.OpenPanel<UIInventoryQuickSlot>();
+            UIKit.OpenPanel<UIAbilityPanel>();
 
             // 怪物
             var spawnSystem = this.GetSystem<ISpawnSystem>();
