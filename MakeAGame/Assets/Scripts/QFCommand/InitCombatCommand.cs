@@ -31,9 +31,9 @@ namespace Game
             // test
             UIKit.OpenPanel<UIHandCard>();
 
-            // // 怪物
-            // var spawnSystem = this.GetSystem<ISpawnSystem>();
-            // spawnSystem.ConstantSpawnMonster(info.monsterSpawnSettings);
+            // 怪物
+            var spawnSystem = this.GetSystem<ISpawnSystem>();
+            spawnSystem.ConstantSpawnMonster(info.monsterSpawnSettings);
         }
     }
 }

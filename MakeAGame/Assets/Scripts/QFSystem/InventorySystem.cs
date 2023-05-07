@@ -29,36 +29,37 @@ namespace Game
 
     public class InventorySystem : AbstractSystem, IInventorySystem
     {
-        public BindableProperty<List<Item>> itemList; // 物品列表
+        public BindableProperty<List<Item>> itemList = new BindableProperty<List<Item>>(); // 物品列表
         public BindableProperty<List<Card>> cardList; // 卡牌列表
         public Transform inventoryRoot; // 生成的物品Prefab悬挂的父物体位置
 
         protected override void OnInit()
         {
-            itemList = new BindableProperty<List<Item>>(new List<Item>());
-            itemList.Register(newItemList => OnItemListChanged(newItemList));
+            itemList.SetValueWithoutEvent(new List<Item>());
+            itemList.Register((newItemList) => OnItemListChanged());
             inventoryRoot = GameObject.Find("InventoryRoot")?.transform;
 
             SOItemBase testItem = AssetDatabase.LoadAssetAtPath<SOItemBase>("Assets/Resources/ScriptableObjects/Items/ChaosPotion.asset");
             SOItemBase testItem2 = AssetDatabase.LoadAssetAtPath<SOItemBase>("Assets/Resources/ScriptableObjects/Items/ChaosPotion2.asset");
 
-            Debug.LogWarning(itemList.Value.Count);
             AddItem(new Item { amount = 1, data = testItem });
             AddItem(new Item { amount = 1, data = testItem2 });
-            Debug.LogWarning(itemList.Value.Count);
+            AddItem(new Item { amount = 1, data = testItem2 });
+
 
 
         }
 
-        private void OnItemListChanged(List<Item> newItemList)
+        private void OnItemListChanged()
         {
-            Debug.LogWarning("OnItemListChanged");
-            UIKit.GetPanel("UIInventoryQuickSlot").Invoke("RefreshInventoryItems", 0f);
+            UIKit.GetPanel("UIInventoryQuickSlot")?.Invoke("RefreshInventoryItems", 0f);
         }
 
         public void AddItem(Item item)
         {
-            itemList.Value.Add(item);
+            List<Item> newList = new List<Item>(itemList.Value);
+            newList.Add(item);
+            itemList.Value = newList;
         }
 
         public List<Item> GetItemList()

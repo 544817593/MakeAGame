@@ -68,24 +68,29 @@ public class MonsterMovement : MonoBehaviour, IController
         (int, int) original = monster.leftTopGridPos.Value; // 当前左上坐标
         (int, int) positionAfterMovement = monster.leftTopGridPos.Value; // 怪物移动后的坐标
 
-        // A star path finding
+        // A* 寻路
         List<BoxGrid> aStarPath = PathFinding.FindPath(original.Item1, original.Item2,
             monster.currentTarget.leftTopGridPos.Item1, monster.currentTarget.leftTopGridPos.Item2, monster);
 
-        // A path to the target exists
+        // 路径存在
         if (aStarPath != null)
         {
-            // Show the movement path in scene window
+            // 场景显示路线
             Color randColor = UnityEngine.Random.ColorHSV();
             for (int i = 0; i < aStarPath.Count - 1; i++)
             {
                 Debug.DrawLine(aStarPath[i].transform.position - new Vector3(0, 0, 0.3f), aStarPath[i + 1].transform.position - new Vector3(0, 0, 0.3f), randColor, 3f);
             }
 
-            // Set movement direction
+            // 设置移动方向
             monster.currentDir = movementSystem.NeighbourBoxGridsToDir(this.GetSystem<IMapSystem>().Grids()
                 [monster.leftTopGridPos.Value.Item1, monster.leftTopGridPos.Value.Item2], aStarPath[1]);
         }
+    }
+
+    public void DoMove()
+    {
+
     }
 }
 
