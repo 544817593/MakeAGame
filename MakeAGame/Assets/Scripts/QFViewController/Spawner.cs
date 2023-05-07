@@ -39,10 +39,9 @@ namespace Game
                 .UnRegisterWhenGameObjectDestroyed(gameObject);
 
             // 监听创建卡牌事件
-            this.RegisterEvent<SpawnCardEvent>(cardId =>
+            this.RegisterEvent<SpawnCardEvent>(data =>
             {
-                GameObject cardItem = OnSpawnCardEvent();
-                return cardItem;
+                OnSpawnCardEvent();
             }).UnRegisterWhenGameObjectDestroyed(gameObject);
         }
 
@@ -50,11 +49,11 @@ namespace Game
         /// 收到卡牌生成事件后处理
         /// </summary>
         /// <exception cref="NotImplementedException"></exception>
-        private GameObject OnSpawnCardEvent()
+        private void OnSpawnCardEvent()
         {
-            throw new NotImplementedException();
+            GameObject cardItem = (GameObject)Instantiate(Resources.Load("Prefabs/CardItem"));
+            this.GetSystem<ISpawnSystem>().SetLastSpawnedCard(cardItem);
         }
-
 
         /// <summary>
         /// 收到怪物生成事件后处理

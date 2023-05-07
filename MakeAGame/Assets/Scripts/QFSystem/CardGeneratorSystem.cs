@@ -16,7 +16,7 @@ namespace Game
 
         protected override void OnInit()
         {
-            mCardPrefab = (GameObject) Resources.Load("Prefabs/CardItemNew");
+            mCardPrefab = (GameObject) Resources.Load("Prefabs/CardItem");
         }
 
         public GameObject CreateCard(int cardID)

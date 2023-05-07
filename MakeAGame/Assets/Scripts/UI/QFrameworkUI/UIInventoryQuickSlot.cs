@@ -40,6 +40,13 @@ namespace InventoryQuickslotUI
 
 		private void RefreshInventoryItems()
 		{
+			Debug.LogWarning("RefeshInventoryCalled, items in inventory =  " + mData.inventory.GetItemList().Count);
+			foreach (Transform child in itemSlotContainer)
+			{
+				if (child == itemSlotTemplate) continue;
+				Destroy(child.gameObject);
+			}
+
 			int x = 0;
 			int y = 0;
 			float itemSlotCellSize = -120f;

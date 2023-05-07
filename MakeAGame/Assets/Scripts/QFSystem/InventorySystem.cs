@@ -54,7 +54,6 @@ namespace Game
 
         public void AddItem(Item item)
         {
-            Debug.LogError(GetItemList());
             itemList.Value.Add(item);
         }
 
@@ -70,7 +69,8 @@ namespace Game
         {
             GameObject cardItem;
             ISpawnSystem spawnSystem = this.GetSystem<ISpawnSystem>();
-            cardItem = spawnSystem.SpawnCard(cardId);
+            spawnSystem.SpawnCard(cardId);
+            cardItem = spawnSystem.GetLastSpawnedCard();
             var cardBase = cardItem.GetComponent<Card>();
             cardList.Value.Add(cardBase);
         }

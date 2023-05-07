@@ -28,8 +28,8 @@ namespace Game
         /// <summary>
         /// 生成一张卡牌
         /// </summary>
-        /// <param name="info">卡牌基础SO信息</param>
-        GameObject SpawnCard(SOCharacterInfo info);
+        /// <param name="cardId">卡牌id</param>
+        void SpawnCard(int cardId);
 
         /// <summary>
         /// 在区域内随机生成怪物，持续一段时间
@@ -61,6 +61,18 @@ namespace Game
         /// <returns></returns>
         List<TempAllyScript> GetAllyList();
 
+        /// <summary>
+        /// 返还上一个被Spawner生成的卡牌
+        /// </summary>
+        /// <returns>上一个被Spawner生成的卡牌</returns>
+        GameObject GetLastSpawnedCard();
+
+        /// <summary>
+        /// 输入上一个由Spawner生成的卡牌
+        /// <param name="card">卡牌Gameobject</param>>
+        /// </summary>
+        void SetLastSpawnedCard(GameObject card);
+
 
     }
 
@@ -74,6 +86,9 @@ namespace Game
         private List<Monster> monsterList = new List<Monster>();
         private List<TempAllyScript> allyList = new List<TempAllyScript>();
         // interactableList待添加
+
+        // 上一个生成的卡牌
+        public GameObject lastSpawnedCard;
 
         protected override void OnInit()
         {
@@ -133,11 +148,20 @@ namespace Game
             return allyList;
         }
 
-        public GameObject SpawnCard(int cardId)
+        public void SpawnCard(int cardId)
         {
             var spawnCardEvent = new SpawnCardEvent { cardId = cardId };
-            GameObject cardItem = this.SendEvent(spawnCardEvent);
-            return cardItem;
+            this.SendEvent(spawnCardEvent);
+        }
+
+        public GameObject GetLastSpawnedCard()
+        {
+            return lastSpawnedCard;
+        }
+
+        public void SetLastSpawnedCard(GameObject card)
+        {
+            lastSpawnedCard = card;
         }
     }
 

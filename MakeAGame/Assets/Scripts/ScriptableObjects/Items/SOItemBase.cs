@@ -5,7 +5,7 @@ using UnityEngine;
 public class SOItemBase : ScriptableObject
 {
     public ItemTypeEnum itemType;
-    public string name;
+    public string itemName;
     public Sprite sprite;
 
 }
