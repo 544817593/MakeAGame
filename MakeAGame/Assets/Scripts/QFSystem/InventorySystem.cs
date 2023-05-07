@@ -37,18 +37,22 @@ namespace Game
         {
             itemList = new BindableProperty<List<Item>>(new List<Item>());
             itemList.Register(newItemList => OnItemListChanged(newItemList));
-            inventoryRoot = GameObject.Find("InventoryRoot").transform;
+            inventoryRoot = GameObject.Find("InventoryRoot")?.transform;
 
             SOItemBase testItem = AssetDatabase.LoadAssetAtPath<SOItemBase>("Assets/Resources/ScriptableObjects/Items/ChaosPotion.asset");
             SOItemBase testItem2 = AssetDatabase.LoadAssetAtPath<SOItemBase>("Assets/Resources/ScriptableObjects/Items/ChaosPotion2.asset");
 
+            Debug.LogWarning(itemList.Value.Count);
             AddItem(new Item { amount = 1, data = testItem });
             AddItem(new Item { amount = 1, data = testItem2 });
+            Debug.LogWarning(itemList.Value.Count);
+
 
         }
 
         private void OnItemListChanged(List<Item> newItemList)
         {
+            Debug.LogWarning("OnItemListChanged");
             UIKit.GetPanel("UIInventoryQuickSlot").Invoke("RefreshInventoryItems", 0f);
         }
 

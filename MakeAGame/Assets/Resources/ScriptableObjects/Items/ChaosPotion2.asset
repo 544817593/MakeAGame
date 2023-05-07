@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: ChaosPotion2
   m_EditorClassIdentifier: 
   itemType: 2
-  name: ChaosPotion
+  itemName: ChaosPotion2
   sprite: {fileID: 21300000, guid: 1af649d8c2562af43889fedd1d42c8a7, type: 3}
