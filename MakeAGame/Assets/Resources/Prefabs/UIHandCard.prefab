@@ -711,6 +711,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e06c3574049144c189bd50153051cb37, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  PieceIcon: {fileID: 8176015989453210200}
+  ImgPieceIcon: {fileID: 2978300338963501785}
   CardRoot: {fileID: 4470555726722604846}
   ButtonAddCardTest: {fileID: 6449066823573359664}
   ButtonOpenAnim: {fileID: 5059342389991640917}
@@ -2716,11 +2718,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5080239066870553527, guid: b70383eef707f472792e849ee97f3b36, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 960
       objectReference: {fileID: 0}
     - target: {fileID: 5080239066870553527, guid: b70383eef707f472792e849ee97f3b36, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: 540
       objectReference: {fileID: 0}
     - target: {fileID: 5080239066870553527, guid: b70383eef707f472792e849ee97f3b36, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -2740,6 +2742,59 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b70383eef707f472792e849ee97f3b36, type: 3}
+--- !u!1 &1874155496733051662 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3311834318803489505, guid: b70383eef707f472792e849ee97f3b36, type: 3}
+  m_PrefabInstance: {fileID: 4032878609871165935}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2477151287689212664
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1874155496733051662}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d51f3a7c41ab0346b49ae50d456bece, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MarkType: 0
+  CustomComponentName: ImgPieceIcon
+  CustomComment: "\u8DDF\u968F\u9F20\u6807\u79FB\u52A8\u7684\u68CB\u5B50\u56FE\u6807\u56FE\u7247"
+  mComponentName: UnityEngine.UI.Image
+--- !u!114 &2978300338963501785 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2207509124864543542, guid: b70383eef707f472792e849ee97f3b36, type: 3}
+  m_PrefabInstance: {fileID: 4032878609871165935}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1874155496733051662}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!1 &7723897261867476880 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6685420029164224127, guid: b70383eef707f472792e849ee97f3b36, type: 3}
+  m_PrefabInstance: {fileID: 4032878609871165935}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &8964492412365424386
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7723897261867476880}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d51f3a7c41ab0346b49ae50d456bece, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MarkType: 0
+  CustomComponentName: PieceIcon
+  CustomComment: "\u8DDF\u968F\u9F20\u6807\u79FB\u52A8\u7684\u68CB\u5B50\u56FE\u6807"
+  mComponentName: RectTransform
 --- !u!224 &8176015989453210200 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 5080239066870553527, guid: b70383eef707f472792e849ee97f3b36, type: 3}

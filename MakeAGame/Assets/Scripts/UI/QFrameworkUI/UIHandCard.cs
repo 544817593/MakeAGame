@@ -41,6 +41,8 @@ namespace Game
 			nodeTooltip.gameObject.SetActive(false);
 			tmpTooltip = nodeTooltip.GetChild(0).GetComponent<TextMeshProUGUI>();
 			
+			PieceIcon.gameObject.SetActive(false);
+			
 			anim = GetComponent<Animator>();
 			foreach (Transform cardPos in CardRoot)
 			{
@@ -132,36 +134,34 @@ namespace Game
 			UpdateLayout();
 		}
 
-		public void OnDragCardStart()
+		public void OnDragCardStart(ViewCard viewCard)
 		{
 			isDragging = true;
-			// mouseImg = (GameObject) Instantiate(Resources.Load("Prefabs/Piece"));
-			mouseImg = transform.Find("PieceIcon");
+			
+			ImgPieceIcon.sprite = viewCard.card.pieceSprite;
+			ImgPieceIcon.SetNativeSize();	// 恢复原大小
+			PieceIcon.gameObject.SetActive(true);
 			anim.Play("Down", -1, 0);
-			// transform.DOLocalMoveY(-60, 0.5f);
 		}
-
-		private Transform mouseImg;
+		
 		private void Update()
 		{
 			// todo 优化 不要在update里写if
 			if (isDragging)
 			{
-				if (mouseImg != null)
-				{
-					var pos = Input.mousePosition;
+				var pos = Input.mousePosition;
 					// Debug.Log($"mouse pos: {pos} screen width: {Screen.width} height: {Screen.height}");
 					pos -= new Vector3(Screen.width / 2f, Screen.height / 2f, 0f);
-					mouseImg.localPosition = pos;
+					PieceIcon.localPosition = pos;
 					// Debug.Log($"mouseImg localpos: {mouseImg.localPosition} pos: {mouseImg.position}");
-				}
 			}
 		}
 
 		public void OnDragCardEnd()
 		{
 			isDragging = false;
-			// transform.DOLocalMoveY(160, 0.5f);
+			
+			PieceIcon.gameObject.SetActive(false);
 			anim.Play("Up", -1, 0);
 			UpdateLayout();
 		}

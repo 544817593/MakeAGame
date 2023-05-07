@@ -35,7 +35,7 @@ namespace Game
             uiHelper.OnUIPointExit += OnUnfocus;
             uiHelper.OnUIPointExit += uiHandCard.OnUnfocusCard;
             uiHelper.OnUIBeginDrag += OnDragStart;
-            uiHelper.OnUIBeginDrag += uiHandCard.OnDragCardStart;
+            uiHelper.OnUIBeginDrag += () => uiHandCard.OnDragCardStart(this);
             uiHelper.OnUIDrag = OnDrag;
             uiHelper.OnUIEndDrag += uiHandCard.OnDragCardEnd;
             uiHelper.OnUIEndDrag += OnDragEnd;

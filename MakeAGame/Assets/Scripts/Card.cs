@@ -17,6 +17,7 @@ namespace Game
         public string charaName => so.characterName;
         public string deathFuncDesc => so.deathFuncDescription;
         public Sprite cardSprite => so.cardSprite;
+        public Sprite pieceSprite => so.pieceSprite;
         public SOFeature[] features => so.features;
         public SOFeature specialFeature => so.specialFeature;
 
