@@ -1,4 +1,5 @@
-﻿using QFramework;
+﻿using InventoryQuickslotUI;
+using QFramework;
 using UnityEngine;
 
 namespace Game
@@ -30,6 +31,7 @@ namespace Game
 
             // test
             UIKit.OpenPanel<UIHandCard>();
+            UIKit.OpenPanel<UIInventoryQuickSlot>();
 
             // 怪物
             var spawnSystem = this.GetSystem<ISpawnSystem>();

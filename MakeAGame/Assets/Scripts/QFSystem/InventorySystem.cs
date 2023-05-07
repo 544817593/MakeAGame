@@ -64,9 +64,6 @@ namespace Game
 
         public List<Item> GetItemList()
         {
-            Debug.LogWarning("itemList is null: " + (itemList == null));
-            Debug.LogWarning("itemList value is null: " + (itemList.Value == null));
-
             return itemList;
         }
 

@@ -54,12 +54,14 @@ public static class PackProbability
                 cardId = number + 1 + numCardsInPack[cardPack];
             }
 
-            // 卡牌id对应到卡牌稀有度，匹配需要的稀有度跳出循环；TODO
-            // if (GameManager.Instance.cardMan.cardBook[cardId].rarity == drawResult) break;
+            // 卡牌id对应到卡牌稀有度，匹配需要的稀有度跳出循环
+            if (IdToSO.FindCardSOByID(cardId).rarity == drawResult) break;
+
             break;
         }
 
         return cardId;
     }
+
 
 }

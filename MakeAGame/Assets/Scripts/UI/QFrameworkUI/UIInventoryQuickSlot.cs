@@ -24,6 +24,7 @@ namespace InventoryQuickslotUI
 		
 		protected override void OnOpen(IUIData uiData = null)
 		{
+			RefreshInventoryItems();
 		}
 		
 		protected override void OnShow()
@@ -40,7 +41,6 @@ namespace InventoryQuickslotUI
 
 		private void RefreshInventoryItems()
 		{
-			Debug.LogWarning("RefeshInventoryCalled, items in inventory =  " + mData.inventory.GetItemList().Count);
 			foreach (Transform child in itemSlotContainer)
 			{
 				if (child == itemSlotTemplate) continue;
