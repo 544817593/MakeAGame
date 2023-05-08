@@ -22,7 +22,7 @@ namespace Game
 		
 		private Animator anim;
 
-		private List<ViewCard> viewCardsList;	// 手牌列表
+		private List<Card> viewCardsList;	// 手牌列表
 		private List<Transform> cardPosList = new List<Transform>();	// 手牌默认位置列表
 
 		private int focusIndex;	// 鼠标选中卡牌在列表中序号
@@ -97,7 +97,7 @@ namespace Game
 			UpdateLayout();
 		}
 
-		public void OnFocusCard(ViewCard viewCard)
+		public void OnFocusCard(Card viewCard)
 		{
 			if (isDragging) return;
 			

@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5773826170004417572}
   - component: {fileID: 2394128902760647689}
+  - component: {fileID: 235048473126228869}
   m_Layer: 0
   m_Name: EnemyPiece
   m_TagString: Untagged
@@ -44,6 +45,24 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 64239551903bc324b8f93aca7098468c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  data: {fileID: 0}
+  rarity: 0
+  monsterId: 0
+  pieceId: 0
+  currentTarget: {fileID: 0}
+  currentDir: 8
+--- !u!114 &235048473126228869
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5717980845046619291}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f52f77ef425a6974087bc8e99f39a7fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &6788082671666119857

@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0432a95699a342929361599b7939f299, type: 3}
+  m_Name: FrancisWaylandThurston
+  m_EditorClassIdentifier: 
+  characterID: 1
+  characterName: Francis Wayland Thurston
+  rarity: 4
+  sanCost: 90
+  deathFuncDescription: "\u5728\u5F53\u524D\u4F4D\u7F6E\u653E\u7F6E\u4E00\u4E2A\u4E0D\u53EF\u6467\u6BC1\u7684\u969C\u788D\u7269\uFF0C\u83B7\u5F97\u4E00\u5F20\u5F17\u6717\u897F\u65AF\u3002"
+  cardSprite: {fileID: 21300000, guid: 2da1960b576f6e34980355df6f66065a, type: 3}
+  hp: 60
+  attack: 5
+  moveSpd: 4
+  defend: 2
+  features:
+  - {fileID: 11400000, guid: 6b484ae509583457884cddc004ecc52b, type: 2}
+  specialFeature: {fileID: 0}
+  pieceSprite: {fileID: 21300000, guid: 99a4ff1fa42eace4cbb688c5eb28fa19, type: 3}
+  width: 1
+  height: 1
+  moveDirections: 
+  attackSpd: 0.8
+  accracy: 0.9
+  attackRange: 1

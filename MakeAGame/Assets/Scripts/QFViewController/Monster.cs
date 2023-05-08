@@ -17,6 +17,7 @@ public class Monster : MonoBehaviour, IController
     public int rarity; // 稀有度 0 白 -- 4 橙
     public int monsterId; // 怪物的ID，辨认品种
     public int pieceId; // 棋子ID，每个棋子独一份
+    public (int, int) pieceSize; // 怪物尺寸
 
     public BindableProperty<float> moveSpeed; // 移动速度
     public BindableProperty<float> hp; // 当前生命值
@@ -27,11 +28,16 @@ public class Monster : MonoBehaviour, IController
     public BindableProperty<float> accuracy; // 命中率
     public BindableProperty<int> atkRange; // 射程
     public BindableProperty<List<PropertyEnum>> properties; // 特性
+    public BindableProperty<List<DirEnum>> dirs; // 特性
     public BindableProperty<bool> inCombat; // 是否在战斗中
     public BindableProperty<bool> isAttacking; // 是否在发起攻击
     public BindableProperty<bool> isDying; // 是否正在死亡中                         
     public BindableProperty<(int, int)> leftTopGridPos; // 怪物当前左上角位置
+    public BindableProperty<(int, int)> botRightGridPos; // 怪物当前右下角位置
     #endregion
+
+    public TempAllyScript currentTarget; // 当前目标
+    public DirEnum currentDir = DirEnum.None; // 当前移动方向
 
     /// <summary>
     /// 获取Architecture 每个IController都要写
@@ -50,6 +56,7 @@ public class Monster : MonoBehaviour, IController
     void Start()
     {
         leftTopGridPos.RegisterWithInitValue(newPosition => OnMonsterPositionChanged(newPosition));
+        this.SendCommand(new MonsterTargetSelectionCommand(this));
     }
 
     private void OnMonsterPositionChanged((int,int) newPosition)
@@ -67,7 +74,9 @@ public class MonsterEditor : Editor
 {
     private SerializedProperty _data;
     public List<PropertyEnum> _properties;
+    public List<DirEnum> _dirs;
     private (int,int) _leftTopGridPos;
+    private (int,int) _botRightGridPos;
 
     private void OnEnable()
     {
@@ -75,7 +84,9 @@ public class MonsterEditor : Editor
         _data = serializedObject.FindProperty("data");
         // 获取特殊类型的 BindableProperty
         _properties = ((Monster)target).properties.Value;
+        _dirs = ((Monster)target).dirs.Value;
         _leftTopGridPos = ((Monster)target).leftTopGridPos.Value;
+        _botRightGridPos = ((Monster)target).botRightGridPos.Value;
 
     }
 
@@ -103,6 +114,12 @@ public class MonsterEditor : Editor
             _properties[i] = (PropertyEnum)EditorGUILayout.EnumPopup("Property " + i, _properties[i]);
         }
 
+        // 可移动方向
+        for (int i = 0; i < _dirs.Count; i++)
+        {
+            _dirs[i] = (DirEnum)EditorGUILayout.EnumPopup("Direction " + i, _dirs[i]);
+        }
+
         // 怪物坐标
         int x = _leftTopGridPos.Item1;
         int y = _leftTopGridPos.Item2;
@@ -112,6 +129,15 @@ public class MonsterEditor : Editor
         y = EditorGUILayout.IntField(y);
         EditorGUILayout.EndHorizontal();
         _leftTopGridPos = (x, y);
+
+        int x2 = _botRightGridPos.Item1;
+        int y2 = _botRightGridPos.Item2;
+        EditorGUILayout.BeginHorizontal();
+        EditorGUILayout.PrefixLabel("Bot right Grid Pos");
+        x2 = EditorGUILayout.IntField(x2);
+        y2 = EditorGUILayout.IntField(y2);
+        EditorGUILayout.EndHorizontal();
+        _leftTopGridPos = (x2, y2);
 
         // 更新 SerializedObject，以便可以显示和编辑脚本中的值
         serializedObject.Update();
@@ -135,6 +161,14 @@ public class MonsterEditor : Editor
             EditorGUILayout.TextField("Attack range: " + monsterData.atkRange);
             EditorGUILayout.TextField("Monster ID: " + monsterData.monsterId);
             EditorGUILayout.TextField("Properties: " + monsterData.properties);
+            EditorGUILayout.TextField("Properties: " + monsterData.dirs);
+            int x3 = monsterData.pieceSize.Item1;
+            int y3 = monsterData.pieceSize.Item2;
+            EditorGUILayout.BeginHorizontal();
+            EditorGUILayout.PrefixLabel("Monster size");
+            EditorGUILayout.IntField(x3);
+            EditorGUILayout.IntField(y3);
+            EditorGUILayout.EndHorizontal();
         }
 
         // 应用 SerializedObject 的更改

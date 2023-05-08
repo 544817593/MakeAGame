@@ -13,8 +13,7 @@ MonoBehaviour:
   m_Name: HoundsOfTindalos
   m_EditorClassIdentifier: 
   monsterSprite: {fileID: 21300000, guid: 99a4ff1fa42eace4cbb688c5eb28fa19, type: 3}
-  moveSpeed: 0
-  hp: 0
+  moveSpeed: 10
   maxHp: 0
   atkSpeed: 0
   atkDmg: 0
@@ -23,8 +22,5 @@ MonoBehaviour:
   rarity: 0
   atkRange: 0
   monsterId: 0
-  pieceId: 0
   properties: 
-  inCombat: 0
-  isAttacking: 0
-  isDying: 0
+  dirs: 00000000020000000300000001000000

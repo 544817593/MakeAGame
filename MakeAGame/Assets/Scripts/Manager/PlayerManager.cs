@@ -1,3 +1,5 @@
+using Game;
+using QFramework;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,6 +7,7 @@ using UnityEngine;
 public class PlayerManager : MonoBehaviour
 {
     private static PlayerManager instance; // 玩家管理器示例
+    private InventorySystem inventory;
 
     /// <summary>
     /// 玩家管理器Getter
@@ -25,19 +28,22 @@ public class PlayerManager : MonoBehaviour
 
         // 把自身赋予GM
         GameManager.Instance.playerMan = this;
+
+        inventory = GameEntry.Interface.GetSystem<InventorySystem>();
     }
 
     public SOPlayer player;
+    
 
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+       
     }
 }

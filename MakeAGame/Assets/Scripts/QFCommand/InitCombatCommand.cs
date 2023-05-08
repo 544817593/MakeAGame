@@ -1,4 +1,5 @@
-﻿using QFramework;
+﻿using InventoryQuickslotUI;
+using QFramework;
 using UnityEngine;
 
 namespace Game
@@ -12,7 +13,7 @@ namespace Game
         
         public InitCombatCommand(CombatStart startInfo)
         {
-            info = startInfo;
+            this.info = startInfo;
         }
         
         protected override void OnExecute()
@@ -30,10 +31,12 @@ namespace Game
 
             // test
             UIKit.OpenPanel<UIHandCard>();
+            UIKit.OpenPanel<UIInventoryQuickSlot>();
+            UIKit.OpenPanel<UIAbilityPanel>();
 
-            // // 怪物
-            // var spawnSystem = this.GetSystem<ISpawnSystem>();
-            // spawnSystem.ConstantSpawnMonster(info.monsterSpawnSettings);
+            // 怪物
+            var spawnSystem = this.GetSystem<ISpawnSystem>();
+            spawnSystem.ConstantSpawnMonster(info.monsterSpawnSettings);
         }
     }
 }

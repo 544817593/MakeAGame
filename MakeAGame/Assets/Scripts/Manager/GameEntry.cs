@@ -17,10 +17,10 @@ namespace Game
             RegisterSystem<IHandCardSystem>(new HandCardSystem());
             RegisterSystem<ICardGeneratorSystem>(new CardGeneratorSystem());
             RegisterSystem<ISpawnSystem>(new SpawnSystem());
-            RegisterSystem<IRoomSelectorSystem>(new RoomSelectorSystem());
+            RegisterSystem<IMovementSystem>(new MovementSystem());
+            RegisterSystem<IInventorySystem>(new InventorySystem());
             RegisterUtility<ICSVImportUtility>(new CSVImportUtility());
 
-           
             
             // 初始化资源管理
             ResKit.Init();
