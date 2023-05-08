@@ -7,7 +7,7 @@ namespace Game
     /// </summary>
     public static class Extensions
     {
-        public const string DefaultCharacterInfoPath = "ScriptableObjects/Characters/SOCharacterInfo_1";    // 默认角色信息资源
+        public const string DefaultCharacterInfoPath = "ScriptableObjects/Characters/FrancisWaylandThurston";    // 默认角色信息资源
         
         /// <summary>
         /// 获取角色信息so
