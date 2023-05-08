@@ -92,7 +92,7 @@ namespace Game
             canvasGroup.alpha = 0.5f;
 
             SelectMapStartCommand comm = new SelectMapStartCommand();
-            comm.area = new SelectArea() {width = 1, height = 1};
+            comm.area = new SelectArea() {width = card.width, height = card.height};
             this.SendCommand<SelectMapStartCommand>(comm);
         }
 

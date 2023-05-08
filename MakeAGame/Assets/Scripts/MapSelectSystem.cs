@@ -1,6 +1,8 @@
+using System;
 using System.Collections.Generic;
 using QFramework;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 namespace Game
 {
@@ -15,6 +17,8 @@ namespace Game
     public interface IMapSelectSystem : ISystem
     {
         MapSelectStage stage { get; }
+        public BindableProperty<BoxGrid> crtGrid { get; set; }
+        public BindableProperty<int> mouseDirection { get; set; }
 
         void SelectMapStart(SelectArea area);
         void SelectMapEnd();
@@ -22,13 +26,144 @@ namespace Game
     
     public class MapSelectSystem: AbstractSystem, IMapSelectSystem
     {
+        private IMapSystem mapSystem;
+        
         // 当前地图选择状态
         public MapSelectStage stage { get; set; } = MapSelectStage.None;
+        public BindableProperty<BoxGrid> crtGrid { get; set; } = new BindableProperty<BoxGrid>();
+        public BindableProperty<int> mouseDirection { get; set; } = new BindableProperty<int>();
+        public List<BoxGrid> selectedGrids = new List<BoxGrid>();
+        public List<BoxGrid> validSelectedGrids = new List<BoxGrid>();
+
         private SelectArea areaInfo;
         
         protected override void OnInit()
         {
+            mapSystem = this.GetSystem<IMapSystem>();
             
+            // crtGrid.RegisterWithInitValue(grid =>
+            // {
+            //     Debug.Log("new grid");
+            // });
+            mouseDirection.RegisterWithInitValue(dir => OnGridUpdate());
+        }
+
+        void OnGridUpdate()
+        {
+            // 隐藏上一次高亮
+            foreach (var grid in validSelectedGrids)
+            {
+                grid.HideHint();
+            }
+            
+            selectedGrids.Clear();
+            validSelectedGrids.Clear();
+            
+            // 拦住数据没准备好的情况
+            if (crtGrid.Value == null || mouseDirection == -1)
+                return;
+            
+            Debug.Log($"mouseDirection: {mouseDirection} grid: {crtGrid.Value}");
+
+            // 以悬浮格子为中心的选取方法
+             // bound均为可取值，即 0 <= bound1 <= 范围 <= bound2 <= mapR-1
+             int boundLeft = crtGrid.Value.col;
+             int boundRight = crtGrid.Value.col;
+             int boundUp = crtGrid.Value.row;
+             int boundDown = crtGrid.Value.row;
+
+             int mapR = mapSystem.mapRow;
+             int mapC = mapSystem.mapCol;
+
+             // 范围宽为奇数，向两边扩展同等宽度
+             if (areaInfo.width % 2 == 1)
+             {
+                 int distW = (areaInfo.width - 1) / 2;
+
+                 int originX = crtGrid.Value.col - distW;
+                 boundLeft = originX < 0 ? 0 : originX;
+                 boundRight = (crtGrid.Value.col + distW) > (mapC - 1) ? (mapC - 1) : crtGrid.Value.col + distW;
+             }
+             // 范围宽为偶数
+             else
+             {
+                 int distW = areaInfo.width / 2;
+                 
+                 // 以格子左边界为中轴线，当前悬浮格子为范围中的第(width/2)+1个
+                 if (mouseDirection % 2 == 0)
+                 {
+                     int originX = crtGrid.Value.col - distW;
+                     boundLeft = originX < 0 ? 0 : originX;
+                     boundRight = (crtGrid.Value.col + distW - 1) > (mapC - 1) ? (mapC - 1) : crtGrid.Value.col + distW - 1;
+                 }
+                 // 以格子右边界为中轴线，当前悬浮格子为范围中的第width/2个
+                 else
+                 {
+                     int originX = crtGrid.Value.col - distW + 1;
+                     boundLeft = originX < 0 ? 0 : originX;
+                     boundRight = (crtGrid.Value.col + distW) > (mapC - 1) ? (mapC - 1) : crtGrid.Value.col + distW;
+                 }
+             }
+
+             // 范围高为奇数，向两边扩展同等高度
+             if (areaInfo.height % 2 == 1)
+             {
+                 int distH = (areaInfo.height - 1) / 2;
+
+                 int originY = crtGrid.Value.row - distH;
+                 boundUp = originY < 0 ? 0 : originY;
+                 boundDown = (crtGrid.Value.row + distH) > (mapR - 1) ? (mapR - 1) : crtGrid.Value.row + distH;
+             }
+             // 范围高为偶数
+             else
+             {
+                 int distH = areaInfo.height / 2;
+                 
+                 // 以格子上边界为中轴线，当前悬浮格子为范围中的第(height/2)+1个
+                 if (mouseDirection < 2)
+                 {
+                     int originY = crtGrid.Value.row - distH;
+                     boundUp = originY < 0 ? 0 : originY;
+                     boundDown = (crtGrid.Value.row + distH - 1) > (mapR - 1) ? (mapR - 1) : crtGrid.Value.row + distH - 1;
+                 }
+                 // 以格子下边界为中轴线，当前悬浮格子为范围中的第height/2个
+                 else
+                 {
+                     int originY = crtGrid.Value.row - distH + 1;
+                     boundUp = originY < 0 ? 0 : originY;
+                     boundDown = (crtGrid.Value.row + distH) > (mapR - 1) ? (mapR - 1) : crtGrid.Value.row + distH;
+                 }
+             }
+
+             // 从左到右、从上到下存储格子
+             for (int r = boundUp; r <= boundDown; r++)
+             {
+                 for (int c = boundLeft; c <= boundRight; c++)
+                 {
+                     selectedGrids.Add(mapSystem.Grids()[r,c]);
+                 }
+             }
+             
+             PrintSelectedGrids();
+             
+             // todo 二次筛选
+
+             validSelectedGrids = selectedGrids;
+             foreach (var grid in validSelectedGrids)
+             {
+                 grid.ShowHint("selected");
+             }
+        }
+
+        void PrintSelectedGrids()
+        {
+            string ret = "SelectedGrids:\n";
+            foreach (var grid in selectedGrids)
+            {
+                ret += grid.ToString() + "\n";
+            }
+            
+            Debug.Log(ret);
         }
 
         public void SelectMapStart(SelectArea area)
@@ -44,8 +179,10 @@ namespace Game
             stage = MapSelectStage.None;
             
             // todo 判断是否成功放置棋子
-            
-            
+
+
+            crtGrid.Value = null;
+            mouseDirection.Value = -1;
         }
         
 

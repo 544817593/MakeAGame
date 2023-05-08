@@ -38,6 +38,8 @@ namespace Game
 
         private void Start()
         {
+            mapSelectSystem = this.GetSystem<IMapSelectSystem>();
+            
             srFloor = transform.Find("Root/SpriteFloor").GetComponent<SpriteRenderer>();
             gridStatus.Value = GridStatusEnum.Unoccupied;
             srHint = transform.Find("Root/SpriteHint").GetComponent<SpriteRenderer>();
@@ -83,18 +85,59 @@ namespace Game
             
         }
 
+        IMapSelectSystem mapSelectSystem;
+        private bool isMouseEntered;
         void OnEnter()
         {
-            Debug.Log($">>boxgrid enter, {this.ToString()}");
-            ShowHint("selected");
+            isMouseEntered = true;
+            
+            // Debug.Log($">>boxgrid enter, {this.ToString()}");
+            // Debug.Log($"enter direction: {mouseDirection}");
+            // ShowHint("selected");
+
+            mapSelectSystem.crtGrid.Value = this;
+        }
+
+        private void Update()
+        {
+            if (isMouseEntered)
+            {
+                UpdateMouseDirection();
+            }
+        }
+
+        private int mouseDirection = -1;    // 鼠标在格子内的相对方位 0:左上 1:右上 2:左下 3:右下
+        void UpdateMouseDirection()
+        {
+            int oldDirection = mouseDirection;
+            var mousePos = Input.mousePosition;
+            var gridScreenPos = Camera.main.WorldToScreenPoint(transform.position);
+            // Debug.Log($"mousePos: {mousePos} gridScreenPos: {gridScreenPos}");
+            bool isUp = mousePos.y > gridScreenPos.y;
+            bool isLeft = mousePos.x < gridScreenPos.x;
+            if (isUp && isLeft) mouseDirection = 0;
+            else if (isUp && !isLeft) mouseDirection = 1;
+            else if (!isUp && isLeft) mouseDirection = 2;
+            else mouseDirection = 3;
+
+            if (oldDirection != mouseDirection)
+            {
+                // Debug.Log($"check direction diff: old {oldDirection} new {mouseDirection}");
+                mapSelectSystem.mouseDirection.Value = mouseDirection;
+            }
         }
 
         void OnExit()
         {
-            HideHint();
+            // HideHint();
+
+            isMouseEntered = false;
+            mouseDirection = -1;
+            mapSelectSystem.crtGrid.Value = null;
+            mapSelectSystem.mouseDirection.Value = mouseDirection;
         }
 
-        void ShowHint(string hintType)
+        public void ShowHint(string hintType)
         {
             if(!srHint.gameObject.activeSelf)
                 srHint.gameObject.SetActive(true);
@@ -110,7 +153,7 @@ namespace Game
             }
         }
 
-        void HideHint()
+        public void HideHint()
         {
             srHint.gameObject.SetActive(false);
         }
