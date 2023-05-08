@@ -8,18 +8,19 @@ namespace Game
     /// </summary>
     public class AddHandCardCommand: AbstractCommand
     {
-        private int cardID;
+        private Card cardData;
 
-        public AddHandCardCommand(int _cardID)
+        public AddHandCardCommand(Card _cardData)
         {
-            cardID = _cardID;
+            cardData = _cardData;
         }
         
         protected override void OnExecute()
         {
             Debug.Log("send AddHandCard command");
+
             var handCardSystem = this.GetSystem<IHandCardSystem>();
-            handCardSystem.AddCard(cardID);
+            handCardSystem.AddCard(cardData);
         }
     }
 }

@@ -22,7 +22,7 @@ namespace Game
 		
 		private Animator anim;
 
-		private List<Card> viewCardsList;	// 手牌列表
+		private List<ViewCard> viewCardsList;	// 手牌列表
 		private List<Transform> cardPosList = new List<Transform>();	// 手牌默认位置列表
 
 		private int focusIndex;	// 鼠标选中卡牌在列表中序号
@@ -41,6 +41,8 @@ namespace Game
 			nodeTooltip.gameObject.SetActive(false);
 			tmpTooltip = nodeTooltip.GetChild(0).GetComponent<TextMeshProUGUI>();
 			
+			PieceIcon.gameObject.SetActive(false);
+			
 			anim = GetComponent<Animator>();
 			foreach (Transform cardPos in CardRoot)
 			{
@@ -58,7 +60,7 @@ namespace Game
 
 			ButtonAddCardTest.onClick.AddListener(() =>
 			{
-				GameEntry.Interface.SendCommand<AddHandCardCommand>(new AddHandCardCommand(0));
+				GameEntry.Interface.SendCommand<AddHandCardCommand>(new AddHandCardCommand(new Card(1)));
 			});
 			ButtonSubCardTest.onClick.AddListener(() =>
 			{
@@ -81,7 +83,7 @@ namespace Game
 
 		public void AddCard(int index)
 		{
-			Debug.Log($"handcard ui add card {index}");
+			Debug.Log($"handcard ui add card index {index}");
 
 			viewCardsList[index].transform.localScale = new Vector3(normalScale, normalScale, 1f);
 
@@ -95,7 +97,7 @@ namespace Game
 			UpdateLayout();
 		}
 
-		public void OnFocusCard(Card viewCard)
+		public void OnFocusCard(ViewCard viewCard)
 		{
 			if (isDragging) return;
 			
@@ -132,37 +134,34 @@ namespace Game
 			UpdateLayout();
 		}
 
-		public void OnDragCardStart()
+		public void OnDragCardStart(ViewCard viewCard)
 		{
 			isDragging = true;
-			// mouseImg = (GameObject) Instantiate(Resources.Load("Prefabs/Piece"));
-			mouseImg = transform.Find("Root/PieceIcon");
+			
+			ImgPieceIcon.sprite = viewCard.card.pieceSprite;
+			ImgPieceIcon.SetNativeSize();	// 恢复原大小
+			PieceIcon.gameObject.SetActive(true);
 			anim.Play("Down", -1, 0);
-			// transform.DOLocalMoveY(-60, 0.5f);
 		}
-
-		private Transform mouseImg;
+		
 		private void Update()
 		{
 			// todo 优化 不要在update里写if
 			if (isDragging)
 			{
-				if (mouseImg != null)
-				{
-					// var pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-					var pos = Input.mousePosition;
-					// pos = new Vector3(pos.x, pos.y, 0);
-					Debug.Log($"mouse pos: {pos}");
-					// pos = new Vector3(pos.x-Screen.width/2f,pos.y-Screen.height/2f);
-					mouseImg.localPosition = pos;
-				}
+				var pos = Input.mousePosition;
+					// Debug.Log($"mouse pos: {pos} screen width: {Screen.width} height: {Screen.height}");
+					pos -= new Vector3(Screen.width / 2f, Screen.height / 2f, 0f);
+					PieceIcon.localPosition = pos;
+					// Debug.Log($"mouseImg localpos: {mouseImg.localPosition} pos: {mouseImg.position}");
 			}
 		}
 
 		public void OnDragCardEnd()
 		{
 			isDragging = false;
-			// transform.DOLocalMoveY(160, 0.5f);
+			
+			PieceIcon.gameObject.SetActive(false);
 			anim.Play("Up", -1, 0);
 			UpdateLayout();
 		}
@@ -211,11 +210,9 @@ namespace Game
 			}
 		}
 
-		public void UpdateTooltip(int featureID)
+		public void UpdateTooltip(SOFeature so)
 		{
-			Debug.Log($"handcard ui show feature {featureID}");
-
-			tmpTooltip.text = $"这是一段关于特性的介绍，test id = {featureID}";
+			tmpTooltip.text = so.featureName + "\n" + so.featureDesc;
 		}
 
 		private void OnAnimEvent(string eventName)

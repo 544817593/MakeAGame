@@ -19,9 +19,8 @@ namespace Game
         public int defend;  // 防御力
 
         public SOFeature[] features;  // 特性
-        public int specialFeature;  // 特殊属性
-
-
+        public SOFeature specialFeature;  // 特殊属性
+        
         public Sprite pieceSprite;  // 棋子图片
         public int width;   // 棋子占地宽
         public int height;  // 棋子占地长

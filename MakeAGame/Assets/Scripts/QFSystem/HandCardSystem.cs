@@ -7,17 +7,17 @@ namespace Game
     public interface IHandCardSystem : ISystem
     {
         int maxCardCount { get; } // 最大手牌数
-        List<Card> handCardList { get; }    // 手牌列表
+        List<ViewCard> handCardList { get; }    // 手牌列表
         
         UIHandCard ui { set; }
         
-        bool AddCard(int cardID);
+        bool AddCard(Card cardData);
         bool SubCard(int index);
     }
     
     public class HandCardSystem: AbstractSystem, IHandCardSystem
     {
-        public List<Card> handCardList { get; } = new List<Card>(); // 手牌列表
+        public List<ViewCard> handCardList { get; } = new List<ViewCard>(); // 手牌列表
         public int maxCardCount { get; } = 7;
         
         public UIHandCard ui {private get; set; }   // 对应UI
@@ -37,7 +37,7 @@ namespace Game
             });
         }
         
-        public bool AddCard(int cardID)
+        public bool AddCard(Card cardData)
         {
             // 判断是否可以加牌
             if (handCardList.Count >= maxCardCount)
@@ -46,16 +46,21 @@ namespace Game
                 return false;
             }
 
-            Debug.Log($"HandCardSystem: AddCard({cardID})");
+            Debug.Log($"HandCardSystem: AddCard(chara: {cardData.charaID})");
             
             // 卡牌实例化，挂载组件，部分初始化
-            GameObject cardGO = this.GetSystem<ICardGeneratorSystem>().CreateCard(cardID);
-            var viewCard = cardGO.AddComponent<Card>();
+            GameObject cardGO = this.GetSystem<ICardGeneratorSystem>().CreateCard();
             cardGO.transform.SetParent(ui.CardRoot);
+            var viewCard = cardGO.AddComponent<ViewCard>();
+            // 接收数据，初始化牌面显示
+            viewCard.card = cardData;
+            // viewCard.InitView(); // 在这里写会先于start执行，不对    // 转由start触发
+            
+            
+            
 
             // 数值变化
             handCardList.Add(viewCard);
-            viewCard.handCardIndexTest = handCardList.Count - 1;
 
             // 通知UI变化   // 通过事件注册
             OnAddCardTest.Trigger(handCardList.Count - 1);

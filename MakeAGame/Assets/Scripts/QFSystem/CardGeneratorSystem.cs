@@ -7,7 +7,7 @@ namespace Game
     {
         GameObject mCardPrefab { get; }
 
-        GameObject CreateCard(int cardID);
+        GameObject CreateCard();
     }
     
     public class CardGeneratorSystem: AbstractSystem, ICardGeneratorSystem
@@ -19,7 +19,7 @@ namespace Game
             mCardPrefab = (GameObject) Resources.Load("Prefabs/CardItem");
         }
 
-        public GameObject CreateCard(int cardID)
+        public GameObject CreateCard()
         {
             // 这里只是生成game object，返回后再根据卡牌所处位置（手牌？背包）挂载对应组件
             var cardGO = GameObject.Instantiate(mCardPrefab);

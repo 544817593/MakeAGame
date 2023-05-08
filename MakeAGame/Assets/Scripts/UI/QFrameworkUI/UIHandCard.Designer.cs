@@ -5,11 +5,21 @@ using QFramework;
 
 namespace Game
 {
-	// Generate Id:15d7bd2d-8f5b-44a7-843e-74407d790bc5
+	// Generate Id:d76802a5-73c4-48aa-a11e-c609912f7f76
 	public partial class UIHandCard
 	{
 		public const string Name = "UIHandCard";
 		
+		/// <summary>
+		/// 跟随鼠标移动的棋子图标
+		/// </summary>
+		[SerializeField]
+		public RectTransform PieceIcon;
+		/// <summary>
+		/// 跟随鼠标移动的棋子图标图片
+		/// </summary>
+		[SerializeField]
+		public UnityEngine.UI.Image ImgPieceIcon;
 		/// <summary>
 		/// 卡牌的父节点
 		/// </summary>
@@ -40,6 +50,8 @@ namespace Game
 		
 		protected override void ClearUIComponents()
 		{
+			PieceIcon = null;
+			ImgPieceIcon = null;
 			CardRoot = null;
 			ButtonAddCardTest = null;
 			ButtonOpenAnim = null;
