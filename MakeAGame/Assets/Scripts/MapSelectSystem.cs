@@ -175,11 +175,19 @@ namespace Game
 
         public void SelectMapEnd()
         {
-            Debug.Log("[todo] MapSelectSystem: SelectMapEnd");
+            Debug.Log("MapSelectSystem: SelectMapEnd");
             stage = MapSelectStage.None;
             
             // todo 判断是否成功放置棋子
-
+            if (validSelectedGrids.Count == areaInfo.width * areaInfo.height)
+            {
+                Debug.Log("it's ok to put piece");
+            }
+            else
+            {
+                Debug.Log(
+                    $"put piece failed, need grid count: {areaInfo.width * areaInfo.height} crt: {validSelectedGrids.Count}");
+            }
 
             crtGrid.Value = null;
             mouseDirection.Value = -1;
