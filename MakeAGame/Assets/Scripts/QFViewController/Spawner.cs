@@ -1,11 +1,9 @@
-using Game;
 using QFramework;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
-using static UnityEditor.PlayerSettings;
 
 namespace Game
 {
@@ -69,8 +67,9 @@ namespace Game
             piece.transform.position = gridTransform.position;
             piece.transform.Rotate(90, 0, 0);
             Monster monster = piece.GetComponent<Monster>();
-            monster.data = AssetDatabase.LoadAssetAtPath<SOMonsterBase>
-                ("Assets/Resources/ScriptableObjects/Monsters/" + data.name + ".asset");
+            monster.data = Resources.Load<SOMonsterBase>("ScriptableObjects/Monsters/" + data.name);
+            // monster.data = AssetDatabase.LoadAssetAtPath<SOMonsterBase>
+                // ("Assets/Resources/ScriptableObjects/Monsters/" + data.name + ".asset");
             piece.transform.Find("image").GetComponent<SpriteRenderer>().sprite = monster.data.monsterSprite;
             InitialiseMonsterValues(monster, data);
             grid[data.row, data.col].gridStatus.Value = GridStatusEnum.MonsterPiece;

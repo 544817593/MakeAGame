@@ -39,15 +39,15 @@ namespace Game
             itemList.Register((newItemList) => OnItemListChanged());
             inventoryRoot = GameObject.Find("InventoryRoot")?.transform;
 
-            SOItemBase testItem = AssetDatabase.LoadAssetAtPath<SOItemBase>("Assets/Resources/ScriptableObjects/Items/ChaosPotion.asset");
-            SOItemBase testItem2 = AssetDatabase.LoadAssetAtPath<SOItemBase>("Assets/Resources/ScriptableObjects/Items/ChaosPotion2.asset");
+
+            SOItemBase testItem = Resources.Load<SOItemBase>("ScriptableObjects/Items/ChaosPotion");
+            SOItemBase testItem2 = Resources.Load<SOItemBase>("ScriptableObjects/Items/ChaosPotion2");
+            // SOItemBase testItem = AssetDatabase.LoadAssetAtPath<SOItemBase>("Assets/Resources/ScriptableObjects/Items/ChaosPotion.asset");
+            // SOItemBase testItem2 = AssetDatabase.LoadAssetAtPath<SOItemBase>("Assets/Resources/ScriptableObjects/Items/ChaosPotion2.asset");
 
             AddItem(new Item { amount = 1, data = testItem });
             AddItem(new Item { amount = 1, data = testItem2 });
             AddItem(new Item { amount = 1, data = testItem2 });
-
-
-
         }
 
         private void OnItemListChanged()
