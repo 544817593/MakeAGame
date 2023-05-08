@@ -10,7 +10,6 @@ public class MonsterMovement : MonoBehaviour, IController
 {
     IMovementSystem movementSystem; // 移动系统
     private Monster monster; // 怪物引用
-    private (int, int) nextPos; // 下一次移动即将去到的位置
     private float lastMoveTime; // 上一次移动的时间
 
     void Start()

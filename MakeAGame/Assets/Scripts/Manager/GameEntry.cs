@@ -19,6 +19,7 @@ namespace Game
             RegisterSystem<ISpawnSystem>(new SpawnSystem());
             RegisterSystem<IMovementSystem>(new MovementSystem());
             RegisterSystem<IInventorySystem>(new InventorySystem());
+            RegisterSystem<ISkillSystem>(new SkillSystem());
             RegisterUtility<ICSVImportUtility>(new CSVImportUtility());
 
             
