@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class SkipIntro : MonoBehaviour
 {
     [SerializeField] private Button skipBtn;
+    [SerializeField] private Button animBtn;
 
     void ToCombatScene()
     {
@@ -13,8 +14,15 @@ public class SkipIntro : MonoBehaviour
         StartCoroutine(GameManager.Instance.gameSceneMan.UnloadScene("Main"));       
     }
 
+    void ToAnimScene()
+    {
+        StartCoroutine(GameManager.Instance.gameSceneMan.LoadScene("Animation", false));
+        StartCoroutine(GameManager.Instance.gameSceneMan.UnloadScene("Main"));
+    }
+
     private void Awake()
     {
         skipBtn.onClick.AddListener( () => ToCombatScene());
+        animBtn.onClick.AddListener(() => ToAnimScene());
     }
 }

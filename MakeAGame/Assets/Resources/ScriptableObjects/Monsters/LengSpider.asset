@@ -13,18 +13,14 @@ MonoBehaviour:
   m_Name: LengSpider
   m_EditorClassIdentifier: 
   monsterSprite: {fileID: 21300000, guid: 7f01198f900dd0c439b13dfa060bed78, type: 3}
-  moveSpeed: 0
-  hp: 0
-  maxHp: 0
-  atkSpeed: 0
-  atkDmg: 0
+  moveSpeed: 4
+  maxHp: 180
+  atkSpeed: 0.5
+  atkDmg: 7.5
   defense: 0
-  accuracy: 0
-  rarity: 0
-  atkRange: 0
-  monsterId: 0
-  pieceId: 0
+  accuracy: 100
+  rarity: 2
+  atkRange: 2
+  monsterId: 9994
   properties: 
-  inCombat: 0
-  isAttacking: 0
-  isDying: 0
+  dirs: 00000000020000000300000001000000
