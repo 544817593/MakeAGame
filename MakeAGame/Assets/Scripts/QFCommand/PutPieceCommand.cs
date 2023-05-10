@@ -25,6 +25,7 @@ namespace Game
             // 先移出手牌
             this.SendCommand(new SubHandCardCommand(viewCard));
             // todo 再添加棋子
+            this.GetSystem<IPieceSystem>().AddPieceFriend(viewCard.card, grids);
             
             Debug.Log("[TODO] add piece");
         }
