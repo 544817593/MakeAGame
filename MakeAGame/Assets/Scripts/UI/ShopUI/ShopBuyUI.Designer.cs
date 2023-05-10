@@ -5,7 +5,7 @@ using QFramework;
 
 namespace ShopBuyUI
 {
-	// Generate Id:4d376610-38f2-4b60-9652-a08664c47ae7
+	// Generate Id:13bc342c-98a1-453f-b288-6c2fb9281a16
 	public partial class ShopBuyUI
 	{
 		public const string Name = "ShopBuyUI";
@@ -13,7 +13,7 @@ namespace ShopBuyUI
 		[SerializeField]
 		public UnityEngine.UI.Button Close;
 		[SerializeField]
-		public UnityEngine.UI.Button Button;
+		public UnityEngine.UI.Button Buy;
 		[SerializeField]
 		public TMPro.TextMeshProUGUI TextCoin;
 		
@@ -22,7 +22,7 @@ namespace ShopBuyUI
 		protected override void ClearUIComponents()
 		{
 			Close = null;
-			Button = null;
+			Buy = null;
 			TextCoin = null;
 			
 			mData = null;

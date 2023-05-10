@@ -2,23 +2,24 @@ using UnityEngine;
 using UnityEngine.UI;
 using QFramework;
 
-namespace ShopBuyUI
+namespace ShopMainUI
 {
-	public class ShopBuyUIData : UIPanelData
+	public class ShopMainUIData : UIPanelData
 	{
 	}
-	public partial class ShopBuyUI : UIPanel
+	public partial class ShopMainUI : UIPanel
 	{
 		protected override void OnInit(IUIData uiData = null)
 		{
-			mData = uiData as ShopBuyUIData ?? new ShopBuyUIData();
+			mData = uiData as ShopMainUIData ?? new ShopMainUIData();
             // please add init code here
-            Close.onClick.AddListener(() =>
+			Buy.onClick.AddListener(() =>
             {
-                Debug.Log($"点击了{Close.name}按钮");
-                this.CloseSelf();
-                UIKit.OpenPanel<ShopMainUI.ShopMainUI>();
+				Debug.Log($"点击了Buy按钮");
+				this.CloseSelf();
+				UIKit.OpenPanel<ShopBuyUI.ShopBuyUI>();
             });
+			
         }
 		
 		protected override void OnOpen(IUIData uiData = null)
