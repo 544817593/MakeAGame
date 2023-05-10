@@ -26,6 +26,7 @@ namespace Game
             
             canvas.overrideSorting = true;
             canvas.sortingOrder = 100;
+            transform.localScale = new Vector3(UIHandCard.normalScale, UIHandCard.normalScale, 1f);
 
             var uiHandCard = UIKit.GetPanel<UIHandCard>();
             OnShowTooltip = uiHandCard.UpdateTooltip;
@@ -40,8 +41,9 @@ namespace Game
             uiHelper.OnUIEndDrag += uiHandCard.OnDragCardEnd;
             uiHelper.OnUIEndDrag += OnDragEnd;
             // uiHelper.OnUIDrag += uiHandCard.OnDragCard;  // todo 看拖拽手牌时手牌ui是否需要响应
-            transform.localScale = new Vector3(UIHandCard.normalScale, UIHandCard.normalScale, 1f);
-            
+
+            this.RegisterEvent<PutPieceByHandCardEvent>(OnUseAsLifeCard);
+
             InitView();
         }
 
@@ -88,7 +90,7 @@ namespace Game
 
         void OnDragStart()
         {
-            Debug.Log("ViewCard: OnDragStart");
+            // Debug.Log("ViewCard: OnDragStart");
             canvasGroup.alpha = 0.5f;
 
             SelectMapStartCommand comm = new SelectMapStartCommand();
@@ -105,7 +107,7 @@ namespace Game
         {
             Debug.Log("ViewCard: OnDragEnd");
             canvasGroup.alpha = 1f;
-            this.SendCommand<SelectMapEndCommand>();
+            this.SendCommand<SelectMapEndCommand>(new SelectMapEndCommand(this));
         }
 
         void ShowTooltip()
@@ -146,6 +148,18 @@ namespace Game
             // {
             //     Debug.Log("ray hit nothing");
             // }
+        }
+
+        void OnUseAsLifeCard(PutPieceByHandCardEvent e)
+        {
+            // 检测通知的是不是自己
+            if (e.viewCard != this) return;
+
+            this.SendCommand(new PutPieceCommand(this, e.pieceGrids));
+            
+            // todo 手牌使用后的后续处理（此时已经移出手牌系统并隐藏），如返回背包、销毁...
+            Debug.Log("[TODO] after card use as life card");
+            
         }
 
         public IArchitecture GetArchitecture()

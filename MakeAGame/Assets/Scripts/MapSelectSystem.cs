@@ -21,7 +21,7 @@ namespace Game
         public BindableProperty<int> mouseDirection { get; set; }
 
         void SelectMapStart(SelectArea area);
-        void SelectMapEnd();
+        void SelectMapEnd(ViewCard viewCard);
     }
     
     public class MapSelectSystem: AbstractSystem, IMapSelectSystem
@@ -41,20 +41,17 @@ namespace Game
         {
             mapSystem = this.GetSystem<IMapSystem>();
             
-            // crtGrid.RegisterWithInitValue(grid =>
+            // BindableProperty扩展测试
+            // crtGrid.RegisterBeforeValueChanged((grid) =>
             // {
-            //     Debug.Log("new grid");
+            //     string output = grid == null ? "null" : grid.ToString();
+            //     Debug.Log($"crtGrid: BeforeValueChanged {output}");
             // });
-            crtGrid.RegisterBeforeValueChanged((grid) =>
-            {
-                string output = grid == null ? "null" : grid.ToString();
-                Debug.Log($"crtGrid: BeforeValueChanged {output}");
-            });
-            crtGrid.RegisterWithInitValue((grid) =>
-            {
-                string output = grid == null ? "null" : grid.ToString();
-                Debug.Log($"crtGrid: OnValueChanged {output}");
-            });
+            // crtGrid.RegisterWithInitValue((grid) =>
+            // {
+            //     string output = grid == null ? "null" : grid.ToString();
+            //     Debug.Log($"crtGrid: OnValueChanged {output}");
+            // });
             mouseDirection.RegisterWithInitValue(dir => OnGridUpdate());
         }
 
@@ -183,15 +180,19 @@ namespace Game
             areaInfo = area;
         }
 
-        public void SelectMapEnd()
+        public void SelectMapEnd(ViewCard viewCard)
         {
             Debug.Log("MapSelectSystem: SelectMapEnd");
             stage = MapSelectStage.None;
             
-            // todo 判断是否成功放置棋子
+            // 判断是否成功放置棋子
+            // 1.格子数量
             if (validSelectedGrids.Count == areaInfo.width * areaInfo.height)
             {
                 Debug.Log("it's ok to put piece");
+                PutPieceByHandCardEvent e = new PutPieceByHandCardEvent()
+                    {viewCard = viewCard, pieceGrids = validSelectedGrids};
+                this.SendEvent<PutPieceByHandCardEvent>(e);
             }
             else
             {
@@ -201,6 +202,10 @@ namespace Game
 
             crtGrid.Value = null;
             mouseDirection.Value = -1;
+            selectedGrids.Clear();
+            validSelectedGrids.Clear();
+            
+            this.SendEvent<SelectMapEndEvent>();
         }
         
 
@@ -210,15 +215,13 @@ namespace Game
         }
     }
 
-    public struct SelectMapStartEvent
+    public struct SelectMapStartEvent { }
+    public struct SelectMapEndEvent{ }
+    // 符合摆放棋子条件时，通知手牌
+    public struct PutPieceByHandCardEvent
     {
-        // public MapSelectStage stage;
-        // public SelectArea areaInfo;
-    }
-
-    public struct SelectMapEndEvent
-    {
-        
+        public ViewCard viewCard;
+        public List<BoxGrid> pieceGrids;
     }
 
     public struct SelectArea
