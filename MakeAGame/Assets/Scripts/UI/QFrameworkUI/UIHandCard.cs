@@ -64,7 +64,10 @@ namespace Game
 			});
 			ButtonSubCardTest.onClick.AddListener(() =>
 			{
-				GameEntry.Interface.SendCommand<SubHandCardCommand>(new SubHandCardCommand(0));
+				if (handCardSystem.handCardList.Count > 0)
+				{
+					GameEntry.Interface.SendCommand<SubHandCardCommand>(new SubHandCardCommand(handCardSystem.handCardList[0]));	
+				}
 			});
 
 			ButtonOpenAnim.onClick.AddListener(() =>

@@ -8,18 +8,18 @@ namespace Game
     /// </summary>
     public class SubHandCardCommand: AbstractCommand
     {
-        private int index;
+        private ViewCard viewCard;
 
-        public SubHandCardCommand(int _index)
+        public SubHandCardCommand(ViewCard _viewCard)
         {
-            index = _index;
+            viewCard = _viewCard;
         }
         
         protected override void OnExecute()
         {
             Debug.Log("send SubHandCard command");
             var handCardSystem = this.GetSystem<IHandCardSystem>();
-            handCardSystem.SubCard(index);
+            handCardSystem.SubCard(viewCard);
         }
     }
 }

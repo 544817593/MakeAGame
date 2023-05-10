@@ -12,7 +12,7 @@ namespace Game
         UIHandCard ui { set; }
         
         bool AddCard(Card cardData);
-        bool SubCard(int index);
+        bool SubCard(ViewCard viewCard);
     }
     
     public class HandCardSystem: AbstractSystem, IHandCardSystem
@@ -68,18 +68,22 @@ namespace Game
             return true;
         }
 
-        public bool SubCard(int index)
+        public bool SubCard(ViewCard viewCard)
         {
-            if (index >= handCardList.Count) return false;
+            if (viewCard == null || !handCardList.Contains(viewCard))
+            {
+                Debug.LogError("try to sub card null or already moved");
+                ui.UpdateLayout();
+                return false;
+            }
             
-            Debug.Log($"HandCardSystem: SubCard {index}");
-
-            var cardGO = handCardList[index].gameObject;
+            int index = handCardList.IndexOf(viewCard);
             handCardList.RemoveAt(index);
-            
             OnSubCardTest.Trigger(index);
-            
-            cardGO.DestroySelf();
+
+            // var cardGO = viewCard.gameObject;
+            // cardGO.DestroySelf();
+            viewCard.gameObject.SetActive(false);
 
             return true;
         }
