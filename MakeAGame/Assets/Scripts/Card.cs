@@ -20,6 +20,8 @@ namespace Game
         public Sprite pieceSprite => so.pieceSprite;
         public SOFeature[] features => so.features;
         public SOFeature specialFeature => so.specialFeature;
+        public int width => so.width;
+        public int height => so.height;
 
         // 会有改动的数据  // 外部可以读取，但不可以直接改动
         public int rarity { get; private set; }

@@ -39,13 +39,16 @@ namespace Game
         /// 地图中央位置，用于摄像头设置
         /// </summary>
         BoxGrid centerGrid { get; }
+
+        public int mapRow { get; }
+        public int mapCol { get; }
     }
 
     public class MapSystem : AbstractSystem, IMapSystem
     {
         public BoxGrid[,] mGrids; // 地图格子数组
-        private int mRow => mGrids.GetLength(0);    // 总行数
-        private int mCol => mGrids.GetLength(1);    // 总列数
+        public int mapRow => mGrids.GetLength(0);    // 总行数
+        public int mapCol => mGrids.GetLength(1);    // 总列数
 
         protected override void OnInit()
         {
@@ -61,7 +64,7 @@ namespace Game
         {
             if (mGrids != null)
             {
-                Debug.LogError($"Map already existed! row: {mRow} col: {mCol}");
+                Debug.LogError($"Map already existed! row: {mapRow} col: {mapCol}");
                 return;
             }
 
@@ -108,7 +111,7 @@ namespace Game
         {
             if (mGrids != null)
             {
-                Debug.LogError($"Map already existed! row: {mRow} col: {mCol}");
+                Debug.LogError($"Map already existed! row: {mapRow} col: {mapCol}");
                 return;
             }
 

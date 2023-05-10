@@ -1,9 +1,9 @@
 using Game;
 using QFramework;
-using System.Collections;
 using System.Collections.Generic;
-using System.Drawing;
+#if UNITY_EDITOR
 using UnityEditor;
+#endif
 using UnityEngine;
 
 
@@ -66,6 +66,8 @@ public class Monster : MonoBehaviour, IController
 
 }
 
+
+#if UNITY_EDITOR
 /// <summary>
 /// 怪物类自定义Inspector，显示ScriptableObject内的信息
 /// </summary>
@@ -176,3 +178,5 @@ public class MonsterEditor : Editor
     }
 
 }
+
+#endif

@@ -4,14 +4,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using QFramework;
 using System;
+using UnityEditor;
 
 
 public class MonsterMovement : MonoBehaviour, IController
 {
     IMovementSystem movementSystem; // 移动系统
     private Monster monster; // 怪物引用
-    private (int, int) nextPos; // 下一次移动即将去到的位置
     private float lastMoveTime; // 上一次移动的时间
+    private (int, int) nextIntendPos; // 下一个想要去到的格子
 
     void Start()
     {
@@ -25,6 +26,7 @@ public class MonsterMovement : MonoBehaviour, IController
         if (Time.time - lastMoveTime > monster.moveSpeed)
         {
             FindMovementDir();
+            DoMove(); // 暂时移动下
             lastMoveTime = Time.time;
         }
     }
@@ -85,12 +87,24 @@ public class MonsterMovement : MonoBehaviour, IController
             // 设置移动方向
             monster.currentDir = movementSystem.NeighbourBoxGridsToDir(this.GetSystem<IMapSystem>().Grids()
                 [monster.leftTopGridPos.Value.Item1, monster.leftTopGridPos.Value.Item2], aStarPath[1]);
+
+            // 更新想要去的格子
+            positionAfterMovement = this.GetSystem<IMovementSystem>().CalculateNextPosition(original, monster.currentDir);
+            nextIntendPos = positionAfterMovement;
         }
     }
 
+    /// <summary>
+    /// 暂时用这个函数 待更新升级
+    /// </summary>
     public void DoMove()
     {
-
+        // 更新画面
+        var grid2DList = this.GetSystem<IMapSystem>().Grids();
+        var newGridTransPos = grid2DList[nextIntendPos.Item1, nextIntendPos.Item2].transform.position;
+        this.gameObject.transform.position = newGridTransPos;
+        monster.leftTopGridPos.Value = nextIntendPos;
     }
+
 }
 

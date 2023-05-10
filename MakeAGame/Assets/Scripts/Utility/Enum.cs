@@ -27,8 +27,8 @@ public enum PlayerStatsEnum
 /// </summary>
 public enum SkillNameEnum
 {
-    None, Alienation1, Earthquake1, Darkarrival, Focus1,
-    Alienation2, Focus2
+    None, Alienation1, Alienation2, Focus1, Focus2, Earthquake1, Darkarrival,
+    Ghost, LastResort, DimentionalPortal, Inferno, Oceanic
 }
 
 /// <summary>

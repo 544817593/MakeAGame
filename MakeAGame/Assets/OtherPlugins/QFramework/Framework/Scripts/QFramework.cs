@@ -743,6 +743,7 @@ namespace QFramework
                 if (value == null && mValue == null) return;
                 if (value != null && value.Equals(mValue)) return;
 
+                mBeforeValueChanged?.Invoke(mValue);
                 SetValue(value);
                 mOnValueChanged?.Invoke(value);
             }
@@ -781,6 +782,18 @@ namespace QFramework
             return Register(onValueChanged);
         }
 
+        private Action<T> mBeforeValueChanged = (v) => { };
+
+        public IUnRegister RegisterBeforeValueChanged(Action<T> beforeValueChanged)
+        {
+            mBeforeValueChanged += beforeValueChanged;
+            return new BindablePropertyUnRegister<T>()
+            {
+                BindableProperty = this,
+                BeforeValueChanged = beforeValueChanged
+            };
+        }
+
         public static implicit operator T(BindableProperty<T> property)
         {
             return property.Value;
@@ -791,9 +804,10 @@ namespace QFramework
             return Value.ToString();
         }
 
-        public void UnRegister(Action<T> onValueChanged)
+        public void UnRegister(Action<T> valueAction)
         {
-            mOnValueChanged -= onValueChanged;
+            mBeforeValueChanged -= valueAction;
+            mOnValueChanged -= valueAction;
         }
     }
 
@@ -802,12 +816,16 @@ namespace QFramework
         public BindableProperty<T> BindableProperty { get; set; }
 
         public Action<T> OnValueChanged { get; set; }
+        
+        public Action<T> BeforeValueChanged { get; set; }
 
         public void UnRegister()
         {
+            BindableProperty.UnRegister(BeforeValueChanged);
             BindableProperty.UnRegister(OnValueChanged);
 
             BindableProperty = null;
+            BeforeValueChanged = null;
             OnValueChanged = null;
         }
     }
