@@ -30,7 +30,7 @@ namespace Game
     public class InventorySystem : AbstractSystem, IInventorySystem
     {
         public BindableProperty<List<Item>> itemList = new BindableProperty<List<Item>>(); // 物品列表
-        public BindableProperty<List<Card>> cardList; // 卡牌列表
+        public BindableProperty<List<ViewCard>> cardList = new BindableProperty<List<ViewCard>>(); // 卡牌列表
         public Transform inventoryRoot; // 生成的物品Prefab悬挂的父物体位置
 
         protected override void OnInit()
@@ -39,6 +39,7 @@ namespace Game
             itemList.Register((newItemList) => OnItemListChanged());
             inventoryRoot = GameObject.Find("InventoryRoot")?.transform;
 
+            cardList.SetValueWithoutEvent(new List<ViewCard>());
 
             SOItemBase testItem = Resources.Load<SOItemBase>("ScriptableObjects/Items/ChaosPotion");
             SOItemBase testItem2 = Resources.Load<SOItemBase>("ScriptableObjects/Items/ChaosPotion2");
@@ -48,6 +49,7 @@ namespace Game
             AddItem(new Item { amount = 1, data = testItem });
             AddItem(new Item { amount = 1, data = testItem2 });
             AddItem(new Item { amount = 1, data = testItem2 });
+
         }
 
         private void OnItemListChanged()
@@ -73,7 +75,7 @@ namespace Game
             ISpawnSystem spawnSystem = this.GetSystem<ISpawnSystem>();
             spawnSystem.SpawnCard(cardId);
             cardItem = spawnSystem.GetLastSpawnedCard();
-            var cardBase = cardItem.GetComponent<Card>();
+            var cardBase = cardItem.GetComponent<ViewCard>();
             cardList.Value.Add(cardBase);
         }
     }
