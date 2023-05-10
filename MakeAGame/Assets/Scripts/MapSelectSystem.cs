@@ -45,6 +45,16 @@ namespace Game
             // {
             //     Debug.Log("new grid");
             // });
+            crtGrid.RegisterBeforeValueChanged((grid) =>
+            {
+                string output = grid == null ? "null" : grid.ToString();
+                Debug.Log($"crtGrid: BeforeValueChanged {output}");
+            });
+            crtGrid.RegisterWithInitValue((grid) =>
+            {
+                string output = grid == null ? "null" : grid.ToString();
+                Debug.Log($"crtGrid: OnValueChanged {output}");
+            });
             mouseDirection.RegisterWithInitValue(dir => OnGridUpdate());
         }
 
