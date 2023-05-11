@@ -17,12 +17,13 @@ namespace Game
         
         protected override void OnInit()
         {
-            pieceRoot = GameObject.Find("PieceRoot").transform;
             mPieceFriendPrefab = (GameObject) Resources.Load("Prefabs/Piece");
         }
 
         public GameObject CreatePieceFriend()
         {
+            if(pieceRoot == null)
+                pieceRoot = GameObject.Find("PieceRoot").transform;
             var pieceGO = GameObject.Instantiate(mPieceFriendPrefab, pieceRoot);
             // var viewPiece = pieceGO.GetComponent<ViewPiece>();
             return pieceGO;
