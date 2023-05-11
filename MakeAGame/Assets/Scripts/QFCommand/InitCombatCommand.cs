@@ -29,7 +29,7 @@ namespace Game
             };
             this.SendEvent<ChangeCameraTargetEvent>(setCameraCenterEvent);
 
-            // test
+            // 界面
             UIKit.OpenPanel<UIHandCard>();
             UIKit.OpenPanel<UIInventoryQuickSlot>();
             UIKit.OpenPanel<UIAbilityPanel>();
@@ -37,6 +37,10 @@ namespace Game
             // 怪物
             var spawnSystem = this.GetSystem<ISpawnSystem>();
             spawnSystem.ConstantSpawnMonster(info.monsterSpawnSettings);
+
+            // 测试使用物品
+            var useItemEvent = new UseItemEvent { item = this.GetSystem<IInventorySystem>().GetItemList()[0] };
+            this.SendCommand(new UseItemCommand(useItemEvent));
         }
     }
 }
