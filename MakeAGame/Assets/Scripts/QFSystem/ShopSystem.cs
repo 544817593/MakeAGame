@@ -11,11 +11,12 @@ namespace Game
     {
         
     }
-    public class ShopSystem : AbstractSystem, ISystem
+    public class ShopSystem : AbstractSystem, IShopSystem
     {
+        public BindableProperty<List<Item>> shopItemList = new BindableProperty<List<Item>>(); // 物品列表
         protected override void OnInit()
         {
-
+            //shopItemList
         }
     }
 }

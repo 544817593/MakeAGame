@@ -23,8 +23,8 @@ namespace Game
             RegisterSystem<IInventorySystem>(new InventorySystem());
             RegisterSystem<ISkillSystem>(new SkillSystem());
             RegisterUtility<ICSVImportUtility>(new CSVImportUtility());
+            RegisterSystem<IShopSystem>(new ShopSystem());
 
-            
             // 初始化资源管理
             ResKit.Init();
 

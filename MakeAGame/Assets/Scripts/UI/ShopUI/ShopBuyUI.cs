@@ -12,13 +12,9 @@ namespace ShopBuyUI
 		protected override void OnInit(IUIData uiData = null)
 		{
 			mData = uiData as ShopBuyUIData ?? new ShopBuyUIData();
-            // please add init code here
-            Close.onClick.AddListener(() =>
-            {
-                Debug.Log($"点击了{Close.name}按钮");
-                this.CloseSelf();
-                UIKit.OpenPanel<ShopMainUI.ShopMainUI>();
-            });
+
+            // 监听按钮点击，跳转panel
+            ShopPanelChange.changeShopPanel(this, Close);
         }
 		
 		protected override void OnOpen(IUIData uiData = null)
