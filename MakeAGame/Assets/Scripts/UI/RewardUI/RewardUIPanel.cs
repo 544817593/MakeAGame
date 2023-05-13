@@ -2,16 +2,16 @@ using UnityEngine;
 using UnityEngine.UI;
 using QFramework;
 
-namespace BagUI
+namespace RewardUI
 {
-	public class BagUIData : UIPanelData
+	public class RewardUIPanelData : UIPanelData
 	{
 	}
-	public partial class BagUI : UIPanel
+	public partial class RewardUIPanel : UIPanel
 	{
 		protected override void OnInit(IUIData uiData = null)
 		{
-			mData = uiData as BagUIData ?? new BagUIData();
+			mData = uiData as RewardUIPanelData ?? new RewardUIPanelData();
 			// please add init code here
 		}
 		

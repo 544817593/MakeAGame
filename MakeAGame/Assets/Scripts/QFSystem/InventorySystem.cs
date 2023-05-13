@@ -25,6 +25,8 @@ namespace Game
         /// </summary>
         /// <param name="cardId">卡牌id</param>
         public void SpawnCardInBag(int cardId);
+
+      
     }
 
     public class InventorySystem : AbstractSystem, IInventorySystem
@@ -78,6 +80,9 @@ namespace Game
             var cardBase = cardItem.GetComponent<ViewCard>();
             cardList.Value.Add(cardBase);
         }
+
+        
+        
     }
 }
 

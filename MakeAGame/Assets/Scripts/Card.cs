@@ -13,7 +13,7 @@ namespace Game
 
         // 应该不会变动的数据，就不另外存储了，直接用so
         // name, death desc, sprite, feature, special feature
-        private SOCharacterInfo so;
+        public SOCharacterInfo so;
         public string charaName => so.characterName;
         public string deathFuncDesc => so.deathFuncDescription;
         public Sprite cardSprite => so.cardSprite;

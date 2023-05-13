@@ -2,31 +2,35 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using QFramework;
-using BagUI;
-
-public class CheckBag : MonoBehaviour
+using DialogueUI;
+using UnityEngine.UI;
+public class CheckControl : MonoBehaviour
 {
-    public static CheckBag instance;
+    
     public CapsuleCollider2D m_Col;
     public GameObject dialogueP;
     public Texture2D defaultCursor;
-    public Texture2D checkCursor;
+    public Texture2D newCursor;
     Dialogue m_Dialogue;
-    public bool isOpen = false;
+    public bool c_finish;
     // Start is called before the first frame update
     void Start()
     {
-      
-       
-        isOpen = false;
         m_Dialogue = dialogueP.GetComponent<Dialogue>();
         m_Col.enabled = false;
+        c_finish = false;
         Cursor.SetCursor(defaultCursor, Vector2.zero, CursorMode.ForceSoftware);
     }
 
-    void ActiveCheck()
+    // Update is called once per frame
+    void Update()
     {
-        if ( m_Dialogue.d_finish == true && isOpen ==false)
+        ActiveNpc();
+    }
+
+    void ActiveNpc()
+    {
+        if(m_Dialogue != null && m_Dialogue.waitForControl)
         {
             m_Col.enabled = true;
         }
@@ -34,35 +38,24 @@ public class CheckBag : MonoBehaviour
     }
     private void OnMouseDown()
     {
-        Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
-        OpenBag();
+        Cursor.SetCursor(defaultCursor, Vector2.zero, CursorMode.ForceSoftware);
+        c_finish = true;
+        UIKit.GetPanel<DialoguePanel>().NPC.GetComponent<Image>().sprite = gameObject.GetComponent<SpriteRenderer>().sprite;
+        m_Dialogue.ShowBG(3);
+        m_Dialogue.npc.SetActive(false);
+        UIKit.ShowPanel<DialoguePanel>();
 
 
     }
-
     private void OnMouseEnter()
     {
-        Cursor.SetCursor(checkCursor, Vector2.zero, CursorMode.ForceSoftware);
+        Cursor.SetCursor(newCursor, Vector2.zero, CursorMode.ForceSoftware);
     }
 
     private void OnMouseExit()
     {
         Cursor.SetCursor(defaultCursor, Vector2.zero, CursorMode.ForceSoftware);
     }
-    public void OpenBag()
-    {
-        UIKit.OpenPanel<BagUIPanel>();
-       // GameManager.Instance.StartBagMan();
-        isOpen = true;
-       
-    }
-    public void SetIsOpenFalse()
-    {
-        isOpen = false;
-    }
-    // Update is called once per frame
-    void Update()
-    {
-        ActiveCheck();
-    }
+
+   
 }

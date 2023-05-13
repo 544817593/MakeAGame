@@ -3,9 +3,9 @@ using UnityEngine;
 using UnityEngine.UI;
 using QFramework;
 
-namespace BagUI
+namespace InventoryQuickslotUI
 {
-	// Generate Id:032738e8-3852-4c43-91f9-434ce5cc988b
+	// Generate Id:43142805-471d-4f6c-bc7d-0c6274f30031
 	public partial class BagUI
 	{
 		public const string Name = "BagUI";
