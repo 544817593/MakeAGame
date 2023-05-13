@@ -19,7 +19,6 @@ namespace ShopMainUI
 			ShopPanelChange.changeShopPanel(this, Sell);
             ShopPanelChange.changeShopPanel(this, LevelUp);
             ShopPanelChange.changeShopPanel(this, ShopNPC);
-
         }
 		
 		protected override void OnOpen(IUIData uiData = null)

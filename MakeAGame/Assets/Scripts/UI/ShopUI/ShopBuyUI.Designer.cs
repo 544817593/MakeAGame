@@ -5,13 +5,12 @@ using QFramework;
 
 namespace ShopBuyUI
 {
-	// Generate Id:cbb5cf84-f18d-46d5-904d-2126868958f9
+	// Generate Id:006167d5-2f26-4496-a03e-522521b22f38
 	public partial class ShopBuyUI
 	{
 		public const string Name = "ShopBuyUI";
-
-        #region initComponents
-        [SerializeField]
+		
+		[SerializeField]
 		public UnityEngine.UI.Button Close;
 		[SerializeField]
 		public UnityEngine.UI.Button Buy;
@@ -63,9 +62,8 @@ namespace ShopBuyUI
 		public UnityEngine.UI.Image ImageItemInfo;
 		[SerializeField]
 		public TMPro.TextMeshProUGUI TextItemInfo;
-        #endregion
-
-        private ShopBuyUIData mPrivateData = null;
+		
+		private ShopBuyUIData mPrivateData = null;
 		
 		protected override void ClearUIComponents()
 		{

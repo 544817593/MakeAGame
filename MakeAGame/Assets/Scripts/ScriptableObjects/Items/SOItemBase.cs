@@ -9,6 +9,7 @@ public class SOItemBase : ScriptableObject
     public ItemVolumeEnum volume;
     public string itemName;
     public Sprite sprite;
+    public int buyCost;
     protected PlayerManager playerManager;
 
 }

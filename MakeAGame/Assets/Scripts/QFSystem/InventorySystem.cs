@@ -44,8 +44,7 @@ namespace Game
             SOItemBase testItem = Resources.Load<SOItemBase>("ScriptableObjects/Items/Item31");
 
             AddItem(new Item { amount = 1, data = testItem });
-            AddItem(new Item { amount = 1, data = testItem });
-            AddItem(new Item { amount = 1, data = testItem });
+            AddItem(new Item { amount = 2, data = testItem });
 
 
         }
