@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace Game
@@ -15,6 +16,7 @@ namespace Game
         /// <param name="id">角色id</param>
         /// <param name="canRetNull">是否可以返回空，若否，找不到对应资源时返回默认资源</param>
         /// <returns></returns>
+        [Obsolete("请使用IdToSO.FindCardSOByID()")]
         public static SOCharacterInfo GetCharacterInfo(int id, bool canRetNull = true)
         {
             var so = Resources.Load<SOCharacterInfo>($"ScriptableObjects/Characters/SOCharacterInfo_{id}");
@@ -42,6 +44,30 @@ namespace Game
         {
             Sprite sp = Resources.Load<Sprite>($"Sprites/Cards/Rarity/Card_Rarity_{rarity}");
             return sp;
+        }
+
+        /// <summary>
+        /// 时间流速enum转为实际乘倍数
+        /// </summary>
+        /// <param name="e"></param>
+        /// <returns></returns>
+        public static float ToTimeMultiplierFloat(this TimeMultiplierEnum e)
+        {
+            switch (e)
+            {
+                case TimeMultiplierEnum.Normal:
+                    return 1f;
+                case TimeMultiplierEnum.Fast:
+                    return 1.2f;
+                case TimeMultiplierEnum.Superfast:
+                    return 1.5f;
+                case TimeMultiplierEnum.Slow:
+                    return 0.8f;
+                case TimeMultiplierEnum.Superslow:
+                    return 0.5f;
+                default:
+                    return 1f;
+            }
         }
     }
 }

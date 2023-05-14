@@ -50,3 +50,6 @@ TagManager:
   - name: Hint
     uniqueID: 1326150115
     locked: 0
+  - name: Piece
+    uniqueID: 358138923
+    locked: 0
