@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace Game
@@ -15,6 +16,7 @@ namespace Game
         /// <param name="id">角色id</param>
         /// <param name="canRetNull">是否可以返回空，若否，找不到对应资源时返回默认资源</param>
         /// <returns></returns>
+        [Obsolete("请使用IdToSO.FindCardSOByID()")]
         public static SOCharacterInfo GetCharacterInfo(int id, bool canRetNull = true)
         {
             var so = Resources.Load<SOCharacterInfo>($"ScriptableObjects/Characters/SOCharacterInfo_{id}");
