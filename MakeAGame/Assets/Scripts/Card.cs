@@ -39,7 +39,9 @@ namespace Game
 
         void InitData()
         {
-            so = Extensions.GetCharacterInfo(charaID, false);
+            // 原来这个是按文件名找的，下面这个按so里面存的卡牌id，文件名不影响
+            //so = Extensions.GetCharacterInfo(charaID, false);
+            so = IdToSO.FindCardSOByID(charaID);
             rarity = so.rarity;
             sanCost = so.sanCost;
             hp = so.hp;

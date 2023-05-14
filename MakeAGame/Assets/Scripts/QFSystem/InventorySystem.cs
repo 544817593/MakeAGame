@@ -30,7 +30,7 @@ namespace Game
     public class InventorySystem : AbstractSystem, IInventorySystem
     {
         public BindableProperty<List<Item>> itemList = new BindableProperty<List<Item>>(); // 物品列表
-        public BindableProperty<List<Card>> cardList; // 卡牌列表
+        public BindableProperty<List<ViewCard>> cardList = new BindableProperty<List<ViewCard>>(); // 卡牌列表
         public Transform inventoryRoot; // 生成的物品Prefab悬挂的父物体位置
 
         protected override void OnInit()
@@ -39,15 +39,14 @@ namespace Game
             itemList.Register((newItemList) => OnItemListChanged());
             inventoryRoot = GameObject.Find("InventoryRoot")?.transform;
 
+            cardList.SetValueWithoutEvent(new List<ViewCard>());
 
-            SOItemBase testItem = Resources.Load<SOItemBase>("ScriptableObjects/Items/ChaosPotion");
-            SOItemBase testItem2 = Resources.Load<SOItemBase>("ScriptableObjects/Items/ChaosPotion2");
-            // SOItemBase testItem = AssetDatabase.LoadAssetAtPath<SOItemBase>("Assets/Resources/ScriptableObjects/Items/ChaosPotion.asset");
-            // SOItemBase testItem2 = AssetDatabase.LoadAssetAtPath<SOItemBase>("Assets/Resources/ScriptableObjects/Items/ChaosPotion2.asset");
+            SOItemBase testItem = Resources.Load<SOItemBase>("ScriptableObjects/Items/Item31");
 
             AddItem(new Item { amount = 1, data = testItem });
-            AddItem(new Item { amount = 1, data = testItem2 });
-            AddItem(new Item { amount = 1, data = testItem2 });
+            AddItem(new Item { amount = 2, data = testItem });
+
+
         }
 
         private void OnItemListChanged()
@@ -57,6 +56,19 @@ namespace Game
 
         public void AddItem(Item item)
         {
+            // 如果已经有物品，那么则数量+1
+            for (int i = 0; i < itemList.Value.Count; i++)
+            {
+                if (itemList.Value[i].data.name == item.data.name)
+                {
+                    // 因为是双层数据类型，需要重新给itemList.Value赋值，不然不会调用OnItemListChanged()
+                    List<Item> tempList = new List<Item>(itemList.Value);
+                    tempList[i].amount += item.amount;
+                    itemList.Value = tempList;
+                    return;
+                }
+               
+            }
             List<Item> newList = new List<Item>(itemList.Value);
             newList.Add(item);
             itemList.Value = newList;
@@ -73,7 +85,7 @@ namespace Game
             ISpawnSystem spawnSystem = this.GetSystem<ISpawnSystem>();
             spawnSystem.SpawnCard(cardId);
             cardItem = spawnSystem.GetLastSpawnedCard();
-            var cardBase = cardItem.GetComponent<Card>();
+            var cardBase = cardItem.GetComponent<ViewCard>();
             cardList.Value.Add(cardBase);
         }
     }

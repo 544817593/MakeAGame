@@ -21,7 +21,7 @@ public class MonsterTargetSelectionCommand : AbstractCommand
     {
         TempAllyScript targetAlly = GameObject.Find("TestAlly").GetComponent<TempAllyScript>(); // 怪物的当前目标
 
-        List<TempAllyScript> allyList = this.GetSystem<ISpawnSystem>().GetAllyList(); // Current ally pieces
+        List<TempAllyScript> allyList = this.GetSystem<ISpawnSystem>().GetAllyList(); // 当前友军列表
         List<TempAllyScript> targetList = new List<TempAllyScript>(); // Ally pieces that direct monster's movement (investigator/undead)
         monster.currentTarget = targetAlly;
     }

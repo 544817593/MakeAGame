@@ -9,9 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 28938642e958f7c4daf6aa93a6e6cc64, type: 3}
-  m_Name: ChaosPotion
+  m_Script: {fileID: 11500000, guid: acc015c2671ef67429c4b70efb47cc33, type: 3}
+  m_Name: Item31
   m_EditorClassIdentifier: 
-  itemType: 0
-  itemName: 
-  sprite: {fileID: 0}
+  itemType: 2
+  volume: 0
+  itemName: Item31
+  sprite: {fileID: 21300000, guid: 0065075aa3437304b97e61ee1f2fdb96, type: 3}
+  buyCost: 11

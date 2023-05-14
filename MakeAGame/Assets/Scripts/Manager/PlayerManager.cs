@@ -8,6 +8,7 @@ public class PlayerManager : MonoBehaviour
 {
     private static PlayerManager instance; // 玩家管理器示例
     private InventorySystem inventory;
+    public SOPlayer player;
 
     /// <summary>
     /// 玩家管理器Getter
@@ -32,8 +33,6 @@ public class PlayerManager : MonoBehaviour
         inventory = GameEntry.Interface.GetSystem<InventorySystem>();
     }
 
-    public SOPlayer player;
-    
 
     // Start is called before the first frame update
     void Start()
