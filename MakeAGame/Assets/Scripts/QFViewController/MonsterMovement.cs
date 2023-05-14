@@ -19,6 +19,8 @@ public class MonsterMovement : MonoBehaviour, IController
 
     private (int, int) nextIntendPos; // 下一个想要去到的格子
 
+    public Animator animator; // 移动动画组件
+
 
     void Start()
     {
@@ -120,6 +122,7 @@ public class MonsterMovement : MonoBehaviour, IController
         var newGridTransPos = grid2DList[nextIntendPos.Item1, nextIntendPos.Item2].transform.position;
         this.gameObject.transform.position = newGridTransPos;
         monster.leftTopGridPos.Value = nextIntendPos;
+
     }
 
 }

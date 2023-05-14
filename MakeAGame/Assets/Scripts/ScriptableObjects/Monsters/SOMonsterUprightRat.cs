@@ -5,5 +5,5 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "UprightRat", menuName = "ScriptableObjects/Pieces/Monsters/UprightRat")]
 public class SOMonsterUprightRat : SOMonsterBase
 {
-    
+
 }

@@ -71,7 +71,8 @@ namespace Game
             Monster monster = piece.GetComponent<Monster>();
             monster.data = Resources.Load<SOMonsterBase>("ScriptableObjects/Monsters/" + data.name);
             // monster.data = AssetDatabase.LoadAssetAtPath<SOMonsterBase>
-                // ("Assets/Resources/ScriptableObjects/Monsters/" + data.name + ".asset");
+            // ("Assets/Resources/ScriptableObjects/Monsters/" + data.name + ".asset");
+
             piece.transform.Find("image").GetComponent<SpriteRenderer>().sprite = monster.data.monsterSprite;
             InitialiseMonsterValues(monster, data);
             grid[data.row, data.col].gridStatus.Value = GridStatusEnum.MonsterPiece;

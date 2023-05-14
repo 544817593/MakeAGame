@@ -10,6 +10,7 @@ public class SOItemBase : ScriptableObject
     public string itemName;
     public Sprite sprite;
     public int buyCost;
+    public string description;
     protected PlayerManager playerManager;
 
 }
