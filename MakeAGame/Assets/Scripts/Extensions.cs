@@ -45,5 +45,29 @@ namespace Game
             Sprite sp = Resources.Load<Sprite>($"Sprites/Cards/Rarity/Card_Rarity_{rarity}");
             return sp;
         }
+
+        /// <summary>
+        /// 时间流速enum转为实际乘倍数
+        /// </summary>
+        /// <param name="e"></param>
+        /// <returns></returns>
+        public static float ToTimeMultiplierFloat(this TimeMultiplierEnum e)
+        {
+            switch (e)
+            {
+                case TimeMultiplierEnum.Normal:
+                    return 1f;
+                case TimeMultiplierEnum.Fast:
+                    return 1.2f;
+                case TimeMultiplierEnum.Superfast:
+                    return 1.5f;
+                case TimeMultiplierEnum.Slow:
+                    return 0.8f;
+                case TimeMultiplierEnum.Superslow:
+                    return 0.5f;
+                default:
+                    return 1f;
+            }
+        }
     }
 }

@@ -35,7 +35,7 @@ public class MonsterMovement : MonoBehaviour, IController
         timeSinceUpdate = Time.time - lastUpdateTime; // 计算两次Update的时间差
         // 根据格子时间倍率减少怪物的移动冷却时间
         movementCooldown -= (timeSinceUpdate * grid2dList[monster.leftTopGridPos.Value.Item1, 
-            monster.leftTopGridPos.Value.Item2].timeMultiplier);
+            monster.leftTopGridPos.Value.Item2].timeMultiplier.Value.ToTimeMultiplierFloat());
 
         // 冷却完毕
         if (movementCooldown <= 0)
