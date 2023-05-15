@@ -24,5 +24,7 @@ namespace Game
     public struct UseItemEvent
     {
         public Item item;
+        public ViewCard viewCard;
     }
+
 }

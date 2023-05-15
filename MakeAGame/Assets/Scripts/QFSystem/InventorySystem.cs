@@ -24,7 +24,14 @@ namespace Game
         /// 创建一个卡牌实体Prefab，并放入背包内
         /// </summary>
         /// <param name="cardId">卡牌id</param>
-        public void SpawnCardInBag(int cardId);
+        void SpawnCardInBag(int cardId);
+
+        /// <summary>
+        /// 返回背包里的卡牌列表
+        /// </summary>
+        /// <returns></returns>
+        List<ViewCard> GetCardList();
+
     }
 
     public class InventorySystem : AbstractSystem, IInventorySystem
@@ -87,6 +94,11 @@ namespace Game
             cardItem = spawnSystem.GetLastSpawnedCard();
             var cardBase = cardItem.GetComponent<ViewCard>();
             cardList.Value.Add(cardBase);
+        }
+
+        public List<ViewCard> GetCardList()
+        {
+            return cardList;
         }
     }
 }
