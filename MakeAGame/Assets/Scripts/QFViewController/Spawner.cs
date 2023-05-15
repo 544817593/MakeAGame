@@ -71,12 +71,16 @@ namespace Game
 
             //动画部分
             GameObject animGO = monster.data.GetChildAnim();
-            GameObject mosterAnim = Instantiate(animGO);
-            piece.GetComponent<MonsterMovement>().animator = mosterAnim.GetComponent<Animator>();
-            mosterAnim.transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
-            mosterAnim.transform.localPosition = new Vector3(0, 0, 0);
-            mosterAnim.transform.localRotation = Quaternion.Euler(new Vector3 (0, 0, 0));
-            mosterAnim.transform.SetParent(piece.transform);
+            if (animGO != null)
+            {
+                GameObject mosterAnim = Instantiate(animGO);
+                piece.GetComponent<MonsterMovement>().animator = mosterAnim.GetComponent<Animator>();
+                mosterAnim.transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
+                mosterAnim.transform.localPosition = new Vector3(0, 0, 0);
+                mosterAnim.transform.localRotation = Quaternion.Euler(new Vector3(0, 0, 0));
+                mosterAnim.transform.SetParent(piece.transform);
+            }
+
             
             // monster.data = AssetDatabase.LoadAssetAtPath<SOMonsterBase>
                 // ("Assets/Resources/ScriptableObjects/Monsters/" + data.name + ".asset");

@@ -22,5 +22,5 @@ MonoBehaviour:
   rarity: 2
   atkRange: 1
   monsterId: 9995
-  properties: 
+  properties: 00000000
   dirs: 00000000020000000300000001000000
