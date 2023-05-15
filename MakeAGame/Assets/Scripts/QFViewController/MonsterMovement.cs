@@ -14,6 +14,7 @@ public class MonsterMovement : MonoBehaviour, IController
     private float lastMoveTime; // 上一次移动的时间
     private (int, int) nextIntendPos; // 下一个想要去到的格子
 
+    public Animator animator;//移动动画组件
     void Start()
     {
         monster = gameObject.GetComponent<Monster>();
@@ -104,6 +105,9 @@ public class MonsterMovement : MonoBehaviour, IController
         var newGridTransPos = grid2DList[nextIntendPos.Item1, nextIntendPos.Item2].transform.position;
         this.gameObject.transform.position = newGridTransPos;
         monster.leftTopGridPos.Value = nextIntendPos;
+
+        animator.SetBool("isMove", true);
+        animator.SetBool("isMove", false);
     }
 
 }

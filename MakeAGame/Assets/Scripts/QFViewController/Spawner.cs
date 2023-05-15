@@ -68,6 +68,16 @@ namespace Game
             piece.transform.Rotate(90, 0, 0);
             Monster monster = piece.GetComponent<Monster>();
             monster.data = Resources.Load<SOMonsterBase>("ScriptableObjects/Monsters/" + data.name);
+
+            //动画部分
+            GameObject animGO = monster.data.GetChildAnim();
+            GameObject mosterAnim = Instantiate(animGO);
+            piece.GetComponent<MonsterMovement>().animator = mosterAnim.GetComponent<Animator>();
+            mosterAnim.transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
+            mosterAnim.transform.localPosition = new Vector3(0, 0, 0);
+            mosterAnim.transform.localRotation = Quaternion.Euler(new Vector3 (0, 0, 0));
+            mosterAnim.transform.SetParent(piece.transform);
+            
             // monster.data = AssetDatabase.LoadAssetAtPath<SOMonsterBase>
                 // ("Assets/Resources/ScriptableObjects/Monsters/" + data.name + ".asset");
             piece.transform.Find("image").GetComponent<SpriteRenderer>().sprite = monster.data.monsterSprite;
