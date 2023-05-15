@@ -123,6 +123,9 @@ public class MonsterMovement : MonoBehaviour, IController
         this.gameObject.transform.position = newGridTransPos;
         monster.leftTopGridPos.Value = nextIntendPos;
 
+        animator.SetBool("isMove", true);
+        animator.SetBool("isMove", false);
+
     }
 
 }
