@@ -7,6 +7,8 @@ public class SOPlayer : ScriptableObject
 {
     [SerializeField] int gold; // 玩家金币
     [SerializeField] float goldAcquisitionMultiplier; // 玩家获取金币倍率
+    [SerializeField] int san; // 精神值
+    [SerializeField] int maxSan; // 最大精神值
 
     // 玩家属性，力量，精神，技巧，体力，魅力
     [SerializeField] int strength;
@@ -14,6 +16,24 @@ public class SOPlayer : ScriptableObject
     [SerializeField] int skill;
     [SerializeField] int stamina;
     [SerializeField] int chrisma;
+
+    /// <summary>
+    /// 获取玩家最大精神值
+    /// </summary>
+    /// <returns></returns>
+    public int GetMaxSan()
+    {
+        return maxSan;
+    }
+
+    /// <summary>
+    /// 调整玩家最大精神值
+    /// </summary>
+    /// <param name="amount">要调整的精神值额度</param>
+    public void AddMaxSan(int amount)
+    {
+        maxSan += amount;
+    }
 
     /// <summary>
     /// 获得玩家现有金币数量
@@ -25,12 +45,30 @@ public class SOPlayer : ScriptableObject
     }
 
     /// <summary>
-    /// 获得金币
+    /// 调整玩家金币
     /// </summary>
     /// <param name="amount">金币数量</param>
     public void AddGold(int amount)
     {
         gold += amount;
+    }
+
+    /// <summary>
+    /// 获得玩家现在精神值
+    /// </summary>
+    /// <returns></returns>
+    public int GetSan()
+    {
+        return san;
+    }
+
+    /// <summary>
+    /// 调整玩家精神值
+    /// </summary>
+    /// <param name="amount">精神值数量</param>
+    public void AddSan(int amount)
+    {
+        san += amount;
     }
 
     /// <summary>

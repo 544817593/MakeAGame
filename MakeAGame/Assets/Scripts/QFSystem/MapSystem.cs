@@ -146,9 +146,10 @@ namespace Game
         /// <param name="attri"></param>
         public void SetGridData(BoxGrid boxGrid, List<string> dataRow, Dictionary<string, int> attri)
         {
+            Debug.LogError("SetGridData暂时没有做任何事");
             // 默认表内数据按顺序排列
-            boxGrid.timeMultiplier.Value = float.Parse(dataRow[attri["timeMultiplier"]]);
-            boxGrid.terrain.Value = int.Parse(dataRow[attri["terrain"]]);
+            // boxGrid.timeMultiplier.Value = float.Parse(dataRow[attri["timeMultiplier"]]);
+            // boxGrid.terrain.Value = int.Parse(dataRow[attri["terrain"]]);
         }
 
         #endregion

@@ -11,19 +11,19 @@ namespace Game
         [TableMatrix(Transpose = true)] [BoxGroup("terrain")]
         public int[,] mapTerrain;   // 地形类型
         [TableMatrix(Transpose = true)] [BoxGroup("timeMultiplier")]
-        public int[,] mapTimeMultiplier;  // 时间流速倍数 // todo 改为enum
+        public TimeMultiplierEnum[,] mapTimeMultiplier;  // 时间流速倍数
 
         [ButtonGroup("1")]
         [Button("新建地图数据（覆盖旧数据）", ButtonSizes.Large)]
         public void BuildMap()
         {
             mapTerrain = new int[row, col];
-            mapTimeMultiplier = new int[row, col];
+            mapTimeMultiplier = new TimeMultiplierEnum[row, col];
             for(int i = 0; i < row; i++)
             for (int j = 0; j < col; j++)
             {
                 mapTerrain[i, j] = (int) TerrainEnum.Road;
-                mapTimeMultiplier[i, j] = 1;   
+                mapTimeMultiplier[i, j] = TimeMultiplierEnum.Normal;   
             }
         }
         

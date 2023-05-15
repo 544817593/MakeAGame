@@ -20,7 +20,7 @@ namespace Game
         public int row; // 行
         public int col; // 列
         public BindableProperty<int> terrain = new BindableProperty<int>((int)TerrainEnum.Road);    // 地形类型
-        public BindableProperty<float> timeMultiplier = new BindableProperty<float>();  // 时间流逝倍数
+        public BindableProperty<TimeMultiplierEnum> timeMultiplier = new BindableProperty<TimeMultiplierEnum>();  // 时间流逝倍数
         public int occupation; // 当前格子上的单位的ID
         public BindableProperty<GridStatusEnum> gridStatus = new BindableProperty<GridStatusEnum>(); // 格子状态
         
@@ -54,7 +54,7 @@ namespace Game
 
             // 注册属性改变时会触发的方法
             terrain.RegisterWithInitValue(terr => OnTerrainChanged(terr));
-            timeMultiplier.RegisterWithInitValue(time => OnTimeMultiplierChanged(time));
+            timeMultiplier.RegisterWithInitValue(tm => OnTimeMultiplierChanged(tm));
             
             // 开始选择格子时
             this.RegisterEvent<SelectMapStartEvent>(e => OnSelectStart(e));
@@ -79,7 +79,7 @@ namespace Game
             }
         }
 
-        private void OnTimeMultiplierChanged(float time)
+        private void OnTimeMultiplierChanged(TimeMultiplierEnum tm)
         {
             // todo 速度变化触发的效果
             

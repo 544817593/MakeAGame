@@ -1,5 +1,6 @@
 using Game;
 using QFramework;
+using System;
 using System.Collections.Generic;
 #if UNITY_EDITOR
 using UnityEditor;
@@ -39,6 +40,9 @@ public class Monster : MonoBehaviour, IController
     public TempAllyScript currentTarget; // 当前目标
     public DirEnum currentDir = DirEnum.None; // 当前移动方向
 
+    private IMapSystem mapSystem; // 地图系统
+    private float oldSpeed; // 记录移动速度被改变前的旧值
+
     /// <summary>
     /// 获取Architecture 每个IController都要写
     /// </summary>
@@ -50,18 +54,49 @@ public class Monster : MonoBehaviour, IController
 
     void Awake()
     {
-
+        mapSystem = this.GetSystem<IMapSystem>();
     }
 
     void Start()
     {
         leftTopGridPos.RegisterWithInitValue(newPosition => OnMonsterPositionChanged(newPosition));
+        leftTopGridPos.RegisterBeforeValueChanged(oldPosition => OnBeforeMonsterPositionChanged(oldPosition));
+        moveSpeed.Register(newMoveSpeed => OnMonsterMoveSpeedChanged(newMoveSpeed));
+        moveSpeed.RegisterBeforeValueChanged(oldSpeed => OnBeforeMonsterMoveSpeedChanged(oldSpeed));
         this.SendCommand(new MonsterTargetSelectionCommand(this));
     }
 
+    private void OnBeforeMonsterMoveSpeedChanged(float oldSpeed)
+    {
+        this.oldSpeed = oldSpeed;
+    }
+
+    private void OnMonsterMoveSpeedChanged(float newMoveSpeed)
+    {
+        // 移动速度改变时同时改变移动冷却计时器
+        float differential = newMoveSpeed - oldSpeed;
+
+        gameObject.GetComponent<MonsterMovement>().movementCooldown += differential;
+    }
+
+    /// <summary>
+    /// 怪物位置改变前一瞬间
+    /// </summary>
+    /// <param name="oldPosition">原位置</param>
+    private void OnBeforeMonsterPositionChanged((int, int) oldPosition)
+    {
+        // 更新格子上储存的信息
+        mapSystem.Grids()[oldPosition.Item1, oldPosition.Item2].occupation = 0;
+    }
+
+    /// <summary>
+    /// 怪物改变位置后一瞬间
+    /// </summary>
+    /// <param name="newPosition">新位置</param>
     private void OnMonsterPositionChanged((int,int) newPosition)
     {
-        this.GetSystem<IMapSystem>().Grids()[newPosition.Item1, newPosition.Item2].occupation = pieceId;
+        // 更新格子上储存的信息
+        mapSystem.Grids()[newPosition.Item1, newPosition.Item2].occupation = pieceId;       
     }
 
 }

@@ -8,7 +8,7 @@ using UnityEngine;
 namespace Game
 {
     /// <summary>
-    /// 用来实际生成关卡内的各种棋子
+    /// 用来实际生成各种卡牌/棋子
     /// </summary>
     public class Spawner : MonoBehaviour, IController
     {
@@ -41,15 +41,17 @@ namespace Game
             {
                 OnSpawnCardEvent();
             }).UnRegisterWhenGameObjectDestroyed(gameObject);
+
         }
 
         /// <summary>
         /// 收到卡牌生成事件后处理
         /// </summary>
-        /// <exception cref="NotImplementedException"></exception>
         private void OnSpawnCardEvent()
         {
             GameObject cardItem = (GameObject)Instantiate(Resources.Load("Prefabs/CardItem"));
+            ViewCard viewCard = cardItem.AddComponent<ViewCard>();
+            viewCard.card = new Card(1);
             this.GetSystem<ISpawnSystem>().SetLastSpawnedCard(cardItem);
         }
 
@@ -83,7 +85,8 @@ namespace Game
 
             
             // monster.data = AssetDatabase.LoadAssetAtPath<SOMonsterBase>
-                // ("Assets/Resources/ScriptableObjects/Monsters/" + data.name + ".asset");
+            // ("Assets/Resources/ScriptableObjects/Monsters/" + data.name + ".asset");
+
             piece.transform.Find("image").GetComponent<SpriteRenderer>().sprite = monster.data.monsterSprite;
             InitialiseMonsterValues(monster, data);
             grid[data.row, data.col].gridStatus.Value = GridStatusEnum.MonsterPiece;

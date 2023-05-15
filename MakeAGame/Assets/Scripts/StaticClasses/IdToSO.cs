@@ -15,13 +15,18 @@ public static class IdToSO
     /// </summary>
     /// <param name="id">卡牌ID</param>
     /// <returns></returns>
-    public static SOCharacterInfo FindCardSOByID(int id)
+    public static SOCharacterInfo FindCardSOByID(int id, bool canReturnNull = true)
     {
         foreach (SOCharacterInfo character in soCharacterList)
         {
             if (character.characterID == id) return character;
         }
-        return null;
+        
+        // 若不能返回空值，返回默认id的so
+        if (canReturnNull)
+            return null;
+        else
+            return soCharacterList.ToList().Find(so => so.characterID == 1);
     }
 }
 
