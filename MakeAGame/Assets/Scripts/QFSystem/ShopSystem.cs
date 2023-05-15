@@ -34,7 +34,7 @@ namespace Game
             //shopItemList.Value.Add(new Item { amount = 1, data = Resources.Load<SOItemBase>("ScriptableObjects/Items/Item31")});
             //shopItemList.Value.Add(new Item { amount = 4, data = Resources.Load<SOItemBase>("ScriptableObjects/Items/Item01")});
 
-            addShopItemWithoutCall(new Item { amount = 10, data = Resources.Load<SOItemBase>("ScriptableObjects/Items/Item31") });
+            addShopItemWithoutCall(new Item { amount = 1, data = Resources.Load<SOItemBase>("ScriptableObjects/Items/Item31") });
             addShopItemWithoutCall(new Item { amount = 2, data = Resources.Load<SOItemBase>("ScriptableObjects/Items/Item01") });
             addShopItemWithoutCall(new Item { amount = 1, data = Resources.Load<SOItemBase>("ScriptableObjects/Items/Item31") });
             addShopItemWithoutCall(new Item { amount = 4, data = Resources.Load<SOItemBase>("ScriptableObjects/Items/Item01") });

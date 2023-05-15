@@ -130,6 +130,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 224268148}
     m_Modifications:
+    - target: {fileID: 1214151929, guid: 44965ec73c1295048b188c158eef8f8f, type: 3}
+      propertyPath: m_text
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1214151929, guid: 44965ec73c1295048b188c158eef8f8f, type: 3}
+      propertyPath: m_fontSize
+      value: 45
+      objectReference: {fileID: 0}
+    - target: {fileID: 1214151929, guid: 44965ec73c1295048b188c158eef8f8f, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 45
+      objectReference: {fileID: 0}
     - target: {fileID: 1821274316126384080, guid: 44965ec73c1295048b188c158eef8f8f, type: 3}
       propertyPath: m_Name
       value: ShopBuyUI

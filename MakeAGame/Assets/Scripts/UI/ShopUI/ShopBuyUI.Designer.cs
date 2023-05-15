@@ -5,7 +5,7 @@ using QFramework;
 
 namespace ShopBuyUI
 {
-	// Generate Id:006167d5-2f26-4496-a03e-522521b22f38
+	// Generate Id:78f92ef1-c916-474f-a4b4-f5a3ebe92c50
 	public partial class ShopBuyUI
 	{
 		public const string Name = "ShopBuyUI";
@@ -13,9 +13,9 @@ namespace ShopBuyUI
 		[SerializeField]
 		public UnityEngine.UI.Button Close;
 		[SerializeField]
-		public UnityEngine.UI.Button Buy;
-		[SerializeField]
 		public TMPro.TextMeshProUGUI TextGold;
+		[SerializeField]
+		public UnityEngine.UI.Button Buy;
 		[SerializeField]
 		public UnityEngine.UI.Image ShopGridPanel;
 		[SerializeField]
@@ -62,14 +62,20 @@ namespace ShopBuyUI
 		public UnityEngine.UI.Image ImageItemInfo;
 		[SerializeField]
 		public TMPro.TextMeshProUGUI TextItemInfo;
+		[SerializeField]
+		public TMPro.TextMeshProUGUI TextCount;
+		[SerializeField]
+		public UnityEngine.UI.Button BtnAdd;
+		[SerializeField]
+		public UnityEngine.UI.Button BtnSub;
 		
 		private ShopBuyUIData mPrivateData = null;
 		
 		protected override void ClearUIComponents()
 		{
 			Close = null;
-			Buy = null;
 			TextGold = null;
+			Buy = null;
 			ShopGridPanel = null;
 			Item01 = null;
 			Item02 = null;
@@ -93,6 +99,9 @@ namespace ShopBuyUI
 			Item20 = null;
 			ImageItemInfo = null;
 			TextItemInfo = null;
+			TextCount = null;
+			BtnAdd = null;
+			BtnSub = null;
 			
 			mData = null;
 		}
