@@ -253,7 +253,7 @@ namespace ShopSellUI
             selectedItem.amount -= sellCount;
             selectedButton.transform.Find("ItemNum").GetComponent<TextMeshProUGUI>().text = selectedItem.amount.ToString();
             // TODO: 售卖价格替换购买价格
-            playerGold += sellCount * selectedItem.data.sellPrize;
+            playerGold += sellCount * selectedItem.data.sellPrice;
             TextGold.text = $"金币: {playerGold}";
 
             // 重置

@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using QFramework;
 using Game;
+using BagUI;
 
 namespace InventoryQuickslotUI
 {
@@ -19,8 +20,12 @@ namespace InventoryQuickslotUI
         protected override void OnInit(IUIData uiData = null)
 		{
 			mData = uiData as UIInventoryQuickSlotData ?? new UIInventoryQuickSlotData();
-			// please add init code here
-		}
+			CombatSceneButton.onClick.AddListener(() => 
+			{
+				UIKit.OpenPanel<BagUIPanel>();
+			});
+
+        }
 		
 		protected override void OnOpen(IUIData uiData = null)
 		{
