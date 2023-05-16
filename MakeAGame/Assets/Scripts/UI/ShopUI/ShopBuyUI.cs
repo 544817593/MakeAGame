@@ -31,7 +31,7 @@ namespace ShopBuyUI
             // 监听按钮点击，跳转panel
             ShopPanelChange.changeShopPanel(this, Close);
             // TODO: 读取玩家当前金币数量，暂时使用hardcode
-             playerGold = PlayerManager.Instance.player.GetGold();
+            //playerGold = PlayerManager.Instance.player.GetGold();
 
 			updateAndShowShopItems();
 			showItemInfo();
@@ -151,6 +151,10 @@ namespace ShopBuyUI
 				{
                     buyCount--;
                     TextCount.text = $"{buyCount}";
+                }
+                else
+                {
+					Debug.Log("无法减少购买数量");
                 }
             });
         }
