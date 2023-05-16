@@ -9,6 +9,7 @@ public class SOPlayer : ScriptableObject
     [SerializeField] float goldAcquisitionMultiplier; // 玩家获取金币倍率
     [SerializeField] int san; // 精神值
     [SerializeField] int maxSan; // 最大精神值
+    [SerializeField] float sanRegenSpeed; // 精神值恢复速度
 
     // 玩家属性，力量，精神，技巧，体力，魅力
     [SerializeField] int strength;
@@ -16,6 +17,24 @@ public class SOPlayer : ScriptableObject
     [SerializeField] int skill;
     [SerializeField] int stamina;
     [SerializeField] int chrisma;
+
+    /// <summary>
+    /// 调整玩家精神值恢复速度
+    /// </summary>
+    /// <param name="amount">要调整的额度</param>
+    public void AddSanRegenSpeed(float amount)
+    {
+        sanRegenSpeed += amount;
+    }
+
+    /// <summary>
+    /// 获取玩家精神值恢复速度
+    /// </summary>
+    /// <returns></returns>
+    public float GetSanRegenSpeed()
+    {
+        return sanRegenSpeed;
+    }
 
     /// <summary>
     /// 获取玩家最大精神值
