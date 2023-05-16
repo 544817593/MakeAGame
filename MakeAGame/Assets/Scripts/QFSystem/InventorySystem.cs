@@ -24,9 +24,14 @@ namespace Game
         /// 创建一个卡牌实体Prefab，并放入背包内
         /// </summary>
         /// <param name="cardId">卡牌id</param>
-        public void SpawnCardInBag(int cardId);
+        void SpawnCardInBag(int cardId);
 
-      
+        /// <summary>
+        /// 返回背包里的卡牌列表
+        /// </summary>
+        /// <returns></returns>
+        List<ViewCard> GetCardList();
+
     }
 
     public class InventorySystem : AbstractSystem, IInventorySystem
@@ -43,14 +48,11 @@ namespace Game
 
             cardList.SetValueWithoutEvent(new List<ViewCard>());
 
-            SOItemBase testItem = Resources.Load<SOItemBase>("ScriptableObjects/Items/ChaosPotion");
-            SOItemBase testItem2 = Resources.Load<SOItemBase>("ScriptableObjects/Items/ChaosPotion2");
-            // SOItemBase testItem = AssetDatabase.LoadAssetAtPath<SOItemBase>("Assets/Resources/ScriptableObjects/Items/ChaosPotion.asset");
-            // SOItemBase testItem2 = AssetDatabase.LoadAssetAtPath<SOItemBase>("Assets/Resources/ScriptableObjects/Items/ChaosPotion2.asset");
+            SOItemBase testItem = Resources.Load<SOItemBase>("ScriptableObjects/Items/Item31");
 
             AddItem(new Item { amount = 1, data = testItem });
-            AddItem(new Item { amount = 1, data = testItem2 });
-            AddItem(new Item { amount = 1, data = testItem2 });
+            AddItem(new Item { amount = 2, data = testItem });
+
 
         }
 
@@ -61,6 +63,19 @@ namespace Game
 
         public void AddItem(Item item)
         {
+            // 如果已经有物品，那么则数量+1
+            for (int i = 0; i < itemList.Value.Count; i++)
+            {
+                if (itemList.Value[i].data.name == item.data.name)
+                {
+                    // 因为是双层数据类型，需要重新给itemList.Value赋值，不然不会调用OnItemListChanged()
+                    List<Item> tempList = new List<Item>(itemList.Value);
+                    tempList[i].amount += item.amount;
+                    itemList.Value = tempList;
+                    return;
+                }
+               
+            }
             List<Item> newList = new List<Item>(itemList.Value);
             newList.Add(item);
             itemList.Value = newList;
@@ -81,8 +96,10 @@ namespace Game
             cardList.Value.Add(cardBase);
         }
 
-        
-        
+        public List<ViewCard> GetCardList()
+        {
+            return cardList;
+        }
     }
 }
 

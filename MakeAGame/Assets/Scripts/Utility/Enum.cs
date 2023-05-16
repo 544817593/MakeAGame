@@ -79,5 +79,16 @@ public enum ItemTypeEnum
     Enhancement, // 卡牌强化道具
     Coin, // 金币
     Potion, // 药剂
-    Utility // 功能性道具
+    Utility, // 功能性道具
+    Misc // 其它
+}
+
+/// <summary>
+/// 道具容量
+/// </summary>
+public enum ItemVolumeEnum
+{
+    Small, 
+    Medium,
+    Large
 }

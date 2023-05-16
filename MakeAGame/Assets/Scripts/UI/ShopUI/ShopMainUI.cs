@@ -7,19 +7,18 @@ namespace ShopMainUI
 	public class ShopMainUIData : UIPanelData
 	{
 	}
+	
 	public partial class ShopMainUI : UIPanel
 	{
 		protected override void OnInit(IUIData uiData = null)
 		{
 			mData = uiData as ShopMainUIData ?? new ShopMainUIData();
-            // please add init code here
-			Buy.onClick.AddListener(() =>
-            {
-				Debug.Log($"点击了Buy按钮");
-				this.CloseSelf();
-				UIKit.OpenPanel<ShopBuyUI.ShopBuyUI>();
-            });
-			
+            
+			// 监听按钮点击，跳转panel
+            ShopPanelChange.changeShopPanel(this, Buy);
+			ShopPanelChange.changeShopPanel(this, Sell);
+            ShopPanelChange.changeShopPanel(this, LevelUp);
+            ShopPanelChange.changeShopPanel(this, ShopNPC);
         }
 		
 		protected override void OnOpen(IUIData uiData = null)

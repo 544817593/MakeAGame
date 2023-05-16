@@ -11,24 +11,42 @@ public class MonsterMovement : MonoBehaviour, IController
 {
     IMovementSystem movementSystem; // 移动系统
     private Monster monster; // 怪物引用
-    private float lastMoveTime; // 上一次移动的时间
+
+    public float movementCooldown; // 移动时间冷却，冷却完毕即可移动，每次移动后重置为怪物移动速度
+    private float lastUpdateTime; // 上一次触发Update函数的时间
+    private float timeSinceUpdate; // 上一次触发Update函数后经过了多久
+    private BoxGrid[,] grid2dList; // 地图格子列表
+
     private (int, int) nextIntendPos; // 下一个想要去到的格子
+
+    public Animator animator; // 移动动画组件
+
 
     void Start()
     {
         monster = gameObject.GetComponent<Monster>();
+        movementCooldown = monster.moveSpeed;
         movementSystem = this.GetSystem<IMovementSystem>();
-        
+        grid2dList = this.GetSystem<IMapSystem>().Grids();
+        lastUpdateTime = Time.time;
+     
     }
 
     void Update()
     {
-        if (Time.time - lastMoveTime > monster.moveSpeed)
+        timeSinceUpdate = Time.time - lastUpdateTime; // 计算两次Update的时间差
+        // 根据格子时间倍率减少怪物的移动冷却时间
+        movementCooldown -= (timeSinceUpdate * grid2dList[monster.leftTopGridPos.Value.Item1, 
+            monster.leftTopGridPos.Value.Item2].timeMultiplier.Value.ToTimeMultiplierFloat());
+
+        // 冷却完毕
+        if (movementCooldown <= 0)
         {
             FindMovementDir();
-            DoMove(); // 暂时移动下
-            lastMoveTime = Time.time;
+            DoMove();
+            movementCooldown = monster.moveSpeed; // 移动冷却时间重置为移动速度
         }
+        lastUpdateTime = Time.time;
     }
 
     /// <summary>
@@ -75,7 +93,7 @@ public class MonsterMovement : MonoBehaviour, IController
             monster.currentTarget.leftTopGridPos.Item1, monster.currentTarget.leftTopGridPos.Item2, monster);
 
         // 路径存在
-        if (aStarPath != null)
+        if (aStarPath != null && aStarPath.Count != 0)
         {
             // 场景显示路线
             Color randColor = UnityEngine.Random.ColorHSV();
@@ -95,7 +113,7 @@ public class MonsterMovement : MonoBehaviour, IController
     }
 
     /// <summary>
-    /// 暂时用这个函数 待更新升级
+    /// 怪物执行移动
     /// </summary>
     public void DoMove()
     {
@@ -104,6 +122,7 @@ public class MonsterMovement : MonoBehaviour, IController
         var newGridTransPos = grid2DList[nextIntendPos.Item1, nextIntendPos.Item2].transform.position;
         this.gameObject.transform.position = newGridTransPos;
         monster.leftTopGridPos.Value = nextIntendPos;
+
     }
 
 }
