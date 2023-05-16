@@ -5,6 +5,7 @@ using UnityEngine;
 using QFramework;
 using System;
 using UnityEditor;
+using TMPro;
 
 
 public class MonsterMovement : MonoBehaviour, IController
@@ -20,6 +21,7 @@ public class MonsterMovement : MonoBehaviour, IController
     private (int, int) nextIntendPos; // 下一个想要去到的格子
 
     public Animator animator; // 移动动画组件
+    private Coroutine movementCoroutine; // 移动时执行的协程
 
 
     void Start()
@@ -117,19 +119,55 @@ public class MonsterMovement : MonoBehaviour, IController
     /// </summary>
     public void DoMove()
     {
-        // 更新画面
-        var grid2DList = this.GetSystem<IMapSystem>().Grids();
-        var newGridTransPos = grid2DList[nextIntendPos.Item1, nextIntendPos.Item2].transform.position;
-        this.gameObject.transform.position = newGridTransPos;
-        monster.leftTopGridPos.Value = nextIntendPos;
+        // 如果移动动画协程还在执行，但又触发DoMove了，那么强制停止之前的
+        if (movementCoroutine != null)
+        {
+            StopCoroutine(movementCoroutine);
+            movementCoroutine = null;
+        }
 
+        // 找到位置
+        var grid2DList = this.GetSystem<IMapSystem>().Grids();
+        var newGridTransPos = grid2DList[nextIntendPos.Item1, nextIntendPos.Item2].transform.position;       
+        
+        // 如果有动画，则播放动画并启动移动协程，否则直接更改怪物位置
         if (animator != null)
         {
             animator.SetBool("isMove", true);
+            movementCoroutine = StartCoroutine(MoveToTarget(newGridTransPos));
+        }
+        else
+        {
+            this.gameObject.transform.position = newGridTransPos;
+        }
+
+        monster.leftTopGridPos.Value = nextIntendPos;
+    }
+
+    /// <summary>
+    /// 移动时执行动画的协程
+    /// </summary>
+    /// <param name="newGridTransPos">新位置</param>
+    /// <param name="duration">持续时间</param>
+    /// <returns></returns>
+    private IEnumerator MoveToTarget(Vector3 newGridTransPos, float duration = 1f)
+    {
+        Vector3 startPosition = transform.position;
+        float elapsedTime = 0f;
+        while (elapsedTime < duration)
+        {
+            elapsedTime += Time.deltaTime;
+            float t = Mathf.Clamp01(elapsedTime / duration);
+            transform.position = Vector3.Lerp(startPosition, newGridTransPos, t);
+            yield return null;
+        }
+
+        if (animator != null)
+        {
             animator.SetBool("isMove", false);
         }
 
-
+        movementCoroutine = null;
     }
 
 }

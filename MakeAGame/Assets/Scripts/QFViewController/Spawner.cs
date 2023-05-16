@@ -75,20 +75,20 @@ namespace Game
             GameObject animGO = monster.data.GetChildAnim();
             if (animGO != null)
             {
-                GameObject mosterAnim = Instantiate(animGO);
-                piece.GetComponent<MonsterMovement>().animator = mosterAnim.GetComponent<Animator>();
-                mosterAnim.transform.SetParent(piece.transform);
-                mosterAnim.transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
-                mosterAnim.transform.localPosition = new Vector3(0, 0, 0);
-                mosterAnim.transform.localRotation = Quaternion.Euler(new Vector3(0, 0, 0));
-                
+                GameObject monsterAnim = Instantiate(animGO);
+                piece.GetComponent<MonsterMovement>().animator = monsterAnim.GetComponent<Animator>();
+                monsterAnim.transform.SetParent(piece.transform);
+                monsterAnim.transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
+                monsterAnim.transform.localPosition = new Vector3(0, 0.25f, -0.25f); // 确保不会被棋盘遮住
+                monsterAnim.transform.localRotation = Quaternion.Euler(new Vector3(0, 0, 0));
+                Destroy(piece.transform.Find("image").gameObject); // 如果有动画预设体，删除图片，暂时先这样写，直到所有棋子都有动画
+            }
+            else
+            {
+                piece.transform.Find("image").GetComponent<SpriteRenderer>().sprite = monster.data.monsterSprite;
+
             }
 
-            
-            // monster.data = AssetDatabase.LoadAssetAtPath<SOMonsterBase>
-            // ("Assets/Resources/ScriptableObjects/Monsters/" + data.name + ".asset");
-
-            piece.transform.Find("image").GetComponent<SpriteRenderer>().sprite = monster.data.monsterSprite;
             InitialiseMonsterValues(monster, data);
             grid[data.row, data.col].gridStatus.Value = GridStatusEnum.MonsterPiece;
             this.GetSystem<ISpawnSystem>().GetMonsterList().Add(piece.GetComponent<Monster>());
