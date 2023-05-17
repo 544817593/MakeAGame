@@ -13,8 +13,7 @@ namespace Game
 
         // 应该不会变动的数据，就不另外存储了，直接用so
         // name, death desc, sprite, feature, special feature
-        private SOCharacterInfo so;
-        public string charaName => so.characterName;
+        public SOCharacterInfo so;
         public string deathFuncDesc => so.deathFuncDescription;
         public Sprite cardSprite => so.cardSprite;
         public Sprite pieceSprite => so.pieceSprite;
@@ -30,6 +29,8 @@ namespace Game
         public float moveSpd { get; private set; }
         public int damage { get; private set; }
         public int defend { get; private set; }
+        public int enhancement { get; private set; }
+        public string charaName { get; private set; }
 
         public Card(int _charaID)
         {
@@ -48,12 +49,49 @@ namespace Game
             moveSpd = so.moveSpd;
             damage = so.attack;
             defend = so.defend;
+            charaName = so.characterName;
             PrintData();
         }
 
         void Func()
         {
             // todo 获取初始数值后，根据各种影响获得这张卡的最终数值
+        }
+
+        /// <summary>
+        /// 设置卡牌的名称
+        /// </summary>
+        /// <param name="name"></param>
+        public void SetName(string name)
+        {
+            charaName = name;
+        }
+
+        /// <summary>
+        /// 设置卡牌的强化等级
+        /// </summary>
+        /// <param name="value"></param>
+        public void SetEnhancement(int value)
+        {
+            enhancement = value;
+        }
+
+        /// <summary>
+        /// 更改卡牌的攻击力
+        /// </summary>
+        /// <param name="value"></param>
+        public void AddDamage(int value)
+        {
+            damage += value;
+        }
+
+        /// <summary>
+        /// 更改卡牌的防御力
+        /// </summary>
+        /// <param name="value"></param>
+        public void AddDefense(int value)
+        {
+            defend += value;
         }
 
         void PrintData()

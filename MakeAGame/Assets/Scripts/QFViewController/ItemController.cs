@@ -55,13 +55,30 @@ namespace Game
         /// <param name="viewCard">卡牌</param>
         private void OnUseEnhancement(Item item, ViewCard viewCard)
         {
-            switch (item.data.name)
+            string newName = "";
+            switch (item.data.itemName)
             {
-                case "Item1":
-                    // 需要改变卡牌的名字、卡牌显示的名字、卡牌的属性（生面包括攻击力，防御力，速度，寿命，特性；死面包括
-                    // 伤害效果的伤害量，恢复效果的恢复量，持续效果的持续时间，给卡牌添加额外功能【如让恢复生命的死面同时随机造成伤害】）
+                case "A-型初级强化药剂":
+                    newName = viewCard.card.charaName;
+                    newName += " (+1)";
+                    viewCard.card.SetName(newName);
+                    viewCard.card.SetEnhancement(1);
+                    viewCard.card.AddDamage(2);
+                    break;
+                case "B-型初级强化药剂":
+                    newName = viewCard.card.charaName;
+                    newName += " (+1)";
+                    viewCard.card.SetName(newName);
+                    viewCard.card.SetEnhancement(1);
+                    viewCard.card.AddDefense(1);
                     break;
             }
+            AfterUseEnhancement(item, viewCard);
+        }
+
+        private void AfterUseEnhancement(Item item, ViewCard viewCard)
+        {
+            viewCard.InitView(); // 刷新卡牌样式
         }
 
         /// <summary>
@@ -70,10 +87,10 @@ namespace Game
         /// <param name="item">被使用的物品</param>
         private void OnUseMisc(Item item)
         {
-            switch (item.data.name)
+            switch (item.data.itemName)
             {
                 // 没写完
-                case "Item42":
+                case "破碎的古镜":
                     List<ViewCard> cardList = inventorySystem.GetCardList();
                     List<int> canDuplicateCardId = new List<int>();
                     if (cardList.Count != 0)
@@ -88,7 +105,7 @@ namespace Game
 
                     }
                     break;
-                case "Item47":
+                case "巫术法杖":
                     List<int> canSpawnCard = new List<int>(); // 可以被生成的卡牌列表
                     // 寻找所有的调查员（橙色）牌
                     foreach (SOCharacterInfo so in IdToSO.soCharacterList)
@@ -122,9 +139,11 @@ namespace Game
         private void OnUsePotion(Item item)
         {
             if (GameManager.Instance.gameSceneMan.GetCurrentSceneName() != "Combat") return;
-            switch (item.data.name)
+            switch (item.data.itemName)
             {
-                case "Item31":
+                case "浅蓝色药水":
+                case "中蓝色药水":
+                case "深蓝色药水":
                     if (item.data.volume == ItemVolumeEnum.Small) playerManager.player.AddSan(20);
                     else if (item.data.volume == ItemVolumeEnum.Medium) playerManager.player.AddSan(50);
                     else
@@ -134,10 +153,10 @@ namespace Game
                         playerManager.player.AddSan(maxSan - currSan);
                     }
                     break;
-                case "Item34":
-                    StartCoroutine(Item34(item.data.volume));
-                    break;
-                case "Item42":
+                case "浅蓝绿色药水":
+                case "中蓝绿色药水":
+                case "深蓝绿色药水":
+                    StartCoroutine(Emerald_Potion(item.data.volume));
                     break;
             }
             AfterUsePotion(item);
@@ -152,7 +171,7 @@ namespace Game
             if (item.amount >= 1) item.amount -= 1;
         }
 
-        private IEnumerator Item34(ItemVolumeEnum volume)
+        private IEnumerator Emerald_Potion(ItemVolumeEnum volume)
         {
             float currSanRegenSpeed = playerManager.player.GetSanRegenSpeed();
             float sanRegenSpeedAdded = 0;

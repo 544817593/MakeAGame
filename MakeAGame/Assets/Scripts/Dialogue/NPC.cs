@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using Ink.Runtime;
 using UnityEngine.UI;
+using QFramework;
+using DialogueUI;
 
 public class NPC : MonoBehaviour
 {
@@ -13,7 +15,7 @@ public class NPC : MonoBehaviour
     public Texture2D newCursor;
     Dialogue m_Dialogue;
     public GameObject _bag;
-    private Story story;
+  
      CheckBag _checkBag;
    private bool _alreadytalk;
     // Start is called before the first frame update
@@ -60,10 +62,11 @@ public class NPC : MonoBehaviour
     }
     public void LoadDialogue()
     {
-       // m_Dialogue.NPC_Image.GetComponent<Image>().sprite = gameObject.GetComponent<SpriteRenderer>().sprite;
+        UIKit.GetPanel<DialoguePanel>().NPC.GetComponent<Image>().sprite = gameObject.GetComponent<SpriteRenderer>().sprite;
         m_Dialogue.npc.SetActive(false);
         m_Dialogue.ShowBG(3);
         dialogueP.SetActive(true);
+        UIKit.ShowPanel<DialoguePanel>();
         m_Dialogue.ink_file = ink_file; 
         m_Dialogue.story = new Story(ink_file.text);
         if(_alreadytalk == true)

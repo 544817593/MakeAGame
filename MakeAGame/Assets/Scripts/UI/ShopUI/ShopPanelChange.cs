@@ -22,7 +22,7 @@ public class ShopPanelChange
             }
             else if(button.name == "Sell")
             {
-
+                UIKit.OpenPanel<ShopSellUI.ShopSellUI>();
             }
             else if(button.name == "LevelUp")
             {

@@ -5,8 +5,9 @@ using TMPro;
 public class TotalPoint : MonoBehaviour
 {
     [SerializeField]
-    private TextMeshProUGUI text_totalP; 
-   // private GameObject m_Message;
+    private TextMeshProUGUI text_totalP;
+    [SerializeField]
+    private GameObject m_Message;
 
 
     public int total_Point; // Point can be used to assign attributes；
@@ -30,5 +31,21 @@ public class TotalPoint : MonoBehaviour
         {
             text_totalP.text = currentTotalText + total_Point;
         }
+    }
+
+    public void LoadGame()
+    {
+        if (total_Point == 0)
+        {
+            //Loading.instance.LoadingScene(GameManager.Instance.currSceneName);
+            StartCoroutine(GameManager.Instance.gameSceneMan.LoadScene("Intro", false));
+            StartCoroutine(GameManager.Instance.gameSceneMan.UnloadScene("Main"));
+        }
+        else
+        {
+
+            m_Message.SetActive(true);
+        }
+
     }
 }

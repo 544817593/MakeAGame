@@ -322,8 +322,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6b7a3e7dc894eaca1053ef166cdad33, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PanelName: BagUI
-  Level: 0
+  PanelName: BagUIPanel
+  Level: -2
   mOtherPanels: []
 --- !u!4 &468583847
 Transform:
@@ -700,62 +700,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 327938946}
     m_Modifications:
-    - target: {fileID: 345024401, guid: 1ef17e3a36c55d243bb301b6d54414fd, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 240
-      objectReference: {fileID: 0}
-    - target: {fileID: 345024401, guid: 1ef17e3a36c55d243bb301b6d54414fd, type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 140
-      objectReference: {fileID: 0}
-    - target: {fileID: 345024401, guid: 1ef17e3a36c55d243bb301b6d54414fd, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: -773.33
-      objectReference: {fileID: 0}
-    - target: {fileID: 345024401, guid: 1ef17e3a36c55d243bb301b6d54414fd, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 259.41
-      objectReference: {fileID: 0}
-    - target: {fileID: 1153134967, guid: 1ef17e3a36c55d243bb301b6d54414fd, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 240
-      objectReference: {fileID: 0}
-    - target: {fileID: 1153134967, guid: 1ef17e3a36c55d243bb301b6d54414fd, type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 140
-      objectReference: {fileID: 0}
-    - target: {fileID: 1153134967, guid: 1ef17e3a36c55d243bb301b6d54414fd, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: -276.08
-      objectReference: {fileID: 0}
-    - target: {fileID: 1153134967, guid: 1ef17e3a36c55d243bb301b6d54414fd, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 259.41
-      objectReference: {fileID: 0}
-    - target: {fileID: 1922025044, guid: 1ef17e3a36c55d243bb301b6d54414fd, type: 3}
-      propertyPath: m_fontSize
-      value: 80
-      objectReference: {fileID: 0}
-    - target: {fileID: 1922025044, guid: 1ef17e3a36c55d243bb301b6d54414fd, type: 3}
-      propertyPath: m_fontSizeBase
-      value: 80
-      objectReference: {fileID: 0}
-    - target: {fileID: 1922313643, guid: 1ef17e3a36c55d243bb301b6d54414fd, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 240
-      objectReference: {fileID: 0}
-    - target: {fileID: 1922313643, guid: 1ef17e3a36c55d243bb301b6d54414fd, type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 140
-      objectReference: {fileID: 0}
-    - target: {fileID: 1922313643, guid: 1ef17e3a36c55d243bb301b6d54414fd, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: -524.6998
-      objectReference: {fileID: 0}
-    - target: {fileID: 1922313643, guid: 1ef17e3a36c55d243bb301b6d54414fd, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 259.41
-      objectReference: {fileID: 0}
     - target: {fileID: 420514660410653709, guid: 1ef17e3a36c55d243bb301b6d54414fd, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -842,7 +786,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5593844570388620398, guid: 1ef17e3a36c55d243bb301b6d54414fd, type: 3}
       propertyPath: m_Name
-      value: BagUI
+      value: BagUIPanel
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1ef17e3a36c55d243bb301b6d54414fd, type: 3}

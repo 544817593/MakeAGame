@@ -1,40 +1,45 @@
 using UnityEngine;
+using DG.Tweening;
 using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
 using QFramework;
+using UnityEngine.EventSystems;
 
 namespace PackOpen
 {
 	public class UIOpenPackPanelData : UIPanelData
 	{
-		public int count=0;
-		public int Number_Of_Packs=1;
 		
 		
 	}
-	public partial class UIOpenPackPanel : UIPanel
+	public partial class UIOpenPackPanel : UIPanel 
 	{
+		public int count = 0;
+		public int Number_Of_Packs = 1;
+		public bool openFinish ;
+		public bool greenDrawn; // Whether green card has been drawn in the current pack
+		public bool blueDrawn; // Whether blue card has been drawn in the current pack
+		public bool blueSecure; // Whether blue secure is active
 		protected override void OnInit(IUIData uiData = null)
 		{
 			mData = uiData as UIOpenPackPanelData ?? new UIOpenPackPanelData();
 			// please add init code here
-			PackOpen.PackModel.finish.RegisterWithInitValue(finish =>
+			
+			PackModel.finish.RegisterWithInitValue(finish =>
 			{
-
+				finish = openFinish;
 			}).UnRegisterWhenGameObjectDestroyed(gameObject);
 
 			Pack.BtnOpen.onClick.AddListener(() => 
 			{
-
 				OpenPack();
-
-
 			});
 
+			
 
-
-              
+			
+			
 		}
 		
 		protected override void OnOpen(IUIData uiData = null)
@@ -57,18 +62,18 @@ namespace PackOpen
 			Pack.BtnOpen.interactable = false;
 			// Reset green and blue drawn variables at each opening of card packs
 			//Pack.CardPosition1.Show();
+			greenDrawn = false;
+			blueDrawn = false;
 			StartCoroutine(OpenCard());
 		}
 		IEnumerator OpenCard()
 		{
-			if (mData.Number_Of_Packs > 0)
+			if (Number_Of_Packs > 0)
 			{
-				GameObject tempCard = new GameObject("temp");
+				GameObject tempCard = new GameObject("Cardtemp");
 				tempCard.transform.SetParent(CardPosition.transform, false);
-				mData.count = 5;
-
+				count = 5;
 				yield return new WaitForSeconds(0.5f);
-
 				CardPosition1.Show();
 				yield return new WaitForSeconds(0.5f);
 				CardPosition2.Show();
@@ -82,8 +87,12 @@ namespace PackOpen
 
 			}
 
-			mData.Number_Of_Packs--;
-
+			Number_Of_Packs--;
+			
 		}
+
+		
+
+		
 	}
 }

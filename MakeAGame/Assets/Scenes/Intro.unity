@@ -134,6 +134,7 @@ GameObject:
   - component: {fileID: 2225242}
   - component: {fileID: 2225244}
   - component: {fileID: 2225243}
+  - component: {fileID: 2225245}
   m_Layer: 6
   m_Name: "\u4FEE\u5973"
   m_TagString: Untagged
@@ -234,6 +235,24 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &2225245
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2225241}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a82890fc10ed1d94eb5590467e5a8c5f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ink_file: {fileID: 4900000, guid: b17ea8f45e97b9044a67c7f9d5db7602, type: 3}
+  dialogueP: {fileID: 8393793}
+  m_Col: {fileID: 2225243}
+  defaultCursor: {fileID: 2800000, guid: 25af01249f2f1f6478d7ef5e0bae0146, type: 3}
+  newCursor: {fileID: 2800000, guid: c9d0f7cd099836a4abadbb6da67901ff, type: 3}
+  _bag: {fileID: 393170824}
 --- !u!1 &8393793
 GameObject:
   m_ObjectHideFlags: 0
@@ -288,6 +307,8 @@ MonoBehaviour:
   ChoiceP: []
   choicesText: []
   name_text: {fileID: 5266850768810780089, guid: 9f32af7c6d4db2c4b85adb4027e9d9b8, type: 3}
+  m_Pack: {fileID: 0}
+  pauseD: 0
   d_finish: 0
   npc: {fileID: 165551005}
   backGround: {fileID: 843423549}
@@ -369,8 +390,9 @@ GameObject:
   m_Component:
   - component: {fileID: 393170825}
   - component: {fileID: 393170826}
+  - component: {fileID: 393170827}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: Bag
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -407,6 +429,23 @@ CapsuleCollider2D:
   m_Offset: {x: -0.18048152, y: 0.13318552}
   m_Size: {x: 1.1573453, y: 2.8754303}
   m_Direction: 0
+--- !u!114 &393170827
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 393170824}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 17dc82b34ba850646b39e0a75f88c310, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Col: {fileID: 393170826}
+  dialogueP: {fileID: 8393793}
+  defaultCursor: {fileID: 2800000, guid: 25af01249f2f1f6478d7ef5e0bae0146, type: 3}
+  checkCursor: {fileID: 2800000, guid: 1457c50796ac90b4b83f2ac43e9a48c5, type: 3}
+  isOpen: 0
 --- !u!1 &577182333
 GameObject:
   m_ObjectHideFlags: 0
@@ -418,6 +457,7 @@ GameObject:
   - component: {fileID: 577182334}
   - component: {fileID: 577182336}
   - component: {fileID: 577182335}
+  - component: {fileID: 577182337}
   m_Layer: 6
   m_Name: "\u6D77\u76D7"
   m_TagString: Untagged
@@ -518,6 +558,24 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &577182337
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 577182333}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a82890fc10ed1d94eb5590467e5a8c5f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ink_file: {fileID: 4900000, guid: c610514e418651d41b8727c1b2ecb160, type: 3}
+  dialogueP: {fileID: 8393793}
+  m_Col: {fileID: 577182335}
+  defaultCursor: {fileID: 2800000, guid: 25af01249f2f1f6478d7ef5e0bae0146, type: 3}
+  newCursor: {fileID: 2800000, guid: c9d0f7cd099836a4abadbb6da67901ff, type: 3}
+  _bag: {fileID: 393170824}
 --- !u!1 &637516860
 GameObject:
   m_ObjectHideFlags: 0
@@ -528,6 +586,7 @@ GameObject:
   m_Component:
   - component: {fileID: 637516861}
   - component: {fileID: 637516862}
+  - component: {fileID: 637516863}
   m_Layer: 0
   m_Name: Door
   m_TagString: Untagged
@@ -576,6 +635,23 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 2.749999, y: 3.211182}
   m_EdgeRadius: 0
+--- !u!114 &637516863
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 637516860}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 099f151c7f1f918448ef70d66eab5a15, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Col: {fileID: 637516862}
+  dialogueP: {fileID: 8393793}
+  defaultCursor: {fileID: 2800000, guid: 25af01249f2f1f6478d7ef5e0bae0146, type: 3}
+  doorCursor: {fileID: 2800000, guid: 32b311176821b0d41abbf25a9d34b3fc, type: 3}
+  _bag: {fileID: 393170824}
 --- !u!1 &843423549
 GameObject:
   m_ObjectHideFlags: 0
@@ -673,6 +749,7 @@ GameObject:
   - component: {fileID: 875016651}
   - component: {fileID: 875016652}
   - component: {fileID: 875016653}
+  - component: {fileID: 875016654}
   m_Layer: 6
   m_Name: "\u4FA6\u63A2"
   m_TagString: Untagged
@@ -773,6 +850,24 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 9.521563, y: 27.818077}
   m_EdgeRadius: 0
+--- !u!114 &875016654
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 875016650}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a82890fc10ed1d94eb5590467e5a8c5f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ink_file: {fileID: 4900000, guid: 8d93232c18e1e83468312836df27ab94, type: 3}
+  dialogueP: {fileID: 8393793}
+  m_Col: {fileID: 875016653}
+  defaultCursor: {fileID: 2800000, guid: 25af01249f2f1f6478d7ef5e0bae0146, type: 3}
+  newCursor: {fileID: 2800000, guid: c9d0f7cd099836a4abadbb6da67901ff, type: 3}
+  _bag: {fileID: 393170824}
 --- !u!1 &890877697
 GameObject:
   m_ObjectHideFlags: 0
@@ -784,6 +879,7 @@ GameObject:
   - component: {fileID: 890877698}
   - component: {fileID: 890877700}
   - component: {fileID: 890877699}
+  - component: {fileID: 890877701}
   m_Layer: 6
   m_Name: "\u541F\u6E38\u8BD7\u4EBA"
   m_TagString: Untagged
@@ -884,6 +980,24 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &890877701
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 890877697}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a82890fc10ed1d94eb5590467e5a8c5f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ink_file: {fileID: 4900000, guid: 4751ee9842499b944a559e905f7cdcc9, type: 3}
+  dialogueP: {fileID: 8393793}
+  m_Col: {fileID: 890877699}
+  defaultCursor: {fileID: 2800000, guid: 25af01249f2f1f6478d7ef5e0bae0146, type: 3}
+  newCursor: {fileID: 2800000, guid: c9d0f7cd099836a4abadbb6da67901ff, type: 3}
+  _bag: {fileID: 393170824}
 --- !u!1 &1491578149
 GameObject:
   m_ObjectHideFlags: 0
@@ -895,6 +1009,7 @@ GameObject:
   - component: {fileID: 1491578150}
   - component: {fileID: 1491578152}
   - component: {fileID: 1491578151}
+  - component: {fileID: 1491578153}
   m_Layer: 6
   m_Name: "\u523D\u5B50\u624B"
   m_TagString: Untagged
@@ -995,6 +1110,91 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1491578153
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1491578149}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a82890fc10ed1d94eb5590467e5a8c5f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ink_file: {fileID: 4900000, guid: 5dd7ad93220a988439f2fc265c9338f6, type: 3}
+  dialogueP: {fileID: 8393793}
+  m_Col: {fileID: 1491578151}
+  defaultCursor: {fileID: 2800000, guid: 25af01249f2f1f6478d7ef5e0bae0146, type: 3}
+  newCursor: {fileID: 2800000, guid: c9d0f7cd099836a4abadbb6da67901ff, type: 3}
+  _bag: {fileID: 393170824}
+--- !u!1 &1650410657
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1650410660}
+  - component: {fileID: 1650410659}
+  - component: {fileID: 1650410658}
+  m_Layer: 0
+  m_Name: EventSystem (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1650410658
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1650410657}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f231c4fb786f3946a6b90b886c48677, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_HorizontalAxis: Horizontal
+  m_VerticalAxis: Vertical
+  m_SubmitButton: Submit
+  m_CancelButton: Cancel
+  m_InputActionsPerSecond: 10
+  m_RepeatDelay: 0.5
+  m_ForceModuleActive: 0
+--- !u!114 &1650410659
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1650410657}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76c392e42b5098c458856cdf6ecaaaa1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_FirstSelected: {fileID: 0}
+  m_sendNavigationEvents: 1
+  m_DragThreshold: 10
+--- !u!4 &1650410660
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1650410657}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1926788216
 GameObject:
   m_ObjectHideFlags: 0

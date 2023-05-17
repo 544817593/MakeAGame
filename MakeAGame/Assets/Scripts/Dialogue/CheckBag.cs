@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using QFramework;
+using BagUI;
 
 public class CheckBag : MonoBehaviour
 {
@@ -9,13 +11,13 @@ public class CheckBag : MonoBehaviour
     public GameObject dialogueP;
     public Texture2D defaultCursor;
     public Texture2D checkCursor;
-    public GameObject _bag;
-    public GameObject _slot;
     Dialogue m_Dialogue;
     public bool isOpen = false;
     // Start is called before the first frame update
     void Start()
     {
+      
+       
         isOpen = false;
         m_Dialogue = dialogueP.GetComponent<Dialogue>();
         m_Col.enabled = false;
@@ -24,7 +26,7 @@ public class CheckBag : MonoBehaviour
 
     void ActiveCheck()
     {
-        if (m_Dialogue.d_finish == true&& isOpen ==false)
+        if ( m_Dialogue.d_finish == true && isOpen ==false)
         {
             m_Col.enabled = true;
         }
@@ -49,10 +51,10 @@ public class CheckBag : MonoBehaviour
     }
     public void OpenBag()
     {
+        UIKit.OpenPanel<BagUIPanel>();
        // GameManager.Instance.StartBagMan();
         isOpen = true;
-        _bag.SetActive(true);
-        _slot.SetActive(true);
+       
     }
     public void SetIsOpenFalse()
     {
