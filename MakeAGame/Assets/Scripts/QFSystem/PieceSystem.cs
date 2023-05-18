@@ -31,7 +31,7 @@ namespace Game
             viewPiece.SetDataWithCard(card);
             // viewCard.InitView(); // 在这里写会先于start执行，不对    // 转由start触发
             viewPiece.SetGrids(grids);
-            
+            viewPiece.InitState();
             
 
             // 数值变化
