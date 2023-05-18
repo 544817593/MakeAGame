@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: acc015c2671ef67429c4b70efb47cc33, type: 3}
   m_Name: Alchemist's Fragments
   m_EditorClassIdentifier: 
-  itemType: 4
+  itemUseTime: 0
   volume: 0
   itemName: "\u70BC\u91D1\u6C99"
   sprite: {fileID: 21300000, guid: f02dc96095d8b7a44953ebf818471d18, type: 3}

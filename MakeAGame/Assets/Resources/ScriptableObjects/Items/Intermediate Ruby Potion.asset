@@ -12,12 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: acc015c2671ef67429c4b70efb47cc33, type: 3}
   m_Name: Intermediate Ruby Potion
   m_EditorClassIdentifier: 
-  itemType: 2
-  volume: 0
-  itemName: "\u6D45\u7EA2\u8272\u836F\u6C34"
-  sprite: {fileID: 21300000, guid: a149fe56087447a43a396b4e13a95896, type: 3}
+  itemUseTime: 0
+  volume: 1
+  itemName: "\u4E2D\u7EA2\u8272\u836F\u6C34"
+  sprite: {fileID: 21300000, guid: 1af8cf06b31d3ae4389dc545f90dd617, type: 3}
   buyCost: 0
   sellPrice: 0
-  description: "\u4E3A\u4E00\u4E2A\u53CB\u65B9\u5355\u4F4D\u589E\u52A05\u5BFF\u547D"
-  rarity: 0
+  description: "\u4E3A\u4E00\u4E2A\u53CB\u65B9\u5355\u4F4D\u589E\u52A010\u5BFF\u547D"
+  rarity: 1
   enhanceLevel: 0

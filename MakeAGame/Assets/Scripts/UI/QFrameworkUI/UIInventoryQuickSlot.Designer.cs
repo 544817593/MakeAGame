@@ -5,7 +5,7 @@ using QFramework;
 
 namespace InventoryQuickslotUI
 {
-	// Generate Id:c84c6d2d-d246-423d-8715-aff5c7ae84de
+	// Generate Id:1017da5f-dc0b-4f15-abdc-cc695a5bddbc
 	public partial class UIInventoryQuickSlot
 	{
 		public const string Name = "UIInventoryQuickSlot";

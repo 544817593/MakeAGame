@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: acc015c2671ef67429c4b70efb47cc33, type: 3}
   m_Name: Intact Ancient Mirror
   m_EditorClassIdentifier: 
-  itemType: 4
+  itemUseTime: 1
   volume: 0
   itemName: "\u5B8C\u6574\u7684\u53E4\u955C"
   sprite: {fileID: 21300000, guid: 42318bc00738c5b49a1ad3f2aea0ac28, type: 3}

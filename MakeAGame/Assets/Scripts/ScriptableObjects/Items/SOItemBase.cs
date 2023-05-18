@@ -5,7 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Item", menuName = "ScriptableObjects/Items")]
 public class SOItemBase : ScriptableObject
 {
-    public ItemTypeEnum itemType; // 物品类型
+    public ItemUseTimeEnum itemUseTime; // 物品使用类型
     public ItemVolumeEnum volume; // 物品容量
     public string itemName; // 物品名字
     public Sprite sprite; // 物品图标

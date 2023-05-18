@@ -8,7 +8,7 @@ using static UnityEditor.Progress;
 
 namespace Game
 {
-    public class ItemController : MonoBehaviour, IController, ICanSendEvent
+    public class ItemController : MonoBehaviour, IController
     {
         private PlayerManager playerManager;
         private IInventorySystem inventorySystem;
@@ -35,27 +35,27 @@ namespace Game
         /// <param name="e">使用物品事件所需的Struct参数</param>
         private void OnUseItemEvent(UseItemEvent e)
         {
-            if (e.item.data.itemType == ItemTypeEnum.Potion)
+            if (e.item.data.itemUseTime == ItemUseTimeEnum.Combat)
             {
-                OnUsePotion(e);
+                OnUseCombatItem(e);
             }
-            else if (e.item.data.itemType == ItemTypeEnum.Misc)
+            else if (e.item.data.itemUseTime == ItemUseTimeEnum.AnyTime)
             {
-                OnUseMisc(e);
+                OnUseAnyTimeItem(e);
             }
-            else if (e.item.data.itemType == ItemTypeEnum.Enhancement)
+            else if (e.item.data.itemUseTime == ItemUseTimeEnum.Merchant)
             {
-                OnUseEnhancement(e.item, e.viewCard);
+                OnUseMerchantItem(e);
             }
         }
 
         /// <summary>
-        /// 使用强化物品
+        /// 使用在商店使用的物品
         /// </summary>
-        /// <param name="item">被使用的物品</param>
-        /// <param name="viewCard">卡牌</param>
-        private void OnUseEnhancement(Item item, ViewCard viewCard)
+        private void OnUseMerchantItem(UseItemEvent e)
         {
+            Item item = e.item;
+            ViewCard viewCard = e.viewCard;
             int rand; // 随机数，用来计算强化成功与否
             switch (item.data.itemName)
             {
@@ -84,7 +84,7 @@ namespace Game
                         viewCard.card.AddDamage(2);
                         break;
                     }
-                    AfterUseEnhancement(item, viewCard, false);
+                    AfterUseMerchantItem(item, viewCard, false);
                     return;
                 case "B-型中级强化药剂":
                     rand = UnityEngine.Random.Range(0, 10);
@@ -93,7 +93,7 @@ namespace Game
                         viewCard.card.AddDefense(1);
                         break;
                     }
-                    AfterUseEnhancement(item, viewCard, false);
+                    AfterUseMerchantItem(item, viewCard, false);
                     return;
                 case "C-型中级强化药剂":
                     rand = UnityEngine.Random.Range(0, 10);
@@ -102,7 +102,7 @@ namespace Game
                         viewCard.card.AddMoveSpeed(0.5f);
                         break;
                     }
-                    AfterUseEnhancement(item, viewCard, false);
+                    AfterUseMerchantItem(item, viewCard, false);
                     return;
                 case "D-型中级强化药剂":
                     rand = UnityEngine.Random.Range(0, 10);
@@ -111,7 +111,7 @@ namespace Game
                         viewCard.card.AddLife(5f);
                         break;
                     }
-                    AfterUseEnhancement(item, viewCard, false);
+                    AfterUseMerchantItem(item, viewCard, false);
                     return;
                 case "E-型中级强化药剂":
                     break;
@@ -132,7 +132,7 @@ namespace Game
                         viewCard.card.AddDamage(4);
                         break;
                     }
-                    AfterUseEnhancement(item, viewCard, false);
+                    AfterUseMerchantItem(item, viewCard, false);
                     return;
                 case "B-型高级强化药剂":
                     rand = UnityEngine.Random.Range(0, 100);
@@ -141,7 +141,7 @@ namespace Game
                         viewCard.card.AddDefense(2);
                         break;
                     }
-                    AfterUseEnhancement(item, viewCard, false);
+                    AfterUseMerchantItem(item, viewCard, false);
                     return;
                 case "C-型高级强化药剂":
                     rand = UnityEngine.Random.Range(0, 100);
@@ -150,7 +150,7 @@ namespace Game
                         viewCard.card.AddMoveSpeed(1f);
                         break;
                     }
-                    AfterUseEnhancement(item, viewCard, false);
+                    AfterUseMerchantItem(item, viewCard, false);
                     return;
                 case "D-型高级强化药剂":
                     rand = UnityEngine.Random.Range(0, 100);
@@ -159,7 +159,7 @@ namespace Game
                         viewCard.card.AddLife(8f);
                         break;
                     }
-                    AfterUseEnhancement(item, viewCard, false);
+                    AfterUseMerchantItem(item, viewCard, false);
                     return;
                 case "E-型高级强化药剂":
                     break;
@@ -175,17 +175,30 @@ namespace Game
                     break;
                 case "D-型破旧的锤子":
                     break;
+                case "木制起钉器":
+                    if (GameManager.Instance.gameSceneMan.GetCurrentSceneName() != "Merchant") return;
+                    viewCard.card.RemoveFeature(e.soFeature);
+                    viewCard.InitView();
+                    break;
+                case "铁质起钉器":
+                    if (GameManager.Instance.gameSceneMan.GetCurrentSceneName() != "Merchant") return;
+                    viewCard.card.RemoveAllFeatures();
+                    viewCard.card.SetEnhancement(0);
+                    string initialCardName = IdToSO.FindCardSOByID(viewCard.card.charaID).characterName;
+                    viewCard.card.SetName(initialCardName);
+                    viewCard.InitView();
+                    break;
             }
-            AfterUseEnhancement(item, viewCard);
+            AfterUseMerchantItem(item, viewCard);
         }
 
         /// <summary>
-        /// 使用强化物品后处理
+        /// 使用商店可用的物品后处理
         /// </summary>
         /// <param name="item">物品</param>
         /// <param name="viewCard">卡牌</param>
         /// <param name="successful">强化成功与否</param>
-        private void AfterUseEnhancement(Item item, ViewCard viewCard, bool successful = true)
+        private void AfterUseMerchantItem(Item item, ViewCard viewCard, bool successful = true)
         {
             if (successful)
             {
@@ -193,12 +206,14 @@ namespace Game
                 viewCard.card.SetEnhancement(item.data.enhanceLevel + 1);
                 viewCard.InitView(); // 刷新卡牌样式
             }
+            item.amount -= 1;
+            if (item.amount <= 0) inventorySystem.RemoveItem(item);
         }
 
         /// <summary>
-        /// 使用其它特效物品
+        /// 使用随时可用的物品
         /// </summary>
-        private void OnUseMisc(UseItemEvent e)
+        private void OnUseAnyTimeItem(UseItemEvent e)
         {
             Item item = e.item;
             ViewCard viewCard = e.viewCard;
@@ -225,51 +240,24 @@ namespace Game
                         inventorySystem.SpawnCardInBag(rand);
                     }
                     break;
-                case "木制起钉器":
-                    if (GameManager.Instance.gameSceneMan.GetCurrentSceneName() != "Merchant") return;
-                    viewCard.card.RemoveFeature(e.soFeature);
-                    viewCard.InitView();
-                    break;
-                case "铁质起钉器":
-                    if (GameManager.Instance.gameSceneMan.GetCurrentSceneName() != "Merchant") return;
-                    viewCard.card.RemoveAllFeatures();
-                    viewCard.card.SetEnhancement(0);
-                    string initialCardName = IdToSO.FindCardSOByID(viewCard.card.charaID).characterName;
-                    viewCard.card.SetName(initialCardName);
-                    viewCard.InitView();
-                    break;
-                case "祈福法杖":
-                    break;
-                case "传送卷轴":
-                    break;
-                case "高级传送卷轴":
-                    break;
-                case "深蓝色羽毛笔":
-                    break;
-                case "浅蓝色羽毛笔":
-                    break;
-                case "炼金沙":
-                    float removeLife = e.viewPiece.card.maxLife / 2;
-                    e.viewPiece.card.AddLife(-removeLife);
-                    GameManager.Instance.playerMan.player.AddGold((int) removeLife / 2);
-                    break;
             }
-            AfterUseMisc(item);
+            AfterUseAnyTimeItem(item);
         }
 
         /// <summary>
-        /// 使用其它特效物品后处理
+        /// 使用完随时可用的物品后处理
         /// </summary>
         /// <param name="item">使用过的物品</param>
-        private void AfterUseMisc(Item item)
+        private void AfterUseAnyTimeItem(Item item)
         {
-            throw new NotImplementedException();
+            item.amount -= 1;
+            if (item.amount <= 0) inventorySystem.RemoveItem(item);
         }
 
         /// <summary>
-        /// 使用药剂类物品
+        /// 使用战斗中可以使用的物品
         /// </summary>
-        private void OnUsePotion(UseItemEvent e)
+        private void OnUseCombatItem(UseItemEvent e)
         {      
             if (GameManager.Instance.gameSceneMan.GetCurrentSceneName() != "Combat") return;
             Item item = e.item;
@@ -301,6 +289,21 @@ namespace Game
                 case "浅黄色药水":
                 case "深黄色药水":
                     break;
+                case "祈福法杖":
+                    break;
+                case "传送卷轴":
+                    break;
+                case "高级传送卷轴":
+                    break;
+                case "深蓝色羽毛笔":
+                    break;
+                case "浅蓝色羽毛笔":
+                    break;
+                case "炼金沙":
+                    float removeLife = e.viewPiece.card.maxLife / 2;
+                    e.viewPiece.card.AddLife(-removeLife);
+                    GameManager.Instance.playerMan.player.AddGold((int)removeLife / 2);
+                    break;
                 case "浅红色药水":
                 case "中红色药水":
                 case "深红色药水":
@@ -312,18 +315,35 @@ namespace Game
                     card.AddCurrLife(card.maxLife - card.currLife);
                     break;
             }
-            AfterUsePotion(item);
+            AfterUseCombatItem(item);
         }
 
         /// <summary>
-        /// 使用药剂类物品后处理
+        /// 使用完战斗中可用的物品后处理
         /// </summary>
         /// <param name="item">使用过的物品</param>
-        private void AfterUsePotion(Item item)
+        private void AfterUseCombatItem(Item item)
         {
             item.amount -= 1;
+
+            // 如果物品被用完了，那么移除这个物品，自动触发物品系统的OnItemListChanged()
+            // 否则只是物品数量-1，itemList里的Item没有变，则需要手动刷新UI
+            if (item.amount <= 0) 
+            { 
+                inventorySystem.RemoveItem(item); 
+            }
+            else
+            {
+                UIKit.GetPanel("UIInventoryQuickSlot")?.Invoke("RefreshInventoryItems", 0f);
+            }
+            
         }
 
+        /// <summary>
+        /// 蓝绿色药水效果协程
+        /// </summary>
+        /// <param name="volume"></param>
+        /// <returns></returns>
         private IEnumerator Emerald_Potion(ItemVolumeEnum volume)
         {
             float currSanRegenSpeed = playerManager.player.GetSanRegenSpeed();

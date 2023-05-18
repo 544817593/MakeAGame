@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: acc015c2671ef67429c4b70efb47cc33, type: 3}
   m_Name: Type-A Intermediate Enhancement Potion
   m_EditorClassIdentifier: 
-  itemType: 0
+  itemUseTime: 2
   volume: 1
   itemName: "A-\u578B\u4E2D\u7EA7\u5F3A\u5316\u836F\u5242"
   sprite: {fileID: 21300000, guid: d1bd3ae452c1dc14f865af2b86ca8c0b, type: 3}

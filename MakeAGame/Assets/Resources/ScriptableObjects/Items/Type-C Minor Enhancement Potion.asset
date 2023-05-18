@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: acc015c2671ef67429c4b70efb47cc33, type: 3}
   m_Name: Type-C Minor Enhancement Potion
   m_EditorClassIdentifier: 
-  itemType: 0
+  itemUseTime: 2
   volume: 0
   itemName: "C-\u578B\u521D\u7EA7\u5F3A\u5316\u836F\u5242"
   sprite: {fileID: 21300000, guid: b989d0e7bcd5fab4c9509eb0ca190dc9, type: 3}

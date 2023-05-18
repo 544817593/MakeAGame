@@ -37,10 +37,6 @@ namespace Game
             // 怪物
             var spawnSystem = this.GetSystem<ISpawnSystem>();
             spawnSystem.ConstantSpawnMonster(info.monsterSpawnSettings);
-
-            // 测试使用物品
-            var useItemEvent = new UseItemEvent { item = this.GetSystem<IInventorySystem>().GetItemList()[0] };
-            this.SendCommand(new UseItemCommand(useItemEvent));
         }
     }
 }

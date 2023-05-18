@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: acc015c2671ef67429c4b70efb47cc33, type: 3}
   m_Name: Damaged Ancient Mirror
   m_EditorClassIdentifier: 
-  itemType: 4
+  itemUseTime: 1
   volume: 0
   itemName: "\u635F\u574F\u7684\u53E4\u955C"
   sprite: {fileID: 21300000, guid: b8077b7d4dd75f34c8c805e268509eaa, type: 3}

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: acc015c2671ef67429c4b70efb47cc33, type: 3}
   m_Name: Minor Sapphire Potion
   m_EditorClassIdentifier: 
-  itemType: 2
+  itemUseTime: 0
   volume: 0
   itemName: "\u6D45\u84DD\u8272\u836F\u6C34"
   sprite: {fileID: 21300000, guid: 0065075aa3437304b97e61ee1f2fdb96, type: 3}
