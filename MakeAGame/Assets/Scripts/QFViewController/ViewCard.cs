@@ -58,11 +58,11 @@ namespace Game
             tmpDefend.text = card.defend.ToString();
             tmpName.text = card.charaName;
             tmpDesc.text = card.deathFuncDesc;
-            for(int i = 0; i < card.features.Length; i++)
+            for(int i = 0; i < card.features.Count; i++)
             {
                 featureTouchArea[i].GetComponent<Image>().sprite = card.features[i].icon;
             }
-            for (int i = card.features.Length; i < 3; i++)
+            for (int i = card.features.Count; i < 3; i++)
             {
                 featureTouchArea[i].gameObject.SetActive(false);
             }

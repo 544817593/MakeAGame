@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Game
@@ -17,7 +18,6 @@ namespace Game
         public string deathFuncDesc => so.deathFuncDescription;
         public Sprite cardSprite => so.cardSprite;
         public Sprite pieceSprite => so.pieceSprite;
-        public SOFeature[] features => so.features;
         public SOFeature specialFeature => so.specialFeature;
         public int width => so.width;
         public int height => so.height;
@@ -31,6 +31,9 @@ namespace Game
         public int defend { get; private set; }
         public int enhancement { get; private set; }
         public string charaName { get; private set; }
+        public float maxLife { get; private set; }
+        public float currLife { get; private set; }
+        public List<SOFeature> features { get; private set; }
 
         public Card(int _charaID)
         {
@@ -40,8 +43,6 @@ namespace Game
 
         void InitData()
         {
-            // 原来这个是按文件名找的，下面这个按so里面存的卡牌id，文件名不影响
-            //so = Extensions.GetCharacterInfo(charaID, false);
             so = IdToSO.FindCardSOByID(charaID);
             rarity = so.rarity;
             sanCost = so.sanCost;
@@ -50,6 +51,9 @@ namespace Game
             damage = so.attack;
             defend = so.defend;
             charaName = so.characterName;
+            maxLife = so.life;
+            currLife = so.life;
+            features = so.features;
             PrintData();
         }
 
@@ -59,12 +63,56 @@ namespace Game
         }
 
         /// <summary>
+        /// 添加特性
+        /// </summary>
+        /// <param name="feature">要添加的特性</param>
+        public void AddFeature(SOFeature feature)
+        {
+            features.Add(feature);
+            // 更新画面
+        }
+
+        /// <summary>
+        /// 删除特性
+        /// </summary>
+        /// <param name="feature">要删除的特性</param>
+        public void RemoveFeature(SOFeature feature)
+        {
+            features.Remove(feature);
+            // 更新画面
+        }
+
+        /// <summary>
+        /// 删除所有特性
+        /// </summary>
+        public void RemoveAllFeatures()
+        {
+            foreach ( SOFeature feature in features) RemoveFeature(feature);
+        }
+
+        /// <summary>
         /// 设置卡牌的名称
         /// </summary>
         /// <param name="name"></param>
         public void SetName(string name)
         {
             charaName = name;
+        }
+
+        /// <summary>
+        /// 卡牌强化后更改名称
+        /// </summary>
+        /// <param name="previousEnhancementLevel">卡牌原强化等级</param>
+        public void SetNameAfterEnhancement(int previousEnhancementLevel)
+        {
+            if (previousEnhancementLevel == 0)
+            {
+                charaName += " (+1)";
+            }
+            else
+            {
+                charaName = charaName.Substring(0, charaName.Length - 5) + " (+" + (previousEnhancementLevel + 1) + ")";
+            }
         }
 
         /// <summary>
@@ -94,13 +142,41 @@ namespace Game
             defend += value;
         }
 
+        /// <summary>
+        /// 更改卡牌的移动速度，最高不超过2
+        /// </summary>
+        /// <param name="value"></param>
+        public void AddMoveSpeed(float value)
+        {
+            moveSpd -= value;
+            if (moveSpd < 2) moveSpd = 2;
+        }
+        
+        /// <summary>
+        /// 更改卡牌的寿命
+        /// </summary>
+        /// <param name="value"></param>
+        public void AddLife(float value)
+        {
+            maxLife += value;
+        }
+
+        /// <summary>
+        /// 更改当前寿命，只有*棋子*才会调用
+        /// </summary>
+        /// <param name="value"></param>
+        public void AddCurrLife(float value)
+        {
+            currLife += value;
+        }
+
         void PrintData()
         {
             string ret = String.Empty;
             ret += $"characterID: {charaID}\n" + $"instID: {instID}\n" + $"characterName: {charaName}\n" +
                    $"deathFuncDescription: {deathFuncDesc}\n" + $"rarity: {rarity}\n" + $"sanCost: {sanCost}\n";
             ret += "feature: ";
-            if (features.Length > 0)
+            if (features.Count > 0)
             {
                 foreach (var soFeature in features)
                 {

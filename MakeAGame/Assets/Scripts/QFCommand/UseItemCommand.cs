@@ -25,6 +25,9 @@ namespace Game
     {
         public Item item;
         public ViewCard viewCard;
+        public SOFeature soFeature;
+        public Monster monster;
+        public ViewPiece viewPiece;
     }
 
 }

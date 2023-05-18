@@ -10,7 +10,7 @@ namespace Game
 {
     public partial class ViewPiece: ViewPieceBase
     {
-        private Card card;
+        public Card card;
         
         public void SetDataWithCard(Card _card)
         {

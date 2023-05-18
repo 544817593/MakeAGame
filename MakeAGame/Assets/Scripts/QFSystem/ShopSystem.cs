@@ -38,12 +38,12 @@ namespace Game
             addShopItemWithoutCall(new Item { amount = 1, data = Resources.Load<SOItemBase>("ScriptableObjects/Items/Item31") });
             addShopItemWithoutCall(new Item { amount = 4, data = Resources.Load<SOItemBase>("ScriptableObjects/Items/Item01") });
 
-            
-            for(int i = 1; i < 50; ++i)
+
+            for (int i = 1; i < 50; ++i)
             {
                 addBagItem(new Item { amount = i, data = Resources.Load<SOItemBase>($"ScriptableObjects/Items/Item01 {i}") });
             }
-            
+
         }
 
         private void OnShopItemListChanged()
