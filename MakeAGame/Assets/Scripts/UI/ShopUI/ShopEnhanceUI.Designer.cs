@@ -3,19 +3,17 @@ using UnityEngine;
 using UnityEngine.UI;
 using QFramework;
 
-namespace ShopSellUI
+namespace ShopEnhanceUI
 {
-	// Generate Id:25d0e7a2-a386-47d8-824e-42ab9742510c
-	public partial class ShopSellUI
+	// Generate Id:0062a9fb-bf05-4d14-8f9d-02a8c7a0be53
+	public partial class ShopEnhanceUI
 	{
-		public const string Name = "ShopSellUI";
+		public const string Name = "ShopEnhanceUI";
 		
 		[SerializeField]
-		public UnityEngine.UI.Button Close;
+		public UnityEngine.UI.Image Background;
 		[SerializeField]
-		public TMPro.TextMeshProUGUI TextGold;
-		[SerializeField]
-		public UnityEngine.UI.Image ShopGridPanel;
+		public UnityEngine.UI.Image BagPanel;
 		[SerializeField]
 		public UnityEngine.UI.Button Item01;
 		[SerializeField]
@@ -47,31 +45,24 @@ namespace ShopSellUI
 		[SerializeField]
 		public UnityEngine.UI.Button Item15;
 		[SerializeField]
-		public UnityEngine.UI.Button Sell;
+		public UnityEngine.UI.Button Close;
 		[SerializeField]
-		public UnityEngine.UI.Image ImageItemInfo;
+		public TMPro.TextMeshProUGUI TextAfterEnhance;
 		[SerializeField]
-		public TMPro.TextMeshProUGUI TextItemInfo;
+		public UnityEngine.UI.Button ButtonEnhance;
 		[SerializeField]
 		public UnityEngine.UI.Button BtnNextPage;
 		[SerializeField]
 		public UnityEngine.UI.Button BtnPrePage;
 		[SerializeField]
 		public TMPro.TextMeshProUGUI TextPageNum;
-		[SerializeField]
-		public TMPro.TextMeshProUGUI TextCount;
-		[SerializeField]
-		public UnityEngine.UI.Button BtnAdd;
-		[SerializeField]
-		public UnityEngine.UI.Button BtnSub;
 		
-		private ShopSellUIData mPrivateData = null;
+		private ShopEnhanceUIData mPrivateData = null;
 		
 		protected override void ClearUIComponents()
 		{
-			Close = null;
-			TextGold = null;
-			ShopGridPanel = null;
+			Background = null;
+			BagPanel = null;
 			Item01 = null;
 			Item02 = null;
 			Item03 = null;
@@ -87,20 +78,17 @@ namespace ShopSellUI
 			Item13 = null;
 			Item14 = null;
 			Item15 = null;
-			Sell = null;
-			ImageItemInfo = null;
-			TextItemInfo = null;
+			Close = null;
+			TextAfterEnhance = null;
+			ButtonEnhance = null;
 			BtnNextPage = null;
 			BtnPrePage = null;
 			TextPageNum = null;
-			TextCount = null;
-			BtnAdd = null;
-			BtnSub = null;
 			
 			mData = null;
 		}
 		
-		public ShopSellUIData Data
+		public ShopEnhanceUIData Data
 		{
 			get
 			{
@@ -108,11 +96,11 @@ namespace ShopSellUI
 			}
 		}
 		
-		ShopSellUIData mData
+		ShopEnhanceUIData mData
 		{
 			get
 			{
-				return mPrivateData ?? (mPrivateData = new ShopSellUIData());
+				return mPrivateData ?? (mPrivateData = new ShopEnhanceUIData());
 			}
 			set
 			{
