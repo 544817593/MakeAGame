@@ -70,6 +70,11 @@ namespace Game
             }
         }
 
+        /// <summary>
+        /// 世界坐标和以左下角为原点的ui坐标的转换
+        /// </summary>
+        /// <param name="pos"></param>
+        /// <returns></returns>
         public static Vector3 WorldToUIPos(Vector3 pos)
         {
             pos = Camera.main.WorldToScreenPoint(pos);

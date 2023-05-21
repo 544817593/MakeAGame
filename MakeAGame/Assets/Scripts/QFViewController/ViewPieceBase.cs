@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using QFramework;
 using UnityEngine;
 
@@ -15,12 +16,29 @@ namespace Game
         protected PieceStateEnum stateFlag = PieceStateEnum.Moving;
         protected PieceState state = new PieceStateIdle(null);
 
-        public PieceMoveDirection direction = PieceMoveDirection.None;
+        public DirEnum direction = DirEnum.None;
 
         public Action<PieceMoveReadyEvent> OnPieceMoveReady;
         public Action<PieceMoveFinishEvent> OnPieceMoveFinish;
+        public Action<PieceAttackStartEvent> OnPieceAttackStart;
 
         public List<BoxGrid> pieceGrids { get; protected set; } = new List<BoxGrid>();
+        // 经过所有占地格子计算出来的时间流速
+        public float crtTimeMultiplier
+        {
+            get
+            {
+                float val = 0f;
+                foreach (var grid in pieceGrids)
+                {
+                    val += Extensions.ToTimeMultiplierFloat(grid.timeMultiplier);
+                }
+                val /= pieceGrids.Count;
+                return val;
+            }
+        }
+
+        // public List<BoxGrid> attadkRangeGrids = new List<BoxGrid>(); // todo
 
         protected virtual void Start()
         {
@@ -29,6 +47,7 @@ namespace Game
             // 棋子自身也会监听棋子（包括自己）
             OnPieceMoveReady += OnMoveReadyEvent;
             OnPieceMoveFinish += OnMoveFinishEvent;
+            OnPieceAttackStart += OnAttackStartEvent;
         }
 
         public virtual void SetGrids(List<BoxGrid> grids)
@@ -45,13 +64,7 @@ namespace Game
         /// </summary>
         public virtual void InitState()
         {
-            switch (stateFlag)
-            {
-                case PieceStateEnum.Moving:
-                    var newState = new PieceFriendMovingState(this);
-                    ChangeStateTo(newState);
-                    break;
-            }
+
         }
 
         private void Update()
@@ -59,7 +72,7 @@ namespace Game
             state.Update();
         }
 
-        private void ChangeStateTo(PieceState newState)
+        protected void ChangeStateTo(PieceState newState)
         {
             Debug.Log($"change state from: {state.stateEnum} to: {newState.stateEnum}");
             state.ExitState();
@@ -95,13 +108,23 @@ namespace Game
         protected virtual void OnMoveReadyEvent(PieceMoveReadyEvent e)
         {
             // todo 
-            Debug.Log("ViewPieceBase receive MoveReadyEvent");
+            // Debug.Log("ViewPieceBase receive MoveReadyEvent");
         }
         
         protected virtual void OnMoveFinishEvent(PieceMoveFinishEvent e)
         {
             // todo
-            Debug.Log("ViewPieceBase receive MoveFinishEvent");
+            // Debug.Log("ViewPieceBase receive MoveFinishEvent");
+        }
+
+        protected virtual void OnAttackStartEvent(PieceAttackStartEvent e)
+        {
+
+        }
+
+        public bool IsAttacking()
+        {
+            return stateFlag == PieceStateEnum.Attacking;
         }
 
         public IArchitecture GetArchitecture()
@@ -118,5 +141,10 @@ namespace Game
     public struct PieceMoveFinishEvent
     {
         public ViewPieceBase viewPieceBase;
+    }
+
+    public struct PieceAttackStartEvent
+    {
+        public ViewPieceBase vpb;
     }
 }

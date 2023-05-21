@@ -10,11 +10,9 @@ namespace Game
     {
         public GameObject gameObject { get; }
 
-        private Dictionary<PieceMoveDirection, Transform> dictBtnDirection =
-            new Dictionary<PieceMoveDirection, Transform>();
-
-        // private IPieceSystem pieceSystem;
-        public PieceMoveDirection crtDirection = PieceMoveDirection.None;
+        private Dictionary<DirEnum, Transform> dictBtnDirection = new Dictionary<DirEnum, Transform>();
+        
+        public DirEnum crtDirection = DirEnum.None;
 
         public ViewDirectionWheel(GameObject go)
         {
@@ -29,15 +27,13 @@ namespace Game
                 var dir = indicator.direction;
                 dictBtnDirection.Add(dir, trans);
             }
-
-            // pieceSystem = this.GetSystem<IPieceSystem>();
         }
 
         /// <summary>
         /// 只显示棋子可用的移动方向
         /// </summary>
         /// <param name="directions"></param>
-        public void SetValidDirections(PieceMoveDirection[] directions)
+        public void SetValidDirections(DirEnum[] directions)
         {
             var listDir = Enumerable.ToList(directions);
             foreach (var kvp in dictBtnDirection)
@@ -53,11 +49,9 @@ namespace Game
             }
         }
 
-        private void OnMouseHoverBtn(PieceMoveDirection dir)
+        private void OnMouseHoverBtn(DirEnum dir)
         {
-            Debug.Log($"mouse enter dir {dir}");
             crtDirection = dir;
-            // this.SendCommand<ChangePieceDirectionCommand>(new ChangePieceDirectionCommand(dir));
         }
 
         public IArchitecture GetArchitecture()

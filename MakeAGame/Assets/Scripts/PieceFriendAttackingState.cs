@@ -2,38 +2,38 @@ using UnityEngine;
 
 namespace Game
 {
-    public class PieceFriendMovingState : PieceState
+    public class PieceFriendAttackingState : PieceState
     {
         private float timer;    // 计时器
-        private float moveDur;  // 移动速度（秒/每行动）
+        private float atkDur;  // 攻击速度（秒/每行动）
         private ViewPiece viewPieceFriend;
         
-        public PieceFriendMovingState(ViewPieceBase view): base(view)
+        public PieceFriendAttackingState(ViewPieceBase view): base(view)
         {
-            stateEnum = PieceStateEnum.Moving;
+            stateEnum = PieceStateEnum.Attacking;
             
             viewPieceFriend = view as ViewPiece;
         }
         
         public override void EnterState()
         {
-            ResetMoveSpeed();
+            ResetAttackSpeed();
         }
 
-        void ResetMoveSpeed()
+        void ResetAttackSpeed()
         {
-            moveDur = viewPieceFriend.card.moveSpd * viewPieceFriend.crtTimeMultiplier;
+            atkDur = viewPieceFriend.card.atkSpd * viewPieceFriend.crtTimeMultiplier;
         }
 
         public override void Update()
         {
             timer += Time.deltaTime;
-            if (timer > moveDur)
+            if (timer > atkDur)
             {
-                viewPieceFriend.Move();
+                viewPieceFriend.Attack();
 
                 timer = 0;
-                ResetMoveSpeed();
+                ResetAttackSpeed();
             }
         }
         

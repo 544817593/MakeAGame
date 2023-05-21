@@ -3,7 +3,7 @@
 /// </summary>
 public enum DirEnum
 {
-    Top, Right, Down, Left, Topleft, Topright, Downright, Downleft, None
+    None, Top, Right, Down, Left, Topleft, Topright, Downright, Downleft
 }
 
 /// <summary>
@@ -97,13 +97,5 @@ public enum ItemVolumeEnum
 /// </summary>
 public enum PieceStateEnum
 {
-    Idle, Moving, Fighting
-}
-
-/// <summary>
-/// 棋子移动方向
-/// </summary>
-public enum PieceMoveDirection
-{
-    None, Up, Right, Down, Left
+    Idle, Moving, Attacking
 }

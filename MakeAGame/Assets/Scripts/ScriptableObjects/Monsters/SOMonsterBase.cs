@@ -15,7 +15,9 @@ public class SOMonsterBase : ScriptableObject
     public int rarity; // 稀有度 0 白 -- 4 橙
     public int atkRange; // 射程
     public int monsterId; // 怪物的ID，辨认品种
-    public (int,int) pieceSize; // 怪物的尺寸
+    public int width;   // 怪物的宽
+    public int height;  // 怪物的长
+    // public (int,int) pieceSize; // 怪物的尺寸
     public List<PropertyEnum> properties; // 特性
     public List<DirEnum> dirs; // 可移动方向
 

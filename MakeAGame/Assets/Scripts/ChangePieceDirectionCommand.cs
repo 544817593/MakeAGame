@@ -7,7 +7,7 @@ namespace Game
     /// </summary>
     public class ChangePieceDirectionCommand: AbstractCommand
     {
-        private PieceMoveDirection direction;
+        private DirEnum direction;
 
         public ChangePieceDirectionCommand()
         {
