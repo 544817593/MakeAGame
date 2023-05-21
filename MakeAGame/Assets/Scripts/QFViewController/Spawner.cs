@@ -67,16 +67,21 @@ namespace Game
             // 置于MonsterPosition父物体下，该物体比地图略高一些
             piece.transform.SetParent(GameObject.Find("MonsterPosition").transform);
             piece.transform.position = gridTransform.position;
-            piece.transform.Rotate(90, 0, 0);
+            // piece.transform.Rotate(90, 0, 0);
             Monster monster = piece.GetComponent<Monster>();
             monster.data = Resources.Load<SOMonsterBase>("ScriptableObjects/Monsters/" + data.name);
             // monster.data = AssetDatabase.LoadAssetAtPath<SOMonsterBase>
             // ("Assets/Resources/ScriptableObjects/Monsters/" + data.name + ".asset");
 
-            piece.transform.Find("image").GetComponent<SpriteRenderer>().sprite = monster.data.monsterSprite;
+            piece.transform.Find("Root/SpritePiece").GetComponent<SpriteRenderer>().sprite = monster.data.monsterSprite;
             InitialiseMonsterValues(monster, data);
             grid[data.row, data.col].gridStatus.Value = GridStatusEnum.MonsterPiece;
             this.GetSystem<ISpawnSystem>().GetMonsterList().Add(piece.GetComponent<Monster>());
+            
+            // 在棋子系统中登记 // todo 目前假设怪物都占据一个格子
+            List<BoxGrid> crtGrids = new List<BoxGrid>();
+            crtGrids.Add(grid[data.row, data.col]);
+            this.GetSystem<IPieceSystem>().AddPieceEnemy(monster, crtGrids);
         }
 
         /// <summary>
@@ -129,7 +134,7 @@ namespace Game
             monster.isDying = new BindableProperty<bool>(false);
             (int, int) temp = (data.row, data.col);
             monster.leftTopGridPos = new BindableProperty<(int, int)>(temp);
-            (int, int) temp2 = (data.row + somb.pieceSize.Item1 - 1, data.col + somb.pieceSize.Item2 - 1);
+            (int, int) temp2 = (data.row + somb.height - 1, data.col + somb.width - 1);
             monster.botRightGridPos = new BindableProperty<(int, int)>(temp2);
         }
     }

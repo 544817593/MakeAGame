@@ -6,6 +6,9 @@ using UnityEngine;
  
 namespace Game
 {
+    /// <summary>
+    /// 目前只有敌人在用
+    /// </summary>
     public interface IMovementSystem : ISystem
     {
         /// <summary>

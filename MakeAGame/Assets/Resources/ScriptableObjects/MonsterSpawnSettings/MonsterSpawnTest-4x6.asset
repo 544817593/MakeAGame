@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca2d7a39a8289164d9d0d98e3169ff2e, type: 3}
+  m_Name: MonsterSpawnTest-4x6
+  m_EditorClassIdentifier: 
+  spawnPoints:
+  - {x: 0, y: 0}
+  spawnProbability: 64000000
+  spawnDuration: 02000000
+  spawnCooldown: e8030000
+  monsterName:
+  - UprightRat

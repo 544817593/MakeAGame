@@ -9,17 +9,13 @@ namespace Game
     /// </summary>
     public class DirectionIndicator: MonoBehaviour
     {
-        public PieceMoveDirection direction;
+        public DirEnum direction;
         public TriggerHelper mouseHelper;
 
         public void InitUIHelper(Action act)
         {
             var uiHelper = this.AddComponent<UIEventHelper>();
             uiHelper.OnUIPointEnter = act;
-            // mouseHelper = transform.AddComponent<TriggerHelper>();
-            // mouseHelper.OnMouseEnterEvent = act;
-            // mouseHelper.OnMouseEnterEvent = () => { Debug.Log("enter!!"); };
-            // mouseHelper.OnMouseUpEvent = () => { Debug.Log("up!!"); };
         }
     }
 }

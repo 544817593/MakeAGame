@@ -7,8 +7,11 @@ namespace Game
     public interface IPieceSystem : ISystem
     {
         List<ViewPiece> pieceFriendList { get; }    // 友方棋子
+        List<Monster> pieceEnemyList { get; }    // 敌方棋子
 
         public bool AddPieceFriend(Card card, List<BoxGrid> grids);
+
+        public bool AddPieceEnemy(Monster monster, List<BoxGrid> grids);
 
         // 唤出方向轮盘显示在棋子下
         public void ShowDirectionWheel(ViewPieceBase viewPB);
@@ -20,6 +23,7 @@ namespace Game
     {
         private ViewDirectionWheel viewDirectionWheel;
         public List<ViewPiece> pieceFriendList { get; } = new List<ViewPiece>();
+        public List<Monster> pieceEnemyList { get; } = new List<Monster>();
 
         protected override void OnInit()
         {
@@ -48,6 +52,25 @@ namespace Game
 
             return true;
         }
+        
+        public bool AddPieceEnemy(Monster monster, List<BoxGrid> grids)
+        {
+            Debug.Log($"PieceSystem: AddPieceEnemy {monster.data.monsterId}");
+            
+            // // 棋子实例化，挂载组件，部分初始化
+            // GameObject pieceGO = this.GetSystem<IPieceGeneratorSystem>().CreatePieceFriend();
+            // var viewPiece = pieceGO.AddComponent<ViewPiece>();
+            // // 接收数据，初始化显示
+            // viewPiece.SetDataWithCard(card);
+            // // viewCard.InitView(); // 在这里写会先于start执行，不对    // 转由start触发
+            monster.SetGrids(grids);
+            monster.InitState();
+
+            // 数值变化
+            pieceEnemyList.Add(monster);
+
+            return true;
+        }
 
         private ViewPieceBase crtSelectedPiece;
         public void ShowDirectionWheel(ViewPieceBase viewPB)
@@ -58,35 +81,27 @@ namespace Game
             
             CheckDirectionWheelExist();
             
-            // Debug.Log(Camera.main.WorldToScreenPoint(viewPB.transform.position));
-            // Debug.Log(Extensions.WorldToUIPos(viewPB.transform.position));
             var viewPiece = viewPB as ViewPiece;
             viewDirectionWheel.SetValidDirections(viewPiece.card.moveDirections);
             viewDirectionWheel.gameObject.transform.localPosition = Extensions.WorldToUIPos(viewPB.transform.position);
             viewDirectionWheel.gameObject.SetActive(true);
         }
-
-        // private string directionWheelResPath = "Prefabs/DirectionWheel";
+        
         void CheckDirectionWheelExist()
         {
             if (viewDirectionWheel == null)
             {
                 var handcardPanel = UIKit.GetPanel<UIHandCard>();
                 viewDirectionWheel = handcardPanel.viewDirectionWheel;
-
-                // var prefab = Resources.Load(directionWheelResPath);
-                // var go = (GameObject) GameObject.Instantiate(prefab);
-                // viewDirectionWheel = new ViewDirectionWheel(go);
-                // viewDirectionWheel.gameObject.SetActive(false);
             }
         }
 
         public void ChangePieceDirection()
         {
-            Debug.Log($"ChangePieceDirection ret1: {crtSelectedPiece == null} ret2: {viewDirectionWheel.crtDirection == PieceMoveDirection.None}");
+            Debug.Log($"ChangePieceDirection ret1: {crtSelectedPiece == null} ret2: {viewDirectionWheel.crtDirection == DirEnum.None}");
 
             // 无效操作
-            if (crtSelectedPiece == null || viewDirectionWheel.crtDirection == PieceMoveDirection.None)
+            if (crtSelectedPiece == null || viewDirectionWheel.crtDirection == DirEnum.None)
             {
             }
             else
@@ -97,7 +112,7 @@ namespace Game
             }
 
             viewDirectionWheel.gameObject.SetActive(false);
-            viewDirectionWheel.crtDirection = PieceMoveDirection.None;
+            viewDirectionWheel.crtDirection = DirEnum.None;
             crtSelectedPiece = null;
         }
         

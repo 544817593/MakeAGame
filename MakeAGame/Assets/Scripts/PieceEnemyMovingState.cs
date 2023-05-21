@@ -2,17 +2,17 @@ using UnityEngine;
 
 namespace Game
 {
-    public class PieceFriendMovingState : PieceState
+    public class PieceEnemyMovingState : PieceState
     {
         private float timer;    // 计时器
         private float moveDur;  // 移动速度（秒/每行动）
-        private ViewPiece viewPieceFriend;
+        private Monster viewPieceEnemy;
         
-        public PieceFriendMovingState(ViewPieceBase view): base(view)
+        public PieceEnemyMovingState(ViewPieceBase view): base(view)
         {
             stateEnum = PieceStateEnum.Moving;
             
-            viewPieceFriend = view as ViewPiece;
+            viewPieceEnemy = view as Monster;
         }
         
         public override void EnterState()
@@ -22,7 +22,7 @@ namespace Game
 
         void ResetMoveSpeed()
         {
-            moveDur = viewPieceFriend.card.moveSpd * viewPieceFriend.crtTimeMultiplier;
+            moveDur = viewPieceEnemy.data.moveSpeed * viewPieceEnemy.crtTimeMultiplier;
         }
 
         public override void Update()
@@ -30,7 +30,7 @@ namespace Game
             timer += Time.deltaTime;
             if (timer > moveDur)
             {
-                viewPieceFriend.Move();
+                viewPieceEnemy.Move();
 
                 timer = 0;
                 ResetMoveSpeed();

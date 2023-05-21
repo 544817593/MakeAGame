@@ -2,6 +2,7 @@ using Game;
 using QFramework;
 using System;
 using System.Collections.Generic;
+using DG.Tweening;
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
@@ -9,7 +10,7 @@ using UnityEngine;
 
 
 
-public class Monster : MonoBehaviour, IController
+public class Monster : ViewPieceBase
 {
     // 怪物初始SO数据
     public SOMonsterBase data;
@@ -38,19 +39,10 @@ public class Monster : MonoBehaviour, IController
     #endregion
 
     public TempAllyScript currentTarget; // 当前目标
-    public DirEnum currentDir = DirEnum.None; // 当前移动方向
+    // public DirEnum currentDir = DirEnum.None; // 当前移动方向
 
-    private IMapSystem mapSystem; // 地图系统
-    private float oldSpeed; // 记录移动速度被改变前的旧值
-
-    /// <summary>
-    /// 获取Architecture 每个IController都要写
-    /// </summary>
-    /// <returns></returns>
-    public IArchitecture GetArchitecture()
-    {
-        return GameEntry.Interface;
-    }
+    // private IMapSystem mapSystem; // 地图系统
+    // private float oldSpeed; // 记录移动速度被改变前的旧值
 
     void Awake()
     {
@@ -59,46 +51,201 @@ public class Monster : MonoBehaviour, IController
 
     void Start()
     {
-        leftTopGridPos.RegisterWithInitValue(newPosition => OnMonsterPositionChanged(newPosition));
-        leftTopGridPos.RegisterBeforeValueChanged(oldPosition => OnBeforeMonsterPositionChanged(oldPosition));
-        moveSpeed.Register(newMoveSpeed => OnMonsterMoveSpeedChanged(newMoveSpeed));
-        moveSpeed.RegisterBeforeValueChanged(oldSpeed => OnBeforeMonsterMoveSpeedChanged(oldSpeed));
+        base.Start();
+        // 因为怪物也可能占地多个格子，所以等格子list全部更新的时候才更改格子本身的信息，不方便用BindableProperty
+        // leftTopGridPos.RegisterWithInitValue(newPosition => OnMonsterPositionChanged(newPosition));
+        // leftTopGridPos.RegisterBeforeValueChanged(oldPosition => OnBeforeMonsterPositionChanged(oldPosition));
+        // moveSpeed.Register(newMoveSpeed => OnMonsterMoveSpeedChanged(newMoveSpeed));
+        // moveSpeed.RegisterBeforeValueChanged(oldSpeed => OnBeforeMonsterMoveSpeedChanged(oldSpeed));
+        
+        // 注意顺序，先放action，再regsiter
+        this.RegisterEvent<PieceMoveReadyEvent>(OnPieceMoveReady).UnRegisterWhenGameObjectDestroyed(gameObject);
+        this.RegisterEvent<PieceMoveFinishEvent>(OnPieceMoveFinish).UnRegisterWhenGameObjectDestroyed(gameObject);
+        
         this.SendCommand(new MonsterTargetSelectionCommand(this));
     }
 
-    private void OnBeforeMonsterMoveSpeedChanged(float oldSpeed)
+    public override void SetGrids(List<BoxGrid> grids)
     {
-        this.oldSpeed = oldSpeed;
+        base.SetGrids(grids);
+        foreach (var grid in pieceGrids)
+        {
+            grid.occupation = pieceId;
+        }
     }
 
-    private void OnMonsterMoveSpeedChanged(float newMoveSpeed)
+    public override void InitState()
     {
-        // 移动速度改变时同时改变移动冷却计时器
-        float differential = newMoveSpeed - oldSpeed;
-
-        gameObject.GetComponent<MonsterMovement>().movementCooldown += differential;
+        switch (stateFlag)
+        {
+            case PieceStateEnum.Moving:
+                var newState = new PieceEnemyMovingState(this);
+                ChangeStateTo(newState);
+                break;
+        }
     }
+
+    // 更新速度的过程换到PieceEnemyMovingState中
+    // private void OnBeforeMonsterMoveSpeedChanged(float oldSpeed)
+    // {
+    //     this.oldSpeed = oldSpeed;
+    // }
+
+    // private void OnMonsterMoveSpeedChanged(float newMoveSpeed)
+    // {
+    //     // 移动速度改变时同时改变移动冷却计时器
+    //     float differential = newMoveSpeed - oldSpeed;
+    //
+    //     gameObject.GetComponent<MonsterMovement>().movementCooldown += differential;
+    // }
 
     /// <summary>
     /// 怪物位置改变前一瞬间
     /// </summary>
     /// <param name="oldPosition">原位置</param>
-    private void OnBeforeMonsterPositionChanged((int, int) oldPosition)
-    {
-        // 更新格子上储存的信息
-        mapSystem.Grids()[oldPosition.Item1, oldPosition.Item2].occupation = 0;
-    }
+    // private void OnBeforeMonsterPositionChanged((int, int) oldPosition)
+    // {
+    //     // 更新格子上储存的信息
+    //     // mapSystem.Grids()[oldPosition.Item1, oldPosition.Item2].occupation = 0;
+    // }
 
     /// <summary>
     /// 怪物改变位置后一瞬间
     /// </summary>
     /// <param name="newPosition">新位置</param>
-    private void OnMonsterPositionChanged((int,int) newPosition)
+    // private void OnMonsterPositionChanged((int,int) newPosition)
+    // {
+    //     // 更新格子上储存的信息
+    //     // mapSystem.Grids()[newPosition.Item1, newPosition.Item2].occupation = pieceId;       
+    //     foreach (var oldGrid in pieceGrids) oldGrid.occupation = pieceId;
+    // }
+    
+    public void Move()
     {
-        // 更新格子上储存的信息
-        mapSystem.Grids()[newPosition.Item1, newPosition.Item2].occupation = pieceId;       
+        if (movementSystem == null)
+            movementSystem = this.GetSystem<IMovementSystem>();
+        
+        // 发送准备移动事件
+        this.SendEvent<PieceMoveReadyEvent>(new PieceMoveReadyEvent() {ViewPieceBase = this});
+        
+        var nextLTCorr = FindMovementDir();
+        
+        // 无法移动
+        if (nextLTCorr.Item1 == -1 && nextLTCorr.Item2 == -1)
+        {
+            return;
+        }
+        
+        // 更新数据
+        int diffR = nextLTCorr.Item1 - leftTopGridPos.Value.Item1;
+        int diffC = nextLTCorr.Item2 - leftTopGridPos.Value.Item2;
+        List<BoxGrid> nextGrids = new List<BoxGrid>();
+        foreach (var crtGrid in pieceGrids)
+        {
+            nextGrids.Add(mapSystem.Grids()[crtGrid.row + diffR, crtGrid.col + diffC]);
+        }
+        
+        foreach (var oldGrid in pieceGrids) oldGrid.occupation = 0;
+        pieceGrids = nextGrids;
+        foreach (var newGrid in pieceGrids) newGrid.occupation = pieceId;
+
+        leftTopGridPos.Value = nextLTCorr;
+        
+        DoMove();
     }
 
+    private IMovementSystem movementSystem;
+    /// <summary>
+    /// 根据目标，找到怪物的下一个移动方向
+    /// 返回移动后的左下角格子坐标，若无法移动，则返回(-1, -1)
+    /// </summary>
+    private (int, int) FindMovementDir()
+    {
+        (int, int) original = leftTopGridPos.Value; // 当前左上坐标
+        (int, int) positionAfterMovement = leftTopGridPos.Value; // 怪物移动后的坐标
+
+        // A* 寻路
+        List<BoxGrid> aStarPath = PathFinding.FindPath(original.Item1, original.Item2,
+            currentTarget.leftTopGridPos.Item1, currentTarget.leftTopGridPos.Item2, this);
+
+        // 路径存在
+        if (aStarPath != null && aStarPath.Count != 0)
+        {
+            // 场景显示路线
+            Color randColor = UnityEngine.Random.ColorHSV();
+            for (int i = 0; i < aStarPath.Count - 1; i++)
+            {
+                Debug.DrawLine(aStarPath[i].transform.position - new Vector3(0, 0, 0.3f), aStarPath[i + 1].transform.position - new Vector3(0, 0, 0.3f), randColor, 3f);
+            }
+
+            // 设置移动方向
+            direction = movementSystem.NeighbourBoxGridsToDir(this.GetSystem<IMapSystem>().Grids()
+                [leftTopGridPos.Value.Item1, leftTopGridPos.Value.Item2], aStarPath[1]);
+
+            // 更新想要去的格子
+            positionAfterMovement = this.GetSystem<IMovementSystem>().CalculateNextPosition(original, direction);
+            // nextIntendPos = positionAfterMovement;
+            return positionAfterMovement;
+        }
+        else
+        {
+            return (-1, -1);
+        }
+    }
+    
+    /// <summary>
+    /// 根据行走方向和下一位置的情况，检查是否可以移动
+    /// </summary>
+    /// <param name="curMoveDir"></param>
+    /// <param name="currentX"></param>
+    /// <param name="currentY"></param>
+    /// <returns></returns>
+    public bool CheckIfMovable(DirEnum curMoveDir, int currentX, int currentY)
+    {
+        if (isAttacking)
+        {
+            return false;
+        }
+
+        // 获取下一步坐标
+        (int, int) intendPos = movementSystem.CalculateNextPosition((currentX, currentY), curMoveDir);
+        // 对下一步坐标做基础检查
+        if (!movementSystem.MovementBaseCheck(intendPos)) return false;
+
+        return true;
+    }
+    
+    /// <summary>
+    /// 怪物执行移动
+    /// </summary>
+    public void DoMove()
+    {
+        // 更新画面
+        // var grid2DList = this.GetSystem<IMapSystem>().Grids();
+        // var newGridTransPos = grid2DList[nextIntendPos.Item1, nextIntendPos.Item2].transform.position;
+        // this.gameObject.transform.position = newGridTransPos;
+        // monster.leftTopGridPos.Value = nextIntendPos;
+        var nextPos = GetGridsCenterPos();
+        transform.DOMove(nextPos, 0.3f).OnComplete(OnMoveFinish);
+    }
+
+    void OnMoveFinish()
+    {
+        // 发送结束移动事件
+        GetArchitecture().SendEvent<PieceMoveFinishEvent>(new PieceMoveFinishEvent() {viewPieceBase = this});
+    }
+
+    protected override void OnMoveReadyEvent(PieceMoveReadyEvent e)
+    {
+        base.OnMoveReadyEvent(e);
+        Debug.Log("Monster recv OnMoveReadyEvent");
+    }
+
+    protected override void OnMoveFinishEvent(PieceMoveFinishEvent e)
+    {
+        base.OnMoveFinishEvent(e);
+        Debug.Log("Monster recv OnMoveFinishEvent");
+    }
 }
 
 
@@ -199,8 +346,10 @@ public class MonsterEditor : Editor
             EditorGUILayout.TextField("Monster ID: " + monsterData.monsterId);
             EditorGUILayout.TextField("Properties: " + monsterData.properties);
             EditorGUILayout.TextField("Properties: " + monsterData.dirs);
-            int x3 = monsterData.pieceSize.Item1;
-            int y3 = monsterData.pieceSize.Item2;
+            // int x3 = monsterData.pieceSize.Item1;
+            // int y3 = monsterData.pieceSize.Item2;
+            int x3 = monsterData.width;
+            int y3 = monsterData.height;
             EditorGUILayout.BeginHorizontal();
             EditorGUILayout.PrefixLabel("Monster size");
             EditorGUILayout.IntField(x3);

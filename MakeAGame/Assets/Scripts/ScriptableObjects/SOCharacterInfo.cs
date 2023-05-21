@@ -25,7 +25,7 @@ namespace Game
         public Sprite pieceSprite;  // 棋子图片
         public int width;   // 棋子占地宽
         public int height;  // 棋子占地长
-        public PieceMoveDirection[] moveDirections;    // 移动方向
+        public DirEnum[] moveDirections;    // 移动方向
 
         public float attackSpd;   // 攻速
         public float accracy;   // 命中率

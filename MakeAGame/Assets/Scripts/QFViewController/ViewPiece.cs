@@ -29,13 +29,11 @@ namespace Game
             this.RegisterEvent<PieceMoveFinishEvent>(OnPieceMoveFinish).UnRegisterWhenGameObjectDestroyed(gameObject);
 
             // OnPieceMoveReady += e => { Debug.Log("add action test"); };  // 在这里加是没有用的，不知道为啥
-            
-            // todo 先随机一个方向
-            direction = (PieceMoveDirection)UnityEngine.Random.Range(1, 5);
             // OnPieceMoveReady += OnMoveReadyEvent;
             // OnPieceMoveFinish += OnMoveFinishEvent;
-
-            // Invoke(nameof(MoveTest), 3f);
+            
+            // todo 先随机一个方向
+            direction = (DirEnum)UnityEngine.Random.Range(1, 5);
         }
 
         void InitView()
@@ -45,24 +43,30 @@ namespace Game
             if(touchArea)
                 touchArea.GetComponent<BoxCollider2D>().size = spPiece.sprite.bounds.size;
         }
-
-        void MoveTest()
+        
+        public override void SetGrids(List<BoxGrid> grids)
         {
-            BoxGrid grid = pieceGrids[0];
-            var mapSystem = this.GetSystem<IMapSystem>();
-            int mapCol = mapSystem.mapCol;
-            BoxGrid nextRightGrid = mapSystem.Grids()[grid.row, Mathf.Clamp(grid.col + 1, 0, mapCol - 1)];
-
-            Vector3 moveVec = nextRightGrid.transform.position - grid.transform.position;
-            transform.DOMove(transform.position + moveVec, 0.3f);
-            
-            Invoke(nameof(MoveTest), 3f);
+            base.SetGrids(grids);
+            foreach (var grid in pieceGrids)
+            {
+                grid.occupation = card.charaID; // todo id待定
+            }
+        }
+        
+        public override void InitState()
+        {
+            switch (stateFlag)
+            {
+                case PieceStateEnum.Moving:
+                    var newState = new PieceFriendMovingState(this);
+                    ChangeStateTo(newState);
+                    break;
+            }
         }
 
         public void Move()
         {
             // 发送准备移动事件
-            // GetArchitecture().SendEvent<PieceMoveReadyEvent>(new PieceMoveReadyEvent() {ViewPieceBase = this});
             this.SendEvent<PieceMoveReadyEvent>(new PieceMoveReadyEvent() {ViewPieceBase = this});
 
             var nextGrids = GetNextGrids();
@@ -72,7 +76,7 @@ namespace Game
                 // 数据变化
                 foreach (var oldGrid in pieceGrids) oldGrid.occupation = 0;
                 pieceGrids = nextGrids;
-                foreach (var oldGrid in pieceGrids) oldGrid.occupation = card.charaID;  // todo id是什么id待定
+                foreach (var newGrid in pieceGrids) newGrid.occupation = card.charaID;  // todo id是什么id待定
                 
                 // 视觉表现
                 DoMove();
@@ -91,8 +95,8 @@ namespace Game
         /// <returns></returns>
         private List<BoxGrid> GetNextGrids()
         {
-            int rowDiff = direction == PieceMoveDirection.Up ? -1 : direction == PieceMoveDirection.Down ? 1 : 0;
-            int colDiff = direction == PieceMoveDirection.Left ? -1 : direction == PieceMoveDirection.Right ? 1 : 0;
+            int rowDiff = direction == DirEnum.Top ? -1 : direction == DirEnum.Down ? 1 : 0;
+            int colDiff = direction == DirEnum.Left ? -1 : direction == DirEnum.Right ? 1 : 0;
 
             int nextRow;
             int nextCol;

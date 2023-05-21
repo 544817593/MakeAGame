@@ -96,7 +96,7 @@ namespace Game
 
             foreach (DirEnum dir in monster.dirs.Value)
             {
-                if (monster.gameObject.GetComponent<MonsterMovement>().CheckIfMovable(dir, currentBoxGrid.row, currentBoxGrid.col))
+                if (monster.CheckIfMovable(dir, currentBoxGrid.row, currentBoxGrid.col))
                 {
                     (int, int) newPos = movementSystem.CalculateNextPosition((currentBoxGrid.row, currentBoxGrid.col), dir);
                     neighbourList.Add(grid2DList[newPos.Item1, newPos.Item2]);
