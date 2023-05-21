@@ -72,15 +72,14 @@ public enum GridStatusEnum
 }
 
 /// <summary>
-/// 道具类型
+/// 道具类型，枚举顺序【不可以】改变，用来整理背包显示顺序
 /// </summary>
-public enum ItemTypeEnum
+public enum ItemUseTimeEnum
 {
-    Enhancement, // 卡牌强化道具
-    Coin, // 金币
-    Potion, // 药剂
-    Utility, // 功能性道具
-    Misc // 其它
+    Combat, // 战斗场景，主要是药剂
+    AnyTime, // 任何时候可以使用的道具
+    Merchant, // 商店场景，主要是强化道具
+    NotUsable // 无法使用的道具，主要是任务道具、功能型道具
 }
 
 /// <summary>

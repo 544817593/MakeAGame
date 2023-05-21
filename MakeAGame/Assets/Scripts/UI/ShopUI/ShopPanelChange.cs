@@ -24,10 +24,11 @@ public class ShopPanelChange
             {
                 UIKit.OpenPanel<ShopSellUI.ShopSellUI>();
             }
-            else if(button.name == "LevelUp")
+            else if(button.name == "Enhance")
             {
-
-            }else if(button.name == "Close")
+                UIKit.OpenPanel<ShopEnhanceUI.ShopEnhanceUI>();
+            }
+            else if(button.name == "Close")
             {
                 currentPanel.CloseSelf();
             }

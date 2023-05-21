@@ -16,6 +16,18 @@ namespace Game
         void AddItem(Item item);
 
         /// <summary>
+        /// 从背包里删除一个物品
+        /// </summary>
+        /// <param name="item"></param>
+        void RemoveItem(Item item);
+
+        /// <summary>
+        /// 使用一个物品
+        /// </summary>
+        /// <param name="item"></param>
+        void UseItem(Item item);
+
+        /// <summary>
         /// 返回背包里的物品列表
         /// </summary>
         List<Item> GetItemList();
@@ -31,6 +43,14 @@ namespace Game
         /// </summary>
         /// <returns></returns>
         List<ViewCard> GetCardList();
+
+        /// <summary>
+        /// 整理itemList也就是背包道具的顺序，优先级为：战斗中使用道具>任何时间使用的道具>其它可使用道具>不可使用道具。
+        /// 同一道具类型下稀有度低的在前，稀有度高的在后。每次背包道具有变动自动调用。
+        /// </summary>
+        void SortItemList();
+
+
 
     }
 
@@ -48,16 +68,25 @@ namespace Game
 
             cardList.SetValueWithoutEvent(new List<ViewCard>());
 
-            SOItemBase testItem = Resources.Load<SOItemBase>("ScriptableObjects/Items/Item31");
+            // 测试用代码
+            SOItemBase IntermediateSapphirePotion = Resources.Load<SOItemBase>("ScriptableObjects/Items/Intermediate Sapphire Potion");
+            SOItemBase MinorSapphirePotion = Resources.Load<SOItemBase>("ScriptableObjects/Items/Minor Sapphire Potion");
+            SOItemBase IntermediateEmeraldPotion = Resources.Load<SOItemBase>("ScriptableObjects/Items/Intermediate Emerald Potion");
+            SOItemBase Type_DMinorEnhancementPotion = Resources.Load<SOItemBase>("ScriptableObjects/Items/Type-D Minor Enhancement Potion");
+            AddItem(new Item { amount = 1, data = IntermediateSapphirePotion });
+            AddItem(new Item { amount = 2, data = MinorSapphirePotion });
+            AddItem(new Item { amount = 1, data = MinorSapphirePotion });
+            AddItem(new Item { amount = 3, data = IntermediateEmeraldPotion });
+            AddItem(new Item { amount = 1, data = Type_DMinorEnhancementPotion });
 
-            AddItem(new Item { amount = 1, data = testItem });
-            AddItem(new Item { amount = 2, data = testItem });
+
 
 
         }
 
         private void OnItemListChanged()
         {
+            SortItemList();
             UIKit.GetPanel("UIInventoryQuickSlot")?.Invoke("RefreshInventoryItems", 0f);
         }
 
@@ -81,6 +110,13 @@ namespace Game
             itemList.Value = newList;
         }
 
+        public void RemoveItem(Item item)
+        {
+            List<Item> newList = new List<Item>(itemList.Value);
+            newList.Remove(item);
+            itemList.Value = newList;
+        }
+
         public List<Item> GetItemList()
         {
             return itemList;
@@ -99,6 +135,34 @@ namespace Game
         public List<ViewCard> GetCardList()
         {
             return cardList;
+        }
+
+
+        public void SortItemList()
+        {
+            List<Item> items = itemList.Value;
+
+            items.Sort((item1, item2) =>
+            {
+                // 比较道具使用时间
+                int useTimeComparison = item1.data.itemUseTime.CompareTo(item2.data.itemUseTime);
+                if (useTimeComparison != 0)
+                {
+                    return useTimeComparison;
+                }
+
+                // 如果道具使用时间相同，则比较稀有度
+                int rarityComparison = item1.data.rarity.CompareTo(item2.data.rarity);
+                return rarityComparison;
+            });
+
+            itemList.SetValueWithoutEvent(items);
+        }
+
+        public void UseItem(Item item)
+        {
+            var useItemEvent = new UseItemEvent { item = item };
+            GameEntry.Interface.SendCommand(new UseItemCommand(useItemEvent));
         }
     }
 }

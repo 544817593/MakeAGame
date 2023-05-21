@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: acc015c2671ef67429c4b70efb47cc33, type: 3}
   m_Name: Advanced Emerald Potion
   m_EditorClassIdentifier: 
-  itemType: 2
+  itemUseTime: 0
   volume: 2
   itemName: "\u6DF1\u84DD\u7EFF\u8272\u836F\u6C34"
   sprite: {fileID: 21300000, guid: 6346569fbf827334d9f87295a7718f0f, type: 3}

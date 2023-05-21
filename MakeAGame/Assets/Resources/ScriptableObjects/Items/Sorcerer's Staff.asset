@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: acc015c2671ef67429c4b70efb47cc33, type: 3}
   m_Name: Sorcerer's Staff
   m_EditorClassIdentifier: 
-  itemType: 4
+  itemUseTime: 1
   volume: 0
   itemName: "\u5DEB\u672F\u6CD5\u6756"
   sprite: {fileID: 21300000, guid: e388cfad7c3946b4bbff904713ff0a1d, type: 3}

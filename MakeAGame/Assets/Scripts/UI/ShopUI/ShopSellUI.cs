@@ -8,6 +8,7 @@ using TMPro;
 using System.Reflection;
 using System;
 using UnityEngine.Assertions;
+using System.Linq;
 
 namespace ShopSellUI
 {
@@ -20,17 +21,17 @@ namespace ShopSellUI
         // TODO 读取玩家当前金币数量，暂时使用hardcode
         public int playerGold = 50;
         // 背包每页的格子数量上限
-        private int gridNum = 20;
+        private const int gridNum = 15;
         private int curPage = 1;
         private int totalPage = 1;
-        private int upperIndex = 19;
+        // 每页显示的元素索引区间[lowerIndex, upperIndex]
+        private int upperIndex = gridNum - 1;
         private int lowerIndex = 0;
 
         private int sellCount = 1;
         private Item selectedItem = null;
         private Button selectedButton = null;
         private Dictionary<Button, Item> activeButtons = new Dictionary<Button, Item>();
-        private Dictionary<Item, int> ItemIdx = new Dictionary<Item, int>();
         protected override void OnInit(IUIData uiData = null)
 		{
 			mData = uiData as ShopSellUIData ?? new ShopSellUIData();
@@ -63,12 +64,12 @@ namespace ShopSellUI
         private void refreshLayout()
         {
             List<Item> bagItemList = mData.shopSystem.getBagItemList();
-            totalPage = (int)Math.Ceiling((double)bagItemList.Count / gridNum);
+            totalPage = bagItemList.Count != 0 ? (int)Math.Ceiling((double)bagItemList.Count / gridNum) : 1;
             // 玩家金币显示
             TextGold.text = $"金币: {playerGold}";
 			// 页数显示
 			TextPageNum.text = $" {curPage} / {totalPage}";
-            //updateIndex();
+            
             int idx = lowerIndex;
             foreach (Transform transform in ShopGridPanel.GetComponentInChildren<Transform>(includeInactive: true))
             {
@@ -106,7 +107,7 @@ namespace ShopSellUI
                         }
                         else if (texts.gameObject.name == "ItemCost")
                         {
-                            texts.gameObject.GetComponent<TextMeshProUGUI>().text = itemInList.data.buyCost.ToString();
+                            texts.gameObject.GetComponent<TextMeshProUGUI>().text = itemInList.data.sellPrice.ToString();
                         }
                     }
                     if (!activeButtons.ContainsKey(curItem.GetComponent<Button>()))
@@ -280,7 +281,8 @@ namespace ShopSellUI
                 selectedItem = null;
                 selectedButton = null;
                 TextItemInfo.text = null;
-                if (mData.shopSystem.getBagItemList().Count % gridNum == 0 && curPage != 1)
+                // 如果卖掉一个物品后最后一页变为空，并且当前页面在最后一页并且总页数不止一页，则自动将当前页-1
+                if (mData.shopSystem.getBagItemList().Count % gridNum == 0 && curPage != 1 && curPage == totalPage)
                 {
                     curPage--;
                 }

@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: acc015c2671ef67429c4b70efb47cc33, type: 3}
+  m_Name: Glorious Ancient Mirror
+  m_EditorClassIdentifier: 
+  itemUseTime: 1
+  volume: 0
+  itemName: "\u534E\u4E3D\u7684\u53E4\u955C"
+  sprite: {fileID: 21300000, guid: 80bc9f049c330654984584a9123c6685, type: 3}
+  buyCost: 0
+  sellPrice: 0
+  description: "\u590D\u5236\u4E00\u5F20\u6A59\u8272\u53CA\u4EE5\u4E0B\u54C1\u8D28\u7684\u5361\u724C\uFF0C\u5361\u724C\u7684\u5F3A\u5316\u6548\u679C\u4E0D\u7EE7\u627F"
+  rarity: 4
+  enhanceLevel: 0

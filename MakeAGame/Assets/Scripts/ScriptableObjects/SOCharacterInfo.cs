@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Game
@@ -18,7 +19,7 @@ namespace Game
         public float moveSpd; // 行动速度
         public int defend;  // 防御力
 
-        public SOFeature[] features;  // 特性
+        public List<SOFeature> features;  // 特性
         public SOFeature specialFeature;  // 特殊属性
         
         public Sprite pieceSprite;  // 棋子图片
@@ -29,5 +30,7 @@ namespace Game
         public float attackSpd;   // 攻速
         public float accracy;   // 命中率
         public int attackRange; // 攻击范围
+
+        public float life; // 寿命
     }
 }

@@ -5,7 +5,7 @@ using QFramework;
 
 namespace ShopSellUI
 {
-	// Generate Id:5f0aa100-b0e4-4891-a13e-912b462e9ef8
+	// Generate Id:25d0e7a2-a386-47d8-824e-42ab9742510c
 	public partial class ShopSellUI
 	{
 		public const string Name = "ShopSellUI";
@@ -47,16 +47,6 @@ namespace ShopSellUI
 		[SerializeField]
 		public UnityEngine.UI.Button Item15;
 		[SerializeField]
-		public UnityEngine.UI.Button Item16;
-		[SerializeField]
-		public UnityEngine.UI.Button Item17;
-		[SerializeField]
-		public UnityEngine.UI.Button Item18;
-		[SerializeField]
-		public UnityEngine.UI.Button Item19;
-		[SerializeField]
-		public UnityEngine.UI.Button Item20;
-		[SerializeField]
 		public UnityEngine.UI.Button Sell;
 		[SerializeField]
 		public UnityEngine.UI.Image ImageItemInfo;
@@ -97,11 +87,6 @@ namespace ShopSellUI
 			Item13 = null;
 			Item14 = null;
 			Item15 = null;
-			Item16 = null;
-			Item17 = null;
-			Item18 = null;
-			Item19 = null;
-			Item20 = null;
 			Sell = null;
 			ImageItemInfo = null;
 			TextItemInfo = null;

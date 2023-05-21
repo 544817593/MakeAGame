@@ -784,14 +784,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7334864566745028645, guid: 812f362474abc6f4a8feeae1703a985c, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: -802
-      objectReference: {fileID: 0}
-    - target: {fileID: 7334864566745028645, guid: 812f362474abc6f4a8feeae1703a985c, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 388
-      objectReference: {fileID: 0}
     - target: {fileID: 9205605612714496565, guid: 812f362474abc6f4a8feeae1703a985c, type: 3}
       propertyPath: m_Name
       value: UIInventoryQuickSlot

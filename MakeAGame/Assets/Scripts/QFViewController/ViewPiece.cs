@@ -10,7 +10,7 @@ namespace Game
     public partial class ViewPiece: ViewPieceBase
     {
         public Card card { get; private set; }
-        
+
         public TriggerHelper mouseHelper;
 
         public void SetDataWithCard(Card _card)

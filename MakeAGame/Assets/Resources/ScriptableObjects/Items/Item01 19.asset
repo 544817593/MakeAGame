@@ -12,12 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: acc015c2671ef67429c4b70efb47cc33, type: 3}
   m_Name: Item01 19
   m_EditorClassIdentifier: 
-  itemType: 1
+  itemUseTime: 0
   volume: 0
   itemName: Item01
-  itemDisplayName: 
   sprite: {fileID: 21300000, guid: 07885f9510ed09e43992921d83ee6d99, type: 3}
-  buyCost: 10
-  sellPrize: 10
+  buyCost: 80
+  sellPrice: 30
   description: "\u8FD9\u4E2A\u662F\u7269\u54C101\uFF0C\u4F46\u662F\u6682\u65F6\u8FD8\u6CA1\u6709\u540D\u5B57"
-  rarity: 0
+  rarity: 1
+  enhanceLevel: 0
