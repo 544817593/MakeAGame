@@ -18,6 +18,7 @@ namespace Game
             RegisterSystem<ICardGeneratorSystem>(new CardGeneratorSystem());
             RegisterSystem<IPieceSystem>(new PieceSystem());
             RegisterSystem<IPieceGeneratorSystem>(new PieceGeneratorSystem());
+            RegisterSystem<IPieceBattleSystem>(new PieceBattleSystem());
             RegisterSystem<ISpawnSystem>(new SpawnSystem());
             RegisterSystem<IMovementSystem>(new MovementSystem());
             RegisterSystem<IInventorySystem>(new InventorySystem());

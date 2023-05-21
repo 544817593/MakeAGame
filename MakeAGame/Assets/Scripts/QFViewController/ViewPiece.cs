@@ -27,6 +27,7 @@ namespace Game
             // 注意顺序，先放action，再regsiter
             this.RegisterEvent<PieceMoveReadyEvent>(OnPieceMoveReady).UnRegisterWhenGameObjectDestroyed(gameObject);
             this.RegisterEvent<PieceMoveFinishEvent>(OnPieceMoveFinish).UnRegisterWhenGameObjectDestroyed(gameObject);
+            this.RegisterEvent<PieceAttackStartEvent>(OnPieceAttackStart).UnRegisterWhenGameObjectDestroyed(gameObject);
 
             // OnPieceMoveReady += e => { Debug.Log("add action test"); };  // 在这里加是没有用的，不知道为啥
             // OnPieceMoveReady += OnMoveReadyEvent;
@@ -169,6 +170,13 @@ namespace Game
             
         }
 
+        public void Attack()
+        {
+            Debug.Log($"piece {this.ToString()} is about to attack");
+            // todo attack
+            
+        }
+
         protected override void OnMoveReadyEvent(PieceMoveReadyEvent e)
         {
             // todo
@@ -184,6 +192,13 @@ namespace Game
             Debug.Log("ViewPiece receive MoveFinishEvent");
             // testAction += () => Debug.Log("test");   // 但这里是有效的！如果有什么需要叠加的函数，可以加在这里
             testAction.Invoke();
+        }
+
+        protected override void OnAttackStartEvent(PieceAttackStartEvent e)
+        {
+            // 若不是给自己的通知，不作相应
+            if (e.vpb != this) return;
+            ChangeStateTo(new PieceFriendAttackingState(this));
         }
 
         private void MouseDown()

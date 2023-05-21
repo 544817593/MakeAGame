@@ -17,6 +17,9 @@ namespace Game
         public void ShowDirectionWheel(ViewPieceBase viewPB);
         // 改变棋子方向
         public void ChangePieceDirection();
+        
+        // 获得两个棋子的最小距离（占地多个格子的情况下）
+        public int GetPieceDist(ViewPieceBase vpb1, ViewPieceBase vpb2);
     }
     
     public class PieceSystem: AbstractSystem, IPieceSystem
@@ -115,7 +118,26 @@ namespace Game
             viewDirectionWheel.crtDirection = DirEnum.None;
             crtSelectedPiece = null;
         }
-        
-        
+
+        public int GetPieceDist(ViewPieceBase vpb1, ViewPieceBase vpb2)
+        {
+            int minDist = 100;
+            BoxGrid grid1;
+            BoxGrid grid2;
+            int tmpDist = minDist;
+            for (int i = 0; i < vpb1.pieceGrids.Count; i++)
+            {
+                grid1 = vpb1.pieceGrids[i];
+                for (int j = 0; j < vpb2.pieceGrids.Count; j++)
+                {
+                    grid2 = vpb2.pieceGrids[j];
+                    tmpDist = Mathf.Abs(grid1.row - grid2.row) + Mathf.Abs(grid1.col - grid2.col);
+                    if (tmpDist < minDist)
+                        minDist = tmpDist;
+                }
+            }
+
+            return minDist;
+        }
     }
 }

@@ -22,6 +22,8 @@ namespace Game
         public int width => so.width;
         public int height => so.height;
         public DirEnum[] moveDirections => so.moveDirections;
+        public int atkRange => so.attackRange;
+        public float atkSpd => so.attackSpd;
 
         // 会有改动的数据  // 外部可以读取，但不可以直接改动
         public int rarity { get; private set; }

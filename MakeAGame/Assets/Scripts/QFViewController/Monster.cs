@@ -61,6 +61,7 @@ public class Monster : ViewPieceBase
         // 注意顺序，先放action，再regsiter
         this.RegisterEvent<PieceMoveReadyEvent>(OnPieceMoveReady).UnRegisterWhenGameObjectDestroyed(gameObject);
         this.RegisterEvent<PieceMoveFinishEvent>(OnPieceMoveFinish).UnRegisterWhenGameObjectDestroyed(gameObject);
+        this.RegisterEvent<PieceAttackStartEvent>(OnPieceAttackStart).UnRegisterWhenGameObjectDestroyed(gameObject);
         
         this.SendCommand(new MonsterTargetSelectionCommand(this));
     }
@@ -234,6 +235,13 @@ public class Monster : ViewPieceBase
         // 发送结束移动事件
         GetArchitecture().SendEvent<PieceMoveFinishEvent>(new PieceMoveFinishEvent() {viewPieceBase = this});
     }
+    
+    public void Attack()
+    {
+        Debug.Log($"monster {this.ToString()} is about to attack");
+        // todo attack
+            
+    }
 
     protected override void OnMoveReadyEvent(PieceMoveReadyEvent e)
     {
@@ -245,6 +253,13 @@ public class Monster : ViewPieceBase
     {
         base.OnMoveFinishEvent(e);
         Debug.Log("Monster recv OnMoveFinishEvent");
+    }
+    
+    protected override void OnAttackStartEvent(PieceAttackStartEvent e)
+    {
+        // 若不是给自己的通知，不作相应
+        if (e.vpb != this) return;
+        ChangeStateTo(new PieceEnemyAttackingState(this));
     }
 }
 

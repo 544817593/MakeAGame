@@ -35,6 +35,8 @@ namespace Game
         /// <param name="boxgrid">需要被检查的格子</param>
         /// <returns></returns>
         bool GridCanMoveTo(BoxGrid boxgrid);
+
+        int GetGridDist(BoxGrid grid1, BoxGrid grid2);
         
         /// 地图中央位置，用于摄像头设置
         /// </summary>
@@ -162,6 +164,11 @@ namespace Game
             if (boxgrid.gridStatus.Value == GridStatusEnum.MonsterPiece) return false;
 
             return true;
+        }
+
+        public int GetGridDist(BoxGrid grid1, BoxGrid grid2)
+        {
+            return Mathf.Abs(grid1.row - grid2.row) + Mathf.Abs(grid1.col - grid2.col);
         }
     }
 }

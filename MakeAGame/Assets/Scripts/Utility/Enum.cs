@@ -97,5 +97,5 @@ public enum ItemVolumeEnum
 /// </summary>
 public enum PieceStateEnum
 {
-    Idle, Moving, Fighting
+    Idle, Moving, Attacking
 }

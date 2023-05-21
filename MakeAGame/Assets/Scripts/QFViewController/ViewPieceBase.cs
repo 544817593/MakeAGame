@@ -20,6 +20,7 @@ namespace Game
 
         public Action<PieceMoveReadyEvent> OnPieceMoveReady;
         public Action<PieceMoveFinishEvent> OnPieceMoveFinish;
+        public Action<PieceAttackStartEvent> OnPieceAttackStart;
 
         public List<BoxGrid> pieceGrids { get; protected set; } = new List<BoxGrid>();
         // 经过所有占地格子计算出来的时间流速
@@ -37,6 +38,8 @@ namespace Game
             }
         }
 
+        // public List<BoxGrid> attadkRangeGrids = new List<BoxGrid>(); // todo
+
         protected virtual void Start()
         {
             mapSystem = this.GetSystem<IMapSystem>();
@@ -44,6 +47,7 @@ namespace Game
             // 棋子自身也会监听棋子（包括自己）
             OnPieceMoveReady += OnMoveReadyEvent;
             OnPieceMoveFinish += OnMoveFinishEvent;
+            OnPieceAttackStart += OnAttackStartEvent;
         }
 
         public virtual void SetGrids(List<BoxGrid> grids)
@@ -113,6 +117,16 @@ namespace Game
             // Debug.Log("ViewPieceBase receive MoveFinishEvent");
         }
 
+        protected virtual void OnAttackStartEvent(PieceAttackStartEvent e)
+        {
+
+        }
+
+        public bool IsAttacking()
+        {
+            return stateFlag == PieceStateEnum.Attacking;
+        }
+
         public IArchitecture GetArchitecture()
         {
             return GameEntry.Interface;
@@ -127,5 +141,10 @@ namespace Game
     public struct PieceMoveFinishEvent
     {
         public ViewPieceBase viewPieceBase;
+    }
+
+    public struct PieceAttackStartEvent
+    {
+        public ViewPieceBase vpb;
     }
 }
