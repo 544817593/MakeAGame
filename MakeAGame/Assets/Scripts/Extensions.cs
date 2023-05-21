@@ -69,5 +69,12 @@ namespace Game
                     return 1f;
             }
         }
+
+        public static Vector3 WorldToUIPos(Vector3 pos)
+        {
+            pos = Camera.main.WorldToScreenPoint(pos);
+            pos -= new Vector3(Screen.width / 2f, Screen.height / 2f, 0f);
+            return pos;
+        }
     }
 }

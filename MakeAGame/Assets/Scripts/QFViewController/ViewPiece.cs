@@ -10,6 +10,8 @@ namespace Game
     public partial class ViewPiece: ViewPieceBase
     {
         public Card card { get; private set; }
+        
+        public TriggerHelper mouseHelper;
 
         public void SetDataWithCard(Card _card)
         {
@@ -21,7 +23,7 @@ namespace Game
             base.Start();
             InitBind();
             InitView();
-            
+
             // 注意顺序，先放action，再regsiter
             this.RegisterEvent<PieceMoveReadyEvent>(OnPieceMoveReady).UnRegisterWhenGameObjectDestroyed(gameObject);
             this.RegisterEvent<PieceMoveFinishEvent>(OnPieceMoveFinish).UnRegisterWhenGameObjectDestroyed(gameObject);
@@ -39,6 +41,9 @@ namespace Game
         void InitView()
         {
             spPiece.sprite = card.pieceSprite;
+            // 重置collider大小以贴合图片
+            if(touchArea)
+                touchArea.GetComponent<BoxCollider2D>().size = spPiece.sprite.bounds.size;
         }
 
         void MoveTest()
@@ -175,6 +180,18 @@ namespace Game
             Debug.Log("ViewPiece receive MoveFinishEvent");
             // testAction += () => Debug.Log("test");   // 但这里是有效的！如果有什么需要叠加的函数，可以加在这里
             testAction.Invoke();
+        }
+
+        private void MouseDown()
+        {
+            Debug.Log("mouse down piece");
+            this.GetSystem<IPieceSystem>().ShowDirectionWheel(this);
+        }
+
+        private void MouseUp()
+        {
+            Debug.Log("mouse up piece");
+            this.SendCommand<ChangePieceDirectionCommand>(new ChangePieceDirectionCommand());
         }
     }
 }

@@ -15,7 +15,7 @@ namespace Game
         protected PieceStateEnum stateFlag = PieceStateEnum.Moving;
         protected PieceState state = new PieceStateIdle(null);
 
-        protected PieceMoveDirection direction = PieceMoveDirection.None;
+        public PieceMoveDirection direction = PieceMoveDirection.None;
 
         public Action<PieceMoveReadyEvent> OnPieceMoveReady;
         public Action<PieceMoveFinishEvent> OnPieceMoveFinish;
