@@ -19,6 +19,7 @@ namespace Game
 	{
 		private Transform nodeTooltip;
 		private TextMeshProUGUI tmpTooltip;
+		public ViewDirectionWheel viewDirectionWheel;
 		
 		private Animator anim;
 
@@ -40,6 +41,9 @@ namespace Game
 			nodeTooltip = transform.Find("Root/Tooltip");
 			nodeTooltip.gameObject.SetActive(false);
 			tmpTooltip = nodeTooltip.GetChild(0).GetComponent<TextMeshProUGUI>();
+
+			viewDirectionWheel = new ViewDirectionWheel(transform.Find("DirectionWheel").gameObject);
+			viewDirectionWheel.gameObject.SetActive(false);
 			
 			PieceIcon.gameObject.SetActive(false);
 			

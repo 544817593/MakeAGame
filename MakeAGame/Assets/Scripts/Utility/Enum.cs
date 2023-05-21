@@ -91,3 +91,19 @@ public enum ItemVolumeEnum
     Medium,
     Large
 }
+
+/// <summary>
+/// 棋子状态
+/// </summary>
+public enum PieceStateEnum
+{
+    Idle, Moving, Fighting
+}
+
+/// <summary>
+/// 棋子移动方向
+/// </summary>
+public enum PieceMoveDirection
+{
+    None, Up, Right, Down, Left
+}
