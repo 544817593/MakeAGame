@@ -120,7 +120,8 @@ namespace Game
         // todo 每个棋子可能不一样的，检查某个格子是否可以移动上去的方法
         private bool CheckIfOneGridCanMove(BoxGrid grid)
         {
-            base.CheckIfOneGridCanMove(grid);
+            if (!base.CheckIfOneGridCanMove(grid))
+                return false;
             
             // 某些判断...
             
