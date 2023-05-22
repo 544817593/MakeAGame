@@ -12,6 +12,8 @@ namespace Game
         public int charaID { get; } // 角色id
         private int instID = -1;    // 卡牌实体id，可能根据该卡牌位于背包中还是手牌中，分别由背包和手牌系统管理    // todo 可能是没用的，暂时不要给它赋值
 
+        public int enhanceID = 1; // 临时用来测试强化界面的数据 
+
         // 应该不会变动的数据，就不另外存储了，直接用so
         // name, death desc, sprite, feature, special feature
         public SOCharacterInfo so;
