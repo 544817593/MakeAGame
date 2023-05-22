@@ -84,10 +84,10 @@ namespace ShopSellUI
                         if (texts.gameObject.name == "ItemNum")
                         {
                             texts.gameObject.GetComponent<TextMeshProUGUI>().text = null;
-                        }
-                        else if (texts.gameObject.name == "ItemCost")
+                       }
+                       else if (texts.gameObject.name == "ItemCost")
                         {
-                            texts.gameObject.GetComponent<TextMeshProUGUI>().text = null;
+                           texts.gameObject.GetComponent<TextMeshProUGUI>().text = null;
                         }
                     }
                     activeButtons.Remove(curItem.GetComponent<Button>());
@@ -110,14 +110,14 @@ namespace ShopSellUI
                             texts.gameObject.GetComponent<TextMeshProUGUI>().text = itemInList.data.sellPrice.ToString();
                         }
                     }
-                    if (!activeButtons.ContainsKey(curItem.GetComponent<Button>()))
-                    {
-                        activeButtons.Add(curItem.GetComponent<Button>(), itemInList);
-                    }
-                    else
-                    {
-                        activeButtons[curItem.GetComponent<Button>()] = itemInList;
-                    }
+                    //if (!activeButtons.ContainsKey(curItem.GetComponent<Button>()))
+                    //{
+                    //    activeButtons.Add(curItem.GetComponent<Button>(), itemInList);
+                    //}
+                    //else
+                    //{
+                    //    activeButtons[curItem.GetComponent<Button>()] = itemInList;
+                    //}
                 }
                 
                 idx++;

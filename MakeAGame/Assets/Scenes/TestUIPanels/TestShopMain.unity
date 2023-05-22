@@ -984,6 +984,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ShopSellUI
       objectReference: {fileID: 0}
+    - target: {fileID: 5929758668396907264, guid: ae1e528c0dc8aa742bc67b183b2da5a1, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6649989285475471094, guid: ae1e528c0dc8aa742bc67b183b2da5a1, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5

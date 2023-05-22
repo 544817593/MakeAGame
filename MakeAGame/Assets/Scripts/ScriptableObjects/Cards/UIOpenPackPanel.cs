@@ -15,8 +15,8 @@ namespace PackOpen
 	}
 	public partial class UIOpenPackPanel : UIPanel 
 	{
-		public int count = 0;
-		public int Number_Of_Packs = 1;
+		public int count;
+		public int Number_Of_Packs;
 		public bool openFinish ;
 		public bool greenDrawn; // Whether green card has been drawn in the current pack
 		public bool blueDrawn; // Whether blue card has been drawn in the current pack
@@ -25,7 +25,9 @@ namespace PackOpen
 		{
 			mData = uiData as UIOpenPackPanelData ?? new UIOpenPackPanelData();
 			// please add init code here
-			
+			openFinish = false;
+			Number_Of_Packs = 1;
+			count = 0;
 			PackModel.finish.RegisterWithInitValue(finish =>
 			{
 				finish = openFinish;

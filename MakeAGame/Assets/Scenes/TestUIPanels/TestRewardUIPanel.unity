@@ -700,6 +700,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 560849423}
     m_Modifications:
+    - target: {fileID: 1213608524, guid: b8793e8c4808ef544859487e6315cd8e, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 2933339856333097301, guid: b8793e8c4808ef544859487e6315cd8e, type: 3}
       propertyPath: m_Name
       value: RewardUIPanel
