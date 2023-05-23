@@ -57,9 +57,9 @@ namespace Game
             timeMultiplier.RegisterWithInitValue(tm => OnTimeMultiplierChanged(tm));
             
             // 开始选择格子时
-            this.RegisterEvent<SelectMapStartEvent>(e => OnSelectStart(e));
+            this.RegisterEvent<SelectMapStartEvent>(e => OnSelectStart(e)).UnRegisterWhenGameObjectDestroyed(this);
             // 结束选择格子
-            this.RegisterEvent<SelectMapEndEvent>(e => OnSelectEnd(e));
+            this.RegisterEvent<SelectMapEndEvent>(e => OnSelectEnd(e)).UnRegisterWhenGameObjectDestroyed(this);
         }
 
 

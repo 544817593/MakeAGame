@@ -8,6 +8,8 @@ namespace Game
     /// </summary>
     public class GameEntry : Architecture<GameEntry>
     {
+        public bool isDev = true;  // 是否为开发测试模式
+        
         protected override void Init()
         {
             // 注册各模块
@@ -30,10 +32,13 @@ namespace Game
             // 初始化资源管理
             ResKit.Init();
 
-            // 开启控制台
-            UIKit.OpenPanel<UIConsolePanel>();
+            if (isDev)
+            {
+                // 开启控制台
+                UIKit.OpenPanel<UIConsolePanel>(UILevel.PopUI);
+            }
 
-            Debug.Log("GameEntry: Init");
+            Debug.Log($"GameEntry: Init, isDev {isDev}");
         }
     }
 }
