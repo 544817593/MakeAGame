@@ -11,7 +11,7 @@ namespace Game
     {
         List<Item> getshopItemList();
         List<Item> getBagItemList();
-        List<ViewCard> getBagCardList();
+        List<ViewBagCard> getBagCardList();
         /// <summary>
         /// 给商店物品列表添加商品
         /// </summary>
@@ -28,14 +28,14 @@ namespace Game
         /// 给背包添加卡牌
         /// </summary>
         /// <param name="card"></param>
-        void addBagCard(ViewCard card);
+        void addBagCard(ViewBagCard card);
     }
     public class ShopSystem : AbstractSystem, IShopSystem
     {
         public BindableProperty<List<Item>> shopItemList = new BindableProperty<List<Item>>(); // 商品列表
         // TODO: 接入背包后直接使用背包中的list，当前临时使用
         public BindableProperty<List<Item>> bagItemList = new BindableProperty<List<Item>>(); // 背包物品列表
-        public BindableProperty<List<ViewCard>> bagCardList = new BindableProperty<List<ViewCard>>(); // 背包卡牌列表
+        public BindableProperty<List<ViewBagCard>> bagCardList = new BindableProperty<List<ViewBagCard>>(); // 背包卡牌列表
         protected override void OnInit()
         {
             shopItemList.SetValueWithoutEvent(new List<Item>());
@@ -43,7 +43,7 @@ namespace Game
 
             bagItemList.SetValueWithoutEvent(new List<Item>());
 
-            bagCardList.SetValueWithoutEvent(new List<ViewCard>());
+            bagCardList.SetValueWithoutEvent(new List<ViewBagCard>());
 
             addShopItemWithoutCall(new Item { amount = 1, data = Resources.Load<SOItemBase>("ScriptableObjects/Items/Item31") });
             addShopItemWithoutCall(new Item { amount = 2, data = Resources.Load<SOItemBase>("ScriptableObjects/Items/Item01") });
@@ -59,15 +59,19 @@ namespace Game
             // 如果打开的是强化页面才执行
             if (GameObject.Find("BagPanel") != null)
             {
+                var cardGeneratorSystem = GameEntry.Interface.GetSystem<ICardGeneratorSystem>();
                 for (int i = 1; i <= 10; ++i)
                 {
-                    GameObject cardGO = this.GetSystem<ICardGeneratorSystem>().CreateCard();
-                    ViewCard viewCard = cardGO.AddComponent<ViewCard>();
-                    // 接收数据，初始化牌面显示
-                    viewCard.card = new Card(1);
-                    viewCard.card.enhanceID = i;
-                    bagCardList.Value.Add(viewCard);
-                    
+                    // GameObject cardGO = this.GetSystem<ICardGeneratorSystem>().CreateCard();
+                    // ViewCard viewCard = cardGO.AddComponent<ViewCard>();
+                    // // 接收数据，初始化牌面显示
+                    // viewCard.card = new Card(1);
+                    // viewCard.card.enhanceID = i;
+                    // bagCardList.Value.Add(viewCard);
+
+                    Card testData = new Card(1);
+                    var viewBagCard = cardGeneratorSystem.CreateBagCard(testData);
+                    bagCardList.Value.Add(viewBagCard);
                 }
             }
         }
@@ -86,7 +90,7 @@ namespace Game
         {
             return bagItemList.Value;
         }
-        public List<ViewCard> getBagCardList()
+        public List<ViewBagCard> getBagCardList()
         {
             return bagCardList.Value;
         }
@@ -139,7 +143,7 @@ namespace Game
             bagItemList.Value.Add(item);
         }
 
-        public void addBagCard(ViewCard card)
+        public void addBagCard(ViewBagCard card)
         {
             bagCardList.Value.Add(card);
         }

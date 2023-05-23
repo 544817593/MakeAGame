@@ -32,9 +32,9 @@ namespace ShopEnhanceUI
         //private int sellCount = 1;
         //private Item selectedItem = null;
         //private Button selectedButton = null;
-        private Dictionary<Button, ViewCard> cardBtn = new Dictionary<Button, ViewCard>();
+        private Dictionary<Button, ViewBagCard> cardBtn = new Dictionary<Button, ViewBagCard>();
 
-        private List<ViewCard> bagCardList;	// 手牌列表
+        private List<ViewBagCard> bagCardList = new List<ViewBagCard>();	// 背包卡牌列表
 
         protected override void OnInit(IUIData uiData = null)
 		{
@@ -42,8 +42,18 @@ namespace ShopEnhanceUI
             // please add init code here
             
             ShopPanelChange.changeShopPanel(this, Close);
+
             bagCardList = mData.shopSystem.getBagCardList();
-			refreshLayout();
+            foreach (var viewBagCard in bagCardList)
+            {
+                viewBagCard.OnTouchAction = () =>
+                {
+                    // todo 原本按按钮的逻辑可以在这里调用
+                    Debug.Log($"Click card enhanceID: {viewBagCard.card.enhanceID}");
+                };
+            }
+
+            refreshLayout();
             //buttonListen();
             pageChange();
             cardLayout();
@@ -64,6 +74,12 @@ namespace ShopEnhanceUI
 		
 		protected override void OnClose()
 		{
+            foreach (var viewBagCard in bagCardList)
+            {
+                // 面板关闭时，在这里撤销点击卡牌会触发的事件，避免卡牌在其他面板还会触发
+                viewBagCard.OnTouchAction = null;
+            }
+            
 		}
 
 
@@ -78,16 +94,16 @@ namespace ShopEnhanceUI
                 // 页数显示
                 TextPageNum.text = $" {curPage} / {totalPage}";
                 int idx = lowerIndex;
-                foreach (ViewCard viewcard in bagCardList)
+                foreach (ViewBagCard viewBagCard in bagCardList)
                 {
-                    viewcard.gameObject.transform.localScale = new Vector3(0.00075f, 0.00075f, 0.00075f);
-                    viewcard.gameObject.transform.SetParent(GameObject.Find("BagPanel").transform);
-                    viewcard.gameObject.SetActive(true);
-                    viewcard.gameObject.transform.Find("Root/BtnChoose").gameObject.SetActive(true);
-                    viewcard.gameObject.transform.Find("Root/BtnChoose").GetComponent<Button>().onClick.AddListener(() =>
-                    {
-                        Debug.Log($"Click card enhanceID: {viewcard.card.enhanceID}");
-                    });
+                    // viewcard.gameObject.transform.localScale = new Vector3(0.00075f, 0.00075f, 0.00075f);    // 缩放系数转入viewBagCard里
+                    viewBagCard.gameObject.transform.SetParent(GameObject.Find("BagPanel").transform);
+                    viewBagCard.gameObject.SetActive(true);
+                    // viewcard.gameObject.transform.Find("Root/BtnChoose").gameObject.SetActive(true);
+                    // viewcard.gameObject.transform.Find("Root/BtnChoose").GetComponent<Button>().onClick.AddListener(() =>
+                    // {
+                    //     Debug.Log($"Click card enhanceID: {viewcard.card.enhanceID}");
+                    // });
                 }
             }
             else if (curBagTab == (int)BagTabs.item)
