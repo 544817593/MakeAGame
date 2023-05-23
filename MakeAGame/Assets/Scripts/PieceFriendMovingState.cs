@@ -4,10 +4,11 @@ namespace Game
 {
     public class PieceFriendMovingState : PieceState
     {
-        private float timer;    // 计时器
-        private float moveDur;  // 移动速度（秒/每行动）
         private ViewPiece viewPieceFriend;
-        
+        public float movementCooldown; // 移动时间冷却，冷却完毕即可移动，每次移动后重置为怪物移动速度
+        private float lastUpdateTime; // 上一次触发Update函数的时间
+        private float timeSinceUpdate; // 上一次触发Update函数后经过了多久
+
         public PieceFriendMovingState(ViewPieceBase view): base(view)
         {
             stateEnum = PieceStateEnum.Moving;
@@ -17,24 +18,29 @@ namespace Game
         
         public override void EnterState()
         {
+            lastUpdateTime = Time.time;
+            movementCooldown = viewPieceFriend.card.moveSpd;
             ResetMoveSpeed();
         }
 
         void ResetMoveSpeed()
         {
-            moveDur = viewPieceFriend.card.moveSpd * viewPieceFriend.crtTimeMultiplier;
+            movementCooldown = viewPieceFriend.card.moveSpd;
         }
 
         public override void Update()
         {
-            timer += Time.deltaTime;
-            if (timer > moveDur)
+            timeSinceUpdate = Time.time - lastUpdateTime; // 计算两次Update的时间差
+            // 根据格子时间倍率减少怪物的移动冷却时间
+            movementCooldown -= (timeSinceUpdate * viewPieceFriend.crtTimeMultiplier);
+
+            // 冷却完毕
+            if (movementCooldown <= 0)
             {
                 viewPieceFriend.Move();
-
-                timer = 0;
-                ResetMoveSpeed();
+                ResetMoveSpeed(); // 移动冷却时间重置为移动速度
             }
+            lastUpdateTime = Time.time;
         }
         
 

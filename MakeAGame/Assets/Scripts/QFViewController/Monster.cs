@@ -145,10 +145,18 @@ public class Monster : ViewPieceBase
         {
             nextGrids.Add(mapSystem.Grids()[crtGrid.row + diffR, crtGrid.col + diffC]);
         }
-        
-        foreach (var oldGrid in pieceGrids) oldGrid.occupation = 0;
+
+        foreach (var oldGrid in pieceGrids)
+        {
+            oldGrid.occupation = 0;
+            oldGrid.gridStatus.Value = GridStatusEnum.Unoccupied;
+        }
         pieceGrids = nextGrids;
-        foreach (var newGrid in pieceGrids) newGrid.occupation = pieceId;
+        foreach (var newGrid in pieceGrids)
+        {
+            newGrid.occupation = pieceId;
+            newGrid.gridStatus.Value = GridStatusEnum.MonsterPiece;
+        }
 
         leftTopGridPos.Value = nextLTCorr;
         
