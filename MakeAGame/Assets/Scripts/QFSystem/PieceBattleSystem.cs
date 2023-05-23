@@ -100,7 +100,7 @@ namespace Game
             PieceBattlePair battleInfo = new PieceBattlePair(attacker, defender);
             battlePairs.Add(battleInfo);
             
-            this.SendEvent<PieceAttackStartEvent>(new PieceAttackStartEvent() {vpb = attacker});
+            this.SendEvent<PieceAttackStartEvent>(new PieceAttackStartEvent() {viewPieceBase = attacker});
         }
 
         public void EndBattle(PieceBattlePair bp)
