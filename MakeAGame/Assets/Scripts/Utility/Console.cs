@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using Unity.VisualScripting;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 
 namespace Game
@@ -33,10 +35,12 @@ namespace Game
                 case "CrtScene":
                     output = CrtScene();    // 每个命令的处理对应一个方法
                     break;
-
                 case "ChangeScene":
                     SceneManager.LoadScene(args[1]);
                     return output;
+                case "GenerateMap":
+                    output = GenerateMap();
+                    break;
 
                 // todo 更多命令写在这里
                 
@@ -52,6 +56,21 @@ namespace Game
         {
             Scene crtScene = SceneManager.GetActiveScene();
             return $"Current scene is: {crtScene.name}";
+        }
+
+        private static string GenerateMap()
+        {
+            var mapSystem = GameEntry.Interface.GetSystem<IMapSystem>();
+            mapSystem.Clear();
+
+            SOMapData mapData = ScriptableObject.CreateInstance<SOMapData>();
+            mapData.row = 6;
+            mapData.col = 1;
+            mapData.BuildMap();
+            
+            mapSystem.CreateMapBySO(mapData);
+            
+            return "map is recreated";
         }
     }
 }

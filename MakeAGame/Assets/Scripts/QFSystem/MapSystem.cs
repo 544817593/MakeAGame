@@ -22,6 +22,7 @@ namespace Game
         /// </summary>
         /// <param name="SOResPath"></param>
         void CreateMapBySO(string SOResPath);
+        void CreateMapBySO(SOMapData data);
 
         /// <summary>
         /// 地图格子数组Getter
@@ -37,6 +38,8 @@ namespace Game
         bool GridCanMoveTo(BoxGrid boxgrid);
 
         int GetGridDist(BoxGrid grid1, BoxGrid grid2);
+
+        void Clear();
         
         /// 地图中央位置，用于摄像头设置
         /// </summary>
@@ -49,6 +52,7 @@ namespace Game
     public class MapSystem : AbstractSystem, IMapSystem
     {
         public BoxGrid[,] mGrids; // 地图格子数组
+
         public int mapRow => mGrids.GetLength(0);    // 总行数
         public int mapCol => mGrids.GetLength(1);    // 总列数
 
@@ -77,6 +81,11 @@ namespace Game
                 return;
             }
 
+            CreateMapBySO(data);
+        }
+
+        public void CreateMapBySO(SOMapData data)
+        {
             int row = data.row;
             int col = data.col;
             mGrids = new BoxGrid[row, col];
@@ -169,6 +178,14 @@ namespace Game
         public int GetGridDist(BoxGrid grid1, BoxGrid grid2)
         {
             return Mathf.Abs(grid1.row - grid2.row) + Mathf.Abs(grid1.col - grid2.col);
+        }
+        
+        public void Clear()
+        {
+            foreach (var grid in mGrids)
+            {
+                GameObject.Destroy(grid.gameObject);
+            }
         }
     }
 }
