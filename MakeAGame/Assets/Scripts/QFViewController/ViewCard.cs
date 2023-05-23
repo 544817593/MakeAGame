@@ -26,21 +26,21 @@ namespace Game
             
             canvas.overrideSorting = true;
             canvas.sortingOrder = 100;
-            //transform.localScale = new Vector3(UIHandCard.normalScale, UIHandCard.normalScale, 1f);
+            transform.localScale = new Vector3(UIHandCard.normalScale, UIHandCard.normalScale, 1f);
 
-            //var uiHandCard = UIKit.GetPanel<UIHandCard>();
-            //OnShowTooltip = uiHandCard.UpdateTooltip;
+            var uiHandCard = UIKit.GetPanel<UIHandCard>();
+            OnShowTooltip = uiHandCard.UpdateTooltip;
 
-            //uiHelper.OnUIPointEnter += OnFocus;
-            //uiHelper.OnUIPointEnter += () => uiHandCard.OnFocusCard(this);
-            //uiHelper.OnUIPointExit += OnUnfocus;
-            //uiHelper.OnUIPointExit += uiHandCard.OnUnfocusCard;
-            //uiHelper.OnUIBeginDrag += OnDragStart;
-            //uiHelper.OnUIBeginDrag += () => uiHandCard.OnDragCardStart(this);
-            //uiHelper.OnUIDrag = OnDrag;
-            //uiHelper.OnUIEndDrag += uiHandCard.OnDragCardEnd;
-            //uiHelper.OnUIEndDrag += OnDragEnd;
-            // uiHelper.OnUIDrag += uiHandCard.OnDragCard;  // todo 看拖拽手牌时手牌ui是否需要响应
+            uiHelper.OnUIPointEnter += OnFocus;
+            uiHelper.OnUIPointEnter += () => uiHandCard.OnFocusCard(this);
+            uiHelper.OnUIPointExit += OnUnfocus;
+            uiHelper.OnUIPointExit += uiHandCard.OnUnfocusCard;
+            uiHelper.OnUIBeginDrag += OnDragStart;
+            uiHelper.OnUIBeginDrag += () => uiHandCard.OnDragCardStart(this);
+            uiHelper.OnUIDrag = OnDrag;
+            uiHelper.OnUIEndDrag += uiHandCard.OnDragCardEnd;
+            uiHelper.OnUIEndDrag += OnDragEnd;
+            //uiHelper.OnUIDrag += uiHandCard.OnDragCard;  // todo 看拖拽手牌时手牌ui是否需要响应
 
             this.RegisterEvent<PutPieceByHandCardEvent>(OnUseAsLifeCard);
 
