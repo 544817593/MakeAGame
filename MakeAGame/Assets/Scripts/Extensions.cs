@@ -81,5 +81,20 @@ namespace Game
             pos -= new Vector3(Screen.width / 2f, Screen.height / 2f, 0f);
             return pos;
         }
+
+        public static Card GetCopy(this Card oldCard)
+        {
+            var newObj = oldCard.Clone();
+            var newCard = newObj as Card;
+            if (newCard == null)
+            {
+                Debug.LogError("card copy failed!");
+                return null;
+            }
+            else
+            {
+                return newCard;
+            }
+        }
     }
 }
