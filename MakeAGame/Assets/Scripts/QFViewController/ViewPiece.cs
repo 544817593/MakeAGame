@@ -68,7 +68,7 @@ namespace Game
         public void Move()
         {
             // 发送准备移动事件
-            this.SendEvent<PieceMoveReadyEvent>(new PieceMoveReadyEvent() {ViewPieceBase = this});
+            this.SendEvent<PieceMoveReadyEvent>(new PieceMoveReadyEvent() {viewPieceBase = this});
 
             var nextGrids = GetNextGrids();
             bool canMove = CheckIfCanMove(nextGrids);
@@ -198,7 +198,7 @@ namespace Game
         protected override void OnAttackStartEvent(PieceAttackStartEvent e)
         {
             // 若不是给自己的通知，不作相应
-            if (e.vpb != this) return;
+            if (e.viewPieceBase != this) return;
             ChangeStateTo(new PieceFriendAttackingState(this));
         }
 

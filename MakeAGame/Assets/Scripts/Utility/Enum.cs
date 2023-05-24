@@ -36,7 +36,10 @@ public enum SkillNameEnum
 /// </summary>
 public enum PropertyEnum
 {
-    None
+    Anthropologist, Writer, Hydrophobia, Insomnia, Psychologist, Dominant,
+    SolitaryHero, Determined, Toxicologist, Camouflaged, Bloodthirsty, MagicResistant,
+    Airborne, AnimalKiller, Aquatic, Feline, SoundSensitive, TinyCreature, Avian,
+    Rodent, Human, Lazy, Laborer, Greedy
 }
 
 /// <summary>

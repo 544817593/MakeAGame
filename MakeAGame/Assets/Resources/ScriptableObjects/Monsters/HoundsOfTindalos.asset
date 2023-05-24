@@ -22,5 +22,7 @@ MonoBehaviour:
   rarity: 0
   atkRange: 1
   monsterId: 9992
+  width: 0
+  height: 0
   properties: 
-  dirs: 00000000020000000300000001000000
+  dirs: 04000000020000000300000001000000

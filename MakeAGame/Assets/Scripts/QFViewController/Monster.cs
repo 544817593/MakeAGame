@@ -30,7 +30,7 @@ public class Monster : ViewPieceBase
     public BindableProperty<float> accuracy; // 命中率
     public BindableProperty<int> atkRange; // 射程
     public BindableProperty<List<PropertyEnum>> properties; // 特性
-    public BindableProperty<List<DirEnum>> dirs; // 特性
+    public BindableProperty<List<DirEnum>> dirs; // 可移动方向
     public BindableProperty<bool> inCombat; // 是否在战斗中
     public BindableProperty<bool> isAttacking; // 是否在发起攻击
     public BindableProperty<bool> isDying; // 是否正在死亡中                         
@@ -48,7 +48,7 @@ public class Monster : ViewPieceBase
     {
         mapSystem = this.GetSystem<IMapSystem>();
     }
-
+    
     void Start()
     {
         base.Start();
@@ -62,6 +62,7 @@ public class Monster : ViewPieceBase
         this.RegisterEvent<PieceMoveReadyEvent>(OnPieceMoveReady).UnRegisterWhenGameObjectDestroyed(gameObject);
         this.RegisterEvent<PieceMoveFinishEvent>(OnPieceMoveFinish).UnRegisterWhenGameObjectDestroyed(gameObject);
         this.RegisterEvent<PieceAttackStartEvent>(OnPieceAttackStart).UnRegisterWhenGameObjectDestroyed(gameObject);
+        this.RegisterEvent<PieceUnderAttackEvent>(OnPieceUnderAttack).UnRegisterWhenGameObjectDestroyed(gameObject);
         
         this.SendCommand(new MonsterTargetSelectionCommand(this));
     }
@@ -127,7 +128,7 @@ public class Monster : ViewPieceBase
             movementSystem = this.GetSystem<IMovementSystem>();
         
         // 发送准备移动事件
-        this.SendEvent<PieceMoveReadyEvent>(new PieceMoveReadyEvent() {ViewPieceBase = this});
+        this.SendEvent<PieceMoveReadyEvent>(new PieceMoveReadyEvent() {viewPieceBase = this});
         
         var nextLTCorr = FindMovementDir();
         
@@ -145,10 +146,18 @@ public class Monster : ViewPieceBase
         {
             nextGrids.Add(mapSystem.Grids()[crtGrid.row + diffR, crtGrid.col + diffC]);
         }
-        
-        foreach (var oldGrid in pieceGrids) oldGrid.occupation = 0;
+
+        foreach (var oldGrid in pieceGrids)
+        {
+            oldGrid.occupation = 0;
+            oldGrid.gridStatus.Value = GridStatusEnum.Unoccupied;
+        }
         pieceGrids = nextGrids;
-        foreach (var newGrid in pieceGrids) newGrid.occupation = pieceId;
+        foreach (var newGrid in pieceGrids)
+        {
+            newGrid.occupation = pieceId;
+            newGrid.gridStatus.Value = GridStatusEnum.MonsterPiece;
+        }
 
         leftTopGridPos.Value = nextLTCorr;
         
@@ -258,8 +267,13 @@ public class Monster : ViewPieceBase
     protected override void OnAttackStartEvent(PieceAttackStartEvent e)
     {
         // 若不是给自己的通知，不作相应
-        if (e.vpb != this) return;
+        if (e.viewPieceBase != this) return;
         ChangeStateTo(new PieceEnemyAttackingState(this));
+    }
+
+    protected override void OnUnderAttackEvent(PieceUnderAttackEvent e)
+    {
+        base.OnUnderAttackEvent(e);
     }
 }
 

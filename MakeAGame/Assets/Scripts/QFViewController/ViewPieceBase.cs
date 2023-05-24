@@ -21,6 +21,7 @@ namespace Game
         public Action<PieceMoveReadyEvent> OnPieceMoveReady;
         public Action<PieceMoveFinishEvent> OnPieceMoveFinish;
         public Action<PieceAttackStartEvent> OnPieceAttackStart;
+        public Action<PieceUnderAttackEvent> OnPieceUnderAttack;
 
         public List<BoxGrid> pieceGrids { get; protected set; } = new List<BoxGrid>();
         // 经过所有占地格子计算出来的时间流速
@@ -48,6 +49,7 @@ namespace Game
             OnPieceMoveReady += OnMoveReadyEvent;
             OnPieceMoveFinish += OnMoveFinishEvent;
             OnPieceAttackStart += OnAttackStartEvent;
+            OnPieceUnderAttack += OnUnderAttackEvent;
         }
 
         public virtual void SetGrids(List<BoxGrid> grids)
@@ -93,6 +95,7 @@ namespace Game
             return centerPos;
         }
         
+        // 这个函数在MovementSystem里有相同功能的
         protected virtual bool CheckIfOneGridCanMove(BoxGrid grid)
         {
             // 通用判断
@@ -122,6 +125,11 @@ namespace Game
 
         }
 
+        protected virtual void OnUnderAttackEvent(PieceUnderAttackEvent e)
+        {
+
+        }
+
         public bool IsAttacking()
         {
             return stateFlag == PieceStateEnum.Attacking;
@@ -135,7 +143,7 @@ namespace Game
 
     public struct PieceMoveReadyEvent
     {
-        public ViewPieceBase ViewPieceBase;
+        public ViewPieceBase viewPieceBase;
     }
     
     public struct PieceMoveFinishEvent
@@ -145,6 +153,15 @@ namespace Game
 
     public struct PieceAttackStartEvent
     {
-        public ViewPieceBase vpb;
+        public ViewPieceBase viewPieceBase;
+
+        public ViewPieceBase target; // 攻击目标，需要传Monster/ViewPiece
+        public bool isTargetMonster; // 被攻击的目标是否为怪物
+        public int baseDamage; // 基础伤害
+    }
+
+    public struct PieceUnderAttackEvent
+    {
+        public ViewPieceBase viewPieceBase;
     }
 }
