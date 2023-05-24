@@ -11,6 +11,7 @@ public class ShopPanelChange
     /// </summary>
     /// <param name="currentPanel"></param>
     /// <param name="button"></param>
+    private static bool EnhanceCardsInited = false;
     public static void changeShopPanel(UIPanel currentPanel, Button button)
     {
         button.onClick.AddListener(() =>
@@ -26,6 +27,10 @@ public class ShopPanelChange
             }
             else if(button.name == "Enhance")
             {
+                if(!EnhanceCardsInited) 
+                {
+                    
+                }
                 UIKit.OpenPanel<ShopEnhanceUI.ShopEnhanceUI>();
             }
             else if(button.name == "Close")

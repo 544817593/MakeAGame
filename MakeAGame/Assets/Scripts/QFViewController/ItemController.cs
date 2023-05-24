@@ -12,6 +12,7 @@ namespace Game
     {
         private PlayerManager playerManager;
         private IInventorySystem inventorySystem;
+        private IShopSystem shopSystem;
 
         public IArchitecture GetArchitecture()
         {
@@ -27,6 +28,7 @@ namespace Game
         {
             playerManager = GameManager.Instance.playerMan;
             inventorySystem = this.GetSystem<IInventorySystem>();
+            shopSystem = this.GetSystem<IShopSystem>();
         }
 
         /// <summary>
@@ -52,24 +54,24 @@ namespace Game
         /// <summary>
         /// 使用在商店使用的物品
         /// </summary>
-        private void OnUseMerchantItem(UseItemEvent e)
+        public void OnUseMerchantItem(UseItemEvent e)
         {
             Item item = e.item;
-            ViewCard viewCard = e.viewCard;
+            ViewBagCard viewBagCard = e.viewBagCard;
             int rand; // 随机数，用来计算强化成功与否
             switch (item.data.itemName)
             {
                 case "A-型初级强化药剂":
-                    viewCard.card.AddDamage(2);
+                    viewBagCard.card.AddDamage(2);
                     break;
                 case "B-型初级强化药剂":
-                    viewCard.card.AddDefense(1);
+                    viewBagCard.card.AddDefense(1);
                     break;
                 case "C-型初级强化药剂":
-                    viewCard.card.AddMoveSpeed(0.5f);
+                    viewBagCard.card.AddMoveSpeed(0.5f);
                     break;
                 case "D-型初级强化药剂":
-                    viewCard.card.AddLife(5f);
+                    viewBagCard.card.AddLife(5f);
                     break;
                 case "E-型初级强化药剂":
                     break;
@@ -81,37 +83,37 @@ namespace Game
                     rand = UnityEngine.Random.Range(0, 10);
                     if (rand > 0)
                     {
-                        viewCard.card.AddDamage(2);
+                        viewBagCard.card.AddDamage(2);
                         break;
                     }
-                    AfterUseMerchantItem(item, viewCard, false);
+                    AfterUseMerchantItem(item, viewBagCard, false);
                     return;
                 case "B-型中级强化药剂":
                     rand = UnityEngine.Random.Range(0, 10);
                     if (rand > 0)
                     {
-                        viewCard.card.AddDefense(1);
+                        viewBagCard.card.AddDefense(1);
                         break;
                     }
-                    AfterUseMerchantItem(item, viewCard, false);
+                    AfterUseMerchantItem(item, viewBagCard, false);
                     return;
                 case "C-型中级强化药剂":
                     rand = UnityEngine.Random.Range(0, 10);
                     if (rand > 0)
                     {
-                        viewCard.card.AddMoveSpeed(0.5f);
+                        viewBagCard.card.AddMoveSpeed(0.5f);
                         break;
                     }
-                    AfterUseMerchantItem(item, viewCard, false);
+                    AfterUseMerchantItem(item, viewBagCard, false);
                     return;
                 case "D-型中级强化药剂":
                     rand = UnityEngine.Random.Range(0, 10);
                     if (rand > 0)
                     {
-                        viewCard.card.AddLife(5f);
+                        viewBagCard.card.AddLife(5f);
                         break;
                     }
-                    AfterUseMerchantItem(item, viewCard, false);
+                    AfterUseMerchantItem(item, viewBagCard, false);
                     return;
                 case "E-型中级强化药剂":
                     break;
@@ -129,37 +131,37 @@ namespace Game
                     rand = UnityEngine.Random.Range(0, 100);
                     if (rand > 14)
                     {
-                        viewCard.card.AddDamage(4);
+                        viewBagCard.card.AddDamage(4);
                         break;
                     }
-                    AfterUseMerchantItem(item, viewCard, false);
+                    AfterUseMerchantItem(item, viewBagCard, false);
                     return;
                 case "B-型高级强化药剂":
                     rand = UnityEngine.Random.Range(0, 100);
                     if (rand > 14)
                     {
-                        viewCard.card.AddDefense(2);
+                        viewBagCard.card.AddDefense(2);
                         break;
                     }
-                    AfterUseMerchantItem(item, viewCard, false);
+                    AfterUseMerchantItem(item, viewBagCard, false);
                     return;
                 case "C-型高级强化药剂":
                     rand = UnityEngine.Random.Range(0, 100);
                     if (rand > 14)
                     {
-                        viewCard.card.AddMoveSpeed(1f);
+                        viewBagCard.card.AddMoveSpeed(1f);
                         break;
                     }
-                    AfterUseMerchantItem(item, viewCard, false);
+                    AfterUseMerchantItem(item, viewBagCard, false);
                     return;
                 case "D-型高级强化药剂":
                     rand = UnityEngine.Random.Range(0, 100);
                     if (rand > 14)
                     {
-                        viewCard.card.AddLife(8f);
+                        viewBagCard.card.AddLife(8f);
                         break;
                     }
-                    AfterUseMerchantItem(item, viewCard, false);
+                    AfterUseMerchantItem(item, viewBagCard, false);
                     return;
                 case "E-型高级强化药剂":
                     break;
@@ -177,19 +179,19 @@ namespace Game
                     break;
                 case "木制起钉器":
                     if (GameManager.Instance.gameSceneMan.GetCurrentSceneName() != "Merchant") return;
-                    viewCard.card.RemoveFeature(e.soFeature);
-                    viewCard.InitView();
+                    viewBagCard.card.RemoveFeature(e.soFeature);
+                    viewBagCard.InitView();
                     break;
                 case "铁质起钉器":
                     if (GameManager.Instance.gameSceneMan.GetCurrentSceneName() != "Merchant") return;
-                    viewCard.card.RemoveAllFeatures();
-                    viewCard.card.SetEnhancement(0);
-                    string initialCardName = IdToSO.FindCardSOByID(viewCard.card.charaID).characterName;
-                    viewCard.card.SetName(initialCardName);
-                    viewCard.InitView();
+                    viewBagCard.card.RemoveAllFeatures();
+                    viewBagCard.card.SetEnhancement(0);
+                    string initialCardName = IdToSO.FindCardSOByID(viewBagCard.card.charaID).characterName;
+                    viewBagCard.card.SetName(initialCardName);
+                    viewBagCard.InitView();
                     break;
             }
-            AfterUseMerchantItem(item, viewCard);
+            AfterUseMerchantItem(item, viewBagCard);
         }
 
         /// <summary>
@@ -198,16 +200,18 @@ namespace Game
         /// <param name="item">物品</param>
         /// <param name="viewCard">卡牌</param>
         /// <param name="successful">强化成功与否</param>
-        private void AfterUseMerchantItem(Item item, ViewCard viewCard, bool successful = true)
+        private void AfterUseMerchantItem(Item item, ViewBagCard viewBagCard, bool successful = true)
         {
             if (successful)
             {
-                viewCard.card.SetNameAfterEnhancement(item.data.enhanceLevel);
-                viewCard.card.SetEnhancement(item.data.enhanceLevel + 1);
-                viewCard.InitView(); // 刷新卡牌样式
+                viewBagCard.card.SetNameAfterEnhancement(item.data.enhanceLevel);
+                viewBagCard.card.SetEnhancement(item.data.enhanceLevel + 1);
+                viewBagCard.InitView(); // 刷新卡牌样式
             }
-            item.amount -= 1;
-            if (item.amount <= 0) inventorySystem.RemoveItem(item);
+            // 物品数量的更新逻辑在强化脚本里，ShopEnhanceUI.cs
+            //item.amount -= 1;
+            //if (item.amount <= 0) inventorySystem.RemoveItem(item);
+            //if (item.amount <= 0) shopSystem.removeBagItem(item);
         }
 
         /// <summary>
