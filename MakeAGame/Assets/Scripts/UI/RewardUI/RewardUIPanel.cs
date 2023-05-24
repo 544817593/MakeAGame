@@ -9,7 +9,7 @@ namespace RewardUI
 {
 	public class RewardUIPanelData : UIPanelData
 	{
-		public IShopSystem shopSystem = GameEntry.Interface.GetSystem<IShopSystem>();
+		public IInventorySystem BagSystem = GameEntry.Interface.GetSystem<IInventorySystem>();
 	}
 	public partial class RewardUIPanel : UIPanel
 	{
@@ -43,14 +43,14 @@ namespace RewardUI
 
 		private void UpdateReward()
         {
-			AllItem = mData.shopSystem.getshopItemList();
+			AllItem = mData.BagSystem.GetItemList();
 			CoinAmount.text = Random.Range(10, 100).ToString();
 			int i = Random.Range(0,AllItem.Count-1);
 			RewardItem = AllItem[i];
 			Item.GetComponent<Image>().sprite = RewardItem.data.sprite;
 
 		}
-
+		
 		private void ChooseReward()
         {
 			legacy.onClick.AddListener(() => 
@@ -69,12 +69,18 @@ namespace RewardUI
 			{
 				if(Choice ==3)
                 {
-					mData.shopSystem.addBagItem(RewardItem);
-					Debug.Log("sssssssssssssss");
+					mData.BagSystem.AddItem(RewardItem);					
 				}
-				
+				LoadScene();
 
 			});
+		}
+		private void LoadScene()
+		{
+			StartCoroutine(GameManager.Instance.gameSceneMan.LoadScene("NormalRoom", false));
+			StartCoroutine(GameManager.Instance.gameSceneMan.UnloadScene("Combat"));
+			
+
 		}
 	}
 }
