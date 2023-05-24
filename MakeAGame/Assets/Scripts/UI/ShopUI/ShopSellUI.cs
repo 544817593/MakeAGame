@@ -110,14 +110,14 @@ namespace ShopSellUI
                             texts.gameObject.GetComponent<TextMeshProUGUI>().text = itemInList.data.sellPrice.ToString();
                         }
                     }
-                    //if (!activeButtons.ContainsKey(curItem.GetComponent<Button>()))
-                    //{
-                    //    activeButtons.Add(curItem.GetComponent<Button>(), itemInList);
-                    //}
-                    //else
-                    //{
-                    //    activeButtons[curItem.GetComponent<Button>()] = itemInList;
-                    //}
+                    if (!activeButtons.ContainsKey(curItem.GetComponent<Button>()))
+                    {
+                        activeButtons.Add(curItem.GetComponent<Button>(), itemInList);
+                    }
+                    else
+                    {
+                        activeButtons[curItem.GetComponent<Button>()] = itemInList;
+                    }
                 }
                 
                 idx++;
@@ -253,7 +253,6 @@ namespace ShopSellUI
             Debug.Log($"出售{selectedItem.data.name}");
             selectedItem.amount -= sellCount;
             selectedButton.transform.Find("ItemNum").GetComponent<TextMeshProUGUI>().text = selectedItem.amount.ToString();
-            // TODO: 售卖价格替换购买价格
             playerGold += sellCount * selectedItem.data.sellPrice;
             TextGold.text = $"金币: {playerGold}";
 

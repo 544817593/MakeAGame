@@ -5,7 +5,7 @@ using QFramework;
 
 namespace ShopEnhanceUI
 {
-	// Generate Id:f45e594f-af80-4674-8132-227975a72917
+	// Generate Id:7ccb6276-2b05-42b5-8020-e7037a8eaa03
 	public partial class ShopEnhanceUI
 	{
 		public const string Name = "ShopEnhanceUI";
@@ -17,9 +17,29 @@ namespace ShopEnhanceUI
 		[SerializeField]
 		public UnityEngine.UI.Image BagPanel;
 		[SerializeField]
+		public UnityEngine.UI.Button Item01;
+		[SerializeField]
+		public UnityEngine.UI.Button Item02;
+		[SerializeField]
+		public UnityEngine.UI.Button Item03;
+		[SerializeField]
+		public UnityEngine.UI.Button Item04;
+		[SerializeField]
+		public UnityEngine.UI.Button Item05;
+		[SerializeField]
+		public UnityEngine.UI.Button Item06;
+		[SerializeField]
+		public UnityEngine.UI.Button Item07;
+		[SerializeField]
+		public UnityEngine.UI.Button Item08;
+		[SerializeField]
+		public UnityEngine.UI.Button Item09;
+		[SerializeField]
+		public UnityEngine.UI.Button Item10;
+		[SerializeField]
 		public RectTransform CardBeforeEnhance;
 		[SerializeField]
-		public RectTransform EnhanceItem;
+		public UnityEngine.UI.Button EnhanceItem;
 		[SerializeField]
 		public RectTransform CardAfterEnhance;
 		[SerializeField]
@@ -34,6 +54,10 @@ namespace ShopEnhanceUI
 		public UnityEngine.UI.Button BtnPrePage;
 		[SerializeField]
 		public TMPro.TextMeshProUGUI TextPageNum;
+		[SerializeField]
+		public UnityEngine.UI.Button BtnItem;
+		[SerializeField]
+		public UnityEngine.UI.Button BtnCard;
 		
 		private ShopEnhanceUIData mPrivateData = null;
 		
@@ -42,6 +66,16 @@ namespace ShopEnhanceUI
 			Background = null;
 			Close = null;
 			BagPanel = null;
+			Item01 = null;
+			Item02 = null;
+			Item03 = null;
+			Item04 = null;
+			Item05 = null;
+			Item06 = null;
+			Item07 = null;
+			Item08 = null;
+			Item09 = null;
+			Item10 = null;
 			CardBeforeEnhance = null;
 			EnhanceItem = null;
 			CardAfterEnhance = null;
@@ -51,6 +85,8 @@ namespace ShopEnhanceUI
 			BtnNextPage = null;
 			BtnPrePage = null;
 			TextPageNum = null;
+			BtnItem = null;
+			BtnCard = null;
 			
 			mData = null;
 		}

@@ -16,7 +16,7 @@ namespace Game
         /// 给商店物品列表添加商品
         /// </summary>
         /// <param name="item"></param>
-        void addShopItem(Item item);
+        void addShopItemWithoutCall(Item item);
 
         /// <summary>
         /// 给背包物品列表添加物品
@@ -29,6 +29,8 @@ namespace Game
         /// </summary>
         /// <param name="card"></param>
         void addBagCard(ViewBagCard card);
+
+        void removeBagItem(Item item);
     }
     public class ShopSystem : AbstractSystem, IShopSystem
     {
@@ -39,47 +41,30 @@ namespace Game
         protected override void OnInit()
         {
             shopItemList.SetValueWithoutEvent(new List<Item>());
-            shopItemList.Register((newList) => OnShopItemListChanged());
+            //shopItemList.Register((newList) => OnShopItemListChanged());
 
             bagItemList.SetValueWithoutEvent(new List<Item>());
 
             bagCardList.SetValueWithoutEvent(new List<ViewBagCard>());
 
+            // 以下都是测试使用的初始化数据
             addShopItemWithoutCall(new Item { amount = 1, data = Resources.Load<SOItemBase>("ScriptableObjects/Items/Item31") });
             addShopItemWithoutCall(new Item { amount = 2, data = Resources.Load<SOItemBase>("ScriptableObjects/Items/Item01") });
             addShopItemWithoutCall(new Item { amount = 1, data = Resources.Load<SOItemBase>("ScriptableObjects/Items/Item31") });
             addShopItemWithoutCall(new Item { amount = 4, data = Resources.Load<SOItemBase>("ScriptableObjects/Items/Item01") });
 
-
-            //for (int i = 1; i < 32; ++i)
-            //{
-            //    addBagItem(new Item { amount = 1, data = Resources.Load<SOItemBase>($"ScriptableObjects/Items/Item01 {i}") });
-            //}
-
-            // 如果打开的是强化页面才执行
-            if (GameObject.Find("BagPanel") != null)
+            addBagItem(new Item { amount = 2, data = Resources.Load<SOItemBase>($"ScriptableObjects/Items/Item31") });
+            for(int i = 1; i <= 32; ++i)
             {
-                var cardGeneratorSystem = GameEntry.Interface.GetSystem<ICardGeneratorSystem>();
-                for (int i = 1; i <= 10; ++i)
-                {
-                    // GameObject cardGO = this.GetSystem<ICardGeneratorSystem>().CreateCard();
-                    // ViewCard viewCard = cardGO.AddComponent<ViewCard>();
-                    // // 接收数据，初始化牌面显示
-                    // viewCard.card = new Card(1);
-                    // viewCard.card.enhanceID = i;
-                    // bagCardList.Value.Add(viewCard);
-
-                    Card testData = new Card(1);
-                    var viewBagCard = cardGeneratorSystem.CreateBagCard(testData);
-                    bagCardList.Value.Add(viewBagCard);
-                }
+                addBagItem(new Item { amount = 1, data = Resources.Load<SOItemBase>($"ScriptableObjects/Items/Item01 {i}") });
             }
+            // bagCardList在ShopEnhanceUI.cs中初始化，因为ShopSystem在点购买和出售的时候也会执行，不符合需要
         }
 
-        private void OnShopItemListChanged()
-        {
-            UIKit.GetPanel("ShopBuyUI")?.Invoke("updateAndShowShopItems", 0f); 
-        }
+        //private void OnShopItemListChanged()
+        //{
+        //    UIKit.GetPanel("ShopBuyUI")?.Invoke("updateAndShowShopItems", 0f); 
+        //}
 
         public List<Item> getshopItemList()
         {
@@ -94,24 +79,24 @@ namespace Game
         {
             return bagCardList.Value;
         }
-        public void addShopItem(Item item)
-        {
-            for (int i = 0; i < shopItemList.Value.Count; i++)
-            {
-                // 如果物品已存在shopItemList中，amount叠加
-                if (shopItemList.Value[i].data.name == item.data.name)
-                {
-                    // 因为是双层数据类型，需要重新给shopItemList.Value赋值，不然不会调用updateAndShowShopItems()
-                    List<Item> tempList = new List<Item>(shopItemList.Value);
-                    tempList[i].amount += item.amount;
-                    shopItemList.Value = tempList;
-                    return;
-                }
-            }
-            List<Item> newList = new List<Item>(shopItemList.Value);
-            newList.Add(item);
-            shopItemList.Value = newList;
-        }
+        //public void addShopItem(Item item)
+        //{
+        //    for (int i = 0; i < shopItemList.Value.Count; i++)
+        //    {
+        //        // 如果物品已存在shopItemList中，amount叠加
+        //        if (shopItemList.Value[i].data.name == item.data.name)
+        //        {
+        //            // 因为是双层数据类型，需要重新给shopItemList.Value赋值，不然不会调用updateAndShowShopItems()
+        //            List<Item> tempList = new List<Item>(shopItemList.Value);
+        //            tempList[i].amount += item.amount;
+        //            shopItemList.Value = tempList;
+        //            return;
+        //        }
+        //    }
+        //    List<Item> newList = new List<Item>(shopItemList.Value);
+        //    newList.Add(item);
+        //    shopItemList.Value = newList;
+        //}
 
         public void addShopItemWithoutCall(Item item)
         {
@@ -147,6 +132,12 @@ namespace Game
         {
             bagCardList.Value.Add(card);
         }
+
+        public void removeBagItem(Item item)
+        {
+            bagItemList.Value.Remove(item);
+        }
+        
     }
 }
 
