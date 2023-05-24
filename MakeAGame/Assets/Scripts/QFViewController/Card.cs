@@ -7,38 +7,38 @@ namespace Game
     /// <summary>
     /// 存放卡牌数据（而不是实际表现）
     /// </summary>
-    public class Card
+    public class Card: ICloneable
     {
         public int charaID { get; } // 角色id
-        private int instID = -1;    // 卡牌实体id，可能根据该卡牌位于背包中还是手牌中，分别由背包和手牌系统管理    // todo 可能是没用的，暂时不要给它赋值
+         int instID = -1;    // 卡牌实体id，可能根据该卡牌位于背包中还是手牌中，分别由背包和手牌系统管理    // todo 可能是没用的，暂时不要给它赋值
 
         public int enhanceID = 1; // 临时用来测试强化界面的数据 
 
-        // 应该不会变动的数据，就不另外存储了，直接用so
-        // name, death desc, sprite, feature, special feature
+        // （已改动）应该不会变动的数据，就不另外存储了，直接用so
+        // 卡牌数据与so解绑，所有卡牌维护自己的一份数据
         public SOCharacterInfo so;
-        public string deathFuncDesc => so.deathFuncDescription;
-        public Sprite cardSprite => so.cardSprite;
-        public Sprite pieceSprite => so.pieceSprite;
-        public SOFeature specialFeature => so.specialFeature;
-        public int width => so.width;
-        public int height => so.height;
-        public DirEnum[] moveDirections => so.moveDirections;
-        public int atkRange => so.attackRange;
-        public float atkSpd => so.attackSpd;
+        public string deathFuncDesc { get;  set; }
+        public Sprite cardSprite { get;  set; }
+        public Sprite pieceSprite { get;  set; }
+        public SOFeature specialFeature { get;  set; }
+        public int width { get;  set; }
+        public int height { get;  set; }
+        public DirEnum[] moveDirections { get;  set; }
+        public int atkRange { get;  set; }
+        public float atkSpd { get;  set; }
 
         // 会有改动的数据  // 外部可以读取，但不可以直接改动
-        public int rarity { get; private set; }
-        public float sanCost { get; private set; }
-        public int hp { get; private set; }
-        public float moveSpd { get; private set; }
-        public int damage { get; private set; }
-        public int defend { get; private set; }
-        public int enhancement { get; private set; }
-        public string charaName { get; private set; }
-        public float maxLife { get; private set; }
-        public float currLife { get; private set; }
-        public List<SOFeature> features { get; private set; }
+        public int rarity { get;  set; }
+        public float sanCost { get;  set; }
+        public int hp { get;  set; }
+        public float moveSpd { get;  set; }
+        public int damage { get;  set; }
+        public int defend { get;  set; }
+        public int enhancement { get;  set; }
+        public string charaName { get;  set; }
+        public float maxLife { get;  set; }
+        public float currLife { get;  set; }
+        public List<SOFeature> features { get;  set; }
 
         public Card(int _charaID)
         {
@@ -49,6 +49,15 @@ namespace Game
         void InitData()
         {
             so = IdToSO.FindCardSOByID(charaID);
+            deathFuncDesc = so.deathFuncDescription;
+            cardSprite = so.cardSprite;
+            pieceSprite = so.pieceSprite;
+            specialFeature = so.specialFeature;
+            width = so.width;
+            height = so.height;
+            moveDirections = so.moveDirections;
+            atkRange = so.attackRange;
+            atkSpd = so.attackSpd;
             rarity = so.rarity;
             sanCost = so.sanCost;
             hp = so.hp;
@@ -189,7 +198,7 @@ namespace Game
             currLife += value;
         }
 
-        void PrintData()
+        public void PrintData()
         {
             string ret = String.Empty;
             ret += $"characterID: {charaID}\n" + $"instID: {instID}\n" + $"characterName: {charaName}\n" +
@@ -207,6 +216,13 @@ namespace Game
                 ret += specialFeature.featureName;
             
             Debug.Log(ret);
+        }
+
+        public object Clone()
+        {
+            Card newCard = (Card) MemberwiseClone();
+            // newCard.so = so;
+            return newCard;
         }
     }
 }
