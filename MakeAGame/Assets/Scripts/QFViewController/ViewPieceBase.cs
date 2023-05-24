@@ -17,6 +17,8 @@ namespace Game
         protected PieceState state = new PieceStateIdle(null);
 
         public DirEnum direction = DirEnum.None;
+        public bool inCombat; // 是否在战斗中(挨打或者攻击)
+        public List<BuffType> listBuffs;    // 目前身上起效的buff
 
         public Action<PieceMoveReadyEvent> OnPieceMoveReady;
         public Action<PieceMoveFinishEvent> OnPieceMoveFinish;
@@ -81,6 +83,11 @@ namespace Game
             state = newState;
             state.EnterState();
             stateFlag = state.stateEnum;
+        }
+
+        public PieceStateEnum GetPieceState()
+        {
+            return stateFlag;
         }
 
         protected Vector3 GetGridsCenterPos()

@@ -101,27 +101,34 @@ namespace Game
             PieceBattlePair battleInfo = new PieceBattlePair(attacker, defender);
             battlePairs.Add(battleInfo);
             
+            // ViewPieceBase加了个inCombat的bool变量，进入战斗(挨打或者攻击)都变为True，
+            // 退出战斗变为False，别忘记在StartBattle和ExitBattle对应的位置处理下，
+            // 处理完删掉这条注释就好。
             this.SendEvent<PieceAttackStartEvent>(new PieceAttackStartEvent() {viewPieceBase = attacker});
+            
+            // TODO 计算伤害和命中等基础属性
+
+            // 原始伤害和命中计算完后，先触发攻击方特性，再触发防御方
 
             // 特性测试用代码 **************
-            Monster m = new Monster();
-            List<PropertyEnum> lst = new List<PropertyEnum>();
-            lst.Add(PropertyEnum.Dominant);
-            m.properties = new BindableProperty<List<PropertyEnum>>();
-            m.properties.SetValueWithoutEvent(lst);
-            ViewPiece p = new ViewPiece();
+            //Monster m = new Monster();
+            //List<PropertyEnum> lst = new List<PropertyEnum>();
+            //lst.Add(PropertyEnum.Dominant);
+            //m.features = new BindableProperty<List<PropertyEnum>>();
+            //m.features.SetValueWithoutEvent(lst);
+            //ViewPiece p = new ViewPiece();
 
-            SpecialitiesAttackCheckEvent e = new SpecialitiesAttackCheckEvent
-            {
-                attacker = m,
-                target = p,
-                isTargetMonster = false,
-                damage = 20,
-                hit = true
-            };
+            //SpecialitiesAttackCheckEvent e = new SpecialitiesAttackCheckEvent
+            //{
+            //    attacker = m,
+            //    target = p,
+            //    isTargetMonster = false,
+            //    damage = 20,
+            //    hit = true
+            //};
 
-            this.SendEvent<SpecialitiesAttackCheckEvent>(e);
-            Debug.LogWarning(e.damage);
+            //this.SendEvent<SpecialitiesAttackCheckEvent>(e);
+            //Debug.LogWarning(e.damage);
             // ****************************
         }
 

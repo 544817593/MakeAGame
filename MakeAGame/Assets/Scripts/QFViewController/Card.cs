@@ -31,6 +31,7 @@ namespace Game
         public int rarity { get;  set; }
         public float sanCost { get;  set; }
         public int hp { get;  set; }
+        public int maxHp { get; set; }
         public float moveSpd { get;  set; }
         public int damage { get;  set; }
         public int defend { get;  set; }
@@ -61,6 +62,7 @@ namespace Game
             rarity = so.rarity;
             sanCost = so.sanCost;
             hp = so.hp;
+            maxHp = so.hp;
             moveSpd = so.moveSpd;
             damage = so.attack;
             defend = so.defend;

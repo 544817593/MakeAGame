@@ -7,7 +7,7 @@ public class SOMonsterBase : ScriptableObject
     // pieceSize
     public Sprite monsterSprite; // 立绘
     public float moveSpeed; // 移动速度
-    public float maxHp; // 最大生命值
+    public int maxHp; // 最大生命值
     public float atkSpeed; // 攻速
     public float atkDmg; // 攻击力
     public float defense; // 防御力
