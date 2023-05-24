@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56ecb282cab14c5d8106ae3ec684c67e, type: 3}
   m_Name: Dominant
   m_EditorClassIdentifier: 
-  featureID: 0
-  featureName: 
-  featureDesc: 
-  icon: {fileID: 0}
+  featureID: 6
+  featureName: "\u9738\u9053"
+  featureDesc: "\u5BF9\u654C\u65B9\u7A00\u6709\u9636\u7EA7\u4E3A\u767D\u8272\u7684\u5355\u4F4D\u9020\u621025%\u989D\u5916\u4F24\u5BB3\u3002"
+  icon: {fileID: 21300000, guid: 6cf76d530a76b17448c1d8fc748352d8, type: 3}

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56ecb282cab14c5d8106ae3ec684c67e, type: 3}
   m_Name: SolitaryHero
   m_EditorClassIdentifier: 
-  featureID: 0
-  featureName: 
-  featureDesc: 
-  icon: {fileID: 0}
+  featureID: 7
+  featureName: "\u5B64\u52C7\u8005"
+  featureDesc: "\u5F53\u5468\u56F48\u4E2A\u683C\u5B50\u5185\u654C\u65B9\u5355\u4F4D\u6570\u91CF\u4E0D\u5C11\u4E8E2\u65F6\uFF0C\u83B7\u5F970.2\u653B\u51FB\u901F\u5EA6\u3002"
+  icon: {fileID: 21300000, guid: a7bb4ecb0b59df946bb30dc3be7f286c, type: 3}

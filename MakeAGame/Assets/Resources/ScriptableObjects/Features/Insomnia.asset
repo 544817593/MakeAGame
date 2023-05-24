@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56ecb282cab14c5d8106ae3ec684c67e, type: 3}
   m_Name: Insomnia
   m_EditorClassIdentifier: 
-  featureID: 0
-  featureName: 
-  featureDesc: 
-  icon: {fileID: 0}
+  featureID: 4
+  featureName: "\u5931\u7720\u75C7"
+  featureDesc: "\u5982\u679C\u4F60\u653E\u7F6E\u7684\u4E0A\u4E00\u4E2A\u8C03\u67E5\u5458\u724C\u662F\u8FD9\u5F20\u724C\uFF0C\u5219\u65E0\u6CD5\u518D\u6B21\u4F7F\u7528\u3002"
+  icon: {fileID: 21300000, guid: 40549cc9c2a811741bfaac801206fea8, type: 3}

@@ -154,14 +154,19 @@ namespace Game
     public struct PieceAttackStartEvent
     {
         public ViewPieceBase viewPieceBase;
-
-        public ViewPieceBase target; // 攻击目标，需要传Monster/ViewPiece
-        public bool isTargetMonster; // 被攻击的目标是否为怪物
-        public int baseDamage; // 基础伤害
     }
 
     public struct PieceUnderAttackEvent
     {
         public ViewPieceBase viewPieceBase;
+    }
+
+    public class SpecialitiesAttackCheckEvent
+    {
+        public ViewPieceBase attacker; // 攻击方
+        public ViewPieceBase target; // 防守方
+        public bool isTargetMonster; // 防守方是否为怪物
+        public int damage; // 伤害
+        public bool hit; // 是否命中
     }
 }

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56ecb282cab14c5d8106ae3ec684c67e, type: 3}
   m_Name: Determined
   m_EditorClassIdentifier: 
-  featureID: 0
-  featureName: 
-  featureDesc: 
-  icon: {fileID: 0}
+  featureID: 8
+  featureName: "\u610F\u5FD7\u575A\u5B9A"
+  featureDesc: "\u5F53\u5468\u56F48\u4E2A\u683C\u5B50\u5185\u654C\u65B9\u5355\u4F4D\u6570\u91CF\u4E0D\u5927\u4E8E1\u65F6\uFF0C\u83B7\u5F970.35\u653B\u51FB\u901F\u5EA6\u3002"
+  icon: {fileID: 21300000, guid: 3a9c4701fcff11c49a4734d25f16c7d3, type: 3}

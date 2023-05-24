@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using QFramework;
+using UnityEngine;
 
 namespace Game
 {
@@ -101,6 +102,27 @@ namespace Game
             battlePairs.Add(battleInfo);
             
             this.SendEvent<PieceAttackStartEvent>(new PieceAttackStartEvent() {viewPieceBase = attacker});
+
+            // 特性测试用代码 **************
+            Monster m = new Monster();
+            List<PropertyEnum> lst = new List<PropertyEnum>();
+            lst.Add(PropertyEnum.Dominant);
+            m.properties = new BindableProperty<List<PropertyEnum>>();
+            m.properties.SetValueWithoutEvent(lst);
+            ViewPiece p = new ViewPiece();
+
+            SpecialitiesAttackCheckEvent e = new SpecialitiesAttackCheckEvent
+            {
+                attacker = m,
+                target = p,
+                isTargetMonster = false,
+                damage = 20,
+                hit = true
+            };
+
+            this.SendEvent<SpecialitiesAttackCheckEvent>(e);
+            Debug.LogWarning(e.damage);
+            // ****************************
         }
 
         public void EndBattle(PieceBattlePair bp)
