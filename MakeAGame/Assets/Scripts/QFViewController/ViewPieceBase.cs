@@ -23,6 +23,7 @@ namespace Game
         public Action<PieceMoveReadyEvent> OnPieceMoveReady;
         public Action<PieceMoveFinishEvent> OnPieceMoveFinish;
         public Action<PieceAttackStartEvent> OnPieceAttackStart;
+        public Action<PieceAttackEndEvent> OnPieceAttackEnd;
         public Action<PieceUnderAttackEvent> OnPieceUnderAttack;
 
         public List<BoxGrid> pieceGrids { get; protected set; } = new List<BoxGrid>();
@@ -51,6 +52,7 @@ namespace Game
             OnPieceMoveReady += OnMoveReadyEvent;
             OnPieceMoveFinish += OnMoveFinishEvent;
             OnPieceAttackStart += OnAttackStartEvent;
+            OnPieceAttackEnd += OnAttackEndEvent;
             OnPieceUnderAttack += OnUnderAttackEvent;
         }
 
@@ -114,6 +116,33 @@ namespace Game
             
             return true;
         }
+
+        // 发起攻击
+        public virtual void Attack()
+        {
+            
+        }
+
+        // 受到攻击，返回是否死亡
+        public virtual bool Hit()
+        {
+            // 收到攻击数据...
+            // 进行各种效果计算...
+            // 获取实际伤害
+            return false;
+        }
+
+        public virtual void Die()
+        {
+            state = new PieceStateIdle(this);
+            foreach (var grid in pieceGrids)
+            {
+                grid.occupation = 0;
+            }
+            pieceGrids.Clear();
+            
+            Destroy(gameObject);
+        }
         
         protected virtual void OnMoveReadyEvent(PieceMoveReadyEvent e)
         {
@@ -130,6 +159,11 @@ namespace Game
         protected virtual void OnAttackStartEvent(PieceAttackStartEvent e)
         {
 
+        }
+
+        protected virtual void OnAttackEndEvent(PieceAttackEndEvent e)
+        {
+            
         }
 
         protected virtual void OnUnderAttackEvent(PieceUnderAttackEvent e)
@@ -158,14 +192,45 @@ namespace Game
         public ViewPieceBase viewPieceBase;
     }
 
+    // 开始战斗（而不是攻击）事件
     public struct PieceAttackStartEvent
     {
         public ViewPieceBase viewPieceBase;
     }
 
+    // 结束战斗事件
+    public struct PieceAttackEndEvent
+    {
+        public ViewPieceBase vpb;
+    }
+
     public struct PieceUnderAttackEvent
     {
         public ViewPieceBase viewPieceBase;
+    }
+
+    // 即将发起攻击
+    public class PieceAttackReadyEvent
+    {
+        // todo 一些战斗数据...
+    }
+
+    // 攻击处理完毕
+    public class PieceAttackFinishEvent
+    {
+        
+    }
+
+    // 即将受到攻击
+    public class PieceHitReadyEvent
+    {
+        
+    }
+
+    // 受击处理完毕
+    public class PieceHitFinishEvent
+    {
+        
     }
 
     public class SpecialitiesAttackCheckEvent
