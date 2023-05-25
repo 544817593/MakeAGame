@@ -106,8 +106,8 @@ namespace Game
         protected virtual bool CheckIfOneGridCanMove(BoxGrid grid)
         {
             // 通用判断
-            // 1.是否格子已被占用
-            if (!grid.IsEmpty())
+            // 1.是否格子已被占用，且不是自己当前占用的格子
+            if (!pieceGrids.Contains(grid) && !grid.IsEmpty())
                 return false;
 
             // 某些判断...
