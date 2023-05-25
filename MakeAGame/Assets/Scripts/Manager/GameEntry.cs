@@ -26,6 +26,7 @@ namespace Game
             RegisterSystem<IInventorySystem>(new InventorySystem());
             RegisterSystem<ISkillSystem>(new SkillSystem());
             RegisterSystem<IShopSystem>(new ShopSystem());
+            RegisterSystem<IRoomSystem>(new RoomSystem());
             RegisterUtility<ICSVImportUtility>(new CSVImportUtility());
             
 
