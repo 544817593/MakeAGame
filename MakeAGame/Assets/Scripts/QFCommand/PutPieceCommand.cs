@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using DG.Tweening;
 using QFramework;
 using UnityEngine;
 
@@ -26,8 +27,23 @@ namespace Game
             this.SendCommand(new SubHandCardCommand(viewCard));
             // todo 再添加棋子
             this.GetSystem<IPieceSystem>().AddPieceFriend(viewCard.card, grids);
+
+            // 直接调用，会导致棋子事件尚未注册时就调用CheckAllPieceAtkRange，棋子收不到进入战斗的事件
+            // OnPutPieceFinish();
             
-            Debug.Log("[TODO] add piece");
+            // todo 先借dotween写一个笨笨的延时
+            Sequence seq = DOTween.Sequence();
+            seq.AppendCallback(() =>
+                {
+                    OnPutPieceFinish();
+                })
+                .SetDelay(0.01f);
+        }
+
+        void OnPutPieceFinish()
+        {
+            // Debug.Log("[TODO] add piece");
+            this.GetSystem<IPieceBattleSystem>().CheckAllPieceAtkRange();
         }
     }
 }
