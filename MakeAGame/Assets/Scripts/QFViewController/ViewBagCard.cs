@@ -19,11 +19,18 @@ namespace Game
         public float largeScale = 0.16f;
         public Action OnTouchAction;    // 点击时触发的事件
 
+        private void Awake()
+        {
+            // instantiate以后立刻执行，防止同一帧的某些操作需要调用其组件
+            gameObject.AddComponent<GraphicRaycaster>();    // 这个必须放在canvas绑定前面，因为它会连带创建canvas
+            InitBind(); // 绑定各组件
+        }
+
         private void Start()
         {
-            gameObject.AddComponent<GraphicRaycaster>();    // 这个必须放在canvas绑定前面，因为它会连带创建canvas
-            
-            InitBind(); // 绑定各组件
+            // gameObject.AddComponent<GraphicRaycaster>();    // 这个必须放在canvas绑定前面，因为它会连带创建canvas
+            //
+            // InitBind(); // 绑定各组件
             
             var uiHelper = touchArea.AddComponent<UIEventHelper>();
             
