@@ -383,9 +383,7 @@ namespace ShopEnhanceUI
                 curCardAfterEnhance = mData.cardGeneratorSystem.CreateBagCard(Extensions.GetCopy(curCardBeforeEnhanceShallowCopy.card));
                 curCardAfterEnhance.gameObject.transform.SetParent(CardAfterEnhance);
                 curCardAfterEnhance.gameObject.transform.position = CardAfterEnhance.position;
-                UseItemEvent e = new UseItemEvent { item = curEnhanceItem , viewBagCard = curCardBeforeEnhance };
-                //e.item = curEnhanceItem;;
-                //e.viewBagCard = curCardBeforeEnhance;
+                UseItemEvent e = new UseItemEvent { item = curEnhanceItem , viewBagCard = curCardAfterEnhance };
                 Debug.Log($"{e.viewBagCard.name}");
                 itemController.OnUseMerchantItem(e);
             }
