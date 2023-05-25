@@ -9,6 +9,7 @@ namespace Game
 
         // 单纯创建卡牌实体
         GameObject CreateCard();
+
         // 创建已经挂上ViewBagCard的卡牌实体
         ViewBagCard CreateBagCard(Card cardData);
     }

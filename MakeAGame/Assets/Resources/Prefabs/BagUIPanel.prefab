@@ -352,13 +352,14 @@ GameObject:
   - component: {fileID: 236863245}
   - component: {fileID: 236863244}
   - component: {fileID: 1443967959}
-  m_Layer: 0
+  - component: {fileID: 3130847203780822944}
+  m_Layer: 5
   m_Name: CardDescribtion
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &236863243
 RectTransform:
   m_ObjectHideFlags: 0
@@ -432,7 +433,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f5926ffe2a4a1774bb5ba57aa4006a5c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_BagUI: {fileID: 0}
+  m_BagUI: {fileID: -8545740999949244148}
+--- !u!114 &3130847203780822944
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 236863242}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d51f3a7c41ab0346b49ae50d456bece, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MarkType: 0
+  CustomComponentName: CardDescribtion
+  CustomComment: 
+  mComponentName: UnityEngine.UI.Image
 --- !u!1 &261364808
 GameObject:
   m_ObjectHideFlags: 0
@@ -492,7 +509,7 @@ GameObject:
   - component: {fileID: 345024403}
   - component: {fileID: 345024402}
   - component: {fileID: 8820852924547143202}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Card
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1084,7 +1101,7 @@ GameObject:
   - component: {fileID: 569761617}
   - component: {fileID: 569761616}
   - component: {fileID: 5501950376236979127}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1176,7 +1193,7 @@ GameObject:
   - component: {fileID: 662458550}
   - component: {fileID: 662458552}
   - component: {fileID: 662458551}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: BackUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1641,7 +1658,7 @@ GameObject:
   - component: {fileID: 1009694303}
   - component: {fileID: 1009694305}
   - component: {fileID: 1009694304}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1859,7 +1876,7 @@ GameObject:
   - component: {fileID: 1028707851}
   - component: {fileID: 1028707850}
   - component: {fileID: 3621091636690420546}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Close
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2380,7 +2397,7 @@ GameObject:
   - component: {fileID: 1153134969}
   - component: {fileID: 1153134968}
   - component: {fileID: 4052157399700807308}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Skill
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2671,7 +2688,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1223205423}
   - component: {fileID: 1611694026191119292}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: SlotPosition
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2862,7 +2879,7 @@ GameObject:
   - component: {fileID: 1653340090}
   - component: {fileID: 1653340092}
   - component: {fileID: 1653340091}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3167,7 +3184,7 @@ GameObject:
   - component: {fileID: 1922025043}
   - component: {fileID: 1922025045}
   - component: {fileID: 1922025044}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3305,7 +3322,7 @@ GameObject:
   - component: {fileID: 1922313645}
   - component: {fileID: 1922313644}
   - component: {fileID: 7371111255456085748}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Item
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3461,7 +3478,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1960231054}
   - component: {fileID: 1215031519292414329}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Ref
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3977,7 +3994,7 @@ GameObject:
   - component: {fileID: 3253523966829091711}
   - component: {fileID: 2685587875371386388}
   - component: {fileID: 8660822817495696685}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: CharName
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4059,8 +4076,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 60
-  m_fontSizeBase: 60
+  m_fontSize: 45
+  m_fontSizeBase: 45
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -4328,6 +4345,7 @@ MonoBehaviour:
   Skill: {fileID: 1153134969}
   Close: {fileID: 1028707851}
   SlotPosition: {fileID: 1223205423}
+  CardDescribtion: {fileID: 236863244}
   Image: {fileID: 569761616}
   CharName: {fileID: 2685587875371386388}
   SizeData: {fileID: 2424125800500055103}
@@ -4531,8 +4549,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -240.00005, y: -545}
-  m_SizeDelta: {x: 200, y: 50}
+  m_AnchoredPosition: {x: -163.82, y: -547.54}
+  m_SizeDelta: {x: 352.36, y: 74.21}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2044840009096807708
 CanvasRenderer:
@@ -4589,8 +4607,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
-  m_fontSizeBase: 36
+  m_fontSize: 20
+  m_fontSizeBase: 20
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -4625,7 +4643,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_margin: {x: -156.33379, y: 0, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -4683,8 +4701,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -240.00005, y: -420.00003}
-  m_SizeDelta: {x: 200, y: 50}
+  m_AnchoredPosition: {x: -239.98, y: -423.21}
+  m_SizeDelta: {x: 504.67, y: 70.65}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1110901615587670161
 CanvasRenderer:
@@ -4741,8 +4759,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
-  m_fontSizeBase: 36
+  m_fontSize: 20
+  m_fontSizeBase: 20
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18

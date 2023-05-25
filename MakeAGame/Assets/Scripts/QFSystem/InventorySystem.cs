@@ -32,7 +32,7 @@ namespace Game
         /// </summary>
         List<Item> GetItemList();
 
-     
+
 
         /// <summary>
         /// 创建一个卡牌实体Prefab，并放入背包内
@@ -45,6 +45,18 @@ namespace Game
         /// </summary>
         /// <returns></returns>
         List<ViewCard> GetCardList();
+
+        /// <summary>
+        /// 创建一个卡牌实体Prefab，并放入背包中
+        /// </summary>
+        /// <param name="m_card">卡牌</param>
+        void SpawnBagCardInBag(Card m_card);
+
+        /// <summary>
+        /// 返回背包里的卡牌ViewBagCard列表
+        /// </summary>
+        /// <returns></returns>
+        List<ViewBagCard> GetBagCardList();
 
         /// <summary>
         /// 整理itemList也就是背包道具的顺序，优先级为：战斗中使用道具>任何时间使用的道具>其它可使用道具>不可使用道具。
@@ -60,6 +72,7 @@ namespace Game
     {
         public BindableProperty<List<Item>> itemList = new BindableProperty<List<Item>>(); // 物品列表
         public BindableProperty<List<ViewCard>> cardList = new BindableProperty<List<ViewCard>>(); // 卡牌列表
+        public BindableProperty<List<ViewBagCard>> cardBagList = new BindableProperty<List<ViewBagCard>>();// 背包卡牌列表
         public Transform inventoryRoot; // 生成的物品Prefab悬挂的父物体位置
 
         protected override void OnInit()
@@ -69,6 +82,7 @@ namespace Game
             inventoryRoot = GameObject.Find("InventoryRoot")?.transform;
 
             cardList.SetValueWithoutEvent(new List<ViewCard>());
+            cardBagList.SetValueWithoutEvent(new List<ViewBagCard>());
 
             // 测试用代码
             SOItemBase IntermediateSapphirePotion = Resources.Load<SOItemBase>("ScriptableObjects/Items/Intermediate Sapphire Potion");
@@ -124,12 +138,13 @@ namespace Game
             return itemList;
         }
 
-        public void SpawnCardInBag(int cardId)
+        public void SpawnCardInBag(int cardid)
         {
+            
             GameObject cardItem;
-            ISpawnSystem spawnSystem = this.GetSystem<ISpawnSystem>();
-            spawnSystem.SpawnCard(cardId);
-            cardItem = spawnSystem.GetLastSpawnedCard();
+            ISpawnSystem SpawnSystem = this.GetSystem<ISpawnSystem>();
+            SpawnSystem.SpawnCard(cardid);
+            cardItem = SpawnSystem.GetLastSpawnedCard();
             var cardBase = cardItem.GetComponent<ViewCard>();
             cardBase.GetComponent<Transform>().localScale = new Vector3(0.05f, 0.07f, 1);
             cardList.Value.Add(cardBase);
@@ -140,7 +155,33 @@ namespace Game
         {
             return cardList;
         }
+        public void SpawnBagCardInBag(Card m_card)
+        {
+            GameObject card_Object;
+            ViewBagCard cardItem;
+            ICardGeneratorSystem CardSystem = this.GetSystem<ICardGeneratorSystem>();
+            cardItem = CardSystem.CreateBagCard(m_card);
+            card_Object = cardItem.gameObject.transform.gameObject;
+            var cardBase = card_Object.GetComponent<ViewBagCard>();
+            cardBase.OnFocusAction = () =>
+                {
+                    UIKit.GetPanel<BagUI.BagUIPanel>().CardDescribtion.Show();
 
+                    UIKit.GetPanel<BagUI.BagUIPanel>().CardDescribtion.GetComponent<LoadCardDetail>()?.ShowDetail(cardBase.card);
+                };
+            cardBase.OnUnFocusAction = () =>
+                {
+                    UIKit.GetPanel<BagUI.BagUIPanel>().CardDescribtion.Hide();
+                };
+
+           
+            cardBagList.Value.Add(cardBase);
+            UIKit.GetPanel<BagUI.BagUIPanel>().UpdateLayout();
+        }
+        public List<ViewBagCard> GetBagCardList()
+        {
+            return cardBagList;
+        }
 
         public void SortItemList()
         {

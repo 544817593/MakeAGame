@@ -323,7 +323,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PanelName: BagUIPanel
-  Level: -2
+  Level: 0
   mOtherPanels: []
 --- !u!4 &468583847
 Transform:
