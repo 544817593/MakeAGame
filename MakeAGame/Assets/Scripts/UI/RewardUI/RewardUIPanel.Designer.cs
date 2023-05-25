@@ -5,16 +5,31 @@ using QFramework;
 
 namespace RewardUI
 {
-	// Generate Id:750a317d-257a-4bf6-8057-9d72b5bbf62c
+	// Generate Id:454e5d38-ffda-452c-9e5e-33985c40f830
 	public partial class RewardUIPanel
 	{
 		public const string Name = "RewardUIPanel";
 		
+		[SerializeField]
+		public UnityEngine.UI.Button legacy;
+		[SerializeField]
+		public UnityEngine.UI.Button Coin;
+		[SerializeField]
+		public TMPro.TextMeshProUGUI CoinAmount;
+		[SerializeField]
+		public UnityEngine.UI.Button Item;
+		[SerializeField]
+		public UnityEngine.UI.Button Confirm;
 		
 		private RewardUIPanelData mPrivateData = null;
 		
 		protected override void ClearUIComponents()
 		{
+			legacy = null;
+			Coin = null;
+			CoinAmount = null;
+			Item = null;
+			Confirm = null;
 			
 			mData = null;
 		}

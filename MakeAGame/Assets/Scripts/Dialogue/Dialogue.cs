@@ -9,6 +9,7 @@ using UnityEngine.EventSystems;
 using QFramework;
 using PackOpen;
 using DialogueUI;
+using BagUI;
 
 public class Dialogue : ViewController
 {
@@ -34,11 +35,12 @@ public class Dialogue : ViewController
     private const string PLAYER_TAG = "player";
     private const string NPC_TAG = "NPC";
     private const string Wait_TAG = "wait";
-    private const string Control_TAG = "control";
-    private const string Pass_TAG = "pass";
+    private const string Control_TAG = "control"; //等待玩家操作
+    private const string ControlInGame_TAG = "controlG";//等待玩家进行游戏内操作
+    private const string Pass_TAG = "pass";//等待该房间通关
     private const string Camera_TAG = "camera";
-    private const string Reward_TAG = "reward";
-    private const string Gift_TAG = "gift";
+    private const string Reward_TAG = "reward";//奖励机制
+    private const string Gift_TAG = "gift";//NPC赠送
 
 
     private Coroutine displayCoroutine;
@@ -80,7 +82,8 @@ public class Dialogue : ViewController
         StoryUI();
         UIKit.OpenPanel<UIOpenPackPanel>();
         UIKit.HidePanel<UIOpenPackPanel>();
-
+        UIKit.OpenPanel<BagUIPanel>();
+        UIKit.HidePanel<BagUIPanel>();
 
         m_Pack = UIKit.GetPanel<UIOpenPackPanel>()?.GetComponent<UIOpenPackPanel>();
         for (int i = 0; i < ChoiceP.Length; i++)
@@ -101,7 +104,7 @@ public class Dialogue : ViewController
     {
         SubmitPressed();
         CheckPause();
-        if (GetSubmitPressed() && canContinue && !pauseD && !waitForChoice && !waitForControl && !waitForScene && !waitForPass &&!showGift)
+        if (GetSubmitPressed() && canContinue && !pauseD && !waitForChoice && !waitForControl /*&& !waitForScene && !waitForPass*/ &&!showGift)
         {
             StoryUI();
         }
@@ -349,11 +352,16 @@ public class Dialogue : ViewController
                     npc.SetActive(true);
                     UIKit.HidePanel<DialoguePanel>();
                     break;
+                case ControlInGame_TAG:
+                    //waitForControl = true;
+                    //UIKit.HidePanel<DialoguePanel>();
+                    break;
                 case Pass_TAG:
                     waitForPass = true;
                     break;
                 case Reward_TAG:
                     reward = true;
+                    UIKit.OpenPanel<RewardUI.RewardUIPanel>();
                     break;
                 case Gift_TAG:
                     m_showGift?.PopGift();

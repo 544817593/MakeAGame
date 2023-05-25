@@ -5,13 +5,15 @@ using QFramework;
 
 namespace ShopEnhanceUI
 {
-	// Generate Id:0062a9fb-bf05-4d14-8f9d-02a8c7a0be53
+	// Generate Id:7ccb6276-2b05-42b5-8020-e7037a8eaa03
 	public partial class ShopEnhanceUI
 	{
 		public const string Name = "ShopEnhanceUI";
 		
 		[SerializeField]
 		public UnityEngine.UI.Image Background;
+		[SerializeField]
+		public UnityEngine.UI.Button Close;
 		[SerializeField]
 		public UnityEngine.UI.Image BagPanel;
 		[SerializeField]
@@ -35,33 +37,34 @@ namespace ShopEnhanceUI
 		[SerializeField]
 		public UnityEngine.UI.Button Item10;
 		[SerializeField]
-		public UnityEngine.UI.Button Item11;
+		public RectTransform CardBeforeEnhance;
 		[SerializeField]
-		public UnityEngine.UI.Button Item12;
+		public UnityEngine.UI.Button EnhanceItem;
 		[SerializeField]
-		public UnityEngine.UI.Button Item13;
-		[SerializeField]
-		public UnityEngine.UI.Button Item14;
-		[SerializeField]
-		public UnityEngine.UI.Button Item15;
-		[SerializeField]
-		public UnityEngine.UI.Button Close;
+		public RectTransform CardAfterEnhance;
 		[SerializeField]
 		public TMPro.TextMeshProUGUI TextAfterEnhance;
 		[SerializeField]
 		public UnityEngine.UI.Button ButtonEnhance;
+		[SerializeField]
+		public UnityEngine.UI.Button ButtonClear;
 		[SerializeField]
 		public UnityEngine.UI.Button BtnNextPage;
 		[SerializeField]
 		public UnityEngine.UI.Button BtnPrePage;
 		[SerializeField]
 		public TMPro.TextMeshProUGUI TextPageNum;
+		[SerializeField]
+		public UnityEngine.UI.Button BtnItem;
+		[SerializeField]
+		public UnityEngine.UI.Button BtnCard;
 		
 		private ShopEnhanceUIData mPrivateData = null;
 		
 		protected override void ClearUIComponents()
 		{
 			Background = null;
+			Close = null;
 			BagPanel = null;
 			Item01 = null;
 			Item02 = null;
@@ -73,17 +76,17 @@ namespace ShopEnhanceUI
 			Item08 = null;
 			Item09 = null;
 			Item10 = null;
-			Item11 = null;
-			Item12 = null;
-			Item13 = null;
-			Item14 = null;
-			Item15 = null;
-			Close = null;
+			CardBeforeEnhance = null;
+			EnhanceItem = null;
+			CardAfterEnhance = null;
 			TextAfterEnhance = null;
 			ButtonEnhance = null;
+			ButtonClear = null;
 			BtnNextPage = null;
 			BtnPrePage = null;
 			TextPageNum = null;
+			BtnItem = null;
+			BtnCard = null;
 			
 			mData = null;
 		}

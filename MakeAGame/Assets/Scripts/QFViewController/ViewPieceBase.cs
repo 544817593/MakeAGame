@@ -17,10 +17,13 @@ namespace Game
         protected PieceState state = new PieceStateIdle(null);
 
         public DirEnum direction = DirEnum.None;
+        public bool inCombat; // 是否在战斗中(挨打或者攻击)
+        public List<BuffType> listBuffs;    // 目前身上起效的buff
 
         public Action<PieceMoveReadyEvent> OnPieceMoveReady;
         public Action<PieceMoveFinishEvent> OnPieceMoveFinish;
         public Action<PieceAttackStartEvent> OnPieceAttackStart;
+        public Action<PieceUnderAttackEvent> OnPieceUnderAttack;
 
         public List<BoxGrid> pieceGrids { get; protected set; } = new List<BoxGrid>();
         // 经过所有占地格子计算出来的时间流速
@@ -48,6 +51,7 @@ namespace Game
             OnPieceMoveReady += OnMoveReadyEvent;
             OnPieceMoveFinish += OnMoveFinishEvent;
             OnPieceAttackStart += OnAttackStartEvent;
+            OnPieceUnderAttack += OnUnderAttackEvent;
         }
 
         public virtual void SetGrids(List<BoxGrid> grids)
@@ -81,6 +85,11 @@ namespace Game
             stateFlag = state.stateEnum;
         }
 
+        public PieceStateEnum GetPieceState()
+        {
+            return stateFlag;
+        }
+
         protected Vector3 GetGridsCenterPos()
         {
             if (pieceGrids.Count == 0) return transform.position;
@@ -93,6 +102,7 @@ namespace Game
             return centerPos;
         }
         
+        // 这个函数在MovementSystem里有相同功能的
         protected virtual bool CheckIfOneGridCanMove(BoxGrid grid)
         {
             // 通用判断
@@ -122,6 +132,11 @@ namespace Game
 
         }
 
+        protected virtual void OnUnderAttackEvent(PieceUnderAttackEvent e)
+        {
+
+        }
+
         public bool IsAttacking()
         {
             return stateFlag == PieceStateEnum.Attacking;
@@ -135,7 +150,7 @@ namespace Game
 
     public struct PieceMoveReadyEvent
     {
-        public ViewPieceBase ViewPieceBase;
+        public ViewPieceBase viewPieceBase;
     }
     
     public struct PieceMoveFinishEvent
@@ -145,6 +160,20 @@ namespace Game
 
     public struct PieceAttackStartEvent
     {
-        public ViewPieceBase vpb;
+        public ViewPieceBase viewPieceBase;
+    }
+
+    public struct PieceUnderAttackEvent
+    {
+        public ViewPieceBase viewPieceBase;
+    }
+
+    public class SpecialitiesAttackCheckEvent
+    {
+        public ViewPieceBase attacker; // 攻击方
+        public ViewPieceBase target; // 防守方
+        public bool isTargetMonster; // 防守方是否为怪物
+        public int damage; // 伤害
+        public bool hit; // 是否命中
     }
 }

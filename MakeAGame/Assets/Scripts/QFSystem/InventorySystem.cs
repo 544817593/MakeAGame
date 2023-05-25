@@ -32,6 +32,8 @@ namespace Game
         /// </summary>
         List<Item> GetItemList();
 
+     
+
         /// <summary>
         /// 创建一个卡牌实体Prefab，并放入背包内
         /// </summary>
@@ -129,7 +131,9 @@ namespace Game
             spawnSystem.SpawnCard(cardId);
             cardItem = spawnSystem.GetLastSpawnedCard();
             var cardBase = cardItem.GetComponent<ViewCard>();
+            cardBase.GetComponent<Transform>().localScale = new Vector3(0.05f, 0.07f, 1);
             cardList.Value.Add(cardBase);
+            UIKit.GetPanel<BagUI.BagUIPanel>().UpdateLayout();
         }
 
         public List<ViewCard> GetCardList()

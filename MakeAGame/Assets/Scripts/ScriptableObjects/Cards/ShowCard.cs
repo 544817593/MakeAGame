@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 
 using QFramework;
+using BagUI;
 
 namespace PackOpen
 {
 	public class ShowCard : MonoBehaviour
 	{
 		public UIOpenPackPanel m_ui;
-		
+		public BagUIPanel m_BagUI;
 		// Start is called before the first frame update
 		void Start()
 		{
@@ -27,8 +28,8 @@ namespace PackOpen
 		/// </summary>
 		public void SaveNewCard(int cardID)
 		{
-			var m_Inv = Game.GameEntry.Interface.GetSystem<Game.IInventorySystem>();
-			m_Inv.SpawnCardInBag(cardID);
+			m_BagUI.AddCard(cardID);
+			
 		}
 		/// <summary>
 		/// 显示翻开的卡牌
@@ -96,8 +97,8 @@ namespace PackOpen
 
 			m_ui.count--;
 
-
-			//SaveNewCard(newCardId);
+			gameObject.SetActive(false);
+			SaveNewCard(newCardId);
 			//if (m_ui.count <= 0)
 			//{
 			//	if (m_ui.blueDrawn == false) m_ui.blueSecure = true;
@@ -105,7 +106,7 @@ namespace PackOpen
 
 			//}
 			//Invoke("OpenNewPack", 3f);
-			if (m_ui.count <= 0)
+			if (m_ui.count <=0)
 			{
 			//	if (m_ui.blueDrawn == false) m_ui.blueSecure = true;
 				Invoke("OpenNewPack", 3f);
@@ -120,7 +121,7 @@ namespace PackOpen
 		{
 
 
-			Destroy(GameObject.Find("temp"));
+			Destroy(GameObject.Find("Cardtemp"));
 			m_ui.Pack.Show();
 			m_ui.Pack.BtnOpen.interactable = true;
 			m_ui.openFinish = false;
@@ -128,11 +129,12 @@ namespace PackOpen
 			{
 				m_ui.openFinish = true;
 				m_ui.Hide();
+				PackModel.finish.RegisterWithInitValue(finish =>
+				{
+					finish = m_ui.openFinish;
+				});
 			}
-			PackModel.finish.RegisterWithInitValue(finish =>
-			{
-				finish = m_ui.openFinish;
-			});
+			
 
 		}
 	}

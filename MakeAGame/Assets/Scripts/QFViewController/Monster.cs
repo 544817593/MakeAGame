@@ -22,16 +22,15 @@ public class Monster : ViewPieceBase
     public (int, int) pieceSize; // 怪物尺寸
 
     public BindableProperty<float> moveSpeed; // 移动速度
-    public BindableProperty<float> hp; // 当前生命值
-    public BindableProperty<float> maxHp; // 最大生命值
+    public BindableProperty<int> hp; // 当前生命值
+    public BindableProperty<int> maxHp; // 最大生命值
     public BindableProperty<float> atkSpeed; // 攻速
     public BindableProperty<float> atkDmg; // 攻击力
     public BindableProperty<float> defense; // 防御力
     public BindableProperty<float> accuracy; // 命中率
     public BindableProperty<int> atkRange; // 射程
-    public BindableProperty<List<PropertyEnum>> properties; // 特性
-    public BindableProperty<List<DirEnum>> dirs; // 特性
-    public BindableProperty<bool> inCombat; // 是否在战斗中
+    public BindableProperty<List<PropertyEnum>> features; // 特性
+    public BindableProperty<List<DirEnum>> dirs; // 可移动方向
     public BindableProperty<bool> isAttacking; // 是否在发起攻击
     public BindableProperty<bool> isDying; // 是否正在死亡中                         
     public BindableProperty<(int, int)> leftTopGridPos; // 怪物当前左上角位置
@@ -48,7 +47,7 @@ public class Monster : ViewPieceBase
     {
         mapSystem = this.GetSystem<IMapSystem>();
     }
-
+    
     void Start()
     {
         base.Start();
@@ -62,6 +61,7 @@ public class Monster : ViewPieceBase
         this.RegisterEvent<PieceMoveReadyEvent>(OnPieceMoveReady).UnRegisterWhenGameObjectDestroyed(gameObject);
         this.RegisterEvent<PieceMoveFinishEvent>(OnPieceMoveFinish).UnRegisterWhenGameObjectDestroyed(gameObject);
         this.RegisterEvent<PieceAttackStartEvent>(OnPieceAttackStart).UnRegisterWhenGameObjectDestroyed(gameObject);
+        this.RegisterEvent<PieceUnderAttackEvent>(OnPieceUnderAttack).UnRegisterWhenGameObjectDestroyed(gameObject);
         
         this.SendCommand(new MonsterTargetSelectionCommand(this));
     }
@@ -127,7 +127,7 @@ public class Monster : ViewPieceBase
             movementSystem = this.GetSystem<IMovementSystem>();
         
         // 发送准备移动事件
-        this.SendEvent<PieceMoveReadyEvent>(new PieceMoveReadyEvent() {ViewPieceBase = this});
+        this.SendEvent<PieceMoveReadyEvent>(new PieceMoveReadyEvent() {viewPieceBase = this});
         
         var nextLTCorr = FindMovementDir();
         
@@ -145,10 +145,18 @@ public class Monster : ViewPieceBase
         {
             nextGrids.Add(mapSystem.Grids()[crtGrid.row + diffR, crtGrid.col + diffC]);
         }
-        
-        foreach (var oldGrid in pieceGrids) oldGrid.occupation = 0;
+
+        foreach (var oldGrid in pieceGrids)
+        {
+            oldGrid.occupation = 0;
+            oldGrid.gridStatus.Value = GridStatusEnum.Unoccupied;
+        }
         pieceGrids = nextGrids;
-        foreach (var newGrid in pieceGrids) newGrid.occupation = pieceId;
+        foreach (var newGrid in pieceGrids)
+        {
+            newGrid.occupation = pieceId;
+            newGrid.gridStatus.Value = GridStatusEnum.MonsterPiece;
+        }
 
         leftTopGridPos.Value = nextLTCorr;
         
@@ -258,8 +266,13 @@ public class Monster : ViewPieceBase
     protected override void OnAttackStartEvent(PieceAttackStartEvent e)
     {
         // 若不是给自己的通知，不作相应
-        if (e.vpb != this) return;
+        if (e.viewPieceBase != this) return;
         ChangeStateTo(new PieceEnemyAttackingState(this));
+    }
+
+    protected override void OnUnderAttackEvent(PieceUnderAttackEvent e)
+    {
+        base.OnUnderAttackEvent(e);
     }
 }
 
@@ -282,7 +295,7 @@ public class MonsterEditor : Editor
         // 获取 data 字段的 SerializedProperty
         _data = serializedObject.FindProperty("data");
         // 获取特殊类型的 BindableProperty
-        _properties = ((Monster)target).properties.Value;
+        _properties = ((Monster)target).features.Value;
         _dirs = ((Monster)target).dirs.Value;
         _leftTopGridPos = ((Monster)target).leftTopGridPos.Value;
         _botRightGridPos = ((Monster)target).botRightGridPos.Value;
@@ -296,14 +309,14 @@ public class MonsterEditor : Editor
         EditorGUILayout.LabelField("Bindable Properties:");
         var monster = (Monster)target;
         monster.moveSpeed.Value = EditorGUILayout.FloatField("Move Speed", monster.moveSpeed.Value);
-        monster.hp.Value = EditorGUILayout.FloatField("HP", monster.hp.Value);
-        monster.maxHp.Value = EditorGUILayout.FloatField("Max HP", monster.maxHp.Value);
+        monster.hp.Value = EditorGUILayout.IntField("HP", monster.hp.Value);
+        monster.maxHp.Value = EditorGUILayout.IntField("Max HP", monster.maxHp.Value);
         monster.atkSpeed.Value = EditorGUILayout.FloatField("Attack Speed", monster.atkSpeed.Value);
         monster.atkDmg.Value = EditorGUILayout.FloatField("Attack Damage", monster.atkDmg.Value);
         monster.defense.Value = EditorGUILayout.FloatField("Defense", monster.defense.Value);
         monster.accuracy.Value = EditorGUILayout.FloatField("Accuracy", monster.accuracy.Value);
         monster.atkRange.Value = EditorGUILayout.IntField("Attack Range", monster.atkRange.Value);
-        monster.inCombat.Value = EditorGUILayout.Toggle("In Combat", monster.inCombat.Value);
+        monster.inCombat = EditorGUILayout.Toggle("In Combat", monster.inCombat);
         monster.isAttacking.Value = EditorGUILayout.Toggle("Is Attacking", monster.isAttacking.Value);
         monster.isDying.Value = EditorGUILayout.Toggle("Is Dying", monster.isDying.Value);
 

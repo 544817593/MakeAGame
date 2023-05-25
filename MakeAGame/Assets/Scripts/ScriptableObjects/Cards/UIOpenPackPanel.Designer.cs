@@ -5,7 +5,7 @@ using QFramework;
 
 namespace PackOpen
 {
-	// Generate Id:e10e3cbd-373c-4dab-bb69-9f81afbdfe0c
+	// Generate Id:91937b24-e602-4efd-a4a0-b5a80c185dd1
 	public partial class UIOpenPackPanel
 	{
 		public const string Name = "UIOpenPackPanel";
