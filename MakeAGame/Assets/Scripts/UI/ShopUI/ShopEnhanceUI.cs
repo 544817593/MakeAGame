@@ -6,12 +6,14 @@ using Game;
 using System;
 using TMPro;
 using UnityEngine.Assertions;
+using Unity.VisualScripting;
 
 namespace ShopEnhanceUI
 {
 	public class ShopEnhanceUIData : UIPanelData
 	{
         public IShopSystem shopSystem = GameEntry.Interface.GetSystem<IShopSystem>();
+        public ICardGeneratorSystem cardGeneratorSystem = GameEntry.Interface.GetSystem<ICardGeneratorSystem>();
     }
 	public partial class ShopEnhanceUI : UIPanel
 	{
@@ -33,13 +35,14 @@ namespace ShopEnhanceUI
         private int cardCount = 12; // 测试用，想要创建多少张牌
         private ViewBagCard curCardBeforeEnhance = null; // 作为展示使用
         private ViewBagCard curCardBeforeEnhanceShallowCopy = null; // 作为实际强化的牌使用
+        private ViewBagCard curCardAfterEnhance = null; // 作为强化后的预览使用
         //private Button curEnhanceItemBtn = null;
         private Item curEnhanceItem = null;
         //private int sellCount = 1;
         //private Item selectedItem = null;
         //private Button selectedButton = null;
         private ItemController itemController = new ItemController(); //不确定是不是这样用
-        private Dictionary<Button, ViewBagCard> cardBtn = new Dictionary<Button, ViewBagCard>();
+        //private Dictionary<Button, ViewBagCard> cardBtn = new Dictionary<Button, ViewBagCard>();
 
         private List<ViewBagCard> bagCardList = new List<ViewBagCard>();	// 手牌列表
 
@@ -86,15 +89,14 @@ namespace ShopEnhanceUI
         public void initCards()
         {
             Assert.IsNotNull(GameObject.Find("BagPanel"));
-            var cardGeneratorSystem = GameEntry.Interface.GetSystem<ICardGeneratorSystem>();
+            
             for (int i = 1; i <= cardCount; ++i)
             {
                 Card testData = new Card(1);
-                ViewBagCard viewBagCard = cardGeneratorSystem.CreateBagCard(testData);
+                ViewBagCard viewBagCard = mData.cardGeneratorSystem.CreateBagCard(testData);
                 bagCardList.Add(viewBagCard);
                 // 接收数据，初始化牌面显示
                 viewBagCard.card.enhanceID = i - 1;
-                //viewBagCard.gameObject.transform.localScale = new Vector3(0.00075f, 0.00075f, 0.00075f);
                 viewBagCard.gameObject.transform.SetParent(BagPanel.transform);
                 viewBagCard.OnTouchAction = () =>
                 {
@@ -104,16 +106,16 @@ namespace ShopEnhanceUI
                     {
                         Destroy(transform.gameObject);
                     }
-                    // TODO: 这里需要一个对Card的拷贝初始化函数
-                    ViewBagCard copy = cardGeneratorSystem.CreateBagCard(new Card(1)); 
-                    copy.card.SetEnhancement(viewBagCard.card.enhancement);
-                    copy.card.enhanceID = i - 1;
+                    ViewBagCard copy = mData.cardGeneratorSystem.CreateBagCard(testData); 
                     copy.gameObject.transform.SetParent(CardBeforeEnhance);
                     copy.gameObject.transform.position = CardBeforeEnhance.position;
                     curCardBeforeEnhance = copy;
                     curCardBeforeEnhanceShallowCopy = viewBagCard;
                     // 如果已经有强化道具在位置上，生成强化后的卡牌预览图
-                    generateCardAfterEnhance();
+                    if(curEnhanceItem != null)
+                    {
+                        generateCardAfterEnhance();
+                    }
                 };
             }
         }
@@ -124,9 +126,6 @@ namespace ShopEnhanceUI
         {
             if (curBagTab == (int)BagTabs.card)
             {
-                //ViewCard viewcard = bagCardList[0];
-                //viewcard.gameObject.transform.SetParent(CardBeforeEnhance.GetComponent<Transform>());
-                //viewcard.gameObject.transform.position = CardBeforeEnhance.GetComponent<Transform>().position;
                 totalPage = bagCardList.Count != 0 ? (int)Math.Ceiling((double)bagCardList.Count / gridNum) : 1;
                 // 页数显示
                 TextPageNum.text = $" {curPage} / {totalPage}";
@@ -180,7 +179,10 @@ namespace ShopEnhanceUI
                             //curEnhanceItemBtn = curItem.GetComponent<Button>();
                             curEnhanceItem = itemInList;
                             // 如果已经有卡牌在强化位置，生成强化后的卡牌预览图
-                            generateCardAfterEnhance();
+                            if(curCardBeforeEnhance != null)
+                            {
+                                generateCardAfterEnhance();
+                            }
                         });
                     }
                     else
@@ -366,6 +368,7 @@ namespace ShopEnhanceUI
             EnhanceItem.GetComponent<Image>().sprite = null;
             EnhanceItem.gameObject.SetActive(false);
             curEnhanceItem = null;
+            curCardAfterEnhance = null;
         }
 
         private void generateCardAfterEnhance()
@@ -377,42 +380,16 @@ namespace ShopEnhanceUI
                 {
                     Destroy(transform.gameObject);
                 }
-                // TODO: 这里需要一个对Card的拷贝初始化函数
-                var cardGeneratorSystem = GameEntry.Interface.GetSystem<ICardGeneratorSystem>();
-                ViewBagCard copy = cardGeneratorSystem.CreateBagCard(new Card(1));
-                copy.card.SetEnhancement(curCardBeforeEnhanceShallowCopy.card.enhancement); 
-                copy.card.enhanceID = curCardBeforeEnhanceShallowCopy.card.enhanceID;
-                copy.gameObject.transform.SetParent(CardAfterEnhance);
-                copy.gameObject.transform.position = CardAfterEnhance.position;
-                UseItemEvent e = new UseItemEvent();
-                e.item = curEnhanceItem;
-                e.viewBagCard = copy;
-                // TODO：需要一个方法获取强化后的预览图
-                //itemController.OnUseMerchantItem(e);
+                curCardAfterEnhance = mData.cardGeneratorSystem.CreateBagCard(Extensions.GetCopy(curCardBeforeEnhanceShallowCopy.card));
+                curCardAfterEnhance.gameObject.transform.SetParent(CardAfterEnhance);
+                curCardAfterEnhance.gameObject.transform.position = CardAfterEnhance.position;
+                UseItemEvent e = new UseItemEvent { item = curEnhanceItem , viewBagCard = curCardBeforeEnhance };
+                //e.item = curEnhanceItem;;
+                //e.viewBagCard = curCardBeforeEnhance;
+                Debug.Log($"{e.viewBagCard.name}");
+                itemController.OnUseMerchantItem(e);
             }
         }
         
-        /// <summary>
-		/// 监听每个active的物品，点击后显示对应描述，更新selectedItem selectedButton，更新counter数字
-		/// </summary>
-        //private void buttonListen()
-        //{
-        //    foreach (Button btn in cardBtn.Keys)
-        //    {
-        //        btn.onClick.AddListener(() =>
-        //        {
-        //            //Debug.Log($"{btn.gameObject.name}");
-        //            //TextItemInfo.text = activeButtons[btn].data.description;
-        //            selectedItem = activeButtons[btn];
-        //            selectedButton = btn;
-        //            if (selectedItem.amount < sellCount)
-        //            {
-        //                sellCount = selectedItem.amount;
-        //            }
-        //        });
-
-        //    }
-
-        //}
     }
 }
