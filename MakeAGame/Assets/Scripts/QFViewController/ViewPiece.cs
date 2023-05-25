@@ -28,6 +28,8 @@ namespace Game
             this.RegisterEvent<PieceMoveReadyEvent>(OnPieceMoveReady).UnRegisterWhenGameObjectDestroyed(gameObject);
             this.RegisterEvent<PieceMoveFinishEvent>(OnPieceMoveFinish).UnRegisterWhenGameObjectDestroyed(gameObject);
             this.RegisterEvent<PieceAttackStartEvent>(OnPieceAttackStart).UnRegisterWhenGameObjectDestroyed(gameObject);
+            this.RegisterEvent<PieceAttackEndEvent>(OnPieceAttackEnd).UnRegisterWhenGameObjectDestroyed(gameObject);
+            this.RegisterEvent<PieceUnderAttackEvent>(OnPieceUnderAttack).UnRegisterWhenGameObjectDestroyed(gameObject);
 
             // OnPieceMoveReady += e => { Debug.Log("add action test"); };  // 在这里加是没有用的，不知道为啥
             // OnPieceMoveReady += OnMoveReadyEvent;
@@ -171,11 +173,24 @@ namespace Game
             
         }
 
-        public void Attack()
+        public override void Attack()
         {
             Debug.Log($"piece {this.ToString()} is about to attack");
             // todo attack
-            
+            this.SendEvent<PieceAttackReadyEvent>();
+            this.SendCommand<PieceAttackCommand>(new PieceAttackCommand(this));
+        }
+        
+        public override bool Hit()
+        {
+            this.SendEvent<PieceHitReadyEvent>();
+
+            card.hp -= 1;
+            Debug.Log($"Monster Hit, hp: {card.hp}");
+        
+            this.SendEvent<PieceHitFinishEvent>();
+
+            return card.hp <= 0;
         }
 
         protected override void OnMoveReadyEvent(PieceMoveReadyEvent e)
@@ -185,14 +200,14 @@ namespace Game
             Debug.Log("ViewPiece receive MoveReadyEvent");
         }
 
-        private Action testAction;
+        // private Action testAction;
         protected override void OnMoveFinishEvent(PieceMoveFinishEvent e)
         {
             // todo
             base.OnMoveFinishEvent(e);
             Debug.Log("ViewPiece receive MoveFinishEvent");
             // testAction += () => Debug.Log("test");   // 但这里是有效的！如果有什么需要叠加的函数，可以加在这里
-            testAction.Invoke();
+            // testAction.Invoke();
         }
 
         protected override void OnAttackStartEvent(PieceAttackStartEvent e)
@@ -200,6 +215,12 @@ namespace Game
             // 若不是给自己的通知，不作相应
             if (e.viewPieceBase != this) return;
             ChangeStateTo(new PieceFriendAttackingState(this));
+        }
+        
+        protected override void OnAttackEndEvent(PieceAttackEndEvent e)
+        {
+            if (e.vpb != this) return;
+            ChangeStateTo(new PieceFriendMovingState(this));
         }
 
         private void MouseDown()

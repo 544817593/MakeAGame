@@ -13,6 +13,8 @@ namespace Game
 
         public bool AddPieceEnemy(Monster monster, List<BoxGrid> grids);
 
+        public void RemovePiece(ViewPieceBase vpb);
+
         // 唤出方向轮盘显示在棋子下
         public void ShowDirectionWheel(ViewPieceBase viewPB);
         // 改变棋子方向
@@ -73,6 +75,18 @@ namespace Game
             pieceEnemyList.Add(monster);
 
             return true;
+        }
+
+        public void RemovePiece(ViewPieceBase vpb)
+        {
+            if (vpb is ViewPiece vp)
+            {
+                pieceFriendList.Remove(vp);
+            }
+            else if (vpb is Monster m)
+            {
+                pieceEnemyList.Remove(m);
+            }
         }
 
         private ViewPieceBase crtSelectedPiece;

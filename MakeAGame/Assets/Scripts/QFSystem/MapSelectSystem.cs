@@ -154,8 +154,18 @@ namespace Game
              PrintSelectedGrids();
              
              // todo 二次筛选
+             validSelectedGrids.Clear();
+             foreach (var grid in selectedGrids)
+             {
+                 // 上方已经有其他棋子
+                 if (!grid.IsEmpty()) {}
+                 else
+                 {
+                     validSelectedGrids.Add(grid);
+                 }
+             }
+             // validSelectedGrids = selectedGrids;
 
-             validSelectedGrids = selectedGrids;
              foreach (var grid in validSelectedGrids)
              {
                  grid.ShowHint("selected");

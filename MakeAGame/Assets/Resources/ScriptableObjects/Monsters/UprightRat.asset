@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   monsterSprite: {fileID: 21300000, guid: 4104dfa448167344a8143443654f24a7, type: 3}
   moveSpeed: 3
-  maxHp: 50
+  maxHp: 5
   atkSpeed: 1
   atkDmg: 0
   defense: 0
