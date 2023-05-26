@@ -13,7 +13,7 @@ namespace InventoryQuickslotUI
 	}
 	public partial class UIAbilityPanel : UIPanel
 	{
-        [SerializeField] private List<Sprite> skillSprites; // 技能图片
+        [SerializeField] private List<Sprite> skillSprites; // 技能栏技能图片
         private bool isSkill1Active = false;
         private bool isSkill2Active = false;
         private int selectedButton = -1; // Keyboard shortcuts, 0 = Q; 1 = E

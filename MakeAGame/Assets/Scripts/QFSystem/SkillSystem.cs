@@ -98,6 +98,13 @@ namespace Game
         /// <param name="skill"></param>
         /// <returns></returns>
         public bool CanUseSkill(SkillNameEnum skill);
+
+        /// <summary>
+        /// Get skill's UI icon
+        /// </summary>
+        /// <param name="skill">Skill name enum</param>
+        /// <returns></returns>
+        public Sprite GetSkillIconSprite(SkillNameEnum skill);
     }
     public class SkillSystem : AbstractSystem, ISkillSystem, ICanSendCommand
     {
@@ -252,9 +259,24 @@ namespace Game
                     return "异化II";
                 case SkillNameEnum.Focus2:
                     return "聚焦II";
+                case SkillNameEnum.Ghost:
+                    return "疾跑";
+                case SkillNameEnum.LastResort:
+                    return "破釜沉舟";
+                case SkillNameEnum.DimentionalPortal:
+                    return "次元门";
+                case SkillNameEnum.Inferno:
+                    return "炼狱";
+                case SkillNameEnum.Oceanic:
+                    return "沧海";
                 default:
                     return "";
             }
+        }
+
+        public Sprite GetSkillIconSprite(SkillNameEnum skill)
+        {
+            return Resources.Load("Sprites/Abilities/" + skill.ToString() + ".png") as Sprite;
         }
 
         public void CastSkill(bool leftSkill)
