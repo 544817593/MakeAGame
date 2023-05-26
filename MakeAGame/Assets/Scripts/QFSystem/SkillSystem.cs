@@ -276,7 +276,7 @@ namespace Game
 
         public Sprite GetSkillIconSprite(SkillNameEnum skill)
         {
-            return Resources.Load("Sprites/Abilities/" + skill.ToString() + ".png") as Sprite;
+            return Resources.Load<Sprite>("Sprites/Abilities/" + skill.ToString());
         }
 
         public void CastSkill(bool leftSkill)
