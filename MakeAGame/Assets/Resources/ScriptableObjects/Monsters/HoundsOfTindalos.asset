@@ -24,3 +24,4 @@ MonoBehaviour:
   monsterId: 9992
   properties: 00000000
   dirs: 00000000020000000300000001000000
+  anim: {fileID: 1935927658568041128, guid: 197e764ae9e2d7c42a81bf9b32ff99e2, type: 3}
