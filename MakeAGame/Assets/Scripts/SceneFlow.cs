@@ -33,9 +33,17 @@ namespace Game
         {
             RoomEnum m_room = ttt[0];
             ttt.RemoveAt(0);
+            UIKit.CloseAllPanel();
+            if(Pre_Room == RoomEnum.Combat.ToString())
+            {
+                IMapSystem mapSystem = GameEntry.Interface.GetSystem<IMapSystem>();
+                mapSystem.SetNUllMap();
+            }
+            
             StartCoroutine(GameManager.Instance.gameSceneMan.LoadScene(m_room.ToString(), false));
             StartCoroutine(GameManager.Instance.gameSceneMan.UnloadScene(Pre_Room));
-            Pre_Room = m_room.ToString(); ;
+            
+            Pre_Room = m_room.ToString(); 
         }    
     }
 }

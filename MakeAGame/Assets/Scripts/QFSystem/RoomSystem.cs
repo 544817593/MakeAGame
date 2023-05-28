@@ -8,8 +8,9 @@ namespace Game
     {
         void SetRoom(List<RoomEnum> m_Room);
         List<RoomEnum> GetRooms();
+        List<RoomEnum> GetRoomsCount();
 
-      
+
 
 
     }
@@ -19,12 +20,19 @@ namespace Game
         
         public BindableProperty<List<RoomEnum>> new_rooms = new BindableProperty<List<RoomEnum>>();
         public BindableProperty<List<RoomEnum>> ran_rooms = new BindableProperty<List<RoomEnum>>();
+        public BindableProperty<List<RoomEnum>> m_count = new BindableProperty<List<RoomEnum>>();
+
+        int combat_Count, npc_Count, explore_Count, merchant_Count, Rest_Count, Boss_Count;
+
+   
+   
         // Start is called before the first frame update
         protected override void OnInit()
         {
           
             new_rooms.SetValueWithoutEvent(new List<RoomEnum>());
             ran_rooms.SetValueWithoutEvent(new List<RoomEnum>());
+            m_count.SetValueWithoutEvent(new List<RoomEnum>());
         }
 
         public void SetRoom(List<RoomEnum> m_Room)
@@ -46,6 +54,25 @@ namespace Game
             return new_rooms;
         }
 
+
+        public List<RoomEnum> GetRoomsCount()
+        {
+            return m_count;
+        }
+
+        public void AssignR()
+        {
+
+            //foreach(var m_RE in GetRoomsCount())
+            //{
+            //    switch(m_RE.)
+            //    {
+            //        case RoomEnum.Combat:
+            //            combat_Count++;
+            //            break;
+            //    }
+            //}
+        }
       
     }
 }
