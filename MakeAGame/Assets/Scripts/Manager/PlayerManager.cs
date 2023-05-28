@@ -29,7 +29,7 @@ public class PlayerManager : MonoBehaviour
 
         // 把自身赋予GM
         GameManager.Instance.playerMan = this;
-
+        player.SetStats();
         inventory = GameEntry.Interface.GetSystem<InventorySystem>();
     }
 
