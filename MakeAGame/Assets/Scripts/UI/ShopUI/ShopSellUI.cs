@@ -21,7 +21,7 @@ namespace ShopSellUI
         // TODO 读取玩家当前金币数量，暂时使用hardcode
         public int playerGold = 50;
         // 背包每页的格子数量上限
-        private const int gridNum = 15;
+        private const int gridNum = 10;
         private int curPage = 1;
         private int totalPage = 1;
         // 每页显示的元素索引区间[lowerIndex, upperIndex]

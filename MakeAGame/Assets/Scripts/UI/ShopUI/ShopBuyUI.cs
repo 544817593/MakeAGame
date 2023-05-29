@@ -20,6 +20,7 @@ namespace ShopBuyUI
         // TODO 读取玩家当前金币数量，暂时使用hardcode
         public int playerGold = 50;
         private int buyCount = 1;
+		private int gridNum = 10; // 购买栏位上限
 		private Dictionary<Button, Item> activeButtons = new Dictionary<Button, Item>();
 		private Item selectedItem = null;
 		private Button selectedButton = null;
@@ -60,6 +61,10 @@ namespace ShopBuyUI
         private void updateAndShowShopItems()
         {
 			List<Item> shopItemList = mData.shopSystem.getshopItemList();
+			if (shopItemList.Count > ShopGridPanel.GetComponentInChildren<Transform>(includeInactive: true).childCount) 
+			{
+				Debug.LogError($"商店购买栏位上限为{gridNum}，超过上限，只能显示数组中倒数{gridNum}种物品");
+			}
 			int idx = 0;
             
 			// 玩家金币读取
@@ -96,6 +101,7 @@ namespace ShopBuyUI
                 Debug.Log(transform.gameObject.name);
 				idx++;
             }
+			
         }
 
 		/// <summary>

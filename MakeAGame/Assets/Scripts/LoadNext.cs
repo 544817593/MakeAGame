@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class LoadNext : MonoBehaviour
 {
@@ -18,7 +19,6 @@ public class LoadNext : MonoBehaviour
 
     public void LoadScene()
     {
-        GameObject.Find("Room")?.transform.GetComponent<Game.SceneFlow>().LoadRoom();
-
+        SceneManager.LoadScene("TestShopMain");
     }
 }
