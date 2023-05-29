@@ -33,18 +33,18 @@ namespace Game
         List<Item> GetItemList();
 
 
-
+        // 目前SpawnSystem.SpawnCard返还的是viewBagCard不是viewCard，不能放入手牌，暂时不确定是否需要这个函数
         /// <summary>
         /// 创建一个卡牌实体Prefab，并放入背包内
         /// </summary>
         /// <param name="cardId">卡牌id</param>
-        void SpawnCardInBag(int cardId);
+        //void SpawnHandCard(int cardId);
 
         /// <summary>
         /// 返回背包里的卡牌列表
         /// </summary>
         /// <returns></returns>
-        List<ViewCard> GetCardList();
+        List<ViewCard> GetHandCardList();
 
         /// <summary>
         /// 创建一个卡牌实体Prefab，并放入背包中
@@ -71,7 +71,7 @@ namespace Game
     public class InventorySystem : AbstractSystem, IInventorySystem
     {
         public BindableProperty<List<Item>> itemList = new BindableProperty<List<Item>>(); // 物品列表
-        public BindableProperty<List<ViewCard>> cardList = new BindableProperty<List<ViewCard>>(); // 卡牌列表
+        public BindableProperty<List<ViewCard>> handCardList = new BindableProperty<List<ViewCard>>(); // 手牌列表
         public BindableProperty<List<ViewBagCard>> cardBagList = new BindableProperty<List<ViewBagCard>>();// 背包卡牌列表
         public Transform inventoryRoot; // 生成的物品Prefab悬挂的父物体位置
 
@@ -81,7 +81,7 @@ namespace Game
             itemList.Register((newItemList) => OnItemListChanged());
             inventoryRoot = GameObject.Find("InventoryRoot")?.transform;
 
-            cardList.SetValueWithoutEvent(new List<ViewCard>());
+            handCardList.SetValueWithoutEvent(new List<ViewCard>());
             cardBagList.SetValueWithoutEvent(new List<ViewBagCard>());
 
             // 测试用代码
@@ -138,22 +138,23 @@ namespace Game
             return itemList;
         }
 
-        public void SpawnCardInBag(int cardid)
-        {
+        // 目前SpawnSystem.SpawnCard返还的是viewBagCard不是viewCard，不能放入手牌，暂时不确定是否需要这个函数
+        //public void SpawnHandCard(int cardid)
+        //{
             
-            GameObject cardItem;
-            ISpawnSystem SpawnSystem = this.GetSystem<ISpawnSystem>();
-            SpawnSystem.SpawnCard(cardid);
-            cardItem = SpawnSystem.GetLastSpawnedCard();
-            var cardBase = cardItem.GetComponent<ViewCard>();
-            cardBase.GetComponent<Transform>().localScale = new Vector3(0.05f, 0.07f, 1);
-            cardList.Value.Add(cardBase);
-            UIKit.GetPanel<BagUI.BagUIPanel>().UpdateLayout();
-        }
+        //    GameObject cardItem;
+        //    ISpawnSystem SpawnSystem = this.GetSystem<ISpawnSystem>();
+        //    SpawnSystem.SpawnCard(cardid);
+        //    cardItem = SpawnSystem.GetLastSpawnedCard();
+        //    var cardBase = cardItem.GetComponent<ViewCard>();
+        //    cardBase.GetComponent<Transform>().localScale = new Vector3(0.05f, 0.07f, 1);
+        //    handCardList.Value.Add(cardBase);
+        //    UIKit.GetPanel<BagUI.BagUIPanel>().UpdateLayout();
+        //}
 
-        public List<ViewCard> GetCardList()
+        public List<ViewCard> GetHandCardList()
         {
-            return cardList;
+            return handCardList;
         }
         public void SpawnBagCardInBag(Card m_card)
         {

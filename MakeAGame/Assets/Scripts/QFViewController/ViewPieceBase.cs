@@ -73,6 +73,8 @@ namespace Game
 
         }
 
+        
+
         private void Update()
         {
             state.Update();
@@ -90,6 +92,16 @@ namespace Game
         public PieceStateEnum GetPieceState()
         {
             return stateFlag;
+        }
+
+        public PieceEnemyMovingState GetEnemyMovingState()
+        {
+            return state as PieceEnemyMovingState;
+        }
+
+        public PieceFriendMovingState GetFriendMovingState()
+        {
+            return state as PieceFriendMovingState;
         }
 
         protected Vector3 GetGridsCenterPos()
@@ -233,6 +245,9 @@ namespace Game
         
     }
 
+    /// <summary>
+    /// 进攻时计算完基础伤害和命中后进行特性检测
+    /// </summary>
     public class SpecialitiesAttackCheckEvent
     {
         public ViewPieceBase attacker; // 攻击方
@@ -240,5 +255,28 @@ namespace Game
         public bool isTargetMonster; // 防守方是否为怪物
         public int damage; // 伤害
         public bool hit; // 是否命中
+    }
+
+    /// <summary>
+    /// 受到伤害时计算完伤害和命中后进行特性检测
+    /// </summary>
+    public class SpecialitiesDefendCheckEvent
+    {
+        public ViewPieceBase attacker; // 攻击方
+        public ViewPieceBase target; // 防守方
+        public bool isTargetMonster; // 防守方是否为怪物
+        public bool isMagic; // 伤害是否为魔法伤害
+        public int damage; // 伤害
+        public BoxGrid boxgrid; // 受到攻击的格子(单位可能并非1*1)
+    }
+
+    /// <summary>
+    /// 移动时进行特性检测
+    /// </summary>
+    public class SpecialitiesMoveCheckEvent
+    {
+        public ViewPieceBase piece; // 棋子
+        public BoxGrid boxgrid; // 移动到的格子
+
     }
 }

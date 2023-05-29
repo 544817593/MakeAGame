@@ -146,7 +146,7 @@ namespace BagUI
 
 		private void updateIndex()
 		{
-			int bagCount = mData.inventorySystem.GetCardList().Count;
+			int bagCount = mData.inventorySystem.GetBagCardList().Count;
 			lowerIndex = (curPage - 1) * gridNum;
 			// 索引上限为当前页*格子数量-1，如果超过list大小，则为list的元素数量-1
 			upperIndex = curPage * gridNum - 1 >= bagCount ? bagCount - 1 : curPage * gridNum - 1;

@@ -228,7 +228,7 @@ namespace Game
                 case "破旧的古镜":
                 case "完整的古镜":
                 case "华丽的古镜":
-                    inventorySystem.SpawnCardInBag(viewCard.card.charaID);
+                    inventorySystem.SpawnBagCardInBag(viewCard.card);
                     break;
                 case "巫术法杖":
                     List<int> canSpawnCard = new List<int>(); // 可以被生成的卡牌列表
@@ -241,7 +241,9 @@ namespace Game
                     if (canSpawnCard.Count > 0)
                     {
                         int rand = UnityEngine.Random.Range(0, canSpawnCard.Count);
-                        inventorySystem.SpawnCardInBag(rand);
+                        this.GetSystem<ISpawnSystem>().SpawnCard(rand);
+                        Card new_Card = this.GetSystem<ISpawnSystem>().GetLastSpawnedCard().GetComponent<ViewBagCard>().card;
+                        inventorySystem.SpawnBagCardInBag(new_Card);
                     }
                     break;
             }
