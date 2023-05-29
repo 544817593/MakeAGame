@@ -9,28 +9,28 @@ namespace Game
 {
     public interface IShopSystem : ISystem
     {
-        List<Item> getshopItemList();
-        List<Item> getBagItemList();
-        List<ViewBagCard> getBagCardList();
+        List<Item> GetshopItemList();
+        List<Item> GetBagItemList();
+        List<ViewBagCard> GetBagCardList();
         /// <summary>
         /// 给商店物品列表添加商品
         /// </summary>
         /// <param name="item"></param>
-        void addShopItemWithoutCall(Item item);
+        void AddShopItemWithoutCall(Item item);
 
         /// <summary>
         /// 给背包物品列表添加物品
         /// </summary>
         /// <param name="item"></param>
-        void addBagItem(Item item);
+        void AddBagItem(Item item);
 
         /// <summary>
         /// 给背包添加卡牌
         /// </summary>
         /// <param name="card"></param>
-        void addBagCard(ViewBagCard card);
+        void AddBagCard(ViewBagCard card);
 
-        void removeBagItem(Item item);
+        void RemoveBagItem(Item item);
     }
     public class ShopSystem : AbstractSystem, IShopSystem
     {
@@ -48,34 +48,34 @@ namespace Game
             bagCardList.SetValueWithoutEvent(new List<ViewBagCard>());
 
             // 以下都是测试使用的初始化数据
-            addShopItemWithoutCall(new Item { amount = 1, data = Resources.Load<SOItemBase>("ScriptableObjects/Items/Item31") });
-            addShopItemWithoutCall(new Item { amount = 2, data = Resources.Load<SOItemBase>("ScriptableObjects/Items/Item01") });
-            addShopItemWithoutCall(new Item { amount = 1, data = Resources.Load<SOItemBase>("ScriptableObjects/Items/Item31") });
-            addShopItemWithoutCall(new Item { amount = 4, data = Resources.Load<SOItemBase>("ScriptableObjects/Items/Item01") });
+            AddShopItemWithoutCall(new Item { amount = 1, data = Resources.Load<SOItemBase>("ScriptableObjects/Items/Item31") });
+            AddShopItemWithoutCall(new Item { amount = 2, data = Resources.Load<SOItemBase>("ScriptableObjects/Items/Item01") });
+            AddShopItemWithoutCall(new Item { amount = 1, data = Resources.Load<SOItemBase>("ScriptableObjects/Items/Item31") });
+            AddShopItemWithoutCall(new Item { amount = 4, data = Resources.Load<SOItemBase>("ScriptableObjects/Items/Item01") });
 
-            addBagItem(new Item { amount = 2, data = Resources.Load<SOItemBase>($"ScriptableObjects/Items/Item31") });
+            AddBagItem(new Item { amount = 2, data = Resources.Load<SOItemBase>($"ScriptableObjects/Items/Item31") });
             for (int i = 1; i <= 32; ++i)
             {
-                addBagItem(new Item { amount = 1, data = Resources.Load<SOItemBase>($"ScriptableObjects/Items/Item01") });
+                AddBagItem(new Item { amount = 1, data = Resources.Load<SOItemBase>($"ScriptableObjects/Items/Item01") });
             }
             // bagCardList在ShopEnhanceUI.cs中初始化，因为ShopSystem在点购买和出售的时候也会执行，不符合需要
         }
 
         //private void OnShopItemListChanged()
         //{
-        //    UIKit.GetPanel("ShopBuyUI")?.Invoke("updateAndShowShopItems", 0f); 
+        //    UIKit.GetPanel("ShopBuyUI")?.Invoke("UpdateAndShowShopItems", 0f); 
         //}
 
-        public List<Item> getshopItemList()
+        public List<Item> GetshopItemList()
         {
             return shopItemList.Value;
         }
 
-        public List<Item> getBagItemList()
+        public List<Item> GetBagItemList()
         {
             return bagItemList.Value;
         }
-        public List<ViewBagCard> getBagCardList()
+        public List<ViewBagCard> GetBagCardList()
         {
             return bagCardList.Value;
         }
@@ -98,7 +98,7 @@ namespace Game
         //    shopItemList.Value = newList;
         //}
 
-        public void addShopItemWithoutCall(Item item)
+        public void AddShopItemWithoutCall(Item item)
         {
             for (int i = 0; i < shopItemList.Value.Count; i++)
             {
@@ -114,7 +114,7 @@ namespace Game
         }
 
         
-        public void addBagItem(Item item)
+        public void AddBagItem(Item item)
         {
             for (int i = 0; i < bagItemList.Value.Count; i++)
             {
@@ -128,12 +128,12 @@ namespace Game
             bagItemList.Value.Add(item);
         }
 
-        public void addBagCard(ViewBagCard card)
+        public void AddBagCard(ViewBagCard card)
         {
             bagCardList.Value.Add(card);
         }
 
-        public void removeBagItem(Item item)
+        public void RemoveBagItem(Item item)
         {
             bagItemList.Value.Remove(item);
         }

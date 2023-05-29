@@ -70,7 +70,7 @@ namespace RestUI
 				// 摇6个骰子
 				for(int i = 1; i <= 6; ++i)
 				{
-                    int randNum = rollDiceFunc(0, 3);
+                    int randNum = RollDiceFunc(0, 3);
                     randNumList.Add(randNum);
                 }
 				int idx = 0;
@@ -183,7 +183,7 @@ namespace RestUI
 		/// <summary>
 		/// 在[lowerBound, upperBound)范围内随机选择一个整数，不包含upperBound
 		/// </summary>
-        private int rollDiceFunc(int lowerBound, int uppperBound)
+        private int RollDiceFunc(int lowerBound, int uppperBound)
         {
             return UnityEngine.Random.Range(lowerBound, uppperBound);
         }

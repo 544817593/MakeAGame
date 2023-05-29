@@ -211,7 +211,7 @@ namespace Game
             // 物品数量的更新逻辑在强化脚本里，ShopEnhanceUI.cs
             //item.amount -= 1;
             //if (item.amount <= 0) inventorySystem.RemoveItem(item);
-            //if (item.amount <= 0) shopSystem.removeBagItem(item);
+            //if (item.amount <= 0) shopSystem.RemoveBagItem(item);
         }
 
         /// <summary>

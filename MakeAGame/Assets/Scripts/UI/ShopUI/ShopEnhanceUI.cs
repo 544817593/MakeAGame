@@ -51,14 +51,14 @@ namespace ShopEnhanceUI
 			mData = uiData as ShopEnhanceUIData ?? new ShopEnhanceUIData();
             // please add init code here
             
-            ShopPanelChange.changeShopPanel(this, Close);
+            ShopPanelChange.ChangeShopPanel(this, Close);
 
-            initCards();
-            refreshLayout();
-            pageChange();
-            tabChange();
-            btnClearListen();
-            enhanceListen();
+            InitCards();
+            RefreshLayout();
+            PageChange();
+            TabChange();
+            BtnClearListen();
+            EnhanceListen();
             
         }
 		
@@ -86,7 +86,7 @@ namespace ShopEnhanceUI
         /// <summary>
         /// 初始化卡牌
         /// </summary>
-        public void initCards()
+        public void InitCards()
         {
             Assert.IsNotNull(GameObject.Find("BagPanel"));
             
@@ -114,7 +114,7 @@ namespace ShopEnhanceUI
                     // 如果已经有强化道具在位置上，生成强化后的卡牌预览图
                     if(curEnhanceItem != null)
                     {
-                        generateCardAfterEnhance();
+                        GenerateCardAfterEnhance();
                     }
                 };
             }
@@ -122,7 +122,7 @@ namespace ShopEnhanceUI
         /// <summary>
         /// 更新页面布局
         /// </summary>
-        private void refreshLayout()
+        private void RefreshLayout()
         {
             if (curBagTab == (int)BagTabs.card)
             {
@@ -146,7 +146,7 @@ namespace ShopEnhanceUI
             }
             else if (curBagTab == (int)BagTabs.item)
             {
-                List<Item> bagItemList = mData.shopSystem.getBagItemList();
+                List<Item> bagItemList = mData.shopSystem.GetBagItemList();
                 totalPage = bagItemList.Count != 0 ? (int)Math.Ceiling((double)bagItemList.Count / gridNum) : 1;
                 // 页数显示
                 TextPageNum.text = $" {curPage} / {totalPage}";
@@ -181,7 +181,7 @@ namespace ShopEnhanceUI
                             // 如果已经有卡牌在强化位置，生成强化后的卡牌预览图
                             if(curCardBeforeEnhance != null)
                             {
-                                generateCardAfterEnhance();
+                                GenerateCardAfterEnhance();
                             }
                         });
                     }
@@ -205,7 +205,7 @@ namespace ShopEnhanceUI
         /// <summary>
         /// 更新当前背包页的index区间
         /// </summary>
-        private void updateIndex()
+        private void UpdateIndex()
         {
             if(curBagTab == (int)BagTabs.card)
             {
@@ -216,7 +216,7 @@ namespace ShopEnhanceUI
             }
             else if(curBagTab == (int)BagTabs.item)
             {
-                int bagItemCount = mData.shopSystem.getBagItemList().Count;
+                int bagItemCount = mData.shopSystem.GetBagItemList().Count;
                 lowerIndex = (curPage - 1) * gridNum;
                 // 索引上限为当前页*格子数量-1，如果超过list大小，则为list的元素数量-1
                 upperIndex = curPage * gridNum - 1 >= bagItemCount ? bagItemCount - 1 : curPage * gridNum - 1;
@@ -225,7 +225,7 @@ namespace ShopEnhanceUI
         /// <summary>
         /// 背包页面切换监听
         /// </summary>
-        private void pageChange()
+        private void PageChange()
         {
             BtnNextPage.onClick.AddListener(() =>
             {
@@ -236,8 +236,8 @@ namespace ShopEnhanceUI
                 else
                 {
                     curPage++;
-                    updateIndex();
-                    refreshLayout();
+                    UpdateIndex();
+                    RefreshLayout();
                 }
 
             });
@@ -250,38 +250,38 @@ namespace ShopEnhanceUI
                 else
                 {
                     curPage--;
-                    updateIndex();
-                    refreshLayout();
+                    UpdateIndex();
+                    RefreshLayout();
                 }
             });
         }
         /// <summary>
         /// 背包栏按钮监听
         /// </summary>
-        private void tabChange()
+        private void TabChange()
         {
             BtnCard.onClick.AddListener(() =>
             {
-                inactiveObjects();
+                InactiveObjects();
                 curPage = 1;
                 curBagTab = (int)BagTabs.card;
                 
-                updateIndex();
-                refreshLayout();
+                UpdateIndex();
+                RefreshLayout();
             });
             BtnItem.onClick.AddListener(() => 
             {
-                inactiveObjects();
+                InactiveObjects();
                 curPage = 1;
                 curBagTab = (int)BagTabs.item;
-                updateIndex();
-                refreshLayout();
+                UpdateIndex();
+                RefreshLayout();
             });
         }
         /// <summary>
         /// 每次切换背包卡牌和道具调用，将所有BagPanel内的gameobject隐藏
         /// </summary>
-        private void inactiveObjects()
+        private void InactiveObjects()
         {
             foreach (Transform transform in BagPanel.GetComponentInChildren<Transform>(includeInactive: true))
             {
@@ -291,7 +291,7 @@ namespace ShopEnhanceUI
         /// <summary>
         /// 强化按钮监听
         /// </summary>
-        private void enhanceListen()
+        private void EnhanceListen()
         {
             ButtonEnhance.onClick.AddListener(() =>
             {
@@ -324,19 +324,19 @@ namespace ShopEnhanceUI
                         curEnhanceItem.amount--;
                         if (curEnhanceItem.amount == 0)
                         {
-                            mData.shopSystem.getBagItemList().Remove(curEnhanceItem);
-                            if (mData.shopSystem.getBagItemList().Count % gridNum == 0 && curPage != 1 && curPage == totalPage)
+                            mData.shopSystem.GetBagItemList().Remove(curEnhanceItem);
+                            if (mData.shopSystem.GetBagItemList().Count % gridNum == 0 && curPage != 1 && curPage == totalPage)
                             {
                                 curPage--;
                             }
                         }
 
                         // 清空强化面板
-                        clearEnhancePanel();
+                        ClearEnhancePanel();
 
                         //更新布局
-                        updateIndex();
-                        refreshLayout();
+                        UpdateIndex();
+                        RefreshLayout();
                         
                     }
 
@@ -346,14 +346,14 @@ namespace ShopEnhanceUI
         /// <summary>
         /// 清空按钮监听
         /// </summary>
-        private void btnClearListen()
+        private void BtnClearListen()
         {
             ButtonClear.onClick.AddListener(() =>
             {
-                clearEnhancePanel();
+                ClearEnhancePanel();
             });
         }
-        private void clearEnhancePanel()
+        private void ClearEnhancePanel()
         {
             foreach (Transform t in CardBeforeEnhance.GetComponentInChildren<Transform>(includeInactive: true))
             {
@@ -371,7 +371,7 @@ namespace ShopEnhanceUI
             curCardAfterEnhance = null;
         }
 
-        private void generateCardAfterEnhance()
+        private void GenerateCardAfterEnhance()
         {
             if (curEnhanceItem != null && curCardBeforeEnhance != null && curCardBeforeEnhanceShallowCopy != null)
             {

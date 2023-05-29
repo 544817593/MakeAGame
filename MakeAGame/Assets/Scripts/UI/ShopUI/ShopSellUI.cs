@@ -37,12 +37,12 @@ namespace ShopSellUI
 			mData = uiData as ShopSellUIData ?? new ShopSellUIData();
             // please add init code here
             // 监听按钮点击，跳转panel
-            ShopPanelChange.changeShopPanel(this, Close);
-            refreshLayout();
-            buttonListen();
-            pageChange();
-            counterLogic();
-            sellItem();
+            ShopPanelChange.ChangeShopPanel(this, Close);
+            RefreshLayout();
+            ButtonListen();
+            PageChange();
+            CounterLogic();
+            SellItem();
         }
 		
 		protected override void OnOpen(IUIData uiData = null)
@@ -61,9 +61,9 @@ namespace ShopSellUI
 		{
 		}
 
-        private void refreshLayout()
+        private void RefreshLayout()
         {
-            List<Item> bagItemList = mData.shopSystem.getBagItemList();
+            List<Item> bagItemList = mData.shopSystem.GetBagItemList();
             totalPage = bagItemList.Count != 0 ? (int)Math.Ceiling((double)bagItemList.Count / gridNum) : 1;
             // 玩家金币显示
             TextGold.text = $"金币: {playerGold}";
@@ -123,15 +123,15 @@ namespace ShopSellUI
                 idx++;
             }
         }
-        private void updateIndex()
+        private void UpdateIndex()
         {
-            int bagItemCount = mData.shopSystem.getBagItemList().Count;
+            int bagItemCount = mData.shopSystem.GetBagItemList().Count;
             lowerIndex = (curPage - 1) * gridNum;
             // 索引上限为当前页*格子数量-1，如果超过list大小，则为list的元素数量-1
             upperIndex = curPage * gridNum - 1 >= bagItemCount ? bagItemCount - 1 : curPage * gridNum - 1;
         }
 
-        private void pageChange()
+        private void PageChange()
         {
             BtnNextPage.onClick.AddListener(() => 
             {
@@ -142,8 +142,8 @@ namespace ShopSellUI
                 else
                 {
                     curPage++;
-                    updateIndex();
-                    refreshLayout();
+                    UpdateIndex();
+                    RefreshLayout();
                 }
                 
             });
@@ -156,8 +156,8 @@ namespace ShopSellUI
                 else
                 {
                     curPage--;
-                    updateIndex();
-                    refreshLayout();
+                    UpdateIndex();
+                    RefreshLayout();
                 }
             });
         }
@@ -165,7 +165,7 @@ namespace ShopSellUI
         /// <summary>
 		/// 监听每个active的物品，点击后显示对应描述，更新selectedItem selectedButton，更新counter数字
 		/// </summary>
-        private void buttonListen()
+        private void ButtonListen()
         {
             foreach (Button btn in activeButtons.Keys)
             {
@@ -190,7 +190,7 @@ namespace ShopSellUI
 		/// 增加数量后的总花费不能超过持有金币，并且不能超过商店物品数量上限
 		/// 减少数量最少为1
 		/// </summary>
-		private void counterLogic()
+		private void CounterLogic()
         {
             BtnAdd.onClick.AddListener(() =>
             {
@@ -226,7 +226,7 @@ namespace ShopSellUI
             });
         }
 
-        private void sellItem()
+        private void SellItem()
         {
             Sell.onClick.AddListener(() =>
             {
@@ -241,15 +241,15 @@ namespace ShopSellUI
                 else
                 {
                     // 物品入包，更新所有相关内容
-                    updateAfterSell();
+                    UpdateAfterSell();
                 }
             });
         }
 
-        private void updateAfterSell()
+        private void UpdateAfterSell()
         {
             // 更新
-            Assert.IsNotNull(selectedItem, "updateViewAfterBuy()中selectedItem不能为null");
+            Assert.IsNotNull(selectedItem, "UpdateViewAfterBuy()中selectedItem不能为null");
             Debug.Log($"出售{selectedItem.data.name}");
             selectedItem.amount -= sellCount;
             selectedButton.transform.Find("ItemNum").GetComponent<TextMeshProUGUI>().text = selectedItem.amount.ToString();
@@ -261,7 +261,7 @@ namespace ShopSellUI
             TextCount.text = $"{sellCount}";
             if(selectedItem.amount == 0)
             {
-                mData.shopSystem.getBagItemList().Remove(selectedItem);
+                mData.shopSystem.GetBagItemList().Remove(selectedItem);
                 activeButtons.Remove(selectedButton);
                 selectedButton.GetComponent<Image>().sprite = null;
                 foreach (Transform texts in selectedButton.GetComponentInChildren<Transform>())
@@ -281,13 +281,13 @@ namespace ShopSellUI
                 selectedButton = null;
                 TextItemInfo.text = null;
                 // 如果卖掉一个物品后最后一页变为空，并且当前页面在最后一页并且总页数不止一页，则自动将当前页-1
-                if (mData.shopSystem.getBagItemList().Count % gridNum == 0 && curPage != 1 && curPage == totalPage)
+                if (mData.shopSystem.GetBagItemList().Count % gridNum == 0 && curPage != 1 && curPage == totalPage)
                 {
                     curPage--;
                 }
             }
-            updateIndex();
-            refreshLayout();
+            UpdateIndex();
+            RefreshLayout();
         }
     }
 }

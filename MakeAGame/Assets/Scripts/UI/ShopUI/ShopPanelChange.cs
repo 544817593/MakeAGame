@@ -12,7 +12,7 @@ public class ShopPanelChange
     /// <param name="currentPanel"></param>
     /// <param name="button"></param>
     private static bool EnhanceCardsInited = false;
-    public static void changeShopPanel(UIPanel currentPanel, Button button)
+    public static void ChangeShopPanel(UIPanel currentPanel, Button button)
     {
         button.onClick.AddListener(() =>
         {
