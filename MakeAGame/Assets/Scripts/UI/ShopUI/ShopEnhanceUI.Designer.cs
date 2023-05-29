@@ -5,7 +5,7 @@ using QFramework;
 
 namespace ShopEnhanceUI
 {
-	// Generate Id:7ccb6276-2b05-42b5-8020-e7037a8eaa03
+	// Generate Id:dd385c26-13b8-4b12-a232-0bfce9d8a80a
 	public partial class ShopEnhanceUI
 	{
 		public const string Name = "ShopEnhanceUI";
