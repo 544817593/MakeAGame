@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56ecb282cab14c5d8106ae3ec684c67e, type: 3}
+  m_Name: "feature_so_\u52A8\u7269\u6740\u624B_14"
+  m_EditorClassIdentifier: 
+  featureID: 14
+  featureName: "\u52A8\u7269\u6740\u624B"
+  featureDesc: "\u6BCF\u6B21\u653B\u51FB\u5C0F\u578B\u52A8\u7269\u540E\u5728\u672C\u573A\u6218\u6597\u4E2D\u83B7\u5F970.1\u653B\u51FB\u901F\u5EA6\u3002"
+  typeName: AnimalKiller
+  icon: {fileID: 0}

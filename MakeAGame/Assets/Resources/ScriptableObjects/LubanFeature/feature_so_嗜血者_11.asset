@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56ecb282cab14c5d8106ae3ec684c67e, type: 3}
+  m_Name: "feature_so_\u55DC\u8840\u8005_11"
+  m_EditorClassIdentifier: 
+  featureID: 11
+  featureName: "\u55DC\u8840\u8005"
+  featureDesc: "\u9020\u6210\u4F24\u5BB3\u768425%\u8F6C\u6362\u4E3A\u81EA\u8EAB\u751F\u547D\u503C\u3002"
+  typeName: Bloodthirsty
+  icon: {fileID: 0}

@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56ecb282cab14c5d8106ae3ec684c67e, type: 3}
+  m_Name: "feature_so_\u98DE\u884C_13"
+  m_EditorClassIdentifier: 
+  featureID: 13
+  featureName: "\u98DE\u884C"
+  featureDesc: "\u4E0D\u4F1A\u53D7\u5230\u5730\u5F62\u7684\u5F71\u54CD\u3002"
+  typeName: Airborne
+  icon: {fileID: 0}
