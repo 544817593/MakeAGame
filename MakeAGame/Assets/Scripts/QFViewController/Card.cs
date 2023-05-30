@@ -30,11 +30,11 @@ namespace Game
         // 会有改动的数据  // 外部可以读取，但不可以直接改动
         public RarityEnum rarity { get;  set; }
         public float sanCost { get;  set; }
-        public int hp { get;  set; }
-        public int maxHp { get; set; }
+        public float hp { get;  set; }
+        public float maxHp { get; set; }
         public float moveSpd { get;  set; }
-        public int damage { get;  set; }
-        public int defend { get;  set; }
+        public float damage { get;  set; }
+        public float defend { get;  set; }
         public int enhancement { get;  set; }
         public string charaName { get;  set; }
         public float maxLife { get;  set; }

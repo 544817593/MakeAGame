@@ -20,13 +20,13 @@ namespace Game
         [FoldoutGroup("Card Information")]
         public Sprite cardSprite;   // 卡面图片
         [FoldoutGroup("Card Information")]
-        public int hp;  // 血量
+        public float hp;  // 血量
         [FoldoutGroup("Card Information")]
-        public int attack;  // 攻击力
+        public float attack;  // 攻击力
         [FoldoutGroup("Card Information")]
         public float moveSpd; // 行动速度
         [FoldoutGroup("Card Information")]
-        public int defend;  // 防御力
+        public float defend;  // 防御力
 
         [FoldoutGroup("Features", true)]
         public List<SOFeature> features;  // 特性
