@@ -19,7 +19,7 @@ public enum TimeMultiplierEnum
 /// </summary>
 public enum PlayerStatsEnum
 {
-    Strength, Spirit, Skill, Stamina, Charisma
+    None, Strength, Spirit, Skill, Stamina, Charisma, Total
 }
 
 /// <summary>
