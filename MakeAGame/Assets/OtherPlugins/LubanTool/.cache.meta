@@ -1,0 +1,16 @@
+﻿/Users/centurygame/MakeAGame/MakeAGame/Assets/OtherPlugins/LubanTool/GameConfig/Datas/__beans__.xlsx,4215EA1D6F5D4A3EE0A4A4B730B7CB81,6378,1685434139360
+/Users/centurygame/MakeAGame/MakeAGame/Assets/OtherPlugins/LubanTool/GameConfig/Datas/__enums__.xlsx,B4ED72B039CC55D65873E6B3EC177A9D,7328,1685434030877
+/Users/centurygame/MakeAGame/MakeAGame/Assets/OtherPlugins/LubanTool/GameConfig/Datas/__tables__.xlsx,607D4BB1BE8368C19BB7A61091A057C2,6645,1685435147920
+/Users/centurygame/MakeAGame/MakeAGame/Assets/OtherPlugins/LubanTool/GameConfig/Datas/Character.xlsx,14E2DEAC58936EE15113292803369,9114,1685435300652
+/Users/centurygame/MakeAGame/MakeAGame/Assets/OtherPlugins/LubanTool/GameConfig/Datas/Feature.xlsx,41AC250FF132D478E41EB9E89995BD8,10485,1685384473333
+/Users/centurygame/MakeAGame/MakeAGame/Assets/Resources/Json/gamedata_tbcharacter.json,B9DE51581AF0C66CAFCA8AD437F425E2,1760,1685437653620
+/Users/centurygame/MakeAGame/MakeAGame/Assets/Resources/Json/gamedata_tbfeature.json,7235CDAE89AED9378428EF8629E2391B,4744,1685437653621
+/Users/centurygame/MakeAGame/MakeAGame/Assets/Scripts/LubanGen/GameData/Character.cs,24DC4C4F357A0F1F4AACD108475,11197,1685437653621
+/Users/centurygame/MakeAGame/MakeAGame/Assets/Scripts/LubanGen/GameData/Feature.cs,BCCCFB38CD21D1C461DD565243C383BD,2475,1685437653620
+/Users/centurygame/MakeAGame/MakeAGame/Assets/Scripts/LubanGen/GameData/MoveDir.cs,611065ABCB66EBB56645A28F7409F58,1160,1685437653620
+/Users/centurygame/MakeAGame/MakeAGame/Assets/Scripts/LubanGen/GameData/PlayerBonus.cs,EF3752311924181597E28E91A99EBF8,1977,1685437653620
+/Users/centurygame/MakeAGame/MakeAGame/Assets/Scripts/LubanGen/GameData/PlayerStats.cs,94869060C7BD75251E2B8EF0CF67A433,1012,1685437653620
+/Users/centurygame/MakeAGame/MakeAGame/Assets/Scripts/LubanGen/GameData/Rarity.cs,C8B0467B1389E7B945F1F53664B7BADE,820,1685437653620
+/Users/centurygame/MakeAGame/MakeAGame/Assets/Scripts/LubanGen/GameData/TbCharacter.cs,457373D4EEA493C4FE2258FABB9D39B,1846,1685437653620
+/Users/centurygame/MakeAGame/MakeAGame/Assets/Scripts/LubanGen/GameData/TbFeature.cs,4488FD742FA5FEAB395A97EF0F3FDA,1818,1685437653620
+/Users/centurygame/MakeAGame/MakeAGame/Assets/Scripts/LubanGen/Tables.cs,B86C1579D64157F6B12667276F6EE598,1350,1685437653620
