@@ -40,7 +40,7 @@ namespace Game
         [FoldoutGroup("Piece Information")]
         public int height;  // 棋子占地长
         [FoldoutGroup("Piece Information")]
-        public DirEnum[] moveDirections;    // 移动方向
+        public List<DirEnum> moveDirections;    // 移动方向
         [FoldoutGroup("Piece Information")]
         public float attackSpd;   // 攻速
         [FoldoutGroup("Piece Information")]

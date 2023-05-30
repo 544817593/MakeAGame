@@ -23,7 +23,7 @@ namespace Game
         public List<SOFeature> specialFeature { get;  set; }
         public int width { get;  set; }
         public int height { get;  set; }
-        public DirEnum[] moveDirections { get;  set; }
+        public List<DirEnum> moveDirections { get;  set; }
         public int atkRange { get;  set; }
         public float atkSpd { get;  set; }
 

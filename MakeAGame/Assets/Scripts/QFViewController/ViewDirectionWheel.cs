@@ -33,7 +33,7 @@ namespace Game
         /// 只显示棋子可用的移动方向
         /// </summary>
         /// <param name="directions"></param>
-        public void SetValidDirections(DirEnum[] directions)
+        public void SetValidDirections(List<DirEnum> directions)
         {
             var listDir = Enumerable.ToList(directions);
             foreach (var kvp in dictBtnDirection)
