@@ -52,6 +52,7 @@ public enum TerrainEnum
 
 /// <summary>
 /// 战斗区域外的背景图片选择
+/// 【千万不要改Enum的顺序！新加Enum加在下面，不要在中间插入！】
 /// </summary>
 public enum EdgeSprite
 {
