@@ -51,12 +51,7 @@ public class Monster : ViewPieceBase
     void Start()
     {
         base.Start();
-        // 因为怪物也可能占地多个格子，所以等格子list全部更新的时候才更改格子本身的信息，不方便用BindableProperty
-        // leftTopGridPos.RegisterWithInitValue(newPosition => OnMonsterPositionChanged(newPosition));
-        // leftTopGridPos.RegisterBeforeValueChanged(oldPosition => OnBeforeMonsterPositionChanged(oldPosition));
-        // moveSpeed.Register(newMoveSpeed => OnMonsterMoveSpeedChanged(newMoveSpeed));
-        // moveSpeed.RegisterBeforeValueChanged(oldSpeed => OnBeforeMonsterMoveSpeedChanged(oldSpeed));
-        
+    
         // 注意顺序，先放action，再regsiter
         this.RegisterEvent<PieceMoveReadyEvent>(OnPieceMoveReady).UnRegisterWhenGameObjectDestroyed(gameObject);
         this.RegisterEvent<PieceMoveFinishEvent>(OnPieceMoveFinish).UnRegisterWhenGameObjectDestroyed(gameObject);
@@ -221,6 +216,9 @@ public class Monster : ViewPieceBase
         (int, int) intendPos = movementSystem.CalculateNextPosition((currentX, currentY), curMoveDir);
         // 对下一步坐标做基础检查
         if (!movementSystem.MovementBaseCheck(intendPos)) return false;
+        // 对下一步的格子做检查
+        BoxGrid grid = mapSystem.Grids()[intendPos.Item1, intendPos.Item2];
+        if (!CheckIfOneGridCanMove(grid)) return false;
 
         return true;
     }

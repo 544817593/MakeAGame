@@ -72,7 +72,7 @@ namespace Game
             // 发送准备移动事件
             this.SendEvent<PieceMoveReadyEvent>(new PieceMoveReadyEvent() {viewPieceBase = this});
 
-            var nextGrids = GetNextGrids();
+            var nextGrids = movementSystem.GetNextGrids(direction, pieceGrids);
             bool canMove = CheckIfCanMove(nextGrids);
             if (canMove)
             {
@@ -94,30 +94,31 @@ namespace Game
 
         /// <summary>
         /// 根据当前方向，获取下次移动后将占据的格子，不做任何筛选
+        /// 移动到了MovementSystem下面
         /// </summary>
         /// <returns></returns>
-        private List<BoxGrid> GetNextGrids()
-        {
-            int rowDiff = direction == DirEnum.Top ? -1 : direction == DirEnum.Down ? 1 : 0;
-            int colDiff = direction == DirEnum.Left ? -1 : direction == DirEnum.Right ? 1 : 0;
+        //private List<BoxGrid> GetNextGrids()
+        //{
+        //    int rowDiff = direction == DirEnum.Top ? -1 : direction == DirEnum.Down ? 1 : 0;
+        //    int colDiff = direction == DirEnum.Left ? -1 : direction == DirEnum.Right ? 1 : 0;
 
-            int nextRow;
-            int nextCol;
-            List<BoxGrid> nextGrids = new List<BoxGrid>();
-            var mapGrids = mapSystem.Grids();
-            foreach (var crtGrid in pieceGrids)
-            {
-                nextRow = crtGrid.row + rowDiff;
-                nextCol = crtGrid.col + colDiff;
-                // 超出地图边界的情况
-                if (nextCol < 0 || nextCol >= mapSystem.mapCol || nextRow < 0 || nextRow >= mapSystem.mapRow)
-                    continue;
+        //    int nextRow;
+        //    int nextCol;
+        //    List<BoxGrid> nextGrids = new List<BoxGrid>();
+        //    var mapGrids = mapSystem.Grids();
+        //    foreach (var crtGrid in pieceGrids)
+        //    {
+        //        nextRow = crtGrid.row + rowDiff;
+        //        nextCol = crtGrid.col + colDiff;
+        //        // 超出地图边界的情况
+        //        if (nextCol < 0 || nextCol >= mapSystem.mapCol || nextRow < 0 || nextRow >= mapSystem.mapRow)
+        //            continue;
                 
-                nextGrids.Add(mapGrids[nextRow, nextCol]);
-            }
+        //        nextGrids.Add(mapGrids[nextRow, nextCol]);
+        //    }
 
-            return nextGrids;
-        }
+        //    return nextGrids;
+        //}
 
         // todo 每个棋子可能不一样的，检查某个格子是否可以移动上去的方法
         private bool CheckIfOneGridCanMove(BoxGrid grid)

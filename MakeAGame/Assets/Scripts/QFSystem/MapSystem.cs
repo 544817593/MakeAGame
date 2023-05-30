@@ -168,8 +168,10 @@ namespace Game
 
         public bool GridCanMoveTo(BoxGrid boxgrid)
         {
+            if (!boxgrid.IsEmpty()) return false;
             if (boxgrid.terrain.Value == (int)TerrainEnum.Invalid) return false;
             if (boxgrid.terrain.Value == (int)TerrainEnum.Wall) return false;
+            if (boxgrid.terrain.Value == (int)TerrainEnum.Edge) return false;
             if (boxgrid.gridStatus.Value == GridStatusEnum.AllyPiece) return false;
             if (boxgrid.gridStatus.Value == GridStatusEnum.MonsterPiece) return false;
 

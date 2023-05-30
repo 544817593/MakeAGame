@@ -12,17 +12,46 @@ public class FeatureController : MonoBehaviour, IController
 {
     // 伤害修改值，保持伤害加成/减免都以基础伤害为基准计算，防止重复叠加
     // 比如基础伤害100，特性1增加20%，特性2增加10%，那么最终伤害为130，并非132
-    int damageAdjust; 
+    int damageAdjust;
+    IPieceSystem pieceSystem;
+
+    private static FeatureController _instance;
+    public static FeatureController instance { get { return _instance; }}
+
 
     /// <summary>
     /// 攻击时生效的特性，优先计算伤害(如翻倍)，其次计算效果(如吸血)，最后计算其它(如攻击后加攻速)
     /// </summary>
     public Action<SpecialitiesAttackCheckEvent> OnPieceAttackFeatureCheck { get; private set; }
+    /// <summary>
+    /// 被攻击时生效的特性，先计算伤害，再计算闪避，dmg为原始伤害，isMagic为是否是魔法伤害。
+    /// </summary>
     public Action<SpecialitiesDefendCheckEvent> OnPieceDefendFeatureCheck { get; private set; }
+    /// <summary>
+    /// 移动时进行特性检测;移动位置计算完，但实际移动生效前进行检测，因为海洋恐惧症可能阻止移动
+    /// </summary>
     public Action<SpecialitiesMoveCheckEvent> OnPieceMoveFeatureCheck { get; private set; }
+    /// <summary>
+    /// 棋子生成/放置后进行的特性效果
+    /// </summary>
+    public Action<SpecialitiesSpawnCheckEvent> OnPieceSpawnFeatureCheck { get; private set; }
+
+    void Awake()
+    {
+        if (_instance != null && _instance != this)
+        {
+            Destroy(gameObject);
+        }
+        else
+        {
+            _instance = this;
+        }
+    }
 
     void Start()
     {
+        pieceSystem = this.GetSystem<IPieceSystem>();
+
         // 按顺序检查进攻类特性
         OnPieceAttackFeatureCheck += Dominant;
         OnPieceAttackFeatureCheck += Feline_Atk;
@@ -47,20 +76,322 @@ public class FeatureController : MonoBehaviour, IController
         OnPieceDefendFeatureCheck += Camouflaged;       
         OnPieceDefendFeatureCheck += Feline_Def;
 
-
         // 移动时触发的特性检查
         OnPieceMoveFeatureCheck += Writer;
         OnPieceMoveFeatureCheck += TinyCreature;
         OnPieceMoveFeatureCheck += Lazy_;
         OnPieceMoveFeatureCheck += Laborer;
+
+        // 棋子生成后的特性效果
+        OnPieceSpawnFeatureCheck += SolitaryHero;
+        OnPieceSpawnFeatureCheck += Determined;
+        OnPieceSpawnFeatureCheck += Rodent;
         
 
         this.RegisterEvent<SpecialitiesAttackCheckEvent>(OnPieceAttackFeatureCheck);
         this.RegisterEvent<SpecialitiesDefendCheckEvent>(OnPieceDefendFeatureCheck);
         this.RegisterEvent<SpecialitiesMoveCheckEvent>(OnPieceMoveFeatureCheck);
+        this.RegisterEvent<SpecialitiesSpawnCheckEvent>(OnPieceSpawnFeatureCheck);
 
         // 测试用代码
         // this.GetSystem<IPieceBattleSystem>().StartBattle(new ViewPieceBase(), new List<ViewPieceBase>());
+    }
+
+    #region 鼠类
+    private void Rodent(SpecialitiesSpawnCheckEvent obj)
+    {
+        if (obj.piece != null)
+        {
+            if (obj.piece.card.HasFeature("鼠类"))
+            {
+                StartCoroutine(RodentCO_Ally(obj.piece));
+            }
+        }
+        else
+        {
+            if (obj.monster.features.Value.Contains(PropertyEnum.Rodent))
+            {
+                StartCoroutine(RodentCO_Monster(obj.monster));
+            }
+        }
+    }
+
+    private IEnumerator RodentCO_Monster(Monster monster)
+    {
+        List<TimeMultiplierEnum> featureActiveEnumCondition = new List<TimeMultiplierEnum>();
+        featureActiveEnumCondition.Add(TimeMultiplierEnum.Fast);
+        featureActiveEnumCondition.Add(TimeMultiplierEnum.Superfast);
+
+        bool featureActive = false;
+        bool switchOffFeature = false;
+        while (monster != null)
+        {
+            switchOffFeature = true;
+            foreach(BoxGrid grid in monster.pieceGrids)
+            {
+                // 开启特性条件达成
+                if (featureActiveEnumCondition.Contains(grid.timeMultiplier) && !featureActive)
+                {
+                    monster.atkSpeed.Value += 0.2f;
+                    featureActive = true;
+                    switchOffFeature = false;
+                    break;
+                }
+            }
+            if (featureActive && switchOffFeature)
+            {
+                monster.atkSpeed.Value -= 0.2f;
+                featureActive = false;
+            }
+            yield return new WaitForSeconds(0.1f);
+        }
+    }
+
+    private IEnumerator RodentCO_Ally(ViewPiece piece)
+    {
+        List<TimeMultiplierEnum> featureActiveEnumCondition = new List<TimeMultiplierEnum>();
+        featureActiveEnumCondition.Add(TimeMultiplierEnum.Fast);
+        featureActiveEnumCondition.Add(TimeMultiplierEnum.Superfast);
+
+        bool featureActive = false;
+        bool switchOffFeature = false;
+        while (piece != null)
+        {
+            switchOffFeature = true;
+            foreach (BoxGrid grid in piece.pieceGrids)
+            {
+                // 开启特性条件达成
+                if (featureActiveEnumCondition.Contains(grid.timeMultiplier) && !featureActive)
+                {
+                    piece.card.atkSpd += 0.2f;
+                    featureActive = true;
+                    switchOffFeature = false;
+                    break;
+                }
+            }
+            if (featureActive && switchOffFeature)
+            {
+                piece.card.atkSpd -= 0.2f;
+                featureActive = false;
+            }
+            yield return new WaitForSeconds(0.1f);
+        }
+    }
+    #endregion
+
+    #region 孤勇者
+    private void SolitaryHero(SpecialitiesSpawnCheckEvent obj)
+    {
+        if (obj.piece != null)
+        {
+            if (obj.piece.card.HasFeature("孤勇者"))
+            {
+                StartCoroutine(SolitaryHeroCO_Ally(obj.piece));
+            }
+        }
+        else
+        {
+            if (obj.monster.features.Value.Contains(PropertyEnum.SolitaryHero))
+            {
+                StartCoroutine(SolitaryHeroCO_Monster(obj.monster));
+            }
+        }
+    }
+
+    private IEnumerator SolitaryHeroCO_Monster(Monster monster)
+    {
+        bool featureActive = false;
+        while (monster != null)
+        {
+            int counter = 0;
+            List<BoxGrid> surroundingGrids = FindSurroundingGrids(monster);
+            List<ViewPiece> pieceFriendList = pieceSystem.pieceFriendList;
+            foreach (ViewPiece piece in pieceFriendList)
+            {
+                foreach(BoxGrid grid in surroundingGrids)
+                {
+                    if (piece.pieceGrids.Contains(grid)) counter++;
+                }
+            }
+            // 开启特性条件达成
+            if (counter >= 2 && !featureActive)
+            {
+                monster.atkSpeed.Value += 0.2f;
+                featureActive = true;
+            }
+            // 关闭特性条件达成
+            else if (counter < 2 && featureActive)
+            {
+                monster.atkSpeed.Value -= 0.2f;
+                featureActive = false;
+            }
+            yield return new WaitForSeconds(0.1f);
+        }
+    }
+
+    private IEnumerator SolitaryHeroCO_Ally(ViewPiece piece)
+    {
+        bool featureActive = false;
+        while (piece != null)
+        {
+            int counter = 0;
+            List<BoxGrid> surroundingGrids = FindSurroundingGrids(piece);
+            List<Monster> pieceEnemyList = pieceSystem.pieceEnemyList;
+            foreach (Monster monster in pieceEnemyList)
+            {
+                foreach (BoxGrid grid in surroundingGrids)
+                {
+                    if (monster.pieceGrids.Contains(grid)) counter++;
+                }
+            }
+            // 开启特性条件达成
+            if (counter >= 2 && !featureActive)
+            {
+                piece.card.atkSpd += 0.2f;
+                featureActive = true;
+            }
+            // 关闭特性条件达成
+            else if (counter < 2 && featureActive)
+            {
+                piece.card.atkSpd -= 0.2f;
+                featureActive = false;
+            }
+            yield return new WaitForSeconds(0.1f);
+        }
+    }
+    #endregion
+
+    #region 意志坚定
+    private void Determined(SpecialitiesSpawnCheckEvent obj)
+    {
+        if (obj.piece != null)
+        {
+            if (obj.piece.card.HasFeature("意志坚定"))
+            {
+                StartCoroutine(DeterminedCO_Ally(obj.piece));
+            }
+        }
+        else
+        {
+            if (obj.monster.features.Value.Contains(PropertyEnum.Determined))
+            {
+                StartCoroutine(DeterminedCO_Monster(obj.monster));
+            }
+        }
+    }
+
+    private IEnumerator DeterminedCO_Monster(Monster monster)
+    {
+        bool featureActive = false;
+        while (monster != null)
+        {
+            int counter = 0;
+            List<BoxGrid> surroundingGrids = FindSurroundingGrids(monster);
+            List<ViewPiece> pieceFriendList = pieceSystem.pieceFriendList;
+            foreach (ViewPiece piece in pieceFriendList)
+            {
+                foreach (BoxGrid grid in surroundingGrids)
+                {
+                    if (piece.pieceGrids.Contains(grid)) counter++;
+                }
+            }
+            // 开启特性条件达成
+            if (counter <= 1 && !featureActive)
+            {
+                monster.atkSpeed.Value += 0.2f;
+                featureActive = true;
+            }
+            // 关闭特性条件达成
+            else if (counter > 1 && featureActive)
+            {
+                monster.atkSpeed.Value -= 0.2f;
+                featureActive = false;
+            }
+            yield return new WaitForSeconds(0.1f);
+        }
+    }
+
+    private IEnumerator DeterminedCO_Ally(ViewPiece piece)
+    {
+        bool featureActive = false;
+        while (piece != null)
+        {
+            int counter = 0;
+            List<BoxGrid> surroundingGrids = FindSurroundingGrids(piece);
+            List<Monster> pieceEnemyList = pieceSystem.pieceEnemyList;
+            foreach (Monster monster in pieceEnemyList)
+            {
+                foreach (BoxGrid grid in surroundingGrids)
+                {
+                    if (monster.pieceGrids.Contains(grid)) counter++;
+                }
+            }
+            // 开启特性条件达成
+            if (counter <= 1 && !featureActive)
+            {
+                piece.card.atkSpd += 0.2f;
+                featureActive = true;
+            }
+            // 关闭特性条件达成
+            else if (counter > 1 && featureActive)
+            {
+                piece.card.atkSpd -= 0.2f;
+                featureActive = false;
+            }
+            yield return new WaitForSeconds(0.1f);
+        }
+    }
+    #endregion
+
+
+    /// <summary>
+    /// 传入棋子，返还棋子周围一圈的格子
+    /// </summary>
+    /// <param name="piece"></param>
+    /// <returns></returns>
+    private List<BoxGrid> FindSurroundingGrids(ViewPieceBase piece)
+    {
+        List<BoxGrid> surroundingGrids = new List<BoxGrid>();
+        BoxGrid[,] map = this.GetSystem<IMapSystem>().Grids();
+        foreach (BoxGrid grid in piece.pieceGrids)
+        {
+            if (map[grid.row - 1, grid.col - 1].terrain.Value != (int)TerrainEnum.Edge && !surroundingGrids.Contains(grid)) surroundingGrids.Add(grid);
+            if (map[grid.row - 1, grid.col].terrain.Value != (int)TerrainEnum.Edge && !surroundingGrids.Contains(grid)) surroundingGrids.Add(grid);
+            if (map[grid.row - 1, grid.col + 1].terrain.Value != (int)TerrainEnum.Edge && !surroundingGrids.Contains(grid)) surroundingGrids.Add(grid);
+            if (map[grid.row, grid.col - 1].terrain.Value != (int)TerrainEnum.Edge && !surroundingGrids.Contains(grid)) surroundingGrids.Add(grid);
+            if (map[grid.row, grid.col + 1].terrain.Value != (int)TerrainEnum.Edge && !surroundingGrids.Contains(grid)) surroundingGrids.Add(grid);
+            if (map[grid.row + 1, grid.col - 1].terrain.Value != (int)TerrainEnum.Edge && !surroundingGrids.Contains(grid)) surroundingGrids.Add(grid);
+            if (map[grid.row + 1, grid.col].terrain.Value != (int)TerrainEnum.Edge && !surroundingGrids.Contains(grid)) surroundingGrids.Add(grid);
+            if (map[grid.row + 1, grid.col + 1].terrain.Value != (int)TerrainEnum.Edge && !surroundingGrids.Contains(grid)) surroundingGrids.Add(grid);
+        }
+        return surroundingGrids;
+    }
+
+    /// <summary>
+    /// 海洋恐惧症检测
+    /// </summary>
+    /// <param name="obj">棋子</param>
+    /// <param name="grid">即将到达的格子</param>
+    /// <returns>True为可以移动，False为不可移动</returns>
+    public bool Hydrophobia(ViewPieceBase obj, BoxGrid grid)
+    {
+        if (obj is Monster)
+        {
+            Monster monster = obj as Monster;
+            if (monster.features.Value.Contains(PropertyEnum.Hydrophobia))
+            {
+                if (grid.terrain.Value == (int)TerrainEnum.Water) return false;
+            }
+        }
+        else
+        {
+            ViewPiece piece = obj as ViewPiece;
+            if (piece.card.HasFeature("海洋恐惧症"))
+            {
+                if (grid.terrain.Value == (int)TerrainEnum.Water) return false;
+            }
+        }
+        return true;
     }
 
     private void Laborer(SpecialitiesMoveCheckEvent obj)

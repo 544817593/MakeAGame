@@ -12,6 +12,7 @@ namespace Game
     public partial class ViewPieceBase: MonoBehaviour, IController, ICanSendEvent
     {
         protected IMapSystem mapSystem;
+        protected IMovementSystem movementSystem;
         protected SOCharacterInfo so;
         protected PieceStateEnum stateFlag = PieceStateEnum.Moving;
         protected PieceState state = new PieceStateIdle(null);
@@ -47,6 +48,7 @@ namespace Game
         protected virtual void Start()
         {
             mapSystem = this.GetSystem<IMapSystem>();
+            movementSystem = this.GetSystem<IMovementSystem>();
             
             // 棋子自身也会监听棋子（包括自己）
             OnPieceMoveReady += OnMoveReadyEvent;
@@ -116,15 +118,16 @@ namespace Game
             return centerPos;
         }
         
-        // 这个函数在MovementSystem里有相同功能的
         protected virtual bool CheckIfOneGridCanMove(BoxGrid grid)
         {
             // 通用判断
             // 1.是否格子已被占用，且不是自己当前占用的格子
-            if (!pieceGrids.Contains(grid) && !grid.IsEmpty())
+            if (!pieceGrids.Contains(grid) && !mapSystem.GridCanMoveTo(grid))
                 return false;
 
             // 某些判断...
+            // 海洋恐惧症
+            if (!FeatureController.instance.Hydrophobia(this, grid)) return false;
             
             return true;
         }
@@ -272,11 +275,22 @@ namespace Game
 
     /// <summary>
     /// 移动时进行特性检测
+    /// 移动位置计算完，但实际移动生效前进行检测，因为海洋恐惧症可能阻止移动
     /// </summary>
     public class SpecialitiesMoveCheckEvent
     {
         public ViewPieceBase piece; // 棋子
-        public BoxGrid boxgrid; // 移动到的格子
+        public BoxGrid boxgrid; // 将要移动到的格子
 
+    }
+
+    /// <summary>
+    /// 棋子生成/放置后进行的特性效果
+    /// </summary>
+    public class SpecialitiesSpawnCheckEvent
+    {
+        // 二者一个为null
+        public ViewPiece piece;
+        public Monster monster;
     }
 }

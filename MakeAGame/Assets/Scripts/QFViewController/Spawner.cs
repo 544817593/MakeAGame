@@ -10,7 +10,7 @@ namespace Game
     /// <summary>
     /// 用来实际生成各种卡牌/棋子
     /// </summary>
-    public class Spawner : MonoBehaviour, IController
+    public class Spawner : MonoBehaviour, IController, ICanSendEvent
     {
 
         /// <summary>
@@ -82,6 +82,10 @@ namespace Game
             List<BoxGrid> crtGrids = new List<BoxGrid>();
             crtGrids.Add(grid[data.row, data.col]);
             this.GetSystem<IPieceSystem>().AddPieceEnemy(monster, crtGrids);
+
+            // 发送棋子生成后触发的特性event
+            SpecialitiesSpawnCheckEvent e = new SpecialitiesSpawnCheckEvent { monster = monster };
+            this.SendEvent(e);
         }
 
         /// <summary>
