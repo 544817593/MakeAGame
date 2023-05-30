@@ -1,0 +1,182 @@
+[
+  {
+    "featureID": 1,
+    "featureName": "人类学家",
+    "desc": "有25%几率闪避人类攻击。",
+    "typeName": "Anthropologist"
+  },
+  {
+    "featureID": 2,
+    "featureName": "作家",
+    "desc": "每次移动时，有3%的概率自制一张白色稀有度的卡牌。",
+    "typeName": "Writer"
+  },
+  {
+    "featureID": 3,
+    "featureName": "海洋恐惧症",
+    "desc": "无法跨越水潭等地形。",
+    "typeName": "Hydrophobia"
+  },
+  {
+    "featureID": 4,
+    "featureName": "失眠症",
+    "desc": "如果你放置的上一个调查员牌是这张牌，则无法再次使用。",
+    "typeName": "Insomnia"
+  },
+  {
+    "featureID": 5,
+    "featureName": "心理医生",
+    "desc": "免疫中毒和混乱。",
+    "typeName": "Psychologist"
+  },
+  {
+    "featureID": 6,
+    "featureName": "霸道",
+    "desc": "对敌方稀有阶级为白色的单位造成25%额外伤害。",
+    "typeName": "Dominant"
+  },
+  {
+    "featureID": 7,
+    "featureName": "孤勇者",
+    "desc": "当周围8个格子内敌方单位数量不少于2时，获得0.2攻击速度。",
+    "typeName": "SolitaryHero"
+  },
+  {
+    "featureID": 8,
+    "featureName": "意志坚定",
+    "desc": "当周围8个格子内敌方单位数量不大于1时，获得0.35攻击速度。",
+    "typeName": "Determined"
+  },
+  {
+    "featureID": 9,
+    "featureName": "施毒者",
+    "desc": "攻击使对方中毒，接下来5秒每秒受到10%当前生命值的伤害。",
+    "typeName": "Toxicologist"
+  },
+  {
+    "featureID": 10,
+    "featureName": "隐身",
+    "desc": "在普通地块上有10%的几率闪避攻击。",
+    "typeName": "Camouflaged"
+  },
+  {
+    "featureID": 11,
+    "featureName": "嗜血者",
+    "desc": "造成伤害的25%转换为自身生命值。",
+    "typeName": "Bloodthirsty"
+  },
+  {
+    "featureID": 12,
+    "featureName": "抗魔者",
+    "desc": "受到的法术伤害-25%，受到的物理伤害+10%。",
+    "typeName": "MagicResistant"
+  },
+  {
+    "featureID": 13,
+    "featureName": "飞行",
+    "desc": "不会受到地形的影响。",
+    "typeName": "Airborne"
+  },
+  {
+    "featureID": 14,
+    "featureName": "动物杀手",
+    "desc": "每次攻击小型动物后在本场战斗中获得0.1攻击速度。",
+    "typeName": "AnimalKiller"
+  },
+  {
+    "featureID": 15,
+    "featureName": "水生物",
+    "desc": "在水面上受到的伤害-10%。",
+    "typeName": "Aquatic"
+  },
+  {
+    "featureID": 16,
+    "featureName": "猫科",
+    "desc": "对鸟类、鼠类有20%的概率伤害翻倍；在战斗中有25%的概率闪避攻击。",
+    "typeName": "Feline"
+  },
+  {
+    "featureID": 17,
+    "featureName": "声音敏感",
+    "desc": "受到的物理伤害-25%，受到的法术伤害+10%。",
+    "typeName": "SoundSensitive"
+  },
+  {
+    "featureID": 18,
+    "featureName": "小型动物",
+    "desc": "移动后有20%的概率再次移动。",
+    "typeName": "TinyCreature"
+  },
+  {
+    "featureID": 19,
+    "featureName": "鸟类",
+    "desc": "对水生物造成25%额外伤害。",
+    "typeName": "Avian"
+  },
+  {
+    "featureID": 20,
+    "featureName": "鼠类",
+    "desc": "在时间流逝速度高于正常的格子上，获得0.2攻击速度。",
+    "typeName": "Rodent"
+  },
+  {
+    "featureID": 21,
+    "featureName": "人类",
+    "desc": "还活着。",
+    "typeName": "Human"
+  },
+  {
+    "featureID": 22,
+    "featureName": "游手好闲",
+    "desc": "经过的格子(包括当前)时间流逝升级",
+    "typeName": "Lazy"
+  },
+  {
+    "featureID": 23,
+    "featureName": "打工者",
+    "desc": "经过的格子(包括当前)时间流逝降级",
+    "typeName": "Laborer"
+  },
+  {
+    "featureID": 24,
+    "featureName": "贪婪",
+    "desc": "每次攻击都有10%的概率获得2金币",
+    "typeName": "Greedy"
+  },
+  {
+    "featureID": 25,
+    "featureName": "额外属性分界线",
+    "desc": "",
+    "typeName": ""
+  },
+  {
+    "featureID": 26,
+    "featureName": "抽丝剥茧",
+    "desc": "距离不大于4的友军获得100%力量的攻击力加成",
+    "typeName": ""
+  },
+  {
+    "featureID": 27,
+    "featureName": "教授",
+    "desc": "该卡牌在场时，玩家放入的棋子获得200%体质的最大生命值加成。",
+    "typeName": ""
+  },
+  {
+    "featureID": 28,
+    "featureName": "学不可以己",
+    "desc": "距离不大于5的死面牌释放造成的伤害增加2*技巧。",
+    "typeName": ""
+  },
+  {
+    "featureID": 29,
+    "featureName": "穿越银匙之门",
+    "desc": "每10秒获得1点改变行动方向的机会。",
+    "typeName": ""
+  },
+  {
+    "featureID": 30,
+    "featureName": "无可动摇",
+    "desc": "该卡牌在场时，玩家放入的棋子获得1*技巧秒无敌。",
+    "typeName": ""
+  }
+]
