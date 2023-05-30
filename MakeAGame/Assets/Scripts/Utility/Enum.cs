@@ -47,7 +47,23 @@ public enum PropertyEnum
 /// </summary>
 public enum TerrainEnum
 {
-    Invalid, Road, Wall, Water, Fire, Poison
+    Invalid, Road, Wall, Water, Fire, Poison, Edge
+}
+
+/// <summary>
+/// 战斗区域外的背景图片选择
+/// </summary>
+public enum EdgeSprite
+{
+    None, 
+    Tile_Tomb, //地砖带墓碑
+    Tile_Grass, //地砖带草
+    Tile, //地砖
+    Wall_High, //墙-上
+    Wall_High_Grass, //墙-上带草
+    Wall_Mid, //墙中
+    Wall_Mid_Candle, //墙中带蜡烛 
+    Wall_Low // 墙下
 }
 
 /// <summary>

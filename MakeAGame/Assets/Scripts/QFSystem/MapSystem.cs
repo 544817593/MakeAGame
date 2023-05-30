@@ -102,7 +102,7 @@ namespace Game
                     // todo 地图格子真正赋值数据的地方
                     newGrid.terrain.Value = data.mapTerrain[i, j];
                     newGrid.timeMultiplier.Value = data.mapTimeMultiplier[i, j];
-                    
+                    newGrid.edgeRes.Value = data.edgeResources[i, j];
                     
                     mGrids[i, j] = newGrid;
                     Debug.Log(mGrids[i, j]);
