@@ -5,7 +5,7 @@ using QFramework;
 
 namespace BagUI
 {
-	// Generate Id:89797a7b-c4e4-41df-8c7b-9cd81210b482
+	// Generate Id:8828e7d5-d256-4295-b9da-c5e4fcf14f4f
 	public partial class BagUIPanel
 	{
 		public const string Name = "BagUIPanel";
@@ -22,6 +22,8 @@ namespace BagUI
 		public UnityEngine.UI.Button Close;
 		[SerializeField]
 		public RectTransform SlotPosition;
+		[SerializeField]
+		public UnityEngine.UI.Image CardDescribtion;
 		[SerializeField]
 		public UnityEngine.UI.Image Image;
 		[SerializeField]
@@ -63,6 +65,7 @@ namespace BagUI
 			Skill = null;
 			Close = null;
 			SlotPosition = null;
+			CardDescribtion = null;
 			Image = null;
 			CharName = null;
 			SizeData = null;

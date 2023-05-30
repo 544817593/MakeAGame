@@ -11,31 +11,30 @@ public class ShopPanelChange
     /// </summary>
     /// <param name="currentPanel"></param>
     /// <param name="button"></param>
-    private static bool EnhanceCardsInited = false;
-    public static void changeShopPanel(UIPanel currentPanel, Button button)
+    public static void ChangeShopPanel(UIPanel currentPanel, Button button)
     {
         button.onClick.AddListener(() =>
         {
             Debug.Log($"点击了{button.name}按钮");
             if (button.name == "Buy")
             {
+                currentPanel.CloseSelf();
                 UIKit.OpenPanel<ShopBuyUI.ShopBuyUI>();
             }
             else if(button.name == "Sell")
             {
+                currentPanel.CloseSelf();
                 UIKit.OpenPanel<ShopSellUI.ShopSellUI>();
             }
             else if(button.name == "Enhance")
             {
-                if(!EnhanceCardsInited) 
-                {
-                    
-                }
+                currentPanel.CloseSelf();
                 UIKit.OpenPanel<ShopEnhanceUI.ShopEnhanceUI>();
             }
             else if(button.name == "Close")
             {
                 currentPanel.CloseSelf();
+                UIKit.OpenPanel<ShopMainUI.ShopMainUI>();
             }
             
         });

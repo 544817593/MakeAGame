@@ -174,7 +174,7 @@ public class BuffConfusion : BuffToPiece
         else if (target is ViewPiece)
         {
             ViewPiece piece = target as ViewPiece;
-            if (piece.card.HasFeature(5)) return false;
+            if (piece.card.HasFeature("心理医生")) return false;
         }
 
         // 先查找该棋子是否已有该类型buff，若有，不再挂新的，而是叠加时间
@@ -304,21 +304,7 @@ public class BuffVine2 : BuffToGrid
 
         if (target != null)
         {
-            switch (target.timeMultiplier.Value)
-            {
-                case TimeMultiplierEnum.Superfast:
-                    target.timeMultiplier.Value = TimeMultiplierEnum.Fast;
-                    break;
-                case TimeMultiplierEnum.Fast:
-                    target.timeMultiplier.Value = TimeMultiplierEnum.Normal;
-                    break;
-                case TimeMultiplierEnum.Normal:
-                    target.timeMultiplier.Value = TimeMultiplierEnum.Slow;
-                    break;
-                case TimeMultiplierEnum.Slow:
-                    target.timeMultiplier.Value = TimeMultiplierEnum.Superslow;
-                    break;
-            }
+            target.LevelDownTimeMultiplier();
         }
     }
 }
@@ -392,7 +378,7 @@ public class DebuffPoison : BuffToPiece
         else if (target is ViewPiece)
         {
             viewPiece = target as ViewPiece;
-            if (viewPiece.card.HasFeature(5)) return false;
+            if (viewPiece.card.HasFeature("心理医生")) return false;
         }
 
         // 先查找该棋子是否已有该类型buff，若有，不再挂新的，而是叠加时间

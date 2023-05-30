@@ -26,9 +26,9 @@ namespace PackOpen
 		/// <summary>
 		/// 保存新开的卡包到牌库
 		/// </summary>
-		public void SaveNewCard(int cardID)
+		public void SaveNewCard( Game.Card cardData)
 		{
-			m_BagUI.AddCard(cardID);
+			m_BagUI.AddCard(cardData);
 			
 		}
 		/// <summary>
@@ -79,12 +79,13 @@ namespace PackOpen
 				new_Card = spawnSystem.GetLastSpawnedCard();
 				//new_Card = Instantiate(Resources.Load("Prefabs/CardItem"), transform.position, Quaternion.identity) as GameObject;
 			}
-
+			Game.Card createCard = new_Card.GetComponent<Game.ViewBagCard>().card;
 			new_Card.transform.SetParent(GameObject.Find("Cardtemp")?.transform, false);
 			new_Card.transform.position = transform.position;
-			new_Card.GetComponent<Transform>().localScale = new Vector3(0.17f, 0.18f, 1);
+			new_Card.GetComponent<Game.ViewBagCard>().normalScale = 0.15f;
+			new_Card.GetComponent<Game.ViewBagCard>().largeScale = 0.2f;
+
 			
-			//var createCard = Game.GameEntry.Interface.GetSystem<Game.CardGeneratorSystem>();
 			//createCard.CreateCard(newCardId);
 			//Game.Card card_base = new_Card.GetComponent<Game.Card>();
 			//card_base(newCardId);
@@ -98,7 +99,7 @@ namespace PackOpen
 			m_ui.count--;
 
 			gameObject.SetActive(false);
-			SaveNewCard(newCardId);
+			SaveNewCard(createCard);
 			//if (m_ui.count <= 0)
 			//{
 			//	if (m_ui.blueDrawn == false) m_ui.blueSecure = true;

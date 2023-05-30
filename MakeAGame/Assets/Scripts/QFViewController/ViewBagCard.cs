@@ -14,11 +14,11 @@ namespace Game
     {
         // 卡牌数据
         public Card card;
-        
         public float normalScale = 0.08f;   // 缩放系数
         public float largeScale = 0.16f;
         public Action OnTouchAction;    // 点击时触发的事件
-
+        public Action OnFocusAction;    // 背包选取时触发的事件
+        public Action OnUnFocusAction;  // 背包取消选取时触发的事件
         private void Awake()
         {
             // instantiate以后立刻执行，防止同一帧的某些操作需要调用其组件
@@ -69,12 +69,16 @@ namespace Game
         {
             canvas.sortingOrder = 100;
             transform.DOScale(largeScale, 0.5f);
+            OnFocusAction?.Invoke();
+            
         }
 
         void OnUnfocus()
         {
             canvas.sortingOrder = 0;
             transform.DOScale(normalScale, 0.5f);
+          OnUnFocusAction?.Invoke();
+            
         }
         
         void OnTouch()

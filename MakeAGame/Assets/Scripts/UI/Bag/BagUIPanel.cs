@@ -12,6 +12,7 @@ namespace BagUI
 	{
 		public IInventorySystem inventorySystem = GameEntry.Interface.GetSystem<IInventorySystem>();
 		
+
 	}
 	public partial class BagUIPanel : UIPanel
 	{
@@ -24,7 +25,7 @@ namespace BagUI
 		private int lowerIndex = 0;
         private Transform mCardRoot;
         private List<Transform> mListSlotPosition;
-		private List<ViewCard> cardList;
+		private List<ViewBagCard> cardList;
 		
 
 
@@ -34,7 +35,7 @@ namespace BagUI
 			// please add init code here
 			mCardRoot = SlotPosition.GetComponent<Transform>();
 			mListSlotPosition = new List<Transform>();
-			cardList = mData.inventorySystem.GetCardList();
+			cardList = mData.inventorySystem.GetBagCardList();
 			
 
 			var rootChilds = mCardRoot.GetComponentInChildren<Transform>(includeInactive: true);
@@ -42,6 +43,7 @@ namespace BagUI
 			{
 				mListSlotPosition.Add(cardPos);
 			}
+			
 			RefreshLayout();
 			pageChange();
 
@@ -86,7 +88,7 @@ namespace BagUI
 				}
 				else
 				{
-					ViewCard card_inList = cardList[idx];
+					ViewBagCard card_inList = cardList[idx];
 					curItem.SetActive(true);
 				}
 				idx++;
@@ -103,7 +105,10 @@ namespace BagUI
 				{
 					cardList[index].transform.SetParent(mListSlotPosition[index].transform);
 					cardList[index].transform.position = mListSlotPosition[index].transform.position;
+					cardList[index].transform.GetComponent<Canvas>().sortingLayerName = "UI";
+		
 				}
+
 			}
 			else
 			{
@@ -125,9 +130,6 @@ namespace BagUI
 			}
 
 
-
-
-
 			//	for (int i = 0; i< minIndex; i++)
 			//{
 			//	cardList[i].transform.SetParent(mListSlotPosition[i].transform);
@@ -136,15 +138,15 @@ namespace BagUI
             
         }
 
-		public void AddCard(int index)
+		public void AddCard(Card cardData)
         {
-			mData.inventorySystem.SpawnCardInBag(index);
+			mData.inventorySystem.SpawnBagCardInBag(cardData);
 			UpdateLayout();
 		}
 
 		private void updateIndex()
 		{
-			int bagCount = mData.inventorySystem.GetCardList().Count;
+			int bagCount = mData.inventorySystem.GetBagCardList().Count;
 			lowerIndex = (curPage - 1) * gridNum;
 			// 索引上限为当前页*格子数量-1，如果超过list大小，则为list的元素数量-1
 			upperIndex = curPage * gridNum - 1 >= bagCount ? bagCount - 1 : curPage * gridNum - 1;

@@ -40,6 +40,8 @@ namespace Game
             }
             touchArea = transform.Find("Root/UIEventArea").gameObject;
             canvas = gameObject.GetComponent<Canvas>();
+            canvas.sortingLayerName= "UI";
+            
             canvasGroup = gameObject.GetComponent<CanvasGroup>();
             tooltipTrans = transform.Find("Root/TooltipPos");
 

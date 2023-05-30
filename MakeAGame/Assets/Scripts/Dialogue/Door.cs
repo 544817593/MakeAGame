@@ -48,8 +48,7 @@ public class Door : MonoBehaviour
     }
     public void LoadScene()
     {
-        StartCoroutine(GameManager.Instance.gameSceneMan.LoadScene("Combat", false));
-        StartCoroutine(GameManager.Instance.gameSceneMan.UnloadScene("Intro"));
+        GameObject.Find("Room")?.transform.GetComponent<Game.SceneFlow>().LoadRoom();
 
     }
     // Update is called once per frame

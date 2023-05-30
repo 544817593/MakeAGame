@@ -211,7 +211,7 @@ namespace Game
             // 物品数量的更新逻辑在强化脚本里，ShopEnhanceUI.cs
             //item.amount -= 1;
             //if (item.amount <= 0) inventorySystem.RemoveItem(item);
-            //if (item.amount <= 0) shopSystem.removeBagItem(item);
+            //if (item.amount <= 0) shopSystem.RemoveBagItem(item);
         }
 
         /// <summary>
@@ -228,7 +228,7 @@ namespace Game
                 case "破旧的古镜":
                 case "完整的古镜":
                 case "华丽的古镜":
-                    inventorySystem.SpawnCardInBag(viewCard.card.charaID);
+                    inventorySystem.SpawnBagCardInBag(viewCard.card);
                     break;
                 case "巫术法杖":
                     List<int> canSpawnCard = new List<int>(); // 可以被生成的卡牌列表
@@ -241,7 +241,9 @@ namespace Game
                     if (canSpawnCard.Count > 0)
                     {
                         int rand = UnityEngine.Random.Range(0, canSpawnCard.Count);
-                        inventorySystem.SpawnCardInBag(rand);
+                        this.GetSystem<ISpawnSystem>().SpawnCard(rand);
+                        Card new_Card = this.GetSystem<ISpawnSystem>().GetLastSpawnedCard().GetComponent<ViewBagCard>().card;
+                        inventorySystem.SpawnBagCardInBag(new_Card);
                     }
                     break;
             }

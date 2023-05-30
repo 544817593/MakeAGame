@@ -101,13 +101,13 @@ namespace Game
         /// <summary>
         /// 检查是否有某个特性
         /// </summary>
-        /// <param name="featureId">特性ID</param>
+        /// <param name="featureName">特性名字</param>
         /// <returns></returns>
-        public bool HasFeature(int featureId)
+        public bool HasFeature(string featureName)
         {
             foreach (SOFeature feature in features)
             {
-                if (feature.featureID == featureId) return true;
+                if (feature.featureName == featureName) return true;
             }
             return false;
         }

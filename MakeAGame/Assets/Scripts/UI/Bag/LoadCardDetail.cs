@@ -19,31 +19,11 @@ public class LoadCardDetail : MonoBehaviour
     public void ShowDetail(Card card)
     {
         rarity = card.rarity;
-        {
-            if (rarity == 0)
-            {
-                m_BagUI.Image.sprite = Game.Extensions.GetRaritySprite(0) ;
-            }
-            else if (rarity == 1)
-            {
-                m_BagUI.Image.sprite = Game.Extensions.GetRaritySprite(1);
-            }
-            else if (rarity == 2)
-            {
-                m_BagUI.Image.sprite = Game.Extensions.GetRaritySprite(2);
-            }
-            else if (rarity == 3)
-            {
-                m_BagUI.Image.sprite = Game.Extensions.GetRaritySprite(3);
-            }
-            else if (rarity == 4)
-            {
-                m_BagUI.Image.sprite = Game.Extensions.GetRaritySprite(4);
-            }
-        }
+        m_BagUI.Image.sprite = Game.Extensions.GetRaritySprite(rarity) ;
+          
         m_BagUI.CharName.text = card.charaName;
-       // _SizeT.text = card.characterInfo.pieceSize.ToString();
-        // _MoveDirT.text = card.listMoveDir.ToString();
+        //m_BagUI.SizeData.text = card..pieceSize.ToString();
+        m_BagUI.MoveDirData.text = card.moveDirections.ToString();
         m_BagUI.MoveSpeedData.text = card.moveSpd.ToString();
         m_BagUI.HPData.text = card.hp.ToString();
         m_BagUI.AtkDmgData.text = card.so.attack.ToString();

@@ -40,7 +40,8 @@ namespace Game
         int GetGridDist(BoxGrid grid1, BoxGrid grid2);
 
         void Clear();
-        
+        void SetNUllMap();
+
         /// 地图中央位置，用于摄像头设置
         /// </summary>
         BoxGrid centerGrid { get; }
@@ -187,5 +188,11 @@ namespace Game
                 GameObject.Destroy(grid.gameObject);
             }
         }
+
+        public void SetNUllMap()
+        {
+            mGrids = null;
+        }
+       
     }
 }

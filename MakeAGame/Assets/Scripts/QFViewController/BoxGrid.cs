@@ -1,6 +1,7 @@
 using System;
 using QFramework;
 using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 
 namespace Game
 {
@@ -193,6 +194,44 @@ namespace Game
         public bool IsEmpty()
         {
             return occupation == 0;
+        }
+
+        public void LevelDownTimeMultiplier()
+        {
+            switch (timeMultiplier.Value)
+            {
+                case TimeMultiplierEnum.Superfast:
+                    timeMultiplier.Value = TimeMultiplierEnum.Fast;
+                    break;
+                case TimeMultiplierEnum.Fast:
+                    timeMultiplier.Value = TimeMultiplierEnum.Normal;
+                    break;
+                case TimeMultiplierEnum.Normal:
+                    timeMultiplier.Value = TimeMultiplierEnum.Slow;
+                    break;
+                case TimeMultiplierEnum.Slow:
+                    timeMultiplier.Value = TimeMultiplierEnum.Superslow;
+                    break;
+            }
+        }
+
+        public void LevelUpTimeMultiplier()
+        {
+            switch (timeMultiplier.Value)
+            {
+                case TimeMultiplierEnum.Fast:
+                    timeMultiplier.Value = TimeMultiplierEnum.Superfast;
+                    break;
+                case TimeMultiplierEnum.Normal:
+                    timeMultiplier.Value = TimeMultiplierEnum.Fast;
+                    break;
+                case TimeMultiplierEnum.Slow:
+                    timeMultiplier.Value = TimeMultiplierEnum.Normal;
+                    break;
+                case TimeMultiplierEnum.Superslow:
+                    timeMultiplier.Value = TimeMultiplierEnum.Slow;
+                    break;
+            }
         }
     }
 }

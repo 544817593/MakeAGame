@@ -50,7 +50,7 @@ namespace Game
         private void OnSpawnCardEvent()
         {
             GameObject cardItem = (GameObject)Instantiate(Resources.Load("Prefabs/CardItem"));
-            ViewCard viewCard = cardItem.AddComponent<ViewCard>();
+            ViewBagCard viewCard = cardItem.AddComponent<ViewBagCard>();
             viewCard.card = new Card(1);
             this.GetSystem<ISpawnSystem>().SetLastSpawnedCard(cardItem);
         }

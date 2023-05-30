@@ -660,6 +660,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1917886750}
+        m_TargetAssemblyTypeName: Attributes, Assembly-CSharp
+        m_MethodName: setCharm
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &166365495
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1089,6 +1101,18 @@ MonoBehaviour:
       - m_Target: {fileID: 1917886750}
         m_TargetAssemblyTypeName: Attributes, Assembly-CSharp
         m_MethodName: MinusPoint
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1917886750}
+        m_TargetAssemblyTypeName: Attributes, Assembly-CSharp
+        m_MethodName: setCharm
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2878,6 +2902,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 240075086}
+        m_TargetAssemblyTypeName: Attributes, Assembly-CSharp
+        m_MethodName: setSkill
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &765824642
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3275,6 +3311,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 462400371}
+        m_TargetAssemblyTypeName: Attributes, Assembly-CSharp
+        m_MethodName: setStrength
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &832442337
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3475,6 +3523,18 @@ MonoBehaviour:
       - m_Target: {fileID: 1995235278}
         m_TargetAssemblyTypeName: Attributes, Assembly-CSharp
         m_MethodName: AddPoint
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1995235278}
+        m_TargetAssemblyTypeName: Attributes, Assembly-CSharp
+        m_MethodName: setSpirit
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -4016,6 +4076,18 @@ MonoBehaviour:
       - m_Target: {fileID: 1011155957}
         m_TargetAssemblyTypeName: Attributes, Assembly-CSharp
         m_MethodName: AddPoint
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1011155957}
+        m_TargetAssemblyTypeName: Attributes, Assembly-CSharp
+        m_MethodName: setStamina
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -4921,6 +4993,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 462400371}
+        m_TargetAssemblyTypeName: Attributes, Assembly-CSharp
+        m_MethodName: setStrength
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1115613660
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5121,6 +5205,18 @@ MonoBehaviour:
       - m_Target: {fileID: 1995235278}
         m_TargetAssemblyTypeName: Attributes, Assembly-CSharp
         m_MethodName: MinusPoint
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1995235278}
+        m_TargetAssemblyTypeName: Attributes, Assembly-CSharp
+        m_MethodName: setSpirit
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -6542,6 +6638,18 @@ MonoBehaviour:
       - m_Target: {fileID: 240075086}
         m_TargetAssemblyTypeName: Attributes, Assembly-CSharp
         m_MethodName: MinusPoint
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 240075086}
+        m_TargetAssemblyTypeName: Attributes, Assembly-CSharp
+        m_MethodName: setSkill
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -8916,6 +9024,18 @@ MonoBehaviour:
       - m_Target: {fileID: 1011155957}
         m_TargetAssemblyTypeName: Attributes, Assembly-CSharp
         m_MethodName: MinusPoint
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1011155957}
+        m_TargetAssemblyTypeName: Attributes, Assembly-CSharp
+        m_MethodName: setStamina
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
