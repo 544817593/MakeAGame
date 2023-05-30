@@ -20,7 +20,7 @@ namespace Game
         public string deathFuncDesc { get;  set; }
         public Sprite cardSprite { get;  set; }
         public Sprite pieceSprite { get;  set; }
-        public SOFeature specialFeature { get;  set; }
+        public List<SOFeature> specialFeature { get;  set; }
         public int width { get;  set; }
         public int height { get;  set; }
         public DirEnum[] moveDirections { get;  set; }
@@ -214,9 +214,13 @@ namespace Game
                 }
             }
             ret += "\nspecial feature: ";
+
             if (specialFeature != null)
-                ret += specialFeature.featureName;
-            
+                foreach (var sf in specialFeature)
+                {
+                    ret += $"{sf.featureName} ";
+                }
+
             Debug.Log(ret);
         }
 
