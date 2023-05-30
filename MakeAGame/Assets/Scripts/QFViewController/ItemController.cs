@@ -235,7 +235,7 @@ namespace Game
                     // 寻找所有的调查员（橙色）牌
                     foreach (SOCharacterInfo so in IdToSO.soCharacterList)
                     {
-                        if (so.rarity == 4) canSpawnCard.Add(so.characterID);
+                        if (so.rarity == RarityEnum.Orange) canSpawnCard.Add(so.characterID);
                     }
                     // 随机生成一张
                     if (canSpawnCard.Count > 0)

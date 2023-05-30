@@ -141,9 +141,9 @@ public class FeatureController : MonoBehaviour, IController
                 int rnd = Random.Range(1, 101);
                 if (rnd <= 3)
                 {
-                    int newCardRarity = -1;
+                    RarityEnum newCardRarity = 0;
                     int newCardId = -1;
-                    while (newCardRarity != 0)
+                    while (newCardRarity != RarityEnum.White)
                     {
                         newCardId = PackProbability.DrawCard(0);
                         newCardRarity = IdToSO.FindCardSOByID(newCardId).rarity;

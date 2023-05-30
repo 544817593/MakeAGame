@@ -40,9 +40,9 @@ namespace Game
         /// </summary>
         /// <param name="rarity"></param>
         /// <returns></returns>
-        public static Sprite GetRaritySprite(int rarity)
+        public static Sprite GetRaritySprite(RarityEnum rarity)
         {
-            Sprite sp = Resources.Load<Sprite>($"Sprites/Cards/Rarity/Card_Rarity_{rarity}");
+            Sprite sp = Resources.Load<Sprite>($"Sprites/Cards/Rarity/Card_Rarity_{(int)rarity}");
             return sp;
         }
 

@@ -28,7 +28,7 @@ namespace Game
         public float atkSpd { get;  set; }
 
         // 会有改动的数据  // 外部可以读取，但不可以直接改动
-        public int rarity { get;  set; }
+        public RarityEnum rarity { get;  set; }
         public float sanCost { get;  set; }
         public int hp { get;  set; }
         public int maxHp { get; set; }

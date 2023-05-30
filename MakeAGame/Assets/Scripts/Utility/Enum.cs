@@ -102,3 +102,11 @@ public enum PieceStateEnum
 {
     Idle, Moving, Attacking
 }
+
+/// <summary>
+/// 卡牌稀有度
+/// </summary>
+public enum RarityEnum
+{
+    None, White, Green, Blue, Orange
+}

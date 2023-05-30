@@ -12,7 +12,7 @@ namespace Game
         public string characterName;    // 角色名字
         
         [FoldoutGroup("Card Information", true)]
-        public int rarity;  // 稀有度
+        public RarityEnum rarity;  // 稀有度
         [FoldoutGroup("Card Information")]
         public int sanCost; // 精神值消耗
         [FoldoutGroup("Card Information")] [TextArea(1, 2)]
