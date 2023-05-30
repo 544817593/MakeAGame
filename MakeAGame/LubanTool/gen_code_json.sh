@@ -1,8 +1,8 @@
 #!/bin/zsh
-WORKSPACE=../../..
+WORKSPACE=..
 
-GEN_CLIENT=${WORKSPACE}/Assets/OtherPlugins/LubanTool/Luban.ClientServer/Luban.ClientServer.dll
-CONF_ROOT=${WORKSPACE}/Assets/OtherPlugins/LubanTool/GameConfig
+GEN_CLIENT=${WORKSPACE}/LubanTool/Luban.ClientServer/Luban.ClientServer.dll
+CONF_ROOT=${WORKSPACE}/LubanTool/GameConfig
 
 
 dotnet ${GEN_CLIENT} -j cfg --\
