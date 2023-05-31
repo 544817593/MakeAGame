@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using DG.Tweening;
 using QFramework;
 using UnityEngine;
@@ -13,9 +14,41 @@ namespace Game
 
         public TriggerHelper mouseHelper;
 
+        public BindableProperty<float> currLife; // 寿命
+        public BindableProperty<float> maxLife; // 最大寿命
+
         public void SetDataWithCard(Card _card)
         {
             card = _card;
+
+            Card pieceData = _card.Clone() as Card;
+            rarity = pieceData.rarity;
+            generalId = pieceData.charaID;
+            pieceId = this.GetSystem<ISpawnSystem>().GetPieceIdCounter();
+            this.GetSystem<ISpawnSystem>().IncrementPieceIdCounter();
+            pieceSize = (pieceData.height, pieceData.width);
+            moveSpeed = new BindableProperty<float>(pieceData.moveSpd);
+            hp = new BindableProperty<int>(pieceData.maxHp);
+            maxHp = new BindableProperty<int>(pieceData.maxHp);
+            atkSpeed = new BindableProperty<float>(pieceData.atkSpd);
+            atkDmg = new BindableProperty<float>(pieceData.damage);
+            defense = new BindableProperty<float>(pieceData.defend);
+            accuracy = new BindableProperty<float>(pieceData.accuracy);
+            atkRange = new BindableProperty<int>(pieceData.atkRange);
+            features = new BindableProperty<List<FeatureEnum>>(pieceData.features);
+            dirs = new BindableProperty<List<DirEnum>>(pieceData.moveDirections);
+            inCombat = false;
+            isAttacking = new BindableProperty<bool>(false);
+            isDying = new BindableProperty<bool>(false);
+            currLife = new BindableProperty<float>(pieceData.maxLife);
+            maxLife = new BindableProperty<float>(pieceData.maxLife);
+
+
+            //(int, int) temp = (data.row, data.col);
+            //leftTopGridPos = new BindableProperty<(int, int)>(temp);
+            //(int, int) temp2 = (data.row + somb.height - 1, data.col + somb.width - 1);
+            //botRightGridPos = new BindableProperty<(int, int)>(temp2);
+
         }
 
         private void Start()
@@ -37,6 +70,7 @@ namespace Game
             
             // todo 先随机一个方向
             direction = (DirEnum)UnityEngine.Random.Range(1, 5);
+
         }
 
         void InitView()
@@ -52,7 +86,7 @@ namespace Game
             base.SetGrids(grids);
             foreach (var grid in pieceGrids)
             {
-                grid.occupation = card.charaID; // todo id待定
+                grid.occupation = pieceId;
             }
         }
         
@@ -79,7 +113,7 @@ namespace Game
                 // 数据变化
                 foreach (var oldGrid in pieceGrids) oldGrid.occupation = 0;
                 pieceGrids = nextGrids;
-                foreach (var newGrid in pieceGrids) newGrid.occupation = card.charaID;  // todo id是什么id待定
+                foreach (var newGrid in pieceGrids) newGrid.occupation = pieceId;
                 
                 // 视觉表现
                 DoMove();
@@ -186,12 +220,12 @@ namespace Game
         {
             this.SendEvent<PieceHitReadyEvent>();
 
-            card.hp -= 1;
-            Debug.Log($"Monster Hit, hp: {card.hp}");
+            hp.Value -= 1;
+            Debug.Log($"Monster Hit, hp: {hp}");
         
             this.SendEvent<PieceHitFinishEvent>();
 
-            return card.hp <= 0;
+            return hp <= 0;
         }
 
         protected override void OnMoveReadyEvent(PieceMoveReadyEvent e)
@@ -234,6 +268,15 @@ namespace Game
         {
             Debug.Log("mouse up piece");
             this.SendCommand<ChangePieceDirectionCommand>(new ChangePieceDirectionCommand());
+        }
+
+        /// <summary>
+        /// 更改当前棋子的寿命
+        /// </summary>
+        /// <param name="value"></param>
+        public void AddCurrLife(float value)
+        {
+            currLife.Value += value;
         }
     }
 }

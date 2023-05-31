@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using Game;
+using System.Threading;
 
 public abstract class BuffBase
 {
@@ -166,16 +167,7 @@ public class BuffConfusion : BuffToPiece
     public override bool OnBuffCreate()
     {
         // 心理医生
-        if (target is Monster)
-        {
-            Monster monster = target as Monster;
-            if (monster.features.Value.Contains(PropertyEnum.Psychologist)) return false;
-        }
-        else if (target is ViewPiece)
-        {
-            ViewPiece piece = target as ViewPiece;
-            if (piece.card.HasFeature("心理医生")) return false;
-        }
+        if (target.features.Value.Contains(FeatureEnum.Psychologist)) return false;
 
         // 先查找该棋子是否已有该类型buff，若有，不再挂新的，而是叠加时间
         if (target.listBuffs.Contains(BuffType.Confusion))
@@ -370,16 +362,7 @@ public class DebuffPoison : BuffToPiece
     public override bool OnBuffCreate() {
 
         // 心理医生
-        if (target is Monster)
-        {
-            monster = target as Monster;
-            if (monster.features.Value.Contains(PropertyEnum.Psychologist)) return false;
-        }
-        else if (target is ViewPiece)
-        {
-            viewPiece = target as ViewPiece;
-            if (viewPiece.card.HasFeature("心理医生")) return false;
-        }
+        if (target.features.Value.Contains(FeatureEnum.Psychologist)) return false;
 
         // 先查找该棋子是否已有该类型buff，若有，不再挂新的，而是叠加时间
         if (target.listBuffs.Contains(BuffType.Poison))
@@ -405,7 +388,7 @@ public class DebuffPoison : BuffToPiece
     public override void OnBuffStart()
     {
         if (monster != null) monster.hp.Value = (int) (0.9f * monster.hp);
-        if (viewPiece != null) viewPiece.card.hp = (int)(0.9f * viewPiece.card.hp);
+        if (viewPiece != null) viewPiece.hp.Value = (int)(0.9f * viewPiece.hp);
     }
 
     public override void OnBuffRefresh()
@@ -415,7 +398,7 @@ public class DebuffPoison : BuffToPiece
         if (activatedTime >= 1)
         {
             if (monster != null) monster.hp.Value = (int)(0.9f * monster.hp);
-            if (viewPiece != null) viewPiece.card.hp = (int)(0.9f * viewPiece.card.hp);
+            if (viewPiece != null) viewPiece.hp.Value = (int)(0.9f * viewPiece.hp);
             activatedTime = 0f;
         }
         if (leftTime <= 0)

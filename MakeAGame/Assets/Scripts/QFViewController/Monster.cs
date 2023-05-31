@@ -16,25 +16,25 @@ public class Monster : ViewPieceBase
     public SOMonsterBase data;
 
     #region 怪物数据
-    public int rarity; // 稀有度 0 白 -- 4 橙
-    public int monsterId; // 怪物的ID，辨认品种
-    public int pieceId; // 棋子ID，每个棋子独一份
-    public (int, int) pieceSize; // 怪物尺寸
+    //public int rarity; // 稀有度 0 白 -- 4 橙
+    //public int monsterId; // 怪物的ID，辨认品种
+    //public int pieceId; // 棋子ID，每个棋子独一份
+    //public (int, int) pieceSize; // 怪物尺寸
 
-    public BindableProperty<float> moveSpeed; // 移动速度
-    public BindableProperty<int> hp; // 当前生命值
-    public BindableProperty<int> maxHp; // 最大生命值
-    public BindableProperty<float> atkSpeed; // 攻速
-    public BindableProperty<float> atkDmg; // 攻击力
-    public BindableProperty<float> defense; // 防御力
-    public BindableProperty<float> accuracy; // 命中率
-    public BindableProperty<int> atkRange; // 射程
-    public BindableProperty<List<PropertyEnum>> features; // 特性
-    public BindableProperty<List<DirEnum>> dirs; // 可移动方向
-    public BindableProperty<bool> isAttacking; // 是否在发起攻击
-    public BindableProperty<bool> isDying; // 是否正在死亡中                         
-    public BindableProperty<(int, int)> leftTopGridPos; // 怪物当前左上角位置
-    public BindableProperty<(int, int)> botRightGridPos; // 怪物当前右下角位置
+    //public BindableProperty<float> moveSpeed; // 移动速度
+    //public BindableProperty<int> hp; // 当前生命值
+    //public BindableProperty<int> maxHp; // 最大生命值
+    //public BindableProperty<float> atkSpeed; // 攻速
+    //public BindableProperty<float> atkDmg; // 攻击力
+    //public BindableProperty<float> defense; // 防御力
+    //public BindableProperty<float> accuracy; // 命中率
+    //public BindableProperty<int> atkRange; // 射程
+    //public BindableProperty<List<PropertyEnum>> features; // 特性
+    //public BindableProperty<List<DirEnum>> dirs; // 可移动方向
+    //public BindableProperty<bool> isAttacking; // 是否在发起攻击
+    //public BindableProperty<bool> isDying; // 是否正在死亡中                         
+    //public BindableProperty<(int, int)> leftTopGridPos; // 怪物当前左上角位置
+    //public BindableProperty<(int, int)> botRightGridPos; // 怪物当前右下角位置
     #endregion
 
     public TempAllyScript currentTarget; // 当前目标
@@ -61,6 +61,7 @@ public class Monster : ViewPieceBase
         
         this.SendCommand(new MonsterTargetSelectionCommand(this));
     }
+
 
     public override void SetGrids(List<BoxGrid> grids)
     {
@@ -303,7 +304,7 @@ public class Monster : ViewPieceBase
 public class MonsterEditor : Editor
 {
     private SerializedProperty _data;
-    public List<PropertyEnum> _properties;
+    public List<FeatureEnum> _properties;
     public List<DirEnum> _dirs;
     private (int,int) _leftTopGridPos;
     private (int,int) _botRightGridPos;
@@ -313,7 +314,7 @@ public class MonsterEditor : Editor
         // 获取 data 字段的 SerializedProperty
         _data = serializedObject.FindProperty("data");
         // 获取特殊类型的 BindableProperty
-        _properties = ((Monster)target).features.Value;
+        _properties = ((Monster)target).features?.Value;
         _dirs = ((Monster)target).dirs.Value;
         _leftTopGridPos = ((Monster)target).leftTopGridPos.Value;
         _botRightGridPos = ((Monster)target).botRightGridPos.Value;
@@ -341,7 +342,7 @@ public class MonsterEditor : Editor
         // 特性
         for (int i = 0; i < _properties.Count; i++)
         {
-            _properties[i] = (PropertyEnum)EditorGUILayout.EnumPopup("Property " + i, _properties[i]);
+            _properties[i] = (FeatureEnum)EditorGUILayout.EnumPopup("Property " + i, _properties[i]);
         }
 
         // 可移动方向

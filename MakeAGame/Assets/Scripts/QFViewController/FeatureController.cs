@@ -3,6 +3,7 @@ using QFramework;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -98,18 +99,15 @@ public class FeatureController : MonoBehaviour, IController
     #region 鼠类
     private void Rodent(SpecialitiesSpawnCheckEvent obj)
     {
-        if (obj.piece != null)
+        if (obj.piece.features.Value.Contains(FeatureEnum.Rodent))
         {
-            if (obj.piece.card.HasFeature("鼠类"))
+            if (obj.isTargetMonster)
             {
-                StartCoroutine(RodentCO_Ally(obj.piece));
+                StartCoroutine(RodentCO_Monster(obj.piece as Monster));
             }
-        }
-        else
-        {
-            if (obj.monster.features.Value.Contains(PropertyEnum.Rodent))
+            else
             {
-                StartCoroutine(RodentCO_Monster(obj.monster));
+                StartCoroutine(RodentCO_Ally(obj.piece as ViewPiece));
             }
         }
     }
@@ -161,7 +159,7 @@ public class FeatureController : MonoBehaviour, IController
                 // 开启特性条件达成
                 if (featureActiveEnumCondition.Contains(grid.timeMultiplier) && !featureActive)
                 {
-                    piece.card.atkSpd += 0.2f;
+                    piece.atkSpeed.Value += 0.2f;
                     featureActive = true;
                     switchOffFeature = false;
                     break;
@@ -169,7 +167,7 @@ public class FeatureController : MonoBehaviour, IController
             }
             if (featureActive && switchOffFeature)
             {
-                piece.card.atkSpd -= 0.2f;
+                piece.atkSpeed.Value -= 0.2f;
                 featureActive = false;
             }
             yield return new WaitForSeconds(0.1f);
@@ -180,20 +178,19 @@ public class FeatureController : MonoBehaviour, IController
     #region 孤勇者
     private void SolitaryHero(SpecialitiesSpawnCheckEvent obj)
     {
-        if (obj.piece != null)
+        if (obj.piece.features.Value.Contains(FeatureEnum.SolitaryHero))
         {
-            if (obj.piece.card.HasFeature("孤勇者"))
+            if (obj.isTargetMonster)
             {
-                StartCoroutine(SolitaryHeroCO_Ally(obj.piece));
+                StartCoroutine(SolitaryHeroCO_Monster(obj.piece as Monster));
+
+            }
+            else
+            {
+                StartCoroutine(SolitaryHeroCO_Ally(obj.piece as ViewPiece));
             }
         }
-        else
-        {
-            if (obj.monster.features.Value.Contains(PropertyEnum.SolitaryHero))
-            {
-                StartCoroutine(SolitaryHeroCO_Monster(obj.monster));
-            }
-        }
+
     }
 
     private IEnumerator SolitaryHeroCO_Monster(Monster monster)
@@ -245,13 +242,13 @@ public class FeatureController : MonoBehaviour, IController
             // 开启特性条件达成
             if (counter >= 2 && !featureActive)
             {
-                piece.card.atkSpd += 0.2f;
+                piece.atkSpeed.Value += 0.2f;
                 featureActive = true;
             }
             // 关闭特性条件达成
             else if (counter < 2 && featureActive)
             {
-                piece.card.atkSpd -= 0.2f;
+                piece.atkSpeed.Value -= 0.2f;
                 featureActive = false;
             }
             yield return new WaitForSeconds(0.1f);
@@ -262,18 +259,15 @@ public class FeatureController : MonoBehaviour, IController
     #region 意志坚定
     private void Determined(SpecialitiesSpawnCheckEvent obj)
     {
-        if (obj.piece != null)
+        if (obj.piece.features.Value.Contains(FeatureEnum.Determined))
         {
-            if (obj.piece.card.HasFeature("意志坚定"))
+            if (obj.isTargetMonster)
             {
-                StartCoroutine(DeterminedCO_Ally(obj.piece));
+                StartCoroutine(DeterminedCO_Monster(obj.piece as Monster));
             }
-        }
-        else
-        {
-            if (obj.monster.features.Value.Contains(PropertyEnum.Determined))
+            else
             {
-                StartCoroutine(DeterminedCO_Monster(obj.monster));
+                StartCoroutine(DeterminedCO_Ally(obj.piece as ViewPiece));
             }
         }
     }
@@ -327,13 +321,13 @@ public class FeatureController : MonoBehaviour, IController
             // 开启特性条件达成
             if (counter <= 1 && !featureActive)
             {
-                piece.card.atkSpd += 0.2f;
+                piece.atkSpeed.Value += 0.2f;
                 featureActive = true;
             }
             // 关闭特性条件达成
             else if (counter > 1 && featureActive)
             {
-                piece.card.atkSpd -= 0.2f;
+                piece.atkSpeed.Value -= 0.2f;
                 featureActive = false;
             }
             yield return new WaitForSeconds(0.1f);
@@ -373,89 +367,37 @@ public class FeatureController : MonoBehaviour, IController
     /// <returns>True为可以移动，False为不可移动</returns>
     public bool Hydrophobia(ViewPieceBase obj, BoxGrid grid)
     {
-        if (obj is Monster)
+        if (obj.features.Value.Contains(FeatureEnum.Hydrophobia))
         {
-            Monster monster = obj as Monster;
-            if (monster.features.Value.Contains(PropertyEnum.Hydrophobia))
-            {
-                if (grid.terrain.Value == (int)TerrainEnum.Water) return false;
-            }
-        }
-        else
-        {
-            ViewPiece piece = obj as ViewPiece;
-            if (piece.card.HasFeature("海洋恐惧症"))
-            {
-                if (grid.terrain.Value == (int)TerrainEnum.Water) return false;
-            }
+            if (grid.terrain.Value == (int)TerrainEnum.Water) return false;
         }
         return true;
     }
 
     private void Laborer(SpecialitiesMoveCheckEvent obj)
     {
-        if (obj.piece is Monster)
+        if (obj.piece.features.Value.Contains(FeatureEnum.Laborer))
         {
-            Monster monster = obj.piece as Monster;
-            if (monster.features.Value.Contains(PropertyEnum.Laborer))
-            {
-                obj.boxgrid.LevelDownTimeMultiplier();
-            }
-        }
-        else
-        {
-            ViewPiece piece = obj.piece as ViewPiece;
-            if (piece.card.HasFeature("打工者"))
-            {
-                obj.boxgrid.LevelDownTimeMultiplier();
-            }
+            obj.boxgrid.LevelDownTimeMultiplier();
         }
     }
 
     private void Lazy_(SpecialitiesMoveCheckEvent obj)
     {
-        if (obj.piece is Monster)
+        if (obj.piece.features.Value.Contains(FeatureEnum.Lazy))
         {
-            Monster monster = obj.piece as Monster;
-            if (monster.features.Value.Contains(PropertyEnum.Lazy))
-            {
-                obj.boxgrid.LevelUpTimeMultiplier();
-            }
-        }
-        else
-        {
-            ViewPiece piece = obj.piece as ViewPiece;
-            if (piece.card.HasFeature("游手好闲"))
-            {
-                obj.boxgrid.LevelUpTimeMultiplier();
-            }
+            obj.boxgrid.LevelUpTimeMultiplier();
         }
     }
 
     private void TinyCreature(SpecialitiesMoveCheckEvent obj)
     {
-        if (obj.piece is Monster)
+        if (obj.piece.features.Value.Contains(FeatureEnum.TinyCreature))
         {
-            Monster monster = obj.piece as Monster;
-            if (monster.features.Value.Contains(PropertyEnum.TinyCreature))
+            int rnd = Random.Range(1, 101);
+            if (rnd <= 20 && obj.piece.GetPieceState() == PieceStateEnum.Moving)
             {
-                int rnd = Random.Range(1, 101);
-                if (rnd <= 20 && monster.GetPieceState() == PieceStateEnum.Moving)
-                {
-                    monster.GetEnemyMovingState().movementCooldown = 0.01f;
-                }
-            }
-        }
-        else
-        {
-            ViewPiece piece = obj.piece as ViewPiece;
-            if (piece.card.HasFeature("小型动物"))
-            {
-                int rnd = Random.Range(1, 101);
-                if (rnd <= 20 && piece.GetPieceState() == PieceStateEnum.Moving)
-                {
-                    piece.GetFriendMovingState().movementCooldown = 0.01f;
-                }
+                obj.piece.GetEnemyMovingState().movementCooldown = 0.01f;
             }
         }
     }
@@ -464,8 +406,7 @@ public class FeatureController : MonoBehaviour, IController
     {
         if (obj.piece is ViewPiece)
         {
-            ViewPiece piece = obj.piece as ViewPiece;
-            if (piece.card.HasFeature("作家"))
+            if (obj.piece.features.Value.Contains(FeatureEnum.Writer))
             {
                 int rnd = Random.Range(1, 101);
                 if (rnd <= 3)
@@ -497,144 +438,61 @@ public class FeatureController : MonoBehaviour, IController
 
     private void SoundSensitive(SpecialitiesDefendCheckEvent obj)
     {
-        if (obj.isTargetMonster)
+        if (obj.target.features.Value.Contains(FeatureEnum.SoundSensitive))
         {
-            Monster monster = obj.target as Monster;
-            if (monster.features.Value.Contains(PropertyEnum.SoundSensitive))
-            {
-                if (obj.isMagic) damageAdjust += (int)(0.1 * obj.damage);
-                if (!obj.isMagic) damageAdjust -= (int)(0.25 * obj.damage);
-            }
-        }
-        else
-        {
-            ViewPiece piece = obj.target as ViewPiece;
-            if (piece.card.HasFeature("声音敏感"))
-            {
-                if (obj.isMagic) damageAdjust += (int)(0.1 * obj.damage);
-                if (!obj.isMagic) damageAdjust -= (int)(0.25 * obj.damage);
-            }
+            if (obj.isMagic) damageAdjust += (int)(0.1 * obj.damage);
+            if (!obj.isMagic) damageAdjust -= (int)(0.25 * obj.damage);
         }
     }
 
     private void Feline_Def(SpecialitiesDefendCheckEvent obj)
     {
-        if (obj.isTargetMonster)
+        if (obj.target.features.Value.Contains(FeatureEnum.Feline))
         {
-            Monster monster = obj.target as Monster;
-            if (monster.features.Value.Contains(PropertyEnum.Feline))
-            {
-                int rnd = Random.Range(1, 101);
-                if (rnd <= 25) obj.damage = 0;
-            }
-        }
-        else
-        {
-            ViewPiece piece = obj.target as ViewPiece;
-            if (piece.card.HasFeature("猫科"))
-            {
-                int rnd = Random.Range(1, 101);
-                if (rnd <= 25) obj.damage = 0;
-            }
+            int rnd = Random.Range(1, 101);
+            if (rnd <= 25) obj.damage = 0;
         }
     }
 
     private void Aquatic(SpecialitiesDefendCheckEvent obj)
     {
-        if (obj.isTargetMonster)
+        if (obj.target.features.Value.Contains(FeatureEnum.Aquatic))
         {
-            Monster monster = obj.target as Monster;
-            if (monster.features.Value.Contains(PropertyEnum.Aquatic)) 
-            { 
-                if (obj.boxgrid.terrain.Value == (int)TerrainEnum.Water)
-                {
-                    damageAdjust -= (int)(0.1f * obj.damage);
-                }
-            }
-        }
-        else
-        {
-            ViewPiece piece = obj.target as ViewPiece;
-            if (piece.card.HasFeature("水生物"))
+            if (obj.boxgrid.terrain.Value == (int)TerrainEnum.Water)
             {
-                if (obj.boxgrid.terrain.Value == (int)TerrainEnum.Water)
-                {
-                    damageAdjust -= (int)(0.1f * obj.damage);
-                }
+                damageAdjust -= (int)(0.1f * obj.damage);
             }
-        }
+        }      
     }
 
     private void MagicResistant(SpecialitiesDefendCheckEvent obj)
     {
-        if (obj.isTargetMonster)
+        if (obj.target.features.Value.Contains(FeatureEnum.MagicResistant))
         {
-            Monster monster = obj.target as Monster;
-            if (monster.features.Value.Contains(PropertyEnum.MagicResistant))
-            {
-                if (obj.isMagic) damageAdjust -= (int)(0.25 * obj.damage);
-                if (!obj.isMagic) damageAdjust += (int)(0.1 * obj.damage);
-            }
-        }
-        else
-        {
-            ViewPiece piece = obj.target as ViewPiece;
-            if (piece.card.HasFeature("抗魔者"))
-            {
-                if (obj.isMagic) damageAdjust -= (int)(0.25 * obj.damage);
-                if (!obj.isMagic) damageAdjust += (int)(0.1 * obj.damage);
-            }
-        }
+            if (obj.isMagic) damageAdjust -= (int)(0.25 * obj.damage);
+            if (!obj.isMagic) damageAdjust += (int)(0.1 * obj.damage);
+        }     
     }
 
     private void Camouflaged(SpecialitiesDefendCheckEvent obj)
     {
-        if (obj.isTargetMonster)
+        if (obj.target.features.Value.Contains(FeatureEnum.Camouflaged))
         {
-            Monster monster = obj.target as Monster;
-            if (monster.features.Value.Contains(PropertyEnum.Camouflaged))
+            if (obj.boxgrid.terrain.Value == (int)TerrainEnum.Road)
             {
-                if (obj.boxgrid.terrain.Value == (int)TerrainEnum.Road)
-                {
-                    int rnd = Random.Range(1, 101);
-                    if (rnd <= 10) obj.damage = 0;
-                }
+                int rnd = Random.Range(1, 101);
+                if (rnd <= 10) obj.damage = 0;
             }
-        }
-        else
-        {
-            ViewPiece piece = obj.target as ViewPiece;
-            if (piece.card.HasFeature("隐身"))
-            {
-                if (obj.boxgrid.terrain.Value == (int)TerrainEnum.Road)
-                {
-                    int rnd = Random.Range(1, 101);
-                    if (rnd <= 10) obj.damage = 0;
-                }
-            }
-        }
+        }    
     }
 
     private void Anthropologist(SpecialitiesDefendCheckEvent obj)
     {
-        if (obj.isTargetMonster)
+        if (obj.target.features.Value.Contains(FeatureEnum.Anthropologist))
         {
-            Monster monster = obj.target as Monster;
-            if (monster.features.Value.Contains(PropertyEnum.Anthropologist))
-            {
-                int rnd = Random.Range(1, 101);
-                if (rnd <= 25) obj.damage = 0;
-            }
-        }
-        else
-        {
-            ViewPiece piece = obj.target as ViewPiece;
-            if (piece.card.HasFeature("人类学家"))
-            {
-                int rnd = Random.Range(1, 101);
-                if (rnd <= 25) obj.damage = 0;
-            }
-        }
+            int rnd = Random.Range(1, 101);
+            if (rnd <= 25) obj.damage = 0;
+        }        
     }
 
     /// <summary>
@@ -658,8 +516,7 @@ public class FeatureController : MonoBehaviour, IController
 
     private void Greedy(SpecialitiesAttackCheckEvent obj)
     {
-        ViewPiece piece = obj.attacker as ViewPiece;
-        if (piece.card.HasFeature("贪婪"))
+        if (obj.attacker.features.Value.Contains(FeatureEnum.Greedy))
         {
             int rnd = UnityEngine.Random.Range(1, 101);
             if (rnd <= 10) GameManager.Instance.playerMan.player.AddGold(2);
@@ -668,141 +525,56 @@ public class FeatureController : MonoBehaviour, IController
 
     private void Avian(SpecialitiesAttackCheckEvent obj)
     {
-        if (obj.isTargetMonster)
+        if (obj.attacker.features.Value.Contains(FeatureEnum.Avian) &&
+            obj.target.features.Value.Contains(FeatureEnum.Aquatic))
         {
-            ViewPiece piece = obj.attacker as ViewPiece;
-            Monster monster = obj.target as Monster;
-            if (piece.card.HasFeature("鸟类") &&
-               monster.features.Value.Contains(PropertyEnum.Aquatic))
-            {
-                damageAdjust += (int)0.25f * obj.damage;
-            }
-        }
-        else
-        {
-            Monster monster = obj.attacker as Monster;
-            ViewPiece piece = obj.target as ViewPiece;
-            if (monster.features.Value.Contains(PropertyEnum.Avian) &&
-                piece.card.HasFeature("水生物"))
-            {
-                damageAdjust += (int)0.25f * obj.damage;
-            }
+            damageAdjust += (int)0.25f * obj.damage;
         }
     }
 
     private void Feline_Atk(SpecialitiesAttackCheckEvent obj)
     {
-        if (obj.isTargetMonster)
-        {
-            ViewPiece piece = obj.attacker as ViewPiece;
-            Monster monster = obj.target as Monster;
-            if (piece.card.HasFeature("猫科") &&
-                (monster.features.Value.Contains(PropertyEnum.Avian) ||
-                monster.features.Value.Contains(PropertyEnum.Rodent)))
+        if (obj.attacker.features.Value.Contains(FeatureEnum.Feline) &&
+            (obj.target.features.Value.Contains(FeatureEnum.Avian) ||
+            obj.target.features.Value.Contains(FeatureEnum.Rodent)))
             {
                 int rnd = UnityEngine.Random.Range(1, 101);
                 if (rnd <= 20) damageAdjust += obj.damage;
             }
-        }
-        else
-        {
-            Monster monster = obj.attacker as Monster;
-            ViewPiece piece = obj.target as ViewPiece;
-            if (monster.features.Value.Contains(PropertyEnum.Feline) &&
-                (piece.card.HasFeature("鸟类") || piece.card.HasFeature("鼠类")))
-            {
-                int rnd = UnityEngine.Random.Range(1, 101);
-                if (rnd <= 20) damageAdjust += obj.damage;
-            }
-        }
     }
 
     private void AnimalKiller(SpecialitiesAttackCheckEvent obj)
     {
-        if (obj.isTargetMonster)
+        if (obj.attacker.features.Value.Contains(FeatureEnum.AnimalKiller) &&
+            obj.target.features.Value.Contains(FeatureEnum.TinyCreature))
         {
-            ViewPiece piece = obj.attacker as ViewPiece;
-            Monster monster = obj.target as Monster;
-            if (piece.card.HasFeature("动物杀手") && 
-                monster.features.Value.Contains(PropertyEnum.TinyCreature))
-            {
-                piece.card.atkSpd += 0.1f;
-            }
-        }
-        else
-        {
-            Monster monster = obj.attacker as Monster;
-            ViewPiece piece = obj.target as ViewPiece;
-            if (monster.features.Value.Contains(PropertyEnum.AnimalKiller) &&
-                piece.card.HasFeature("小型动物"))
-            {
-                monster.atkSpeed.Value += 0.1f;
-            }
+            obj.attacker.atkSpeed.Value += 0.1f;
         }
     }
 
     private void Bloodthirsty(SpecialitiesAttackCheckEvent obj)
     {
-        if (obj.isTargetMonster)
+        if (obj.attacker.features.Value.Contains(FeatureEnum.Bloodthirsty) && obj.hit)
         {
-            ViewPiece piece = obj.attacker as ViewPiece;
-            if (piece.card.HasFeature("嗜血者") && obj.hit)
-            {
-                piece.card.hp += (int)(0.25f * obj.damage);
-                if (piece.card.hp > piece.card.maxHp) piece.card.hp = piece.card.maxHp;
-            }
-        }
-        else
-        {
-            Monster monster = obj.attacker as Monster;
-            if (monster.features.Value.Contains(PropertyEnum.Bloodthirsty) && obj.hit)
-            {
-                monster.hp.Value += (int)(0.25f * obj.damage);
-                if (monster.hp > monster.maxHp) monster.hp = monster.maxHp;
-            }
-        }
+            obj.attacker.hp.Value += (int)(0.25f * obj.damage);
+            if (obj.attacker.hp > obj.attacker.maxHp) obj.attacker.hp = obj.attacker.maxHp;
+        }       
     }
 
     private void Toxicologist(SpecialitiesAttackCheckEvent obj)
     {
-        if (obj.isTargetMonster)
+        if (obj.attacker.features.Value.Contains(FeatureEnum.Toxicologist))
         {
-            ViewPiece piece = obj.attacker as ViewPiece;
-            if (piece.card.HasFeature("施毒者"))
-            {
-                GameManager.Instance.buffMan.AddBuff(new DebuffPoison(obj.target, 5f));
-            }
-        }
-        else
-        {
-            Monster monster = obj.attacker as Monster;
-            if (monster.features.Value.Contains(PropertyEnum.Toxicologist))
-            {
-                GameManager.Instance.buffMan.AddBuff(new DebuffPoison(obj.target, 5f));
-            }
-        }
+            GameManager.Instance.buffMan.AddBuff(new DebuffPoison(obj.target, 5f));
+        }       
     }
 
     private void Dominant(SpecialitiesAttackCheckEvent obj)
     {
-        if (obj.isTargetMonster)
+        if (obj.attacker.features.Value.Contains(FeatureEnum.Dominant) && obj.target.rarity == RarityEnum.White)
         {
-            ViewPiece piece = obj.attacker as ViewPiece;
-            Monster monster = obj.target as Monster;
-            if (piece.card.HasFeature("霸道") && monster.rarity == 0)
-            {
-                damageAdjust += (int)0.25f * obj.damage;
-            }
-        }
-        else
-        {
-            Monster monster = obj.attacker as Monster;
-            ViewPiece piece = obj.target as ViewPiece;           
-            if (monster.features.Value.Contains(PropertyEnum.Dominant) && piece.card.rarity == 0)
-            {
-                damageAdjust += obj.damage + (int)0.25f * obj.damage;
-            }
-        }
+            damageAdjust += obj.damage + (int)0.25f * obj.damage;
+        }        
     }
 
     public IArchitecture GetArchitecture()
