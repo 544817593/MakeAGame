@@ -33,13 +33,50 @@ namespace Game
         /// <param name="target">格子B</param>
         /// <returns></returns>
         DirEnum NeighbourBoxGridsToDir(BoxGrid start, BoxGrid target);
+
+        /// <summary>
+        /// 根据当前方向，获取下次移动后将占据的格子，不做任何筛选
+        /// </summary>
+        /// <param name="direction">当前移动方向</param>
+        /// <param name="pieceGrids">当前棋子占用的格子</param>
+        /// <returns></returns>
+        List<BoxGrid> GetNextGrids(DirEnum direction, List<BoxGrid> pieceGrids);
     }
 
     public class MovementSystem : AbstractSystem, IMovementSystem
     {
+        private IMapSystem mapSystem;
         protected override void OnInit()
         {
+            mapSystem = this.GetSystem<IMapSystem>();
+        }
 
+
+        /// <summary>
+        /// 根据当前方向，获取下次移动后将占据的格子，不做任何筛选
+        /// </summary>
+        /// <returns></returns>
+        public List<BoxGrid> GetNextGrids(DirEnum direction, List<BoxGrid> pieceGrids)
+        {
+            int rowDiff = direction == DirEnum.Top ? -1 : direction == DirEnum.Down ? 1 : 0;
+            int colDiff = direction == DirEnum.Left ? -1 : direction == DirEnum.Right ? 1 : 0;
+
+            int nextRow;
+            int nextCol;
+            List<BoxGrid> nextGrids = new List<BoxGrid>();
+            var mapGrids = mapSystem.Grids();
+            foreach (var crtGrid in pieceGrids)
+            {
+                nextRow = crtGrid.row + rowDiff;
+                nextCol = crtGrid.col + colDiff;
+                // 超出地图边界的情况
+                if (nextCol < 0 || nextCol >= mapSystem.mapCol || nextRow < 0 || nextRow >= mapSystem.mapRow)
+                    continue;
+
+                nextGrids.Add(mapGrids[nextRow, nextCol]);
+            }
+
+            return nextGrids;
         }
 
         public (int, int) CalculateNextPosition((int, int) currPos, DirEnum dir)
@@ -81,12 +118,6 @@ namespace Game
             var grid2DList = this.GetSystem<IMapSystem>().Grids();
             if (intendPos.Item1 < 0 || intendPos.Item1 >= grid2DList.GetLength(0) ||
                 intendPos.Item2 < 0 || intendPos.Item2 >= grid2DList.GetLength(1))
-            {
-                return false;
-            }
-
-            // 已有棋子或者地形不可通过
-            if (!this.GetSystem<IMapSystem>().GridCanMoveTo(grid2DList[intendPos.Item1, intendPos.Item2]))
             {
                 return false;
             }

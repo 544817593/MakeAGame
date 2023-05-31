@@ -430,7 +430,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d009c6d42bf84f18bbab77e8fde56d84, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mapDataResPath: ScriptableObjects/SOMapDataTest
+  mapDataResPath: ScriptableObjects/SOMapDataEdgeTest
   monsterSpawnSettings: {fileID: 11400000, guid: 328c7f0148f614cd4969cfe271e9e31d, type: 2}
   combatCamera: {fileID: 1083411594}
 --- !u!4 &1351751550

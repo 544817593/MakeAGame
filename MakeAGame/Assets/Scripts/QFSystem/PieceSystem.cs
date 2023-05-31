@@ -13,6 +13,10 @@ namespace Game
 
         public bool AddPieceEnemy(Monster monster, List<BoxGrid> grids);
 
+        public ViewPiece GetLastSpawnedFriend(bool investigator);
+
+        public Monster GetLastSpawnedMonster();
+
         public void RemovePiece(ViewPieceBase vpb);
 
         // 唤出方向轮盘显示在棋子下
@@ -29,6 +33,10 @@ namespace Game
         private ViewDirectionWheel viewDirectionWheel;
         public List<ViewPiece> pieceFriendList { get; } = new List<ViewPiece>();
         public List<Monster> pieceEnemyList { get; } = new List<Monster>();
+
+        private ViewPiece lastSpawnedFriend;
+        private ViewPiece lastSpawnedInvestigator;
+        private Monster lastSpawnedMonster;
 
         protected override void OnInit()
         {
@@ -51,6 +59,8 @@ namespace Game
 
             // 数值变化
             pieceFriendList.Add(viewPiece);
+            lastSpawnedFriend = viewPiece;
+            if (viewPiece.card.rarity == 4) lastSpawnedInvestigator = viewPiece;
 
             // 通知UI变化   // 通过事件注册
             // OnAddCardTest.Trigger(handCardList.Count - 1);
@@ -73,10 +83,22 @@ namespace Game
 
             // 数值变化
             pieceEnemyList.Add(monster);
+            lastSpawnedMonster = monster;
 
             return true;
         }
 
+        public ViewPiece GetLastSpawnedFriend(bool investigator)
+        {
+            if (investigator) return lastSpawnedInvestigator;
+            return lastSpawnedFriend;
+        }
+
+        public Monster GetLastSpawnedMonster()
+        {
+            return lastSpawnedMonster;
+        }
+            
         public void RemovePiece(ViewPieceBase vpb)
         {
             if (vpb is ViewPiece vp)

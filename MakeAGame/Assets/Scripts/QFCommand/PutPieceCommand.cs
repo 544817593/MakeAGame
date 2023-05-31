@@ -42,8 +42,16 @@ namespace Game
 
         void OnPutPieceFinish()
         {
+            InitFeatures();
             // Debug.Log("[TODO] add piece");
             this.GetSystem<IPieceBattleSystem>().CheckAllPieceAtkRange();
+        }
+
+        void InitFeatures()
+        {
+            ViewPiece piece = this.GetSystem<IPieceSystem>().GetLastSpawnedFriend(false);
+            SpecialitiesSpawnCheckEvent e = new SpecialitiesSpawnCheckEvent { piece = piece };
+            this.SendEvent(e);
         }
     }
 }
