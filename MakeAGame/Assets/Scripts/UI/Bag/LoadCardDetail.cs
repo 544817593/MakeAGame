@@ -10,7 +10,7 @@ public class LoadCardDetail : MonoBehaviour
 {
 
     // Start is called before the first frame update
-    int rarity;
+    RarityEnum rarity;
     public BagUIPanel m_BagUI;
     void Start()
     {

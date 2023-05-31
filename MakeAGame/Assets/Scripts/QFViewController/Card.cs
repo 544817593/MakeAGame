@@ -20,21 +20,21 @@ namespace Game
         public string deathFuncDesc { get;  set; }
         public Sprite cardSprite { get;  set; }
         public Sprite pieceSprite { get;  set; }
-        public SOFeature specialFeature { get;  set; }
+        public List<SOFeature> specialFeature { get;  set; }
         public int width { get;  set; }
         public int height { get;  set; }
-        public DirEnum[] moveDirections { get;  set; }
+        public List<DirEnum> moveDirections { get;  set; }
         public int atkRange { get;  set; }
         public float atkSpd { get;  set; }
 
         // 会有改动的数据  // 外部可以读取，但不可以直接改动
-        public int rarity { get;  set; }
+        public RarityEnum rarity { get;  set; }
         public float sanCost { get;  set; }
-        public int hp { get;  set; }
-        public int maxHp { get; set; }
+        public float hp { get;  set; }
+        public float maxHp { get; set; }
         public float moveSpd { get;  set; }
-        public int damage { get;  set; }
-        public int defend { get;  set; }
+        public float damage { get;  set; }
+        public float defend { get;  set; }
         public int enhancement { get;  set; }
         public string charaName { get;  set; }
         public float maxLife { get;  set; }
@@ -53,7 +53,7 @@ namespace Game
             deathFuncDesc = so.deathFuncDescription;
             cardSprite = so.cardSprite;
             pieceSprite = so.pieceSprite;
-            specialFeature = so.specialFeature;
+            specialFeature = so.specialFeatures;
             width = so.width;
             height = so.height;
             moveDirections = so.moveDirections;
@@ -214,9 +214,13 @@ namespace Game
                 }
             }
             ret += "\nspecial feature: ";
+
             if (specialFeature != null)
-                ret += specialFeature.featureName;
-            
+                foreach (var sf in specialFeature)
+                {
+                    ret += $"{sf.featureName} ";
+                }
+
             Debug.Log(ret);
         }
 

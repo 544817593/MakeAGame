@@ -19,7 +19,7 @@ public enum TimeMultiplierEnum
 /// </summary>
 public enum PlayerStatsEnum
 {
-    Strength, Spirit, Skill, Stamina, Charisma
+    None, Strength, Spirit, Skill, Stamina, Charisma, Total
 }
 
 /// <summary>
@@ -118,4 +118,20 @@ public enum ItemVolumeEnum
 public enum PieceStateEnum
 {
     Idle, Moving, Attacking
+}
+
+/// <summary>
+/// 卡牌稀有度
+/// </summary>
+public enum RarityEnum
+{
+    None, White, Green, Blue, Purple, Orange
+}
+
+/// <summary>
+/// 卡包
+/// </summary>
+public enum CardPackEnum
+{
+    None, Base, Warrior
 }

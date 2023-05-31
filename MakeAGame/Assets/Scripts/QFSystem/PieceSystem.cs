@@ -60,7 +60,7 @@ namespace Game
             // 数值变化
             pieceFriendList.Add(viewPiece);
             lastSpawnedFriend = viewPiece;
-            if (viewPiece.card.rarity == 4) lastSpawnedInvestigator = viewPiece;
+            if (viewPiece.card.rarity == RarityEnum.Orange) lastSpawnedInvestigator = viewPiece;
 
             // 通知UI变化   // 通过事件注册
             // OnAddCardTest.Trigger(handCardList.Count - 1);
