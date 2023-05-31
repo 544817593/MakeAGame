@@ -3,13 +3,13 @@
     "characterID": 1,
     "characterName": "弗朗西斯·维兰德·瑟斯顿",
     "rarity": 4,
+    "cardPack": 1,
     "sanCost": 90,
     "sanCostBonus": {
       "property": 0,
       "multiple": 0
     },
     "deathDesc": "在当前位置放置一个不可摧毁的障碍物，获得一张弗朗西斯。",
-    "cardSpriteName": "11",
     "hp": 60,
     "hpBonus": {
       "property": 4,
@@ -31,7 +31,6 @@
       26,
       27
     ],
-    "pieceSpriteName": "11",
     "width": 1,
     "height": 1,
     "moveDirections": [
@@ -53,13 +52,13 @@
     "characterID": 2,
     "characterName": "伦道夫·卡特",
     "rarity": 4,
+    "cardPack": 1,
     "sanCost": 90,
     "sanCostBonus": {
       "property": 0,
       "multiple": 0
     },
     "deathDesc": "当前位置的时间流逝速率永久-0.5，获得一张伦道夫。",
-    "cardSpriteName": "22",
     "hp": 35,
     "hpBonus": {
       "property": 4,
@@ -81,7 +80,6 @@
       29,
       30
     ],
-    "pieceSpriteName": "22",
     "width": 1,
     "height": 1,
     "moveDirections": [

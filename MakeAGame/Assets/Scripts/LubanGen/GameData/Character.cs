@@ -21,10 +21,10 @@ public sealed partial class Character :  Bright.Config.BeanBase
         { if(!_json["characterID"].IsNumber) { throw new SerializationException(); }  CharacterID = _json["characterID"]; }
         { if(!_json["characterName"].IsString) { throw new SerializationException(); }  CharacterName = _json["characterName"]; }
         { if(!_json["rarity"].IsNumber) { throw new SerializationException(); }  Rarity = (GameData.Rarity)_json["rarity"].AsInt; }
+        { if(!_json["cardPack"].IsNumber) { throw new SerializationException(); }  CardPack = (GameData.CardPack)_json["cardPack"].AsInt; }
         { if(!_json["sanCost"].IsNumber) { throw new SerializationException(); }  SanCost = _json["sanCost"]; }
         { if(!_json["sanCostBonus"].IsObject) { throw new SerializationException(); }  SanCostBonus = GameData.PlayerBonus.DeserializePlayerBonus(_json["sanCostBonus"]);  }
         { if(!_json["deathDesc"].IsString) { throw new SerializationException(); }  DeathDesc = _json["deathDesc"]; }
-        { if(!_json["cardSpriteName"].IsString) { throw new SerializationException(); }  CardSpriteName = _json["cardSpriteName"]; }
         { if(!_json["hp"].IsNumber) { throw new SerializationException(); }  Hp = _json["hp"]; }
         { if(!_json["hpBonus"].IsObject) { throw new SerializationException(); }  HpBonus = GameData.PlayerBonus.DeserializePlayerBonus(_json["hpBonus"]);  }
         { if(!_json["atk"].IsNumber) { throw new SerializationException(); }  Atk = _json["atk"]; }
@@ -33,7 +33,6 @@ public sealed partial class Character :  Bright.Config.BeanBase
         { if(!_json["def"].IsNumber) { throw new SerializationException(); }  Def = _json["def"]; }
         { var __json0 = _json["feature"]; if(!__json0.IsArray) { throw new SerializationException(); } Feature = new System.Collections.Generic.List<int>(__json0.Count); foreach(JSONNode __e0 in __json0.Children) { int __v0;  { if(!__e0.IsNumber) { throw new SerializationException(); }  __v0 = __e0; }  Feature.Add(__v0); }   }
         { var __json0 = _json["specialFeature"]; if(!__json0.IsArray) { throw new SerializationException(); } SpecialFeature = new System.Collections.Generic.List<int>(__json0.Count); foreach(JSONNode __e0 in __json0.Children) { int __v0;  { if(!__e0.IsNumber) { throw new SerializationException(); }  __v0 = __e0; }  SpecialFeature.Add(__v0); }   }
-        { if(!_json["pieceSpriteName"].IsString) { throw new SerializationException(); }  PieceSpriteName = _json["pieceSpriteName"]; }
         { if(!_json["width"].IsNumber) { throw new SerializationException(); }  Width = _json["width"]; }
         { if(!_json["height"].IsNumber) { throw new SerializationException(); }  Height = _json["height"]; }
         { var __json0 = _json["moveDirections"]; if(!__json0.IsArray) { throw new SerializationException(); } MoveDirections = new System.Collections.Generic.List<GameData.MoveDir>(__json0.Count); foreach(JSONNode __e0 in __json0.Children) { GameData.MoveDir __v0;  { if(!__e0.IsNumber) { throw new SerializationException(); }  __v0 = (GameData.MoveDir)__e0.AsInt; }  MoveDirections.Add(__v0); }   }
@@ -45,15 +44,15 @@ public sealed partial class Character :  Bright.Config.BeanBase
         PostInit();
     }
 
-    public Character(int characterID, string characterName, GameData.Rarity rarity, int sanCost, GameData.PlayerBonus sanCostBonus, string deathDesc, string cardSpriteName, float hp, GameData.PlayerBonus hpBonus, float atk, GameData.PlayerBonus atkBonus, float moveSpd, float def, System.Collections.Generic.List<int> feature, System.Collections.Generic.List<int> specialFeature, string pieceSpriteName, int width, int height, System.Collections.Generic.List<GameData.MoveDir> moveDirections, float atkSpd, GameData.PlayerBonus atkSpdBonus, float accuracy, int atkRange, int life ) 
+    public Character(int characterID, string characterName, GameData.Rarity rarity, GameData.CardPack cardPack, int sanCost, GameData.PlayerBonus sanCostBonus, string deathDesc, float hp, GameData.PlayerBonus hpBonus, float atk, GameData.PlayerBonus atkBonus, float moveSpd, float def, System.Collections.Generic.List<int> feature, System.Collections.Generic.List<int> specialFeature, int width, int height, System.Collections.Generic.List<GameData.MoveDir> moveDirections, float atkSpd, GameData.PlayerBonus atkSpdBonus, float accuracy, int atkRange, int life ) 
     {
         this.CharacterID = characterID;
         this.CharacterName = characterName;
         this.Rarity = rarity;
+        this.CardPack = cardPack;
         this.SanCost = sanCost;
         this.SanCostBonus = sanCostBonus;
         this.DeathDesc = deathDesc;
-        this.CardSpriteName = cardSpriteName;
         this.Hp = hp;
         this.HpBonus = hpBonus;
         this.Atk = atk;
@@ -62,7 +61,6 @@ public sealed partial class Character :  Bright.Config.BeanBase
         this.Def = def;
         this.Feature = feature;
         this.SpecialFeature = specialFeature;
-        this.PieceSpriteName = pieceSpriteName;
         this.Width = width;
         this.Height = height;
         this.MoveDirections = moveDirections;
@@ -92,6 +90,10 @@ public sealed partial class Character :  Bright.Config.BeanBase
     /// </summary>
     public GameData.Rarity Rarity { get; private set; }
     /// <summary>
+    /// 卡包
+    /// </summary>
+    public GameData.CardPack CardPack { get; private set; }
+    /// <summary>
     /// 精神消耗
     /// </summary>
     public int SanCost { get; private set; }
@@ -103,10 +105,6 @@ public sealed partial class Character :  Bright.Config.BeanBase
     /// 死面功能描述
     /// </summary>
     public string DeathDesc { get; private set; }
-    /// <summary>
-    /// 牌面图片文件名
-    /// </summary>
-    public string CardSpriteName { get; private set; }
     /// <summary>
     /// 血量
     /// </summary>
@@ -141,10 +139,6 @@ public sealed partial class Character :  Bright.Config.BeanBase
     /// </summary>
     public System.Collections.Generic.List<int> SpecialFeature { get; private set; }
     public System.Collections.Generic.List<GameData.Feature> SpecialFeature_Ref { get; private set; }
-    /// <summary>
-    /// 棋子图片文件名
-    /// </summary>
-    public string PieceSpriteName { get; private set; }
     /// <summary>
     /// 棋子宽
     /// </summary>
@@ -206,10 +200,10 @@ public sealed partial class Character :  Bright.Config.BeanBase
         + "CharacterID:" + CharacterID + ","
         + "CharacterName:" + CharacterName + ","
         + "Rarity:" + Rarity + ","
+        + "CardPack:" + CardPack + ","
         + "SanCost:" + SanCost + ","
         + "SanCostBonus:" + SanCostBonus + ","
         + "DeathDesc:" + DeathDesc + ","
-        + "CardSpriteName:" + CardSpriteName + ","
         + "Hp:" + Hp + ","
         + "HpBonus:" + HpBonus + ","
         + "Atk:" + Atk + ","
@@ -218,7 +212,6 @@ public sealed partial class Character :  Bright.Config.BeanBase
         + "Def:" + Def + ","
         + "Feature:" + Bright.Common.StringUtil.CollectionToString(Feature) + ","
         + "SpecialFeature:" + Bright.Common.StringUtil.CollectionToString(SpecialFeature) + ","
-        + "PieceSpriteName:" + PieceSpriteName + ","
         + "Width:" + Width + ","
         + "Height:" + Height + ","
         + "MoveDirections:" + Bright.Common.StringUtil.CollectionToString(MoveDirections) + ","

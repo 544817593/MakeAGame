@@ -110,3 +110,11 @@ public enum RarityEnum
 {
     None, White, Green, Blue, Orange
 }
+
+/// <summary>
+/// 卡包
+/// </summary>
+public enum CardPackEnum
+{
+    None, Base, Warrior
+}

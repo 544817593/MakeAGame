@@ -123,7 +123,7 @@ namespace Game.LubanDataLoad
         void LoadCharacter(List<Character> datas)
         {
             Debug.Log(string.Format("<color=green>{0}</color>", $"start load character, data count: {datas.Count}"));
-            string resFolderChara = fullSOFolderChara.Substring("Assets/".Length);
+            string resFolderChara = fullSOFolderChara.Substring("Assets/Resources/".Length);
             int createCount = 0;
             
             foreach (var data in datas)
@@ -159,6 +159,7 @@ namespace Game.LubanDataLoad
             so.characterName = json.CharacterName;
 
             so.rarity = (RarityEnum)json.Rarity;
+            so.cardPack = (CardPackEnum) json.CardPack;
             so.sanCost = json.SanCost;
             so.deathFuncDescription = json.DeathDesc;
             so.cardSprite = LoadCardSprite(json);
