@@ -246,11 +246,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23116bc5693f42da863be7440665463a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fullSOFolderFeature: Assets/Resources/ScriptableObject/LubanFeature
+  fullSOFolderFeature: Assets/Resources/ScriptableObjects/LubanFeature
   forceOverrideFeature: 1
-  fullSOFolderChara: Assets/Resources/ScriptableObject/LubanCharacter
+  loadFeature: 1
+  fullSOFolderChara: Assets/Resources/ScriptableObjects/LubanCharacter
   forceOverrideChara: 1
+  loadCharacter: 1
   FeatureIconResFolder: Sprites/Cards/Feature
+  CardIconResFolder: Sprites/Cards/Character
+  PieceIconResFolder: Sprites/Piece
 --- !u!4 &1595611388
 Transform:
   m_ObjectHideFlags: 0

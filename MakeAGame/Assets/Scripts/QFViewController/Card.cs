@@ -53,7 +53,7 @@ namespace Game
             deathFuncDesc = so.deathFuncDescription;
             cardSprite = so.cardSprite;
             pieceSprite = so.pieceSprite;
-            specialFeature = so.specialFeature;
+            specialFeature = so.specialFeatures;
             width = so.width;
             height = so.height;
             moveDirections = so.moveDirections;

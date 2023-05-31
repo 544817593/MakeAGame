@@ -16,4 +16,4 @@ MonoBehaviour:
   featureName: "\u610F\u5FD7\u575A\u5B9A"
   featureDesc: "\u5F53\u5468\u56F48\u4E2A\u683C\u5B50\u5185\u654C\u65B9\u5355\u4F4D\u6570\u91CF\u4E0D\u5927\u4E8E1\u65F6\uFF0C\u83B7\u5F970.35\u653B\u51FB\u901F\u5EA6\u3002"
   typeName: Determined
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: 63da547440c29425b8bb07672e84a858, type: 3}

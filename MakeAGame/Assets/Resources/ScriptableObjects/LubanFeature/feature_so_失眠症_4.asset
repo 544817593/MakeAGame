@@ -16,4 +16,4 @@ MonoBehaviour:
   featureName: "\u5931\u7720\u75C7"
   featureDesc: "\u5982\u679C\u4F60\u653E\u7F6E\u7684\u4E0A\u4E00\u4E2A\u8C03\u67E5\u5458\u724C\u662F\u8FD9\u5F20\u724C\uFF0C\u5219\u65E0\u6CD5\u518D\u6B21\u4F7F\u7528\u3002"
   typeName: Insomnia
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: 6a3c17f152b6b4dc9b8006af3d6ed0eb, type: 3}

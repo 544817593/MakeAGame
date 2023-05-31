@@ -16,4 +16,4 @@ MonoBehaviour:
   featureName: "\u58F0\u97F3\u654F\u611F"
   featureDesc: "\u53D7\u5230\u7684\u7269\u7406\u4F24\u5BB3-25%\uFF0C\u53D7\u5230\u7684\u6CD5\u672F\u4F24\u5BB3+10%\u3002"
   typeName: SoundSensitive
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: 40b385f94874343d0bf7c2ea90c2cc46, type: 3}

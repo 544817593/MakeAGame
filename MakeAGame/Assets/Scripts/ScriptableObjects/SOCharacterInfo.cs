@@ -31,7 +31,7 @@ namespace Game
         [FoldoutGroup("Features", true)]
         public List<SOFeature> features;  // 特性
         [FoldoutGroup("Features")]
-        public List<SOFeature> specialFeature;  // 特殊属性
+        public List<SOFeature> specialFeatures;  // 特殊属性
         
         [FoldoutGroup("Piece Information", true)]
         public Sprite pieceSprite;  // 棋子图片

@@ -16,4 +16,4 @@ MonoBehaviour:
   featureName: "\u4EBA\u7C7B\u5B66\u5BB6"
   featureDesc: "\u670925%\u51E0\u7387\u95EA\u907F\u4EBA\u7C7B\u653B\u51FB\u3002"
   typeName: Anthropologist
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: c077b31f762404ba0896992a451aa699, type: 3}

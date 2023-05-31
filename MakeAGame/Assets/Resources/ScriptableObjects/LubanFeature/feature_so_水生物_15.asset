@@ -16,4 +16,4 @@ MonoBehaviour:
   featureName: "\u6C34\u751F\u7269"
   featureDesc: "\u5728\u6C34\u9762\u4E0A\u53D7\u5230\u7684\u4F24\u5BB3-10%\u3002"
   typeName: Aquatic
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: 29b401b0ab0cb4ddc819e1605c6275ef, type: 3}

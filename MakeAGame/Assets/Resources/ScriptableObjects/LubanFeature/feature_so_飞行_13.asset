@@ -16,4 +16,4 @@ MonoBehaviour:
   featureName: "\u98DE\u884C"
   featureDesc: "\u4E0D\u4F1A\u53D7\u5230\u5730\u5F62\u7684\u5F71\u54CD\u3002"
   typeName: Airborne
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: aafc46ff3ede94da2b703a97f2d6f8c6, type: 3}

@@ -35,6 +35,10 @@ namespace Game.LubanDataLoad
         
         // Feature图片资源路径
         public string FeatureIconResFolder = "Sprites/Cards/Feature";
+        // 卡面图片资源路径
+        public string CardIconResFolder = "Sprites/Cards/Character";
+        // 棋子图片资源路径
+        public string PieceIconResFolder = "Sprites/Piece";
         
         private void Start()
         {
@@ -44,21 +48,34 @@ namespace Game.LubanDataLoad
         void StartLoad()
         {
             var table = new Tables(Loader);
-            var features = table.TbFeature.DataList;
-            LoadFeature(features);
-            // var characters = table.TbCharacter.DataList;
-            // LoadCharacter(characters);
+            Debug.Log($"start load so, loadFeature: {loadFeature}, loadCharacter: {loadCharacter}");
+
+            if (loadFeature)
+            {
+                var features = table.TbFeature.DataList;
+                LoadFeature(features);   
+            }
+            
+            AssetDatabase.Refresh();
+
+            if (loadCharacter)
+            {
+                var characters = table.TbCharacter.DataList;
+                LoadCharacter(characters);   
+            }
+            
+            AssetDatabase.Refresh();
         }
 
         void LoadFeature(List<Feature> datas)
         {
             Debug.Log(string.Format("<color=green>{0}</color>", $"start load feature, data count: {datas.Count}"));
-            string resFolderFeature = fullSOFolderFeature.Substring("Assets/".Length);
+            string resFolderFeature = fullSOFolderFeature.Substring("Assets/Resources/".Length);
             int createCount = 0;
             
             foreach (var data in datas)
             {
-                if (forceOverrideFeature)
+                if (!forceOverrideFeature)
                 {
                     var tmpSO = Resources.Load<SOFeature>(
                         $@"{resFolderFeature}/feature_so_{data.FeatureName}_{data.FeatureID}");
@@ -85,10 +102,7 @@ namespace Game.LubanDataLoad
 
         void ConvertFeatureJsonToSO(SOFeature so, Feature json)
         {
-            string iconFileName = String.Empty;
-            string fullFolderPath = Application.dataPath + "/Resources/" + FeatureIconResFolder;
-            var iconFiles = new DirectoryInfo(fullFolderPath).GetFiles();
-            iconFileName = iconFiles.ToList().Find(info => info.Name.EndsWith($"_{json.FeatureID}.png"))?.Name;
+            string iconFileName = Extensions.GetFileWithTail(FeatureIconResFolder, $"_{json.FeatureID}", "png");
 
             so.featureID = json.FeatureID;
             so.featureName = json.FeatureName;
@@ -100,7 +114,10 @@ namespace Game.LubanDataLoad
                 Debug.LogError($"feature {json.FeatureName} icon sprite null");
                 return;
             }
-            so.icon = Resources.Load<Sprite>($@"{FeatureIconResFolder}/{iconFileName}");
+
+            string tmpPath = $@"{FeatureIconResFolder}/{iconFileName}";
+            var tmpSpr = Resources.Load<Sprite>(tmpPath);
+            so.icon = tmpSpr;
         }
 
         void LoadCharacter(List<Character> datas)
@@ -111,9 +128,9 @@ namespace Game.LubanDataLoad
             
             foreach (var data in datas)
             {
-                if (forceOverrideChara)
+                if (!forceOverrideChara)
                 {
-                    var tmpSO = Resources.Load<SOFeature>(
+                    var tmpSO = Resources.Load<SOCharacterInfo>(
                         $@"{resFolderChara}/character_so_{data.CharacterName}_{data.CharacterID}");
                     if (tmpSO != null)
                     {
@@ -124,9 +141,7 @@ namespace Game.LubanDataLoad
                 }
                 
                 SOCharacterInfo so = ScriptableObject.CreateInstance<SOCharacterInfo>();
-                // todo luban character
-                
-                
+                ConvertCharacterJsonToSO(so, data);
 
                 AssetDatabase.CreateAsset(so, $@"{fullSOFolderChara}/character_so_{data.CharacterName}_{data.CharacterID}.asset");
                 AssetDatabase.SaveAssets();
@@ -138,13 +153,102 @@ namespace Game.LubanDataLoad
             Debug.Log(string.Format("<color=green>{0}</color>", $"finish load character, create count: {createCount}"));
         }
         
-        void ConvertCharacterJsonToSO(SOFeature so, Character json)
+        void ConvertCharacterJsonToSO(SOCharacterInfo so, Character json)
         {
+            so.characterID = json.CharacterID;
+            so.characterName = json.CharacterName;
+
+            so.rarity = (RarityEnum)json.Rarity;
+            so.sanCost = json.SanCost;
+            so.deathFuncDescription = json.DeathDesc;
+            so.cardSprite = LoadCardSprite(json);
+            so.hp = json.Hp;
+            so.attack = json.Atk;
+            so.moveSpd = json.MoveSpd;
+            so.defend = json.Def;
             
-            // todo Luban icon
+            LoadFeatureAndSpecialFeature(so, json);
             
-            
+            so.pieceSprite = LoadPieceSprite(json);
+            so.width = json.Width;
+            so.height = json.Height;
+            so.moveDirections = new List<DirEnum>();
+            foreach (var dir in json.MoveDirections)
+            {
+                so.moveDirections.Add((DirEnum) dir);
+            }
+            so.attackSpd = json.AtkSpd;
+            so.accracy = json.Accuracy;
+            so.attackRange = json.AtkRange;
+            so.life = json.Life;
+
+            if (json.SanCostBonus.Property != PlayerStats.None)
+                so.sanCostBonus = new SOCharacterInfo.PlayerBonus()
+                    {stat = (PlayerStatsEnum) json.SanCostBonus.Property, multiple = json.SanCostBonus.Multiple};
+            if (json.HpBonus.Property != PlayerStats.None)
+                so.hpBonus = new SOCharacterInfo.PlayerBonus()
+                    {stat = (PlayerStatsEnum) json.HpBonus.Property, multiple = json.HpBonus.Multiple};
+            if (json.AtkBonus.Property != PlayerStats.None)
+                so.atkBonus = new SOCharacterInfo.PlayerBonus()
+                    {stat = (PlayerStatsEnum) json.AtkBonus.Property, multiple = json.AtkBonus.Multiple};
+            if (json.AtkSpdBonus.Property != PlayerStats.None)
+                so.atkSpdBonus = new SOCharacterInfo.PlayerBonus()
+                    {stat = (PlayerStatsEnum) json.AtkSpdBonus.Property, multiple = json.AtkSpdBonus.Multiple};
         }
+
+        Sprite LoadCardSprite(Character json)
+        {
+            string cardSpriteName = Extensions.GetFileWithTail(CardIconResFolder, $"_{json.CharacterID}", "png");
+            if (string.IsNullOrEmpty(cardSpriteName))
+            {
+                Debug.LogError($"character {json.CharacterName} card sprite null");
+                return null;
+            }
+            return Resources.Load<Sprite>($@"{CardIconResFolder}/{cardSpriteName}");
+        }
+
+        void LoadFeatureAndSpecialFeature(SOCharacterInfo so, Character json)
+        {
+            string resFolderFeature = fullSOFolderFeature.Substring("Assets/Resources/".Length);
+
+            so.features = new List<SOFeature>();
+            foreach (var fe in json.Feature_Ref)
+            {
+                var tmpPath = $"{resFolderFeature}/feature_so_{fe.FeatureName}_{fe.FeatureID}";
+                var sof = Resources.Load<SOFeature>(tmpPath);
+                if (sof == null)
+                {
+                    Debug.LogError($"character {json.CharacterName} feature {tmpPath} null");
+                    continue;
+                }
+                so.features.Add(sof);
+            }
+            
+            so.specialFeatures = new List<SOFeature>();
+            foreach (var fe in json.SpecialFeature_Ref)
+            {
+                var tmpPath = $"{resFolderFeature}/feature_so_{fe.FeatureName}_{fe.FeatureID}";
+                var sof = Resources.Load<SOFeature>(tmpPath);
+                if (sof == null)
+                {
+                    Debug.LogError($"character {json.CharacterName} feature {tmpPath} null");
+                    continue;
+                }
+                so.specialFeatures.Add(sof);
+            }
+        }
+        
+        Sprite LoadPieceSprite(Character json)
+        {
+            string pieceSpriteName = Extensions.GetFileWithTail(PieceIconResFolder, $"_{json.CharacterID}", "png");
+            if (string.IsNullOrEmpty(pieceSpriteName))
+            {
+                Debug.LogError($"character {json.CharacterName} piece sprite null");
+                return null;
+            }
+            return Resources.Load<Sprite>($@"{PieceIconResFolder}/{pieceSpriteName}");
+        }
+
 
         // 载入json文件
         private JSONNode Loader(string fileName)

@@ -1,4 +1,6 @@
 using System;
+using System.IO;
+using System.Linq;
 using UnityEngine;
 
 namespace Game
@@ -95,6 +97,22 @@ namespace Game
             {
                 return newCard;
             }
+        }
+
+        public static string GetFileWithTail(string resFolder, string tail, string format)
+        {
+            string iconFileName = String.Empty;
+            string fullFolderPath = Application.dataPath + "/Resources/" + resFolder;
+            var iconFiles = new DirectoryInfo(fullFolderPath).GetFiles();
+            iconFileName = iconFiles.ToList().Find(info => info.Name.EndsWith($"{tail}.{format}"))?.Name;
+
+            if (string.IsNullOrEmpty(iconFileName))
+                return null;
+            else
+            {
+                iconFileName = iconFileName.Split(".")[0];
+            }
+            return iconFileName;
         }
     }
 }

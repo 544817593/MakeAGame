@@ -16,4 +16,4 @@ MonoBehaviour:
   featureName: "\u4EBA\u7C7B"
   featureDesc: "\u8FD8\u6D3B\u7740\u3002"
   typeName: Human
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: 15adb3a1caba4417f929f28fe7eabacc, type: 3}

@@ -16,4 +16,4 @@ MonoBehaviour:
   featureName: "\u6297\u9B54\u8005"
   featureDesc: "\u53D7\u5230\u7684\u6CD5\u672F\u4F24\u5BB3-25%\uFF0C\u53D7\u5230\u7684\u7269\u7406\u4F24\u5BB3+10%\u3002"
   typeName: MagicResistant
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: 4f473377b60634369b3d71910a80c488, type: 3}

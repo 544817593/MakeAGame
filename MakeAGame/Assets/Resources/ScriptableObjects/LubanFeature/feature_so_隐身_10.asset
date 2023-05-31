@@ -16,4 +16,4 @@ MonoBehaviour:
   featureName: "\u9690\u8EAB"
   featureDesc: "\u5728\u666E\u901A\u5730\u5757\u4E0A\u670910%\u7684\u51E0\u7387\u95EA\u907F\u653B\u51FB\u3002"
   typeName: Camouflaged
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: 0c660c7a27fd44b75bb02748616c0a08, type: 3}
