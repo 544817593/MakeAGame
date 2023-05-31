@@ -8,7 +8,7 @@ using UnityEngine;
 public static class IdToSO
 {
     // 角色SO列表
-    public static SOCharacterInfo[] soCharacterList = Resources.LoadAll<SOCharacterInfo>("ScriptableObjects/Characters");
+    public static SOCharacterInfo[] soCharacterList = Resources.LoadAll<SOCharacterInfo>("ScriptableObjects/LubanCharacter");
 
     /// <summary>
     /// 通过卡牌id来返还卡牌的SO
@@ -27,6 +27,12 @@ public static class IdToSO
             return null;
         else
             return soCharacterList.ToList().Find(so => so.characterID == 1);
+    }
+
+    public static SOCharacterInfo GetRandomCardSO()
+    {
+        int index = Random.Range(0, soCharacterList.Length);
+        return soCharacterList[index];
     }
 }
 

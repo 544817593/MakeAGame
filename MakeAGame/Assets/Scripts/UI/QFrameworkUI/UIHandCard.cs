@@ -64,7 +64,8 @@ namespace Game
 
 			ButtonAddCardTest.onClick.AddListener(() =>
 			{
-				GameEntry.Interface.SendCommand<AddHandCardCommand>(new AddHandCardCommand(new Card(1)));
+				var randomInfo = IdToSO.GetRandomCardSO();
+				GameEntry.Interface.SendCommand<AddHandCardCommand>(new AddHandCardCommand(new Card(randomInfo.characterID)));
 			});
 			ButtonSubCardTest.onClick.AddListener(() =>
 			{
