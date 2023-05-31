@@ -39,7 +39,8 @@ namespace Game.LubanDataLoad
         public string CardIconResFolder = "Sprites/Cards/Character";
         // 棋子图片资源路径
         public string PieceIconResFolder = "Sprites/Piece";
-        
+
+#if UNITY_EDITOR
         private void Start()
         {
             StartLoad();
@@ -255,6 +256,7 @@ namespace Game.LubanDataLoad
         private JSONNode Loader(string fileName)
         {
             return JSON.Parse(File.ReadAllText(Application.dataPath + "/Resources/Json/" + fileName + ".json"));
-        }
+        }  
+#endif
     }
 }
