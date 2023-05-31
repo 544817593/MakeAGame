@@ -155,7 +155,8 @@ namespace Game
         {
             // 检测通知的是不是自己
             if (e.viewCard != this) return;
-            if (e.viewCard.card.charaID == this.GetSystem<IPieceSystem>().GetLastSpawnedFriend(true).card.charaID &&
+            if (this.GetSystem<IPieceSystem>().GetLastSpawnedFriend(true) != null &&
+                e.viewCard.card.charaID == this.GetSystem<IPieceSystem>().GetLastSpawnedFriend(true).card.charaID &&
                 e.viewCard.card.HasFeature("失眠症"))
             {
                 Debug.Log("失眠症，无法连续放置");
