@@ -364,6 +364,7 @@ MonoBehaviour:
   lookAtTarget: {fileID: 0}
   cameraAngle: {x: -30, y: 0, z: 0}
   cameraDist: 12
+  ForceSetValue: 0
 --- !u!1 &1272447386
 GameObject:
   m_ObjectHideFlags: 0
@@ -431,6 +432,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mapDataResPath: ScriptableObjects/SOMapDataTest2
   monsterSpawnSettings: {fileID: 11400000, guid: 328c7f0148f614cd4969cfe271e9e31d, type: 2}
+  combatCamera: {fileID: 1083411594}
 --- !u!4 &1351751550
 Transform:
   m_ObjectHideFlags: 0

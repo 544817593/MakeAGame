@@ -2,7 +2,7 @@
   {
     "characterID": 1,
     "characterName": "弗朗西斯·维兰德·瑟斯顿",
-    "rarity": 4,
+    "rarity": 5,
     "cardPack": 1,
     "sanCost": 90,
     "sanCostBonus": {
@@ -51,7 +51,7 @@
   {
     "characterID": 2,
     "characterName": "伦道夫·卡特",
-    "rarity": 4,
+    "rarity": 5,
     "cardPack": 1,
     "sanCost": 90,
     "sanCostBonus": {
@@ -94,6 +94,273 @@
       "multiple": 0.05
     },
     "accuracy": 0.7,
+    "atkRange": 2,
+    "life": 999
+  },
+  {
+    "characterID": 3,
+    "characterName": "阿比盖尔·米勒",
+    "rarity": 5,
+    "cardPack": 1,
+    "sanCost": 90,
+    "sanCostBonus": {
+      "property": 0,
+      "multiple": 0
+    },
+    "deathDesc": "对当前位置以及其上下左右范围为1的格子造成10点伤害，获得一张阿比盖尔。",
+    "hp": 50,
+    "hpBonus": {
+      "property": 4,
+      "multiple": 8
+    },
+    "atk": 3,
+    "atkBonus": {
+      "property": 2,
+      "multiple": 2
+    },
+    "moveSpd": 5,
+    "def": 0,
+    "feature": [
+      5,
+      21
+    ],
+    "specialFeature": [
+      31,
+      32
+    ],
+    "width": 1,
+    "height": 1,
+    "moveDirections": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "atkSpd": 0.8,
+    "atkSpdBonus": {
+      "property": 2,
+      "multiple": 0.02
+    },
+    "accuracy": 0.7,
+    "atkRange": 2,
+    "life": 999
+  },
+  {
+    "characterID": 4,
+    "characterName": "D级员工",
+    "rarity": 1,
+    "cardPack": 1,
+    "sanCost": 20,
+    "sanCostBonus": {
+      "property": 6,
+      "multiple": -0.04
+    },
+    "deathDesc": "对3*3的格子造成15点伤害。",
+    "hp": 25,
+    "hpBonus": {
+      "property": 4,
+      "multiple": 2
+    },
+    "atk": 3,
+    "atkBonus": {
+      "property": 0,
+      "multiple": 0
+    },
+    "moveSpd": 3.5,
+    "def": 0,
+    "feature": [],
+    "specialFeature": [],
+    "width": 1,
+    "height": 1,
+    "moveDirections": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "atkSpd": 0.5,
+    "atkSpdBonus": {
+      "property": 0,
+      "multiple": 0
+    },
+    "accuracy": 0.6,
+    "atkRange": 1,
+    "life": 999
+  },
+  {
+    "characterID": 5,
+    "characterName": "C级员工",
+    "rarity": 2,
+    "cardPack": 1,
+    "sanCost": 20,
+    "sanCostBonus": {
+      "property": 6,
+      "multiple": -0.05
+    },
+    "deathDesc": "对3*3的格子造成20点伤害，25%的概率获得一张D级员工。",
+    "hp": 35,
+    "hpBonus": {
+      "property": 4,
+      "multiple": 2
+    },
+    "atk": 3,
+    "atkBonus": {
+      "property": 0,
+      "multiple": 0
+    },
+    "moveSpd": 3.5,
+    "def": 1,
+    "feature": [
+      6
+    ],
+    "specialFeature": [],
+    "width": 1,
+    "height": 1,
+    "moveDirections": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "atkSpd": 0.6,
+    "atkSpdBonus": {
+      "property": 0,
+      "multiple": 0
+    },
+    "accuracy": 0.7,
+    "atkRange": 1,
+    "life": 999
+  },
+  {
+    "characterID": 6,
+    "characterName": "B级员工",
+    "rarity": 3,
+    "cardPack": 1,
+    "sanCost": 20,
+    "sanCostBonus": {
+      "property": 6,
+      "multiple": -0.06
+    },
+    "deathDesc": "对4*4的格子造成25点伤害，20%的概率获得一张C级员工。",
+    "hp": 50,
+    "hpBonus": {
+      "property": 4,
+      "multiple": 3
+    },
+    "atk": 4,
+    "atkBonus": {
+      "property": 0,
+      "multiple": 0
+    },
+    "moveSpd": 2.5,
+    "def": 2,
+    "feature": [
+      6,
+      7
+    ],
+    "specialFeature": [],
+    "width": 1,
+    "height": 1,
+    "moveDirections": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "atkSpd": 0.6,
+    "atkSpdBonus": {
+      "property": 5,
+      "multiple": 0.01
+    },
+    "accuracy": 0.8,
+    "atkRange": 1,
+    "life": 999
+  },
+  {
+    "characterID": 7,
+    "characterName": "A级员工",
+    "rarity": 4,
+    "cardPack": 1,
+    "sanCost": 20,
+    "sanCostBonus": {
+      "property": 6,
+      "multiple": -0.07
+    },
+    "deathDesc": "对4*4的格子造成40点伤害，15%的概率获得一张B级员工。",
+    "hp": 75,
+    "hpBonus": {
+      "property": 4,
+      "multiple": 4
+    },
+    "atk": 5,
+    "atkBonus": {
+      "property": 0,
+      "multiple": 0
+    },
+    "moveSpd": 2.5,
+    "def": 2,
+    "feature": [
+      6,
+      7,
+      8
+    ],
+    "specialFeature": [],
+    "width": 1,
+    "height": 1,
+    "moveDirections": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "atkSpd": 0.6,
+    "atkSpdBonus": {
+      "property": 5,
+      "multiple": 0.02
+    },
+    "accuracy": 0.9,
+    "atkRange": 1,
+    "life": 999
+  },
+  {
+    "characterID": 14,
+    "characterName": "藤曼",
+    "rarity": 1,
+    "cardPack": 1,
+    "sanCost": 14,
+    "sanCostBonus": {
+      "property": 0,
+      "multiple": 0
+    },
+    "deathDesc": "使1*6格子内的敌人移动速度减半，持续3秒，随后这些格子时间流逝速率永久降低一个级别",
+    "hp": 30,
+    "hpBonus": {
+      "property": 2,
+      "multiple": 10
+    },
+    "atk": 0,
+    "atkBonus": {
+      "property": 0,
+      "multiple": 0
+    },
+    "moveSpd": 6,
+    "def": 2,
+    "feature": [],
+    "specialFeature": [
+      34
+    ],
+    "width": 2,
+    "height": 1,
+    "moveDirections": [
+      4,
+      2
+    ],
+    "atkSpd": 1,
+    "atkSpdBonus": {
+      "property": 5,
+      "multiple": 0.1
+    },
+    "accuracy": 1,
     "atkRange": 2,
     "life": 999
   }

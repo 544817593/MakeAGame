@@ -45,7 +45,7 @@ namespace Game
         public List<DirEnum> moveDirections;    // 移动方向
         [FoldoutGroup("Piece Information")]
         public float attackSpd;         // 攻速
-        [FoldoutGroup("Piece Information")]
+        [FoldoutGroup("Piece Information")] [Range(0, 1)]
         public float accracy;           // 命中率
         [FoldoutGroup("Piece Information")]
         public int attackRange;         // 攻击范围

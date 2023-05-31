@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56ecb282cab14c5d8106ae3ec684c67e, type: 3}
+  m_Name: "feature_so_\u4EB2\u548C\u529B_31"
+  m_EditorClassIdentifier: 
+  featureID: 31
+  featureName: "\u4EB2\u548C\u529B"
+  featureDesc: "\u8DDD\u79BB\u4E0D\u5927\u4E8E6\u7684\u53CB\u519B\u6BCF3\u79D2\u56DE\u590D1*\u7CBE\u795E\u70B9\u751F\u547D\u503C\u3002"
+  typeName: 
+  icon: {fileID: 0}

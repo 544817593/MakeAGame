@@ -178,5 +178,23 @@
     "featureName": "无可动摇",
     "desc": "该卡牌在场时，玩家放入的棋子获得1*技巧秒无敌。",
     "typeName": ""
+  },
+  {
+    "featureID": 31,
+    "featureName": "亲和力",
+    "desc": "距离不大于6的友军每3秒回复1*精神点生命值。",
+    "typeName": ""
+  },
+  {
+    "featureID": 32,
+    "featureName": "我爱疯子",
+    "desc": "该卡牌在场时，玩家放入的棋子获得10%精神的移动速度加成。",
+    "typeName": ""
+  },
+  {
+    "featureID": 34,
+    "featureName": "藤蔓",
+    "desc": "被攻击到的敌人移动速度减半，持续3秒。",
+    "typeName": ""
   }
 ]

@@ -28,9 +28,13 @@ namespace cfg.GameData
         /// </summary>
         Blue = 3,
         /// <summary>
+        /// 紫
+        /// </summary>
+        Purple = 4,
+        /// <summary>
         /// 橙
         /// </summary>
-        Orange = 4,
+        Orange = 5,
     }
 
 } 

@@ -144,7 +144,7 @@ public sealed partial class Character :  Bright.Config.BeanBase
     /// </summary>
     public int Width { get; private set; }
     /// <summary>
-    /// 棋子长
+    /// 棋子高
     /// </summary>
     public int Height { get; private set; }
     /// <summary>
@@ -152,7 +152,7 @@ public sealed partial class Character :  Bright.Config.BeanBase
     /// </summary>
     public System.Collections.Generic.List<GameData.MoveDir> MoveDirections { get; private set; }
     /// <summary>
-    /// 攻速
+    /// 攻速（次/每秒）
     /// </summary>
     public float AtkSpd { get; private set; }
     /// <summary>
