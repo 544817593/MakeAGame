@@ -61,7 +61,7 @@ namespace Game
             tmpDesc.text = card.deathFuncDesc;
             for(int i = 0; i < card.features.Count; i++)
             {
-                featureTouchArea[i].GetComponent<Image>().sprite = card.features[i].icon;
+                featureTouchArea[i].GetComponent<Image>().sprite = IdToSO.FindFeatureSOByEnum(card.features[i]).icon;
             }
             for (int i = card.features.Count; i < 3; i++)
             {
@@ -128,7 +128,7 @@ namespace Game
                     if (!tooltipTrans.gameObject.activeSelf)
                     {
                         int index = featureTouchArea.IndexOf(ret.gameObject);
-                        OnShowTooltip.Invoke(card.features[index]);
+                        OnShowTooltip.Invoke(IdToSO.FindFeatureSOByEnum(card.features[index]));
                         tooltipTrans.gameObject.SetActive(true);
                     }
                     return;
@@ -157,7 +157,7 @@ namespace Game
             if (e.viewCard != this) return;
             if (this.GetSystem<IPieceSystem>().GetLastSpawnedFriend(true) != null &&
                 e.viewCard.card.charaID == this.GetSystem<IPieceSystem>().GetLastSpawnedFriend(true).card.charaID &&
-                e.viewCard.card.HasFeature("失眠症"))
+                e.viewCard.card.HasFeature(FeatureEnum.Insomnia))
             {
                 Debug.Log("失眠症，无法连续放置");
                 return;

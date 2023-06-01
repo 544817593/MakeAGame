@@ -11,6 +11,8 @@ namespace Game
     /// </summary>
     public partial class ViewPieceBase: MonoBehaviour, IController, ICanSendEvent
     {
+        protected Transform healthBar;
+
         protected IMapSystem mapSystem;
         protected IMovementSystem movementSystem;
         protected SOCharacterInfo so;
@@ -43,6 +45,28 @@ namespace Game
             }
         }
 
+        #region 棋子数据
+        public RarityEnum rarity; // 稀有度 0 白 -- 4 橙
+        public int generalId; // 基础ID，辨认品种
+        public int pieceId; // 棋子ID，每个棋子独一份
+        public (int, int) pieceSize; // 棋子尺寸
+
+        public BindableProperty<float> moveSpeed; // 移动速度
+        public BindableProperty<int> hp; // 当前生命值
+        public BindableProperty<int> maxHp; // 最大生命值
+        public BindableProperty<float> atkSpeed; // 攻速
+        public BindableProperty<float> atkDmg; // 攻击力
+        public BindableProperty<float> defense; // 防御力
+        public BindableProperty<float> accuracy; // 命中率
+        public BindableProperty<int> atkRange; // 射程
+        public BindableProperty<List<FeatureEnum>> features; // 特性
+        public BindableProperty<List<DirEnum>> dirs; // 可移动方向
+        public BindableProperty<bool> isAttacking; // 是否在发起攻击
+        public BindableProperty<bool> isDying; // 是否正在死亡中                         
+        public BindableProperty<(int, int)> leftTopGridPos; // 当前左上角位置
+        public BindableProperty<(int, int)> botRightGridPos; // 当前右下角位置
+        #endregion
+
         // public List<BoxGrid> attadkRangeGrids = new List<BoxGrid>(); // todo
 
         protected virtual void Start()
@@ -56,6 +80,19 @@ namespace Game
             OnPieceAttackStart += OnAttackStartEvent;
             OnPieceAttackEnd += OnAttackEndEvent;
             OnPieceUnderAttack += OnUnderAttackEvent;
+
+            healthBar = transform.Find("Root/SpritePiece/HealthBar/Bar");
+            hp.Register(e => OnCurrHpChanged(e));
+
+        }
+
+        /// <summary>
+        /// 当前生命值被改变
+        /// </summary>
+        /// <param name="e">新生命值</param>
+        protected void OnCurrHpChanged(int e)
+        {
+            healthBar.localScale = new Vector3((float)e / maxHp, 1f);
         }
 
         public virtual void SetGrids(List<BoxGrid> grids)
@@ -255,7 +292,6 @@ namespace Game
     {
         public ViewPieceBase attacker; // 攻击方
         public ViewPieceBase target; // 防守方
-        public bool isTargetMonster; // 防守方是否为怪物
         public int damage; // 伤害
         public bool hit; // 是否命中
     }
@@ -267,7 +303,6 @@ namespace Game
     {
         public ViewPieceBase attacker; // 攻击方
         public ViewPieceBase target; // 防守方
-        public bool isTargetMonster; // 防守方是否为怪物
         public bool isMagic; // 伤害是否为魔法伤害
         public int damage; // 伤害
         public BoxGrid boxgrid; // 受到攻击的格子(单位可能并非1*1)
@@ -290,7 +325,7 @@ namespace Game
     public class SpecialitiesSpawnCheckEvent
     {
         // 二者一个为null
-        public ViewPiece piece;
-        public Monster monster;
+        public ViewPieceBase piece; // 棋子
+        public bool isTargetMonster; // 棋子是否为怪物
     }
 }

@@ -180,7 +180,7 @@ namespace Game.LubanDataLoad
                 so.moveDirections.Add((DirEnum) dir);
             }
             so.attackSpd = json.AtkSpd;
-            so.accracy = json.Accuracy;
+            so.accuracy = json.Accuracy;
             so.attackRange = json.AtkRange;
             so.life = json.Life;
 
@@ -213,7 +213,7 @@ namespace Game.LubanDataLoad
         {
             string resFolderFeature = fullSOFolderFeature.Substring("Assets/Resources/".Length);
 
-            so.features = new List<SOFeature>();
+            so.features = new List<FeatureEnum>();
             foreach (var fe in json.Feature_Ref)
             {
                 var tmpPath = $"{resFolderFeature}/feature_so_{fe.FeatureName}_{fe.FeatureID}";
@@ -223,10 +223,10 @@ namespace Game.LubanDataLoad
                     Debug.LogError($"character {json.CharacterName} feature {tmpPath} null");
                     continue;
                 }
-                so.features.Add(sof);
+                so.features.Add((FeatureEnum)sof.featureID);
             }
             
-            so.specialFeatures = new List<SOFeature>();
+            so.specialFeatures = new List<FeatureEnum>();
             foreach (var fe in json.SpecialFeature_Ref)
             {
                 var tmpPath = $"{resFolderFeature}/feature_so_{fe.FeatureName}_{fe.FeatureID}";
@@ -236,7 +236,7 @@ namespace Game.LubanDataLoad
                     Debug.LogError($"character {json.CharacterName} feature {tmpPath} null");
                     continue;
                 }
-                so.specialFeatures.Add(sof);
+                so.specialFeatures.Add((FeatureEnum)sof.featureID);
             }
         }
         

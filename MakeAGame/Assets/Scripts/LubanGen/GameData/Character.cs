@@ -25,7 +25,7 @@ public sealed partial class Character :  Bright.Config.BeanBase
         { if(!_json["sanCost"].IsNumber) { throw new SerializationException(); }  SanCost = _json["sanCost"]; }
         { if(!_json["sanCostBonus"].IsObject) { throw new SerializationException(); }  SanCostBonus = GameData.PlayerBonus.DeserializePlayerBonus(_json["sanCostBonus"]);  }
         { if(!_json["deathDesc"].IsString) { throw new SerializationException(); }  DeathDesc = _json["deathDesc"]; }
-        { if(!_json["hp"].IsNumber) { throw new SerializationException(); }  Hp = _json["hp"]; }
+        { if(!_json["hp"].IsNumber) { throw new SerializationException(); }  Hp = _json["hp"].AsInt; }
         { if(!_json["hpBonus"].IsObject) { throw new SerializationException(); }  HpBonus = GameData.PlayerBonus.DeserializePlayerBonus(_json["hpBonus"]);  }
         { if(!_json["atk"].IsNumber) { throw new SerializationException(); }  Atk = _json["atk"]; }
         { if(!_json["atkBonus"].IsObject) { throw new SerializationException(); }  AtkBonus = GameData.PlayerBonus.DeserializePlayerBonus(_json["atkBonus"]);  }
@@ -44,7 +44,7 @@ public sealed partial class Character :  Bright.Config.BeanBase
         PostInit();
     }
 
-    public Character(int characterID, string characterName, GameData.Rarity rarity, GameData.CardPack cardPack, int sanCost, GameData.PlayerBonus sanCostBonus, string deathDesc, float hp, GameData.PlayerBonus hpBonus, float atk, GameData.PlayerBonus atkBonus, float moveSpd, float def, System.Collections.Generic.List<int> feature, System.Collections.Generic.List<int> specialFeature, int width, int height, System.Collections.Generic.List<GameData.MoveDir> moveDirections, float atkSpd, GameData.PlayerBonus atkSpdBonus, float accuracy, int atkRange, int life ) 
+    public Character(int characterID, string characterName, GameData.Rarity rarity, GameData.CardPack cardPack, int sanCost, GameData.PlayerBonus sanCostBonus, string deathDesc, int hp, GameData.PlayerBonus hpBonus, float atk, GameData.PlayerBonus atkBonus, float moveSpd, float def, System.Collections.Generic.List<int> feature, System.Collections.Generic.List<int> specialFeature, int width, int height, System.Collections.Generic.List<GameData.MoveDir> moveDirections, float atkSpd, GameData.PlayerBonus atkSpdBonus, float accuracy, int atkRange, int life ) 
     {
         this.CharacterID = characterID;
         this.CharacterName = characterName;
@@ -108,7 +108,7 @@ public sealed partial class Character :  Bright.Config.BeanBase
     /// <summary>
     /// 血量
     /// </summary>
-    public float Hp { get; private set; }
+    public int Hp { get; private set; }
     /// <summary>
     /// 血量加成
     /// </summary>

@@ -70,7 +70,7 @@ namespace Game
             bool pieceHasBattle = dictBattle.ContainsKey(viewPiece);
             List<ViewPieceBase> opponents = pieceHasBattle ? dictBattle[viewPiece] : null;
             
-            int atkDist = viewPiece.card.atkRange;
+            int atkDist = viewPiece.atkRange;
             List<ViewPieceBase> toAttackPieces = new List<ViewPieceBase>();
             foreach (var monster in pieceSystem.pieceEnemyList)
             {

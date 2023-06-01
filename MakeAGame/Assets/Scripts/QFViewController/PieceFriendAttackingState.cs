@@ -22,7 +22,7 @@ namespace Game
 
         void ResetAttackSpeed()
         {
-            atkDur = viewPieceFriend.card.atkSpd * viewPieceFriend.crtTimeMultiplier;
+            atkDur = viewPieceFriend.atkSpeed * viewPieceFriend.crtTimeMultiplier;
         }
 
         public override void Update()

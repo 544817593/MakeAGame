@@ -27,7 +27,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: ba75046eaa4274d19a86b061c8a39cda, type: 2}
   - {fileID: 11400000, guid: 84a860fe0949f474aa7febe3ad83f431, type: 2}
   specialFeatures: []
-  pieceSprite: {fileID: 0}
+  pieceSprite: {fileID: 21300000, guid: 111ecdf8e16b3374bafeb18a060d01f7, type: 3}
   width: 1
   height: 1
   moveDirections: 01000000020000000300000004000000

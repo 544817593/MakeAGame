@@ -20,7 +20,7 @@ namespace Game
         public string deathFuncDesc { get;  set; }
         public Sprite cardSprite { get;  set; }
         public Sprite pieceSprite { get;  set; }
-        public List<SOFeature> specialFeature { get;  set; }
+        public List<FeatureEnum> specialFeature { get;  set; }
         public int width { get;  set; }
         public int height { get;  set; }
         public List<DirEnum> moveDirections { get;  set; }
@@ -30,8 +30,8 @@ namespace Game
         // 会有改动的数据  // 外部可以读取，但不可以直接改动
         public RarityEnum rarity { get;  set; }
         public float sanCost { get;  set; }
-        public float hp { get;  set; }
-        public float maxHp { get; set; }
+        public int hp { get;  set; }
+        public int maxHp { get; set; }
         public float moveSpd { get;  set; }
         public float damage { get;  set; }
         public float defend { get;  set; }
@@ -39,7 +39,8 @@ namespace Game
         public string charaName { get;  set; }
         public float maxLife { get;  set; }
         public float currLife { get;  set; }
-        public List<SOFeature> features { get;  set; }
+        public List<FeatureEnum> features { get;  set; }
+        public float accuracy { get; set; }
 
         public Card(int _charaID)
         {
@@ -68,8 +69,8 @@ namespace Game
             defend = so.defend;
             charaName = so.characterName;
             maxLife = so.life;
-            currLife = so.life;
             features = so.features;
+            accuracy = so.accuracy;
             PrintData();
         }
 
@@ -82,7 +83,7 @@ namespace Game
         /// 添加特性
         /// </summary>
         /// <param name="feature">要添加的特性</param>
-        public void AddFeature(SOFeature feature)
+        public void AddFeature(FeatureEnum feature)
         {
             features.Add(feature);
             // 更新画面
@@ -92,7 +93,7 @@ namespace Game
         /// 删除特性
         /// </summary>
         /// <param name="feature">要删除的特性</param>
-        public void RemoveFeature(SOFeature feature)
+        public void RemoveFeature(FeatureEnum feature)
         {
             features.Remove(feature);
             // 更新画面
@@ -103,12 +104,9 @@ namespace Game
         /// </summary>
         /// <param name="featureName">特性名字</param>
         /// <returns></returns>
-        public bool HasFeature(string featureName)
+        public bool HasFeature(FeatureEnum fea)
         {
-            foreach (SOFeature feature in features)
-            {
-                if (feature.featureName == featureName) return true;
-            }
+            if (features.Contains(fea)) return true;
             return false;
         }
 
@@ -117,7 +115,7 @@ namespace Game
         /// </summary>
         public void RemoveAllFeatures()
         {
-            foreach ( SOFeature feature in features) RemoveFeature(feature);
+            foreach (FeatureEnum feature in features) RemoveFeature(feature);
         }
 
         /// <summary>
@@ -191,14 +189,6 @@ namespace Game
             maxLife += value;
         }
 
-        /// <summary>
-        /// 更改当前寿命，只有*棋子*才会调用
-        /// </summary>
-        /// <param name="value"></param>
-        public void AddCurrLife(float value)
-        {
-            currLife += value;
-        }
 
         public void PrintData()
         {
@@ -208,9 +198,9 @@ namespace Game
             ret += "feature: ";
             if (features.Count > 0)
             {
-                foreach (var soFeature in features)
+                foreach (var featureEnum in features)
                 {
-                    ret += $"{soFeature.featureName} ";
+                    ret += $"{featureEnum} ";
                 }
             }
             ret += "\nspecial feature: ";
@@ -218,7 +208,7 @@ namespace Game
             if (specialFeature != null)
                 foreach (var sf in specialFeature)
                 {
-                    ret += $"{sf.featureName} ";
+                    ret += $"{sf} ";
                 }
 
             Debug.Log(ret);

@@ -75,7 +75,7 @@ namespace Game
 
     public class SpawnSystem : AbstractSystem, ISpawnSystem
     {
-        // 棋子ID，每个棋子独一份，设置为从1开始，因为BoxGrid.isEmpty()插空为格子上的occupation是否为0
+        // 棋子ID，每个棋子独一份，设置为从1开始，因为BoxGrid.isEmpty()查空为格子上的occupation是否为0
         private int pieceIdCounter = 1; 
 
         // 怪物和友军的列表
@@ -90,6 +90,7 @@ namespace Game
         {
             
         }
+
 
         public void SpawnMonster(int row, int col, string name)
         {

@@ -54,13 +54,13 @@ namespace Game
             viewPiece.SetDataWithCard(card);
             // viewCard.InitView(); // 在这里写会先于start执行，不对    // 转由start触发
             viewPiece.SetGrids(grids);
-            viewPiece.InitState();
+            viewPiece.InitState();            
             
 
             // 数值变化
             pieceFriendList.Add(viewPiece);
             lastSpawnedFriend = viewPiece;
-            if (viewPiece.card.rarity == RarityEnum.Orange) lastSpawnedInvestigator = viewPiece;
+            if (viewPiece.rarity == RarityEnum.Orange) lastSpawnedInvestigator = viewPiece;
 
             // 通知UI变化   // 通过事件注册
             // OnAddCardTest.Trigger(handCardList.Count - 1);
@@ -121,7 +121,7 @@ namespace Game
             CheckDirectionWheelExist();
             
             var viewPiece = viewPB as ViewPiece;
-            viewDirectionWheel.SetValidDirections(viewPiece.card.moveDirections);
+            viewDirectionWheel.SetValidDirections(viewPiece.dirs);
             viewDirectionWheel.gameObject.transform.localPosition = Extensions.WorldToUIPos(viewPB.transform.position);
             viewDirectionWheel.gameObject.SetActive(true);
         }

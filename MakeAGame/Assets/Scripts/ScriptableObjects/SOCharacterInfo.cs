@@ -22,7 +22,7 @@ namespace Game
         [FoldoutGroup("Card Information")]
         public Sprite cardSprite;       // 卡面图片
         [FoldoutGroup("Card Information")]
-        public float hp;                // 血量
+        public int hp;                // 血量
         [FoldoutGroup("Card Information")]
         public float attack;            // 攻击力
         [FoldoutGroup("Card Information")]
@@ -31,9 +31,9 @@ namespace Game
         public float defend;            // 防御力
 
         [FoldoutGroup("Features", true)]
-        public List<SOFeature> features;// 特性
+        public List<FeatureEnum> features;// 特性
         [FoldoutGroup("Features")]
-        public List<SOFeature> specialFeatures;  // 特殊属性
+        public List<FeatureEnum> specialFeatures;  // 特殊属性
         
         [FoldoutGroup("Piece Information", true)]
         public Sprite pieceSprite;      // 棋子图片
@@ -46,7 +46,7 @@ namespace Game
         [FoldoutGroup("Piece Information")]
         public float attackSpd;         // 攻速
         [FoldoutGroup("Piece Information")] [Range(0, 1)]
-        public float accracy;           // 命中率
+        public float accuracy;           // 命中率
         [FoldoutGroup("Piece Information")]
         public int attackRange;         // 攻击范围
         [FoldoutGroup("Piece Information")]

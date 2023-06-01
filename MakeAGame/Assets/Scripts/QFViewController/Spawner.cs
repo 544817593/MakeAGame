@@ -84,7 +84,7 @@ namespace Game
             this.GetSystem<IPieceSystem>().AddPieceEnemy(monster, crtGrids);
 
             // 发送棋子生成后触发的特性event
-            SpecialitiesSpawnCheckEvent e = new SpecialitiesSpawnCheckEvent { monster = monster };
+            SpecialitiesSpawnCheckEvent e = new SpecialitiesSpawnCheckEvent { piece = monster };
             this.SendEvent(e);
         }
 
@@ -122,7 +122,7 @@ namespace Game
             SOMonsterBase somb = monster.data;
             monster.pieceId = data.pieceId;           
             monster.rarity = somb.rarity;
-            monster.monsterId = somb.monsterId;
+            monster.generalId = somb.monsterId;
             monster.moveSpeed = new BindableProperty<float>(somb.moveSpeed);
             monster.hp = new BindableProperty<int>(somb.maxHp);
             monster.maxHp = new BindableProperty<int>(somb.maxHp);
@@ -131,11 +131,13 @@ namespace Game
             monster.defense = new BindableProperty<float>(somb.defense);
             monster.accuracy = new BindableProperty<float>(somb.accuracy);
             monster.atkRange = new BindableProperty<int>(somb.atkRange);
-            monster.features = new BindableProperty<List<PropertyEnum>>(somb.properties);
+            monster.features = new BindableProperty<List<FeatureEnum>>(somb.properties);
             monster.dirs = new BindableProperty<List<DirEnum>>(somb.dirs);
             monster.inCombat = false;
             monster.isAttacking = new BindableProperty<bool>(false);
             monster.isDying = new BindableProperty<bool>(false);
+
+            // 也许可以删除，用viewpiecebase的pieceGrids
             (int, int) temp = (data.row, data.col);
             monster.leftTopGridPos = new BindableProperty<(int, int)>(temp);
             (int, int) temp2 = (data.row + somb.height - 1, data.col + somb.width - 1);

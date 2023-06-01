@@ -34,7 +34,7 @@ public enum SkillNameEnum
 /// <summary>
 /// 特性
 /// </summary>
-public enum PropertyEnum
+public enum FeatureEnum
 {
     Anthropologist, Writer, Hydrophobia, Insomnia, Psychologist, Dominant,
     SolitaryHero, Determined, Toxicologist, Camouflaged, Bloodthirsty, MagicResistant,

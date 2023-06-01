@@ -19,13 +19,13 @@ namespace Game
         public override void EnterState()
         {
             lastUpdateTime = Time.time;
-            movementCooldown = viewPieceFriend.card.moveSpd;
+            movementCooldown = viewPieceFriend.moveSpeed;
             ResetMoveSpeed();
         }
 
         void ResetMoveSpeed()
         {
-            movementCooldown = viewPieceFriend.card.moveSpd;
+            movementCooldown = viewPieceFriend.moveSpeed;
         }
 
         public override void Update()

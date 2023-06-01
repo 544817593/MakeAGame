@@ -1,4 +1,5 @@
-﻿using QFramework;
+﻿using DG.Tweening;
+using QFramework;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -264,7 +265,6 @@ namespace Game
         {      
             if (GameManager.Instance.gameSceneMan.GetCurrentSceneName() != "Combat") return;
             Item item = e.item;
-            Card card = e.viewPiece?.card;
             switch (item.data.itemName)
             {
                 case "浅蓝色药水":
@@ -303,19 +303,19 @@ namespace Game
                 case "浅蓝色羽毛笔":
                     break;
                 case "炼金沙":
-                    float removeLife = e.viewPiece.card.maxLife / 2;
-                    e.viewPiece.card.AddLife(-removeLife);
+                    float removeLife = e.viewPiece.maxLife / 2;
+                    e.viewPiece.AddCurrLife(-removeLife);
                     GameManager.Instance.playerMan.player.AddGold((int)removeLife / 2);
                     break;
                 case "浅红色药水":
                 case "中红色药水":
                 case "深红色药水":
-                    if (item.data.volume == ItemVolumeEnum.Small) card.AddLife(5f);
-                    else if (item.data.volume == ItemVolumeEnum.Medium) card.AddLife(10f);
-                    else card.AddLife(20f);
+                    if (item.data.volume == ItemVolumeEnum.Small) e.viewPiece.AddCurrLife(5f);
+                    else if (item.data.volume == ItemVolumeEnum.Medium) e.viewPiece.AddCurrLife(10f);
+                    else e.viewPiece.AddCurrLife(20f);
                     break;
-                case "猩红色药水":              
-                    card.AddCurrLife(card.maxLife - card.currLife);
+                case "猩红色药水":
+                    e.viewPiece.AddCurrLife(e.viewPiece.maxLife - e.viewPiece.currLife);
                     break;
             }
             AfterUseCombatItem(item);
