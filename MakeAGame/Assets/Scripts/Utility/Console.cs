@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using QFramework;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -11,12 +12,13 @@ namespace Game
     /// </summary>
     public static class Console
     {
+        public const string ErrorOutput = "<color=\"red\">Unvalid command!</color>";
+        
         // 所有命令
         private static string[] Commands = new string[]
         {
             "CrtScene", // 获取当前场景名称
-            "GenerateMap",  // todo
-            "Test",  // todo
+            "GenMap",   // 生成一张全是普通格子的地图 arg1:行数 arg2:列数    // ex: GenMap 4 6
             "ChangeScene" // 转到战斗场景
         };
         
@@ -38,14 +40,14 @@ namespace Game
                 case "ChangeScene":
                     SceneManager.LoadScene(args[1]);
                     return output;
-                case "GenerateMap":
-                    output = GenerateMap();
+                case "GenMap":
+                    output = GenerateMap(args.GetRange(1,args.Count - 1));
                     break;
 
                 // todo 更多命令写在这里
                 
                 default:
-                    output = "<color=\"red\">Unvalid command!</color>";
+                    output = ErrorOutput;
                     break;
             }
 
@@ -58,18 +60,28 @@ namespace Game
             return $"Current scene is: {crtScene.name}";
         }
 
-        private static string GenerateMap()
+        private static string GenerateMap(List<string> args)
         {
+            if(args.Count < 2)
+                return ErrorOutput;
+            
             var mapSystem = GameEntry.Interface.GetSystem<IMapSystem>();
             mapSystem.Clear();
 
             SOMapData mapData = ScriptableObject.CreateInstance<SOMapData>();
-            mapData.row = 6;
-            mapData.col = 1;
+            mapData.row = args[0].ToInt();
+            mapData.col = args[1].ToInt();
             mapData.BuildMap();
             
             mapSystem.CreateMapBySO(mapData);
             
+            // 镜头位置
+            ChangeCameraTargetEvent setCameraCenterEvent = new ChangeCameraTargetEvent()
+            {
+                target = mapSystem.centerGrid.transform
+            };
+            GameEntry.Interface.SendEvent<ChangeCameraTargetEvent>(setCameraCenterEvent);
+
             return "map is recreated";
         }
     }
