@@ -35,6 +35,7 @@ public class TotalPoint : MonoBehaviour
 
     public void LoadGame()
     {
+        
         if (total_Point == 0)
         {
             //Loading.instance.LoadingScene(GameManager.Instance.currSceneName);

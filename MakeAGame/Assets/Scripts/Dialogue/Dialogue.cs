@@ -25,6 +25,7 @@ public class Dialogue : ViewController
     TextMeshProUGUI story_text;
     public CheckControl m_checkControl;
     public ShowGift m_showGift;
+    public string ssssss;
     
     private const string SPEAKER_TAG = "speaker";
     private const string PAUSE_TAG = "pause";
@@ -41,7 +42,8 @@ public class Dialogue : ViewController
     private const string Camera_TAG = "camera";
     private const string Reward_TAG = "reward";//奖励机制
     private const string Gift_TAG = "gift";//NPC赠送
-
+    //private const string SPRITE_DECISION_TAG = "Decision_Sprite";//精神判定机制
+    //private const string STRENGTH_DECISION_TAG = "Decision_Strength";//力量判定机制
 
     private Coroutine displayCoroutine;
 
@@ -59,7 +61,7 @@ public class Dialogue : ViewController
     bool reward = false;
     bool waitForPass = false;
     public bool showGift = false;
-
+   
     public GameObject npc;
     public GameObject backGround;
     //private bool canContinueNext = false;
@@ -97,18 +99,20 @@ public class Dialogue : ViewController
             });
 
         }
+        
 
     }
 
     void Update()
     {
+        
         SubmitPressed();
         CheckPause();
-        if (GetSubmitPressed() && canContinue && !pauseD && !waitForChoice && !waitForControl /*&& !waitForScene && !waitForPass*/ &&!showGift)
+        if (GetSubmitPressed() && canContinue && !pauseD && !waitForChoice && !waitForControl && !showGift )
         {
             StoryUI();
         }
-    
+       
     }
     public void ShowBG(int choice)
     {
@@ -144,7 +148,14 @@ public class Dialogue : ViewController
         {
             showGift = false;
         }
-        
+        //if(UIKit.GetPanel<DiceUI.AllDiceUIPanel>()?.finish == true)
+        //{
+        //    decision = UIKit.GetPanel<DiceUI.AllDiceUIPanel>().decision;
+        //    story.variablesState["CheckP"] = decision.ToString();
+           
+        //    WaitForDecision = false;
+        //    UIKit.ClosePanel<DiceUI.AllDiceUIPanel>();
+        //}
             
        
 
@@ -229,27 +240,94 @@ public class Dialogue : ViewController
 
     }
 
-    
-    public void ChooseChoice(int i)
+    public void MakeDecision1()
     {
-
         
+        if (PlayerManager.Instance.player.GetStats(PlayerStatsEnum.Spirit) >= 5)
+        {
+            story.variablesState["CheckSprite"] = true;
+            PlayerManager.Instance.player.ModifyStats(PlayerStatsEnum.Spirit, 1);
+        }
+        else
+        {
+            story.variablesState["CheckSprite"] = false;
+            PlayerManager.Instance.player.ModifyStats(PlayerStatsEnum.Spirit, -1);
+        }
+
+        if (PlayerManager.Instance.player.GetStats(PlayerStatsEnum.Strength) >= 5)
+        {
+            story.variablesState["CheckStrength"] = true;
+            PlayerManager.Instance.player.ModifyStats(PlayerStatsEnum.Stamina, -1);
+        }
+        else
+        {
+            story.variablesState["CheckStrength"] = false;
+            PlayerManager.Instance.player.ModifyStats(PlayerStatsEnum.Spirit, 1);
+        }
+    }
+
+    public void MakeDecision2()
+    {
+        if (PlayerManager.Instance.player.GetStats(PlayerStatsEnum.Stamina) >= 3)
+        {
+            story.variablesState["CheckStamina"] = true;
+            PlayerManager.Instance.player.ModifyStats(PlayerStatsEnum.Stamina, -1);
+        }
+        else
+        {
+            story.variablesState["CheckStamina"] = false;
+            PlayerManager.Instance.player.ModifyStats(PlayerStatsEnum.Spirit, 1);
+        }
+    }
+    public void MakeDecision3()
+    {
+        if (PlayerManager.Instance.player.GetStats(PlayerStatsEnum.Charisma) >= 5)
+        {
+            story.variablesState["CheckCharisma"] = true;
+            PlayerManager.Instance.player.ModifyStats(PlayerStatsEnum.Charisma, 1);
+        }
+        else
+        {
+            story.variablesState["CheckCharisma"] = false;
+            
+        }
+        if (PlayerManager.Instance.player.GetStats(PlayerStatsEnum.Charisma) >=4 && PlayerManager.Instance.player.GetStats(PlayerStatsEnum.Skill) >=4)
+        {
+            story.variablesState["CheckP"] = true;
+            PlayerManager.Instance.player.ModifyStats(PlayerStatsEnum.Skill, 1);
+        }
+        else
+        {
+            story.variablesState["CheckP"] = false;
+
+        }
+    }
+    public void ChooseChoice(int i)
+    {  
             story.ChooseChoiceIndex(i);
             waitForChoice = false;
             StoryUI();
-       
-
-
     }
 
     void LoadStory()
     {
 
         story_text.text = "";
+        if(ink_file.name == "NPC1")
+        {
+            MakeDecision1();
+        }
+        else if(ink_file.name == "NPC2")
+        {
+            MakeDecision2();
+        }
+        else if (ink_file.name == "NPC3")
+        {
+            MakeDecision3();
+        }
 
-        
-           
-            if (story.canContinue)
+
+        if (story.canContinue)
             {
             d_finish = false;
             if (displayCoroutine != null)
@@ -258,7 +336,7 @@ public class Dialogue : ViewController
                 }
                 displayCoroutine = StartCoroutine(DisplayText(story.Continue()));
            
-            HandleTags(story.currentTags);
+            
             DisplayChoices();
            
         }
@@ -276,6 +354,9 @@ public class Dialogue : ViewController
 
     IEnumerator DisplayText(string line)
     {
+        HandleTags(story.currentTags);
+
+       
         story_text.text = line;
         story_text.maxVisibleCharacters = 0;
        
@@ -367,6 +448,7 @@ public class Dialogue : ViewController
                     m_showGift?.PopGift();
                     showGift = true;                  
                     break;
+               
             }
         }
     }

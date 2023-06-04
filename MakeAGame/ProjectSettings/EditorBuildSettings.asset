@@ -24,6 +24,12 @@ EditorBuildSettings:
     path: Assets/Scenes/Animation.unity
     guid: 7d1a120600b0f2c4ba5f57d09d0f4664
   - enabled: 1
+    path: Assets/Scenes/Merchant.unity
+    guid: 4fd1c88d14e7f104ba5a9bf70ed93b89
+  - enabled: 1
+    path: Assets/Scenes/Explore.unity
+    guid: 7332f294cf3b2ee41aacccb51b0a7b27
+  - enabled: 1
     path: Assets/Scenes/TestUIPanels/TestShopMain.unity
     guid: f018a51f54b961a40b6ca594b66f539a
   - enabled: 1

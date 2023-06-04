@@ -129,6 +129,17 @@ namespace Game
             }
         }
 
+        public void SetStartStats(PlayerStatsEnum stats, int amount)
+        {
+            switch (stats)
+            {
+                case PlayerStatsEnum.Strength: strength = amount; return;
+                case PlayerStatsEnum.Spirit: spirit = amount; return;
+                case PlayerStatsEnum.Skill: skill = amount; return;
+                case PlayerStatsEnum.Stamina: stamina = amount; return;
+                case PlayerStatsEnum.Charisma: chrisma = amount; return;
+            }
+        }
         public void SetStats()
         {
             strength = 0;

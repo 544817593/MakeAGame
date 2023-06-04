@@ -65,7 +65,7 @@ public class Attributes : MonoBehaviour
     public void setStrength()
     {
         strength = currentP;
-        PlayerManager.Instance.player.ModifyStats(PlayerStatsEnum.Strength, strength);
+        
     }
     public int getStrength()
     {
@@ -74,7 +74,7 @@ public class Attributes : MonoBehaviour
     public void setSpirit()
     {
         spirit = currentP;
-        PlayerManager.Instance.player.ModifyStats(PlayerStatsEnum.Spirit, spirit);
+        PlayerManager.Instance.player.SetStartStats(PlayerStatsEnum.Spirit, spirit);
 
     }
     public int getSpirit()
@@ -84,7 +84,7 @@ public class Attributes : MonoBehaviour
     public void setSkill()
     {
         skill = currentP;
-        PlayerManager.Instance.player.ModifyStats(PlayerStatsEnum.Skill, skill);
+        PlayerManager.Instance.player.SetStartStats(PlayerStatsEnum.Skill, skill);
     }
     public int getSkill()
     {
@@ -93,7 +93,7 @@ public class Attributes : MonoBehaviour
     public void setStamina()
     {
         stamina = currentP;
-        PlayerManager.Instance.player.ModifyStats(PlayerStatsEnum.Stamina, stamina);
+        PlayerManager.Instance.player.SetStartStats(PlayerStatsEnum.Stamina, stamina);
     }
     public int getCon()
     {
@@ -102,10 +102,14 @@ public class Attributes : MonoBehaviour
     public void setCharm()
     {
         charm = currentP;
-        PlayerManager.Instance.player.ModifyStats(PlayerStatsEnum.Charisma, charm);
+        PlayerManager.Instance.player.SetStartStats(PlayerStatsEnum.Charisma, charm);
     }
     public int getCharm()
     {
         return charm;
+    }
+    public void setState()
+    {
+
     }
 }

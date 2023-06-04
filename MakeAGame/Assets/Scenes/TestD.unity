@@ -241,14 +241,20 @@ MonoBehaviour:
   ScriptsFolder: Assets/Scripts/Game
   GeneratePrefab: 0
   PrefabFolder: Assets/Art/Prefab
-  ink_file: {fileID: 4900000, guid: 434b115f9ab3ecb45945298c22d0be5c, type: 3}
+  ink_file: {fileID: 4900000, guid: a887126a21c131f409bf1739955746a4, type: 3}
   text_Pre: {fileID: 3964987597994152445, guid: afef7d82f4af2c64392905a2a69eed09, type: 3}
   ChoiceP: []
   choicesText: []
   name_text: {fileID: 5266850768810780089, guid: 9f32af7c6d4db2c4b85adb4027e9d9b8, type: 3}
   m_Pack: {fileID: 0}
+  m_checkControl: {fileID: 0}
+  m_showGift: {fileID: 0}
+  ssssss: 
+  canContinue: 0
   pauseD: 0
   d_finish: 0
+  waitForControl: 0
+  showGift: 0
   npc: {fileID: 0}
   backGround: {fileID: 0}
 --- !u!4 &1571763630
