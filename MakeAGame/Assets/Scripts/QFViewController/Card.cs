@@ -42,6 +42,16 @@ namespace Game
         public List<FeatureEnum> features { get;  set; }
         public float accuracy { get; set; }
 
+        public DeathEnhancement deathEnhancement;
+
+        public struct DeathEnhancement
+        {
+            public int damageIncrease;
+            public int healthIncrease;
+            public int statusTimeIncrease;
+            public bool extraDamageEffect;
+        }
+
         public Card(int _charaID)
         {
             charaID = _charaID;

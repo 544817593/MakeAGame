@@ -175,5 +175,14 @@ namespace Game
 
             return minDist;
         }
+
+        public bool IsPieceMonster(int pieceId)
+        {
+            foreach(Monster monster in pieceEnemyList)
+            {
+                if (monster.pieceId == pieceId) return true;
+            }
+            return false;
+        }
     }
 }
