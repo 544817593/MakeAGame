@@ -61,6 +61,14 @@ namespace Game
         /// <param name="data"></param>
         private void OnSpawnMonsterEvent(SpawnMonsterEvent data)
         {
+            // 拦下不合法怪物名字
+            var so = Resources.Load<SOMonsterBase>("ScriptableObjects/Monsters/" + data.name);
+            if (so == null)
+            {
+                Debug.LogError($"no monster so: {data.name}");
+                return;
+            }
+            
             var grid = this.GetSystem<IMapSystem>().Grids();
             Transform gridTransform = grid[data.row, data.col].transform;
             GameObject piece = (GameObject)Instantiate(Resources.Load("Prefabs/EnemyPiece"));
@@ -69,7 +77,7 @@ namespace Game
             piece.transform.position = gridTransform.position;
             // piece.transform.Rotate(90, 0, 0);
             Monster monster = piece.GetComponent<Monster>();
-            monster.data = Resources.Load<SOMonsterBase>("ScriptableObjects/Monsters/" + data.name);
+            monster.data = so;
             // monster.data = AssetDatabase.LoadAssetAtPath<SOMonsterBase>
             // ("Assets/Resources/ScriptableObjects/Monsters/" + data.name + ".asset");
 
