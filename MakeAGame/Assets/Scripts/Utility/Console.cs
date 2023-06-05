@@ -12,14 +12,18 @@ namespace Game
     /// </summary>
     public static class Console
     {
-        public const string ErrorOutput = "<color=\"red\">Unvalid command!</color>";
+        public const string ErrorInvalidCommand = "<color=\"red\">Invalid command!</color>";
+        public const string ErrorLackArgument = "<color=\"red\">Lack argument!</color>";
+        public const string ErrorInvalidArgument = "<color=\"red\">Invalid argument!</color>";
         
         // 所有命令
         private static string[] Commands = new string[]
         {
             "CrtScene", // 获取当前场景名称
+            "ChangeScene",  // 转到战斗场景
             "GenMap",   // 生成一张全是普通格子的地图 arg1:行数 arg2:列数    // ex: GenMap 4 6
-            "ChangeScene" // 转到战斗场景
+            "GenEnemy",   // 生成一个敌人 arg1:怪物名字 arg2:行数 arg3:列数（以该行该列为左上角格子）
+            ""
         };
         
         /// <summary>
@@ -43,11 +47,14 @@ namespace Game
                 case "GenMap":
                     output = GenerateMap(args.GetRange(1,args.Count - 1));
                     break;
+                case "GenEnemy":
+                    output = GenerateEnemy(args.GetRange(1, args.Count - 1));
+                    break;
 
                 // todo 更多命令写在这里
                 
                 default:
-                    output = ErrorOutput;
+                    output = ErrorInvalidCommand;
                     break;
             }
 
@@ -63,7 +70,7 @@ namespace Game
         private static string GenerateMap(List<string> args)
         {
             if(args.Count < 2)
-                return ErrorOutput;
+                return ErrorLackArgument;
             
             var mapSystem = GameEntry.Interface.GetSystem<IMapSystem>();
             mapSystem.Clear();
@@ -71,6 +78,10 @@ namespace Game
             SOMapData mapData = ScriptableObject.CreateInstance<SOMapData>();
             mapData.row = args[0].ToInt();
             mapData.col = args[1].ToInt();
+
+            if (mapData.row <= 0 || mapData.col <= 0)
+                return ErrorInvalidArgument;
+            
             mapData.BuildMap();
             
             mapSystem.CreateMapBySO(mapData);
@@ -83,6 +94,22 @@ namespace Game
             GameEntry.Interface.SendEvent<ChangeCameraTargetEvent>(setCameraCenterEvent);
 
             return "map is recreated";
+        }
+
+        private static string GenerateEnemy(List<string> args)
+        {
+            if (args.Count < 3)
+                return ErrorLackArgument;
+
+            // int charaID = args[0].ToInt();
+            string monsterName = args[0];
+            int row = args[1].ToInt();
+            int col = args[2].ToInt();
+
+            var spawnSystem = GameEntry.Interface.GetSystem<ISpawnSystem>();
+            spawnSystem.SpawnMonster(row, col, monsterName);
+
+            return $"try spawn {monsterName} at row {row}, col {col}";
         }
     }
 }
