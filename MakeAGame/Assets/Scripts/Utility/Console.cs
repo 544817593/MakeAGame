@@ -23,6 +23,7 @@ namespace Game
             "ChangeScene",  // 转到战斗场景
             "GenMap",   // 生成一张全是普通格子的地图 arg1:行数 arg2:列数    // ex: GenMap 4 6
             "GenEnemy",   // 生成一个敌人 arg1:怪物名字 arg2:行数 arg3:列数（以该行该列为左上角格子）
+            "AddHandCard",  // 添加手牌 arg1:角色id
             ""
         };
         
@@ -49,6 +50,9 @@ namespace Game
                     break;
                 case "GenEnemy":
                     output = GenerateEnemy(args.GetRange(1, args.Count - 1));
+                    break;
+                case "AddHandCard":
+                    output = AddHandCard(args.GetRange(1, args.Count - 1));
                     break;
 
                 // todo 更多命令写在这里
@@ -110,6 +114,20 @@ namespace Game
             spawnSystem.SpawnMonster(row, col, monsterName);
 
             return $"try spawn {monsterName} at row {row}, col {col}";
+        }
+
+        private static string AddHandCard(List<string> args)
+        {
+            if (args.Count < 1)
+                return ErrorLackArgument;
+
+            int charaID = args[0].ToInt();
+            var so = IdToSO.FindCardSOByID(charaID);
+            if (so == null)
+                return ErrorInvalidArgument + " so is null";
+            
+            GameEntry.Interface.SendCommand<AddHandCardCommand>(new AddHandCardCommand(new Card(charaID)));
+            return "handcard is added";
         }
     }
 }
