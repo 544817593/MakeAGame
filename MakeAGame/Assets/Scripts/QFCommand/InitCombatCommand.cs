@@ -26,8 +26,11 @@ namespace Game
             UIKit.OpenPanel<UIAbilityPanel>();
 
             // 怪物
-            var spawnSystem = this.GetSystem<ISpawnSystem>();
-            spawnSystem.ConstantSpawnMonster(info.monsterSpawnSettings);
+            if (info.monsterSpawnSettings != null)
+            {
+                var spawnSystem = this.GetSystem<ISpawnSystem>();
+                spawnSystem.ConstantSpawnMonster(info.monsterSpawnSettings);
+            }
         }
 
         private void InitMap()
