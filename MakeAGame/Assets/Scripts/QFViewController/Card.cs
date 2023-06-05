@@ -46,10 +46,24 @@ namespace Game
 
         public struct DeathEnhancement
         {
-            public int damageIncrease;
-            public int healthIncrease;
-            public int statusTimeIncrease;
-            public bool extraDamageEffect;
+            public int damageIncrease; // 增加的伤害
+            public int healthIncrease; // 增加的回复量
+            public int statusTimeIncrease; // 增加的持续时间
+            public bool extraDamageEffect; // 是否有“对随机三个敌人造成恢复量的伤害”的效果，只有可以恢复的死面才有可能获得
+            /// <summary>
+            /// 初始化默认的死面强化效果
+            /// </summary>
+            /// <param name="_damageIncrease"></param>
+            /// <param name="_healthIncrease"></param>
+            /// <param name="_statusTimeIncrease"></param>
+            /// <param name="_extraDamageEffect"></param>
+            public DeathEnhancement(int _damageIncrease = 0, int _healthIncrease = 0, int _statusTimeIncrease = 0, bool _extraDamageEffect = false)
+            {
+                damageIncrease = _damageIncrease;
+                healthIncrease = _healthIncrease;
+                statusTimeIncrease = _statusTimeIncrease;
+                extraDamageEffect = _extraDamageEffect;
+            }
         }
 
         public Card(int _charaID)

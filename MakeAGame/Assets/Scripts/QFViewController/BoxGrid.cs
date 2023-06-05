@@ -41,6 +41,10 @@ namespace Game
 
         // components
         private SpriteRenderer srFloor; // 地形图片
+        public void setSrFloor(Sprite sp)
+        {
+            srFloor.sprite = sp;
+        }
         private SpriteRenderer srHint;  // 提示颜色图片
         public GameObject touchArea;    // 鼠标响应区域
         public TriggerHelper mouseHelper;
