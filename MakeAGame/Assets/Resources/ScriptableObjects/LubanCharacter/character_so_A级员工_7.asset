@@ -32,8 +32,8 @@ MonoBehaviour:
   width: 1
   height: 1
   moveDirections: 01000000020000000300000004000000
-  attackSpd: 0.6
-  accracy: 0.9
+  attackSpd: 1.67
+  accuracy: 0.9
   attackRange: 1
   life: 999
   sanCostBonus:

@@ -26,8 +26,11 @@ namespace Game
             UIKit.OpenPanel<UIAbilityPanel>();
 
             // 怪物
-            var spawnSystem = this.GetSystem<ISpawnSystem>();
-            spawnSystem.ConstantSpawnMonster(info.monsterSpawnSettings);
+            if (info.monsterSpawnSettings != null)
+            {
+                var spawnSystem = this.GetSystem<ISpawnSystem>();
+                spawnSystem.ConstantSpawnMonster(info.monsterSpawnSettings);
+            }
 
             // 从背包里抽出七张手牌
             var inventorySystem = this.GetSystem<IInventorySystem>();           
@@ -50,7 +53,6 @@ namespace Game
                 drawCardCooldown = 5f
             };
             this.SendEvent(refillHandCardEvent);
-
         }
 
         private void InitMap()

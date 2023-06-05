@@ -458,7 +458,7 @@ public class FeatureController : MonoBehaviour, IController
     {
         if (obj.target.features.Value.Contains(FeatureEnum.Aquatic))
         {
-            if (obj.boxgrid.terrain.Value == (int)TerrainEnum.Water)
+            if(obj.boxgrids.Find(grid => grid.terrain.Value == (int) TerrainEnum.Water))
             {
                 damageAdjust -= (int)(0.1f * obj.damage);
             }
@@ -478,7 +478,7 @@ public class FeatureController : MonoBehaviour, IController
     {
         if (obj.target.features.Value.Contains(FeatureEnum.Camouflaged))
         {
-            if (obj.boxgrid.terrain.Value == (int)TerrainEnum.Road)
+            if (obj.boxgrids.Find(grid => grid.terrain.Value == (int) TerrainEnum.Road))
             {
                 int rnd = Random.Range(1, 101);
                 if (rnd <= 10) obj.damage = 0;

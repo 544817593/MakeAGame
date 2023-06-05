@@ -212,16 +212,16 @@ namespace Game
         {
             Debug.Log($"piece {this.ToString()} is about to attack");
             // todo attack
-            this.SendEvent<PieceAttackReadyEvent>();
+            // this.SendEvent<PieceAttackReadyEvent>();
             this.SendCommand<PieceAttackCommand>(new PieceAttackCommand(this));
         }
         
-        public override bool Hit()
+        public override bool Hit(int damage)
         {
             this.SendEvent<PieceHitReadyEvent>();
 
-            hp.Value -= 1;
-            Debug.Log($"Monster Hit, hp: {hp}");
+            hp.Value -= damage;
+            Debug.Log($"Piece Hit, damage: {damage} hp: {hp}");
         
             this.SendEvent<PieceHitFinishEvent>();
 

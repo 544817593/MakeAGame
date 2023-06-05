@@ -22,12 +22,15 @@ namespace Game
 
         void ResetAttackSpeed()
         {
-            atkDur = viewPieceFriend.atkSpeed * viewPieceFriend.crtTimeMultiplier;
+            atkDur = viewPieceFriend.atkSpeed;
         }
 
         public override void Update()
         {
-            timer += Time.deltaTime;
+            timer += Time.deltaTime * viewPieceFriend.crtTimeMultiplier;
+            
+            viewPieceFriend.actionBar.SetBarFillAmount((atkDur - timer) / atkDur);
+            
             if (timer > atkDur)
             {
                 viewPieceFriend.Attack();

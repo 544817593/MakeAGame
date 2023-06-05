@@ -170,6 +170,11 @@ public class Monster : ViewPieceBase
         (int, int) original = leftTopGridPos.Value; // 当前左上坐标
         (int, int) positionAfterMovement = leftTopGridPos.Value; // 怪物移动后的坐标
 
+        // 若目标不存在或就是当前位置
+        if (currentTarget == null || currentTarget.leftTopGridPos == original)
+            return (-1, -1);
+        
+
         // A* 寻路
         List<BoxGrid> aStarPath = PathFinding.FindPath(original.Item1, original.Item2,
             currentTarget.leftTopGridPos.Item1, currentTarget.leftTopGridPos.Item2, this);
@@ -252,12 +257,12 @@ public class Monster : ViewPieceBase
         this.SendCommand<PieceAttackCommand>(new PieceAttackCommand(this));
     }
 
-    public override bool Hit()
+    public override bool Hit(int damage)
     {
         this.SendEvent<PieceHitReadyEvent>();
 
-        hp.Value -= 1;
-        Debug.Log($"Monster Hit, hp: {hp.Value}");
+        hp.Value -= damage;
+        Debug.Log($"Monster Hit, damage: {damage} hp: {hp.Value}");
         
         this.SendEvent<PieceHitFinishEvent>();
 
