@@ -164,7 +164,7 @@ namespace Game.LubanDataLoad
             so.sanCost = json.SanCost;
             so.deathFuncDescription = json.DeathDesc;
             so.cardSprite = LoadCardSprite(json);
-            so.hp = json.Hp;
+            so.hp = (int)json.Hp;
             so.attack = json.Atk;
             so.moveSpd = json.MoveSpd;
             so.defend = json.Def;

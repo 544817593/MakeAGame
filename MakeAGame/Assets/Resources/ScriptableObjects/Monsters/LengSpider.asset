@@ -15,7 +15,7 @@ MonoBehaviour:
   monsterSprite: {fileID: 21300000, guid: 7f01198f900dd0c439b13dfa060bed78, type: 3}
   moveSpeed: 4
   maxHp: 180
-  atkSpeed: 0.5
+  atkSpeed: 2
   atkDmg: 7.5
   defense: 0
   accuracy: 100

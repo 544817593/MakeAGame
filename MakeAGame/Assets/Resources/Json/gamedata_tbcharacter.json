@@ -39,7 +39,7 @@
       3,
       4
     ],
-    "atkSpd": 0.8,
+    "atkSpd": 1.25,
     "atkSpdBonus": {
       "property": 1,
       "multiple": 0.1
@@ -88,7 +88,7 @@
       3,
       4
     ],
-    "atkSpd": 0.8,
+    "atkSpd": 1.25,
     "atkSpdBonus": {
       "property": 3,
       "multiple": 0.05
@@ -136,7 +136,7 @@
       3,
       4
     ],
-    "atkSpd": 0.8,
+    "atkSpd": 1.25,
     "atkSpdBonus": {
       "property": 2,
       "multiple": 0.02
@@ -178,7 +178,7 @@
       3,
       4
     ],
-    "atkSpd": 0.5,
+    "atkSpd": 2,
     "atkSpdBonus": {
       "property": 0,
       "multiple": 0
@@ -222,7 +222,7 @@
       3,
       4
     ],
-    "atkSpd": 0.6,
+    "atkSpd": 1.67,
     "atkSpdBonus": {
       "property": 0,
       "multiple": 0
@@ -267,7 +267,7 @@
       3,
       4
     ],
-    "atkSpd": 0.6,
+    "atkSpd": 1.67,
     "atkSpdBonus": {
       "property": 5,
       "multiple": 0.01
@@ -313,7 +313,7 @@
       3,
       4
     ],
-    "atkSpd": 0.6,
+    "atkSpd": 1.67,
     "atkSpdBonus": {
       "property": 5,
       "multiple": 0.02
