@@ -28,6 +28,9 @@ namespace Game
         public override void Update()
         {
             timer += Time.deltaTime;
+            
+            viewPieceEnemy.actionBar.SetBarFillAmount((atkDur - timer) / atkDur);
+            
             if (timer > atkDur)
             {
                 viewPieceEnemy.Attack();

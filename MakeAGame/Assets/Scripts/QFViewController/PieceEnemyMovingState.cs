@@ -34,6 +34,8 @@ namespace Game
             timeSinceUpdate = Time.time - lastUpdateTime; // 计算两次Update的时间差
             // 根据格子时间倍率减少怪物的移动冷却时间
             movementCooldown -= (timeSinceUpdate * viewPieceEnemy.crtTimeMultiplier);
+            
+            viewPieceEnemy.actionBar.SetBarFillAmount(movementCooldown / viewPieceEnemy.moveSpeed);
 
             // 冷却完毕
             if (movementCooldown <= 0)

@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using QFramework;
 using UnityEngine;
 
@@ -11,7 +10,7 @@ namespace Game
     /// </summary>
     public partial class ViewPieceBase: MonoBehaviour, IController, ICanSendEvent
     {
-        protected Transform healthBar;
+        // protected Transform healthBar;
 
         protected IMapSystem mapSystem;
         protected IMovementSystem movementSystem;
@@ -71,6 +70,8 @@ namespace Game
 
         protected virtual void Start()
         {
+            InitBind();
+            
             mapSystem = this.GetSystem<IMapSystem>();
             movementSystem = this.GetSystem<IMovementSystem>();
             
@@ -80,10 +81,8 @@ namespace Game
             OnPieceAttackStart += OnAttackStartEvent;
             OnPieceAttackEnd += OnAttackEndEvent;
             OnPieceUnderAttack += OnUnderAttackEvent;
-
-            healthBar = transform.Find("Root/SpritePiece/HealthBar/Bar");
+            
             hp.Register(e => OnCurrHpChanged(e));
-
         }
 
         /// <summary>
@@ -92,7 +91,7 @@ namespace Game
         /// <param name="e">新生命值</param>
         protected void OnCurrHpChanged(int e)
         {
-            healthBar.localScale = new Vector3((float)e / maxHp, 1f);
+            healthBar.SetBarFillAmount((float)e / maxHp);
         }
 
         public virtual void SetGrids(List<BoxGrid> grids)
@@ -111,8 +110,6 @@ namespace Game
         {
 
         }
-
-        
 
         private void Update()
         {
