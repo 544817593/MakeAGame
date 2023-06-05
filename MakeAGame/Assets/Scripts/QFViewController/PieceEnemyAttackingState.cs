@@ -22,12 +22,12 @@ namespace Game
 
         void ResetAttackSpeed()
         {
-            atkDur = viewPieceEnemy.data.atkSpeed * viewPieceEnemy.crtTimeMultiplier;
+            atkDur = viewPieceEnemy.data.atkSpeed;
         }
 
         public override void Update()
         {
-            timer += Time.deltaTime;
+            timer += Time.deltaTime * viewPieceEnemy.crtTimeMultiplier;
             
             viewPieceEnemy.actionBar.SetBarFillAmount((atkDur - timer) / atkDur);
             
