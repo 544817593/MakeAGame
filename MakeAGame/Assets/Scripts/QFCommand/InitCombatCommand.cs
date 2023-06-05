@@ -31,6 +31,28 @@ namespace Game
                 var spawnSystem = this.GetSystem<ISpawnSystem>();
                 spawnSystem.ConstantSpawnMonster(info.monsterSpawnSettings);
             }
+
+            // 从背包里抽出七张手牌
+            var inventorySystem = this.GetSystem<IInventorySystem>();           
+            for (int i = 0; i < this.GetSystem<IHandCardSystem>().maxCardCount; i++)
+            {
+                if (inventorySystem.GetBagCardList().Count != 0)
+                {
+                    Card card = inventorySystem.DrawCard();
+                    this.SendCommand<AddHandCardCommand>(new AddHandCardCommand(card));
+                }
+                else
+                {
+                    break;
+                }
+            }
+
+            // 持续抽卡协程
+            var refillHandCardEvent = new RefillHandCardEvent
+            {
+                drawCardCooldown = 5f
+            };
+            this.SendEvent(refillHandCardEvent);
         }
 
         private void InitMap()

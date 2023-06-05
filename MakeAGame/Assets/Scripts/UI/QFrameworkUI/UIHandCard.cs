@@ -69,9 +69,9 @@ namespace Game
 			});
 			ButtonSubCardTest.onClick.AddListener(() =>
 			{
-				if (handCardSystem.handCardList.Count > 0)
+				if (handCardSystem.handCardList.Value.Count > 0)
 				{
-					GameEntry.Interface.SendCommand<SubHandCardCommand>(new SubHandCardCommand(handCardSystem.handCardList[0]));	
+					GameEntry.Interface.SendCommand<SubHandCardCommand>(new SubHandCardCommand(handCardSystem.handCardList.Value[0]));	
 				}
 			});
 

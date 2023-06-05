@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace Game
 {
@@ -40,11 +41,6 @@ namespace Game
         /// <param name="cardId">卡牌id</param>
         //void SpawnHandCard(int cardId);
 
-        /// <summary>
-        /// 返回背包里的卡牌列表
-        /// </summary>
-        /// <returns></returns>
-        List<ViewCard> GetHandCardList();
 
         /// <summary>
         /// 创建一个卡牌实体Prefab，并放入背包中
@@ -64,6 +60,17 @@ namespace Game
         /// </summary>
         void SortItemList();
 
+        /// <summary>
+        /// Knuth-Durstenfeld Shuffle算法，给背包中的牌随机排序
+        /// </summary>
+        void ShuffleCard();
+
+        /// <summary>
+        /// 从背包里抽取一张牌，返还抽到的卡牌数据
+        /// </summary>
+        /// <returns></returns>
+        Card DrawCard();
+
 
 
     }
@@ -71,7 +78,6 @@ namespace Game
     public class InventorySystem : AbstractSystem, IInventorySystem
     {
         public BindableProperty<List<Item>> itemList = new BindableProperty<List<Item>>(); // 物品列表
-        public BindableProperty<List<ViewCard>> handCardList = new BindableProperty<List<ViewCard>>(); // 手牌列表
         public BindableProperty<List<ViewBagCard>> cardBagList = new BindableProperty<List<ViewBagCard>>();// 背包卡牌列表
         public Transform inventoryRoot; // 生成的物品Prefab悬挂的父物体位置
 
@@ -81,7 +87,6 @@ namespace Game
             itemList.Register((newItemList) => OnItemListChanged());
             inventoryRoot = GameObject.Find("InventoryRoot")?.transform;
 
-            handCardList.SetValueWithoutEvent(new List<ViewCard>());
             cardBagList.SetValueWithoutEvent(new List<ViewBagCard>());
 
             // 测试用代码
@@ -152,10 +157,6 @@ namespace Game
         //    UIKit.GetPanel<BagUI.BagUIPanel>().UpdateLayout();
         //}
 
-        public List<ViewCard> GetHandCardList()
-        {
-            return handCardList;
-        }
         public void SpawnBagCardInBag(Card m_card)
         {
             GameObject card_Object;
@@ -177,6 +178,7 @@ namespace Game
 
            
             cardBagList.Value.Add(cardBase);
+            ShuffleCard();
             UIKit.GetPanel<BagUI.BagUIPanel>().UpdateLayout();
         }
         public List<ViewBagCard> GetBagCardList()
@@ -210,6 +212,36 @@ namespace Game
             var useItemEvent = new UseItemEvent { item = item };
             GameEntry.Interface.SendCommand(new UseItemCommand(useItemEvent));
         }
+
+        public void ShuffleCard()
+        {
+            for (int i = 0; i < cardBagList.Value.Count; i++)
+            {
+                var index = Random.Range(0, cardBagList.Value.Count - i);
+                var tempValue = cardBagList.Value[index];
+                cardBagList.Value[index] = cardBagList.Value[cardBagList.Value.Count - i - 1];
+                cardBagList.Value[cardBagList.Value.Count - i - 1] = tempValue;
+            }
+        }
+
+        public Card DrawCard()
+        {
+            var index = cardBagList.Value.Count - 1;
+            var card = cardBagList.Value[index].card;
+            cardBagList.Value.RemoveAt(index);
+            Debug.Log($"get card {index} from bag");
+            UIKit.GetPanel<BagUI.BagUIPanel>()?.UpdateLayout();
+            return card;
+        }
+
+    }
+
+    /// <summary>
+    /// 由InitCombatCommand发出的持续抽牌事件，参数结构体在InventorySystem下
+    /// </summary>
+    public struct RefillHandCardEvent
+    {
+        public float drawCardCooldown;
     }
 }
 

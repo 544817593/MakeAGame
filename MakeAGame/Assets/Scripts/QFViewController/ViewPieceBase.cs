@@ -27,7 +27,7 @@ namespace Game
         public Action<PieceAttackStartEvent> OnPieceAttackStart;
         public Action<PieceAttackEndEvent> OnPieceAttackEnd;
         public Action<PieceUnderAttackEvent> OnPieceUnderAttack;
-
+        
         public List<BoxGrid> pieceGrids { get; protected set; } = new List<BoxGrid>();
         // 经过所有占地格子计算出来的时间流速
         public float crtTimeMultiplier
@@ -42,6 +42,7 @@ namespace Game
                 val /= pieceGrids.Count;
                 return val;
             }
+            
         }
 
         #region 棋子数据

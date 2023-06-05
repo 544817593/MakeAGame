@@ -13,17 +13,17 @@ namespace DiceUI
 	public partial class AllDiceUIPanel : UIPanel
 	{
 		int totalDiceP;
+		public bool decision =false;
+		
+		public bool finish = false;
 		protected override void OnInit(IUIData uiData = null)
 		{
 			mData = uiData as AllDiceUIPanelData ?? new AllDiceUIPanelData();
 			// please add init code here
 
-			// Test Data
-			PlayerManager.Instance.player.ModifyStats(PlayerStatsEnum.Charisma, 6);
-			PlayerManager.Instance.player.ModifyStats(PlayerStatsEnum.Spirit, 6);
-			PlayerManager.Instance.player.ModifyStats(PlayerStatsEnum.Stamina, 6);
 
-			RoolDice();
+		
+			
 		}
 		
 		protected override void OnOpen(IUIData uiData = null)
@@ -42,7 +42,7 @@ namespace DiceUI
 		{
 		}
 
-		private void RoolDice()
+		public void RoolDice(PlayerStatsEnum playerStatsEnum)
         {
 			BtnRollDice.onClick.AddListener(() =>
 			{
@@ -64,22 +64,26 @@ namespace DiceUI
 					idx++;
 				}
 			
-				MakeDecision();
+				MakeDecision(playerStatsEnum);
+
+				finish = true;
 			});
 			
         }
 
-		private void MakeDecision()
+		private void MakeDecision(PlayerStatsEnum playerStatsEnum)
         {
+			Debug.Log(PlayerManager.Instance.player.GetStats(playerStatsEnum));
 			
-			Debug.Log(PlayerManager.Instance.player.GetStats(PlayerStatsEnum.Charisma));
-			if (totalDiceP <= PlayerManager.Instance.player.GetStats(PlayerStatsEnum.Charisma)&& totalDiceP<= PlayerManager.Instance.player.GetStats(PlayerStatsEnum.Spirit)&&totalDiceP <= PlayerManager.Instance.player.GetStats(PlayerStatsEnum.Stamina))
+			if ( PlayerManager.Instance.player.GetStats(playerStatsEnum) >= 5)
             {
 				Debug.Log("Success");
+				decision = true;
             }
 			else
             {
 				Debug.Log("Add Debuff");
+				decision = false;
             }
         }
 	}

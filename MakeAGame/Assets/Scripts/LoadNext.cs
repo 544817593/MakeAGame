@@ -19,6 +19,7 @@ public class LoadNext : MonoBehaviour
 
     public void LoadScene()
     {
-        SceneManager.LoadScene("TestShopMain");
+        //SceneManager.LoadScene("TestShopMain");
+        GameObject.Find("Room")?.transform.GetComponent<Game.SceneFlow>().LoadRoom();
     }
 }

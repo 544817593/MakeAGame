@@ -7,23 +7,31 @@ namespace Game
     public interface IHandCardSystem : ISystem
     {
         int maxCardCount { get; } // 最大手牌数
-        List<ViewCard> handCardList { get; }    // 手牌列表
+        BindableProperty<List<ViewCard>> handCardList { get; }    // 手牌列表
         
         UIHandCard ui { set; }
         
         bool AddCard(Card cardData);
         bool SubCard(ViewCard viewCard);
+
+        /// <summary>
+        /// 返还手牌列表
+        /// </summary>
+        /// <returns></returns>
+        List<ViewCard> GetHandCardList();
     }
     
     public class HandCardSystem: AbstractSystem, IHandCardSystem
     {
-        public List<ViewCard> handCardList { get; } = new List<ViewCard>(); // 手牌列表
+        public BindableProperty<List<ViewCard>> handCardList { get; } = new BindableProperty<List<ViewCard>>(); // 手牌列表
+
         public int maxCardCount { get; } = 7;
         
         public UIHandCard ui {private get; set; }   // 对应UI
 
         private EasyEvent<int> OnAddCardTest = new EasyEvent<int>();   // 逻辑上卡牌已经添加，要求ui进行更新的事件
         private EasyEvent<int> OnSubCardTest = new EasyEvent<int>();
+        private IInventorySystem inventorySystem;
 
         protected override void OnInit()
         {
@@ -35,12 +43,16 @@ namespace Game
             {
                 ui.SubCard(index);
             });
+
+            handCardList.SetValueWithoutEvent(new List<ViewCard>());
+            inventorySystem = this.GetSystem<IInventorySystem>();
+
         }
-        
+
         public bool AddCard(Card cardData)
         {
             // 判断是否可以加牌
-            if (handCardList.Count >= maxCardCount)
+            if (handCardList.Value.Count >= maxCardCount)
             {
                 Debug.LogError("try add handcard when hand is full!");
                 return false;
@@ -60,25 +72,25 @@ namespace Game
             
 
             // 数值变化
-            handCardList.Add(viewCard);
+            handCardList.Value.Add(viewCard);
 
             // 通知UI变化   // 通过事件注册
-            OnAddCardTest.Trigger(handCardList.Count - 1);
+            OnAddCardTest.Trigger(handCardList.Value.Count - 1);
 
             return true;
         }
 
         public bool SubCard(ViewCard viewCard)
         {
-            if (viewCard == null || !handCardList.Contains(viewCard))
+            if (viewCard == null || !handCardList.Value.Contains(viewCard))
             {
                 Debug.LogError("try to sub card null or already moved");
                 ui.UpdateLayout();
                 return false;
             }
             
-            int index = handCardList.IndexOf(viewCard);
-            handCardList.RemoveAt(index);
+            int index = handCardList.Value.IndexOf(viewCard);
+            handCardList.Value.RemoveAt(index);
             OnSubCardTest.Trigger(index);
 
             // var cardGO = viewCard.gameObject;
@@ -86,6 +98,11 @@ namespace Game
             viewCard.gameObject.SetActive(false);
 
             return true;
+        }
+
+        public List<ViewCard> GetHandCardList()
+        {
+            return handCardList;
         }
 
         public IArchitecture GetArchitecture()

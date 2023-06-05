@@ -42,6 +42,33 @@ namespace Game
                 OnSpawnCardEvent();
             }).UnRegisterWhenGameObjectDestroyed(gameObject);
 
+            // 监听持续抽取卡牌事件
+            this.RegisterEvent<RefillHandCardEvent>(data =>
+            {
+                OnHandCardRefillEvent(data);
+            }).UnRegisterWhenGameObjectDestroyed(gameObject);
+
+        }
+
+        /// <summary>
+        /// 收到持续抽卡事件后开始持续抽卡
+        /// </summary>
+        /// <param name="data"></param>
+        /// <returns></returns>
+        private IEnumerator OnHandCardRefillEvent(RefillHandCardEvent data)
+        {
+            IInventorySystem inventorySystem = this.GetSystem<IInventorySystem>();
+            IHandCardSystem handCardSystem = this.GetSystem<IHandCardSystem>();
+            while(GameManager.Instance.gameSceneMan.GetCurrentSceneName() == "Combat")
+            {
+                if (inventorySystem.GetBagCardList().Count != 0 &&
+                    handCardSystem.handCardList.Value.Count < handCardSystem.maxCardCount)
+                {
+                    Card card = inventorySystem.DrawCard();
+                    this.SendCommand<AddHandCardCommand>(new AddHandCardCommand(card));
+                }
+                yield return new WaitForSeconds(data.drawCardCooldown);
+            }
         }
 
         /// <summary>
