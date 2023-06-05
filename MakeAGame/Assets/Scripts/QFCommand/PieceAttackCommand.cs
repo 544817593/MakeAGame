@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using QFramework;
+using UnityEngine;
 
 namespace Game
 {
@@ -20,7 +21,22 @@ namespace Game
             List<ViewPieceBase> toDiePieces = new List<ViewPieceBase>();
             foreach (var defender in defenders)
             {
-                bool isDead = defender.Hit();
+                // 对每个防御者，通过初始值计算是否命中
+                bool isHit = Random.Range(0, 1f) <= attacker.accuracy;
+
+                int damage = (int)attacker.atkDmg;
+                
+                var atkEvent = new SpecialitiesAttackCheckEvent()
+                    {attacker = attacker, damage = (int) damage, hit = isHit, target = defender};
+                this.SendEvent<SpecialitiesAttackCheckEvent>(atkEvent);
+                var defEvent = new SpecialitiesDefendCheckEvent()
+                {
+                    attacker = attacker, target = defender, isMagic = false, damage = (int)atkEvent.damage, // todo isMagic咋判断的
+                    boxgrids = defender.pieceGrids
+                };
+                this.SendEvent<SpecialitiesDefendCheckEvent>(defEvent);
+                
+                bool isDead = defender.Hit(damage);
                 if (isDead)
                 {
                     toDiePieces.Add(defender);

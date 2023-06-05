@@ -257,12 +257,12 @@ public class Monster : ViewPieceBase
         this.SendCommand<PieceAttackCommand>(new PieceAttackCommand(this));
     }
 
-    public override bool Hit()
+    public override bool Hit(int damage)
     {
         this.SendEvent<PieceHitReadyEvent>();
 
-        hp.Value -= 1;
-        Debug.Log($"Monster Hit, hp: {hp.Value}");
+        hp.Value -= damage;
+        Debug.Log($"Monster Hit, damage: {damage} hp: {hp.Value}");
         
         this.SendEvent<PieceHitFinishEvent>();
 

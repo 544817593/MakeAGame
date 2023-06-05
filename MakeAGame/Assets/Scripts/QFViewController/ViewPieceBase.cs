@@ -174,7 +174,7 @@ namespace Game
         }
 
         // 受到攻击，返回是否死亡
-        public virtual bool Hit()
+        public virtual bool Hit(int damage)
         {
             // 收到攻击数据...
             // 进行各种效果计算...
@@ -263,6 +263,8 @@ namespace Game
     public class PieceAttackReadyEvent
     {
         // todo 一些战斗数据...
+        public float damage;
+        public float accuracy;
     }
 
     // 攻击处理完毕
@@ -303,7 +305,7 @@ namespace Game
         public ViewPieceBase target; // 防守方
         public bool isMagic; // 伤害是否为魔法伤害
         public int damage; // 伤害
-        public BoxGrid boxgrid; // 受到攻击的格子(单位可能并非1*1)
+        public List<BoxGrid> boxgrids; // 受到攻击的格子(单位可能并非1*1)
     }
 
     /// <summary>
