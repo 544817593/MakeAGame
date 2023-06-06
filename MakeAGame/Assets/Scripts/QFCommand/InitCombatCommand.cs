@@ -53,6 +53,20 @@ namespace Game
                 drawCardCooldown = 5f
             };
             this.SendEvent(refillHandCardEvent);
+            
+            // 计时测试 todo delete test 在main场景增加UpdateManager
+            var updateGO = GameObject.Find("UpdateManager");
+            if (updateGO != null)
+            {
+                var updateMan = GameObject.Find("UpdateManager").GetComponent<UpdateManager>();
+                updateMan.ScheduleExecute(CountTest, false, 1, 5);
+                this.GetSystem<IRelicSystem>().StartCountTime();   
+            }
+        }
+
+        void CountTest()
+        {
+            this.SendEvent<CountTimeEvent>();
         }
 
         private void InitMap()
