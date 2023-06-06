@@ -9,7 +9,7 @@ namespace Game
     public class SceneFlow : MonoBehaviour
     {
       public static  SceneFlow instance = null;
-        public List<RoomEnum> ttt;
+        public List<RoomEnum> roomList;
         public string Pre_Room = "Intro";
         public static int combatSceneCount =0 ;
         public static int NpcSceneCount = 0;
@@ -29,14 +29,14 @@ namespace Game
         public void SetRoomList()
         {
              IRoomSystem roomSystem = GameEntry.Interface.GetSystem<IRoomSystem>();
-            roomSystem.SetRoom(ttt);
-            ttt = roomSystem.GetRooms();
+            roomSystem.SetRoom(roomList);
+            roomList = roomSystem.GetRooms();
         }
 
         public void LoadRoom()
         {
-            RoomEnum m_room = ttt[0];
-            ttt.RemoveAt(0);
+            RoomEnum m_room = roomList[0];
+            roomList.RemoveAt(0);
             UIKit.CloseAllPanel();
             if(Pre_Room == RoomEnum.Combat.ToString())
             {

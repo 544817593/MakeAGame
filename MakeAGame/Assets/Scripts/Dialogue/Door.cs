@@ -48,7 +48,7 @@ public class Door : MonoBehaviour
     }
     public void LoadScene()
     {
-        GameObject.Find("Room")?.transform.GetComponent<Game.SceneFlow>().LoadRoom();
+        GameObject.Find("GameSceneManager")?.transform.GetComponent<Game.SceneFlow>().LoadRoom();
 
     }
     // Update is called once per frame
