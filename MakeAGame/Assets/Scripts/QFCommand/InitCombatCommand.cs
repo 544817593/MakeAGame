@@ -59,7 +59,7 @@ namespace Game
             if (updateGO != null)
             {
                 var updateMan = GameObject.Find("UpdateManager").GetComponent<UpdateManager>();
-                updateMan.ScheduleExecute(CountTest, false, 1, 5);
+                updateMan.ScheduleExecute(CountTest, false, 1);
                 this.GetSystem<IRelicSystem>().StartCountTime();   
             }
         }

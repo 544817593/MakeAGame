@@ -25,6 +25,8 @@ namespace Game
             
             // 先移出手牌
             this.SendCommand(new SubHandCardCommand(viewCard));
+            // 扣除混沌值
+            UIKit.GetPanel<UIHandCard>().OnSanChange(-(int)viewCard.card.sanCost);
             // todo 再添加棋子
             this.GetSystem<IPieceSystem>().AddPieceFriend(viewCard.card, grids);
 

@@ -646,6 +646,7 @@ GameObject:
   - component: {fileID: 4470555725283928592}
   - component: {fileID: 646701924594637173}
   - component: {fileID: -7815733672399123621}
+  - component: {fileID: -3896592737811505392}
   m_Layer: 5
   m_Name: UIHandCard
   m_TagString: Untagged
@@ -715,6 +716,26 @@ MonoBehaviour:
   PieceIcon: {fileID: 8176015989453210200}
   ImgPieceIcon: {fileID: 2978300338963501785}
   CardRoot: {fileID: 4470555726722604846}
+  ButtonAddCardTest: {fileID: 6449066823573359664}
+  ButtonOpenAnim: {fileID: 5059342389991640917}
+  ButtonCloseAnim: {fileID: 2833084845442322616}
+  ButtonSubCardTest: {fileID: 8853453963175174112}
+--- !u!114 &-3896592737811505392
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4470555725283928591}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff183eebcc24d43439e008f9e405ec39, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  PieceIcon: {fileID: 8176015989453210200}
+  ImgPieceIcon: {fileID: 2978300338963501785}
+  CardRoot: {fileID: 4470555726722604846}
+  ImgMP: {fileID: 4470555726190738773}
   ButtonAddCardTest: {fileID: 6449066823573359664}
   ButtonOpenAnim: {fileID: 5059342389991640917}
   ButtonCloseAnim: {fileID: 2833084845442322616}
@@ -982,6 +1003,7 @@ GameObject:
   - component: {fileID: 4470555726190738772}
   - component: {fileID: 4470555726190738774}
   - component: {fileID: 4470555726190738773}
+  - component: {fileID: 2743147151210290646}
   m_Layer: 5
   m_Name: ImgMP
   m_TagString: Untagged
@@ -1047,6 +1069,22 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &2743147151210290646
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4470555726190738771}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d51f3a7c41ab0346b49ae50d456bece, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MarkType: 0
+  CustomComponentName: ImgMP
+  CustomComment: "\u6DF7\u6C8C\u503C\u6761"
+  mComponentName: UnityEngine.UI.Image
 --- !u!1 &4470555726259618308
 GameObject:
   m_ObjectHideFlags: 0
