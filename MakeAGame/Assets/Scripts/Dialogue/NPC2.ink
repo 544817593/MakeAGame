@@ -5,9 +5,9 @@ VAR CheckStamina = "false"
 你不禁感到疑惑，这到底是什么东西呢？长得四四方方的奇怪东西。
 ->Choice
 ==Choice==
-*拿起来
+*[拿起来]
 ->PickUp
-*无视
+*[无视]
 ->Ignore
 
 ==PickUp==

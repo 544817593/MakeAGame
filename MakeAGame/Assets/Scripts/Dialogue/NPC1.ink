@@ -11,7 +11,7 @@ VAR CheckStrength = "False"
 ->forward
 *[离开]
 ->Leave
-*[杀了它 ]
+*[杀了它]
 ->Kill
 
 ==forward==

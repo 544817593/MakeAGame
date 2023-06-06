@@ -14,8 +14,11 @@ namespace DialogueUI
 		{
 			mData = uiData as DialoguePanelData ?? new DialoguePanelData();
 			// please add init code here
-			
-			
+			foreach(Button b_t in choice.GetComponentsInChildren<Button>())
+            {
+				b_t.Hide();
+            }
+		
 		}
 		
 		protected override void OnOpen(IUIData uiData = null)

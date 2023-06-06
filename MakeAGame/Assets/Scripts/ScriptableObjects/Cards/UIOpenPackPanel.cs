@@ -3,6 +3,7 @@ using DG.Tweening;
 using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
+using System;
 using QFramework;
 using UnityEngine.EventSystems;
 
@@ -21,6 +22,8 @@ namespace PackOpen
 		public bool greenDrawn; // Whether green card has been drawn in the current pack
 		public bool blueDrawn; // Whether blue card has been drawn in the current pack
 		public bool blueSecure; // Whether blue secure is active
+		public List<Transform> card_t;
+		public List<Transform> point_t;
 		protected override void OnInit(IUIData uiData = null)
 		{
 			mData = uiData as UIOpenPackPanelData ?? new UIOpenPackPanelData();
@@ -28,6 +31,18 @@ namespace PackOpen
 			openFinish = false;
 			Number_Of_Packs = 1;
 			count = 0;
+			card_t = new List<Transform>();
+			foreach(Transform card in CardPosition.GetComponentsInChildren<Transform>())
+            {
+				card_t.Add(card);
+				card.Hide();
+            }
+			foreach (Transform point in Point.GetComponentsInChildren<Transform>())
+			{
+				point_t.Add(point);
+			}
+
+			
 			PackModel.finish.RegisterWithInitValue(finish =>
 			{
 				finish = openFinish;
@@ -75,16 +90,26 @@ namespace PackOpen
 				GameObject tempCard = new GameObject("Cardtemp");
 				tempCard.transform.SetParent(CardPosition.transform, false);
 				count = 5;
-				yield return new WaitForSeconds(0.5f);
-				CardPosition1.Show();
-				yield return new WaitForSeconds(0.5f);
-				CardPosition2.Show();
-				yield return new WaitForSeconds(0.5f);
-				CardPosition3.Show();
-				yield return new WaitForSeconds(0.5f);
-				CardPosition4.Show();
-				yield return new WaitForSeconds(0.5f);
-				CardPosition5.Show();
+				
+				for (int i =0; i < card_t.Count; i++)
+                {
+					yield return new WaitForSeconds(0.5f);
+					card_t[i].position = Pack.transform.position;
+					card_t[i].DOScale(0.5f, 0);
+					card_t[i].Show();
+					card_t[i].DOMove(point_t[i].position, 2);
+					card_t[i].DOScale(1f, 2);
+				}
+				//yield return new WaitForSeconds(0.5f);
+				//CardPosition1.Show();
+				//yield return new WaitForSeconds(0.5f);
+				//CardPosition2.Show();
+				//yield return new WaitForSeconds(0.5f);
+				//CardPosition3.Show();
+				//yield return new WaitForSeconds(0.5f);
+				//CardPosition4.Show();
+				//yield return new WaitForSeconds(0.5f);
+				//CardPosition5.Show();
 				Pack.Hide();
 
 			}
