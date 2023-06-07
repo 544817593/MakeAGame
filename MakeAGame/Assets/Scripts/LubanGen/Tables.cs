@@ -16,6 +16,7 @@ public sealed partial class Tables
 {
     public GameData.TbCharacter TbCharacter {get; }
     public GameData.TbFeature TbFeature {get; }
+    public GameData.TbRelic TbRelic {get; }
 
     public Tables(System.Func<string, JSONNode> loader)
     {
@@ -24,10 +25,13 @@ public sealed partial class Tables
         tables.Add("GameData.TbCharacter", TbCharacter);
         TbFeature = new GameData.TbFeature(loader("gamedata_tbfeature")); 
         tables.Add("GameData.TbFeature", TbFeature);
+        TbRelic = new GameData.TbRelic(loader("gamedata_tbrelic")); 
+        tables.Add("GameData.TbRelic", TbRelic);
         PostInit();
 
         TbCharacter.Resolve(tables); 
         TbFeature.Resolve(tables); 
+        TbRelic.Resolve(tables); 
         PostResolve();
     }
 
@@ -35,6 +39,7 @@ public sealed partial class Tables
     {
         TbCharacter.TranslateText(translator); 
         TbFeature.TranslateText(translator); 
+        TbRelic.TranslateText(translator); 
     }
     
     partial void PostInit();

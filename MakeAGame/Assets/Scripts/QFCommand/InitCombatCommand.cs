@@ -53,6 +53,19 @@ namespace Game
                 drawCardCooldown = 5f
             };
             this.SendEvent(refillHandCardEvent);
+            
+            // 计时测试
+            var updateSystem = this.GetSystem<IUpdateSystem>();
+            updateSystem.Reset();
+            updateSystem.ScheduleExecute(CountTest, false, 1f);
+            
+            // 遗物系统开始接受计时
+            this.GetSystem<IRelicSystem>().StartCountTime();
+        }
+
+        void CountTest()
+        {
+            this.SendEvent<CountTimeEvent>();
         }
 
         private void InitMap()

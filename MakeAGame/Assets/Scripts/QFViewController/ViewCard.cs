@@ -166,7 +166,7 @@ namespace Game
             this.SendCommand(new PutPieceCommand(this, e.pieceGrids));
             
             // todo 手牌使用后的后续处理（此时已经移出手牌系统并隐藏），如返回背包、销毁...
-            Debug.Log("[TODO] after card use as life card");
+            Debug.Log("after card use as life card");
             
         }
 

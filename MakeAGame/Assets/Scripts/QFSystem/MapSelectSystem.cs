@@ -153,7 +153,7 @@ namespace Game
              
              PrintSelectedGrids();
              
-             // todo 二次筛选
+             // 二次筛选
              validSelectedGrids.Clear();
              foreach (var grid in selectedGrids)
              {
@@ -164,7 +164,6 @@ namespace Game
                      validSelectedGrids.Add(grid);
                  }
              }
-             // validSelectedGrids = selectedGrids;
 
              foreach (var grid in validSelectedGrids)
              {
@@ -197,7 +196,11 @@ namespace Game
             
             // 判断是否成功放置棋子
             // 1.格子数量
-            if (validSelectedGrids.Count == areaInfo.width * areaInfo.height)
+            bool isGridCountCorrect = validSelectedGrids.Count == areaInfo.width * areaInfo.height;
+            // 2.蓝是否足够
+            int crtSan = UIKit.GetPanel<UIHandCard>().crtSan;
+            bool isSanEnough = viewCard.card.sanCost <= crtSan;
+            if (isGridCountCorrect && isSanEnough)
             {
                 Debug.Log("it's ok to put piece");
                 PutPieceByHandCardEvent e = new PutPieceByHandCardEvent()
@@ -207,7 +210,7 @@ namespace Game
             else
             {
                 Debug.Log(
-                    $"put piece failed, need grid count: {areaInfo.width * areaInfo.height} crt: {validSelectedGrids.Count}");
+                    $"put piece failed, ret1: {isGridCountCorrect} ret2: {isSanEnough}");
             }
 
             crtGrid.Value = null;

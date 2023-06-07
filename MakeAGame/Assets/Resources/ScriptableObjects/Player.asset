@@ -14,3 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gold: 0
   goldAcquisitionMultiplier: 0
+  san: 0
+  maxSan: 100
+  sanRegenSpeed: 0
+  strength: 0
+  spirit: 0
+  skill: 0
+  stamina: 0
+  chrisma: 0

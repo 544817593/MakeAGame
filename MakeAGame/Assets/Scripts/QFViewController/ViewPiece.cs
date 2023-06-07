@@ -68,15 +68,15 @@ namespace Game
             // OnPieceMoveReady += OnMoveReadyEvent;
             // OnPieceMoveFinish += OnMoveFinishEvent;
             
-            // todo 先随机一个方向
-            direction = (DirEnum)UnityEngine.Random.Range(1, 5);
-
+            // 从可选方向中随机一个方向
+            int dirIndex = UnityEngine.Random.Range(0, dirs.Value.Count);
+            direction = dirs.Value[dirIndex];
         }
 
         void InitView()
         {
             spPiece.sprite = card.pieceSprite;
-            // 重置collider大小以贴合图片
+            // 重置collider大小以贴合图片    // todo collider有点太大了
             if(touchArea)
                 touchArea.GetComponent<BoxCollider2D>().size = spPiece.sprite.bounds.size;
         }
@@ -120,7 +120,7 @@ namespace Game
             }
             else
             {
-                // todo 暂时跳一下表示没动成
+                // 暂时跳一下表示没动成
                 transform.DOJump(transform.position, 1, 1, 0.3f);
                 Debug.Log("move is canceled because check failed");
             }
@@ -154,8 +154,8 @@ namespace Game
         //    return nextGrids;
         //}
 
-        // todo 每个棋子可能不一样的，检查某个格子是否可以移动上去的方法
-        private bool CheckIfOneGridCanMove(BoxGrid grid)
+        // 每个棋子可能不一样的，检查某个格子是否可以移动上去的方法
+        protected override bool CheckIfOneGridCanMove(BoxGrid grid)
         {
             if (!base.CheckIfOneGridCanMove(grid))
                 return false;
@@ -211,7 +211,6 @@ namespace Game
         public override void Attack()
         {
             Debug.Log($"piece {this.ToString()} is about to attack");
-            // todo attack
             // this.SendEvent<PieceAttackReadyEvent>();
             this.SendCommand<PieceAttackCommand>(new PieceAttackCommand(this));
         }
@@ -230,7 +229,6 @@ namespace Game
 
         protected override void OnMoveReadyEvent(PieceMoveReadyEvent e)
         {
-            // todo
             base.OnMoveReadyEvent(e);
             Debug.Log("ViewPiece receive MoveReadyEvent");
         }
@@ -238,7 +236,6 @@ namespace Game
         // private Action testAction;
         protected override void OnMoveFinishEvent(PieceMoveFinishEvent e)
         {
-            // todo
             base.OnMoveFinishEvent(e);
             Debug.Log("ViewPiece receive MoveFinishEvent");
             // testAction += () => Debug.Log("test");   // 但这里是有效的！如果有什么需要叠加的函数，可以加在这里

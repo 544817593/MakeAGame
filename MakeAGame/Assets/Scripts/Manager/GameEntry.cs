@@ -13,6 +13,7 @@ namespace Game
         protected override void Init()
         {
             // 注册各模块
+            RegisterSystem<IUpdateSystem>(new UpdateSystem());
             RegisterSystem<IMapSystem>(new MapSystem());
             RegisterSystem<IGridGeneratorSystem>(new GridGeneratorSystem());
             RegisterSystem<IMapSelectSystem>(new MapSelectSystem());
@@ -27,6 +28,7 @@ namespace Game
             RegisterSystem<ISkillSystem>(new SkillSystem());
             RegisterSystem<IShopSystem>(new ShopSystem());
             RegisterSystem<IRoomSystem>(new RoomSystem());
+            RegisterSystem<IRelicSystem>(new RelicSystem());
             RegisterUtility<ICSVImportUtility>(new CSVImportUtility());
             
 
