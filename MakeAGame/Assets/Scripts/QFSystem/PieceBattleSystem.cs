@@ -192,8 +192,11 @@ namespace Game
 
         void RemoveDictBattleAsAttacker(ViewPieceBase attacker)
         {
-            dictBattle[attacker].Clear();
-            dictBattle.Remove(attacker);
+            if (dictBattle.ContainsKey(attacker))
+            {
+                dictBattle[attacker].Clear();
+                dictBattle.Remove(attacker);   
+            }
         }
 
         void RemoveDictBattleAsDefender(ViewPieceBase defender)
