@@ -31,15 +31,11 @@ namespace Game
             this.GetSystem<IPieceSystem>().AddPieceFriend(viewCard.card, grids);
 
             // 直接调用，会导致棋子事件尚未注册时就调用CheckAllPieceAtkRange，棋子收不到进入战斗的事件
+            // todo 本质原因是start的调用会在instantiate后一帧，监听事件的时机可能需要统一调整
             // OnPutPieceFinish();
             
-            // todo 先借dotween写一个笨笨的延时
-            Sequence seq = DOTween.Sequence();
-            seq.AppendCallback(() =>
-                {
-                    OnPutPieceFinish();
-                })
-                .SetDelay(0.01f);
+            // 延时一帧
+            this.GetSystem<IUpdateSystem>().updateMan.ScheduleExecute(OnPutPieceFinish, true, 1, 1);
         }
 
         void OnPutPieceFinish()
