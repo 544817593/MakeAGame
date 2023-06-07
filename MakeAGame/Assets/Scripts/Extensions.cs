@@ -114,5 +114,11 @@ namespace Game
             }
             return iconFileName;
         }
+
+        public static SORelic GetTestSORelic()
+        {
+            var so = Resources.Load<SORelic>($"ScriptableObjects/Relics/SORelic_test");
+            return so;
+        }
     }
 }
