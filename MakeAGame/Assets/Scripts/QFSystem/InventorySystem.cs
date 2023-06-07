@@ -5,6 +5,9 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 using Random = UnityEngine.Random;
+using BagUI;
+using Unity.VisualScripting;
+using UnityEngine.UIElements;
 
 namespace Game
 {
@@ -78,7 +81,7 @@ namespace Game
     public class InventorySystem : AbstractSystem, IInventorySystem
     {
         public BindableProperty<List<Item>> itemList = new BindableProperty<List<Item>>(); // 物品列表
-        public BindableProperty<List<ViewBagCard>> cardBagList = new BindableProperty<List<ViewBagCard>>();// 背包卡牌列表
+        private BindableProperty<List<ViewBagCard>> cardBagList = new BindableProperty<List<ViewBagCard>>();// 背包卡牌列表
         public Transform inventoryRoot; // 生成的物品Prefab悬挂的父物体位置
 
         protected override void OnInit()
@@ -88,6 +91,9 @@ namespace Game
             inventoryRoot = GameObject.Find("InventoryRoot")?.transform;
 
             cardBagList.SetValueWithoutEvent(new List<ViewBagCard>());
+
+            UIKit.OpenPanel<BagUIPanel>();
+            UIKit.HidePanel<BagUIPanel>();
 
             // 测试用代码
             SOItemBase IntermediateSapphirePotion = Resources.Load<SOItemBase>("ScriptableObjects/Items/Intermediate Sapphire Potion");
@@ -104,6 +110,8 @@ namespace Game
 
 
         }
+
+
 
         private void OnItemListChanged()
         {
@@ -163,27 +171,27 @@ namespace Game
             ViewBagCard cardItem;
             ICardGeneratorSystem CardSystem = this.GetSystem<ICardGeneratorSystem>();
             cardItem = CardSystem.CreateBagCard(m_card);
-            card_Object = cardItem.gameObject.transform.gameObject;
+            card_Object = cardItem.gameObject;
             var cardBase = card_Object.GetComponent<ViewBagCard>();
             cardBase.OnFocusAction = () =>
                 {
-                    UIKit.GetPanel<BagUI.BagUIPanel>().CardDescribtion.Show();
+                    UIKit.GetPanel<BagUIPanel>().CardDescription.Show();
 
-                    UIKit.GetPanel<BagUI.BagUIPanel>().CardDescribtion.GetComponent<LoadCardDetail>()?.ShowDetail(cardBase.card);
+                    UIKit.GetPanel<BagUIPanel>().CardDescription.GetComponent<LoadCardDetail>()?.ShowDetail(cardBase.card);
                 };
             cardBase.OnUnFocusAction = () =>
                 {
-                    UIKit.GetPanel<BagUI.BagUIPanel>().CardDescribtion.Hide();
+                    UIKit.GetPanel<BagUIPanel>().CardDescription.Hide();
                 };
 
            
             cardBagList.Value.Add(cardBase);
             ShuffleCard();
-            UIKit.GetPanel<BagUI.BagUIPanel>().UpdateLayout();
+            UIKit.GetPanel<BagUIPanel>().UpdateLayout();
         }
         public List<ViewBagCard> GetBagCardList()
         {
-            return cardBagList;
+            return cardBagList.Value;
         }
 
         public void SortItemList()
@@ -227,10 +235,8 @@ namespace Game
         public Card DrawCard()
         {
             var index = cardBagList.Value.Count - 1;
-            var card = cardBagList.Value[index].card;
+            var card = (Card)cardBagList.Value[index].card.Clone();
             cardBagList.Value.RemoveAt(index);
-            Debug.Log($"get card {index} from bag");
-            UIKit.GetPanel<BagUI.BagUIPanel>()?.UpdateLayout();
             return card;
         }
 

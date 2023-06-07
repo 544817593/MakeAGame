@@ -23,7 +23,7 @@ namespace BagUI
 		[SerializeField]
 		public RectTransform SlotPosition;
 		[SerializeField]
-		public UnityEngine.UI.Image CardDescribtion;
+		public UnityEngine.UI.Image CardDescription;
 		[SerializeField]
 		public UnityEngine.UI.Image Image;
 		[SerializeField]
@@ -65,7 +65,7 @@ namespace BagUI
 			Skill = null;
 			Close = null;
 			SlotPosition = null;
-			CardDescribtion = null;
+			CardDescription = null;
 			Image = null;
 			CharName = null;
 			SizeData = null;

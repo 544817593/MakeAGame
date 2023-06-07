@@ -11,9 +11,10 @@ public class LoadCardDetail : MonoBehaviour
 
     // Start is called before the first frame update
     RarityEnum rarity;
-    public BagUIPanel m_BagUI;
+    private BagUIPanel m_BagUI;
     void Start()
     {
+        m_BagUI = UIKit.GetPanel<BagUIPanel>();
         rarity = 0;
     }
     public void ShowDetail(Card card)

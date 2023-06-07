@@ -10,7 +10,6 @@ namespace PackOpen
 	public class ShowCard : MonoBehaviour
 	{
 		public UIOpenPackPanel m_ui;
-		public BagUIPanel m_BagUI;
 		// Start is called before the first frame update
 		void Start()
 		{
@@ -26,9 +25,9 @@ namespace PackOpen
 		/// <summary>
 		/// 保存新开的卡包到牌库
 		/// </summary>
-		public void SaveNewCard( Game.Card cardData)
+		public void SaveNewCard(Game.Card cardData)
 		{
-			m_BagUI.AddCard(cardData);
+			UIKit.GetPanel<BagUIPanel>().AddCard(cardData);
 			
 		}
 		/// <summary>
@@ -36,7 +35,7 @@ namespace PackOpen
 		/// </summary>
 		public void ShowNewCard()
 		{
-			int newCardId =0;
+			int newCardId = 1;
 			
 			//if (m_ui.blueSecure ==true)
 			//{
@@ -68,17 +67,11 @@ namespace PackOpen
 			Game.ISpawnSystem spawnSystem = Game.GameEntry.Interface.GetSystem<Game.ISpawnSystem>();
 			
 			GameObject new_Card;
-			if (newCardId >= 7000 && newCardId < 8000)
-			{
-				spawnSystem.SpawnCard(newCardId);
-				new_Card = spawnSystem.GetLastSpawnedCard();
-			}
-			else
-			{
-				spawnSystem.SpawnCard(newCardId);
-				new_Card = spawnSystem.GetLastSpawnedCard();
+
+			spawnSystem.SpawnCard(newCardId);
+			new_Card = spawnSystem.GetLastSpawnedCard();
 				//new_Card = Instantiate(Resources.Load("Prefabs/CardItem"), transform.position, Quaternion.identity) as GameObject;
-			}
+			
 			Game.Card createCard = new_Card.GetComponent<Game.ViewBagCard>().card;
 			new_Card.transform.SetParent(GameObject.Find("Cardtemp")?.transform, false);
 			new_Card.transform.position = transform.position;

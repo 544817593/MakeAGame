@@ -354,7 +354,7 @@ GameObject:
   - component: {fileID: 1443967959}
   - component: {fileID: 3130847203780822944}
   m_Layer: 5
-  m_Name: CardDescribtion
+  m_Name: CardDescription
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -433,7 +433,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f5926ffe2a4a1774bb5ba57aa4006a5c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_BagUI: {fileID: -8545740999949244148}
 --- !u!114 &3130847203780822944
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4345,7 +4344,7 @@ MonoBehaviour:
   Skill: {fileID: 1153134969}
   Close: {fileID: 1028707851}
   SlotPosition: {fileID: 1223205423}
-  CardDescribtion: {fileID: 236863244}
+  CardDescription: {fileID: 236863244}
   Image: {fileID: 569761616}
   CharName: {fileID: 2685587875371386388}
   SizeData: {fileID: 2424125800500055103}

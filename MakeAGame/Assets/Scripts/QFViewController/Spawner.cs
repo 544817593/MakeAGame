@@ -39,7 +39,7 @@ namespace Game
             // 监听创建卡牌事件
             this.RegisterEvent<SpawnCardEvent>(data =>
             {
-                OnSpawnCardEvent();
+                OnSpawnCardEvent(data);
             }).UnRegisterWhenGameObjectDestroyed(gameObject);
 
             // 监听持续抽取卡牌事件
@@ -74,11 +74,11 @@ namespace Game
         /// <summary>
         /// 收到卡牌生成事件后处理
         /// </summary>
-        private void OnSpawnCardEvent()
+        private void OnSpawnCardEvent(SpawnCardEvent data)
         {
             GameObject cardItem = (GameObject)Instantiate(Resources.Load("Prefabs/CardItem"));
             ViewBagCard viewCard = cardItem.AddComponent<ViewBagCard>();
-            viewCard.card = new Card(1);
+            viewCard.card = new Card(data.cardId);
             this.GetSystem<ISpawnSystem>().SetLastSpawnedCard(cardItem);
         }
 

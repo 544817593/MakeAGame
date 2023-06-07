@@ -1,4 +1,5 @@
-﻿using InventoryQuickslotUI;
+﻿using BagUI;
+using InventoryQuickslotUI;
 using QFramework;
 using UnityEngine;
 
@@ -25,6 +26,7 @@ namespace Game
             UIKit.OpenPanel<UIInventoryQuickSlot>();
             UIKit.OpenPanel<UIAbilityPanel>();
 
+
             // 怪物
             if (info.monsterSpawnSettings != null)
             {
@@ -33,7 +35,7 @@ namespace Game
             }
 
             // 从背包里抽出七张手牌
-            var inventorySystem = this.GetSystem<IInventorySystem>();           
+            var inventorySystem = this.GetSystem<IInventorySystem>();
             for (int i = 0; i < this.GetSystem<IHandCardSystem>().maxCardCount; i++)
             {
                 if (inventorySystem.GetBagCardList().Count != 0)
