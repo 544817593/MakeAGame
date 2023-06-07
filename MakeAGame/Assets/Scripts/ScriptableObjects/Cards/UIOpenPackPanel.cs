@@ -96,10 +96,13 @@ namespace PackOpen
 					yield return new WaitForSeconds(0.5f);
 					card_t[i].position = Pack.transform.position;
 					card_t[i].DOScale(0.5f, 0);
+					Cursor.lockState = CursorLockMode.Locked;
 					card_t[i].Show();
 					card_t[i].DOMove(point_t[i].position, 2);
 					card_t[i].DOScale(1f, 2);
+					
 				}
+				Cursor.lockState = CursorLockMode.None;
 				//yield return new WaitForSeconds(0.5f);
 				//CardPosition1.Show();
 				//yield return new WaitForSeconds(0.5f);

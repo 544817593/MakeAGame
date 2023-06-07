@@ -35,7 +35,8 @@ namespace BagUI
 			// please add init code here
 			mCardRoot = SlotPosition.GetComponent<Transform>();
 			mListSlotPosition = new List<Transform>();
-			cardList = mData.inventorySystem.GetBagCardList();
+			cardList = new List<ViewBagCard>();
+		   cardList = mData.inventorySystem.GetBagCardList();
 			
 
 			var rootChilds = mCardRoot.GetComponentInChildren<Transform>(includeInactive: true);

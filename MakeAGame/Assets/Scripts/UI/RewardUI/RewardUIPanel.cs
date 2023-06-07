@@ -10,10 +10,13 @@ namespace RewardUI
 	public class RewardUIPanelData : UIPanelData
 	{
 		public IInventorySystem BagSystem = GameEntry.Interface.GetSystem<IInventorySystem>();
+		 
 	}
 	public partial class RewardUIPanel : UIPanel
 	{
 		private List<Item> AllItem = new List<Item>();
+		
+		private RelicBase RewardRelic = null;
 		private Item RewardItem = null;
 		private int Choice = 0;
 		protected override void OnInit(IUIData uiData = null)
@@ -44,11 +47,13 @@ namespace RewardUI
 		private void UpdateReward()
         {
 			AllItem = mData.BagSystem.GetItemList();
+			
 			CoinAmount.text = Random.Range(10, 100).ToString();
 			int i = Random.Range(0,AllItem.Count-1);
 			RewardItem = AllItem[i];
 			Item.GetComponent<Image>().sprite = RewardItem.data.sprite;
-
+			int j = Random.Range(0, 80 - 1);
+			legacy.GetComponent<Image>().sprite = Resources.Load<Sprite>("Sprites/Artifacts/遗物-" + j);
 		}
 		
 		private void ChooseReward()

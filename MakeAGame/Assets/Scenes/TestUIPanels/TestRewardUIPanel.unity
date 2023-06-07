@@ -703,7 +703,11 @@ PrefabInstance:
     - target: {fileID: 1213608524, guid: b8793e8c4808ef544859487e6315cd8e, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 21300000, guid: 559f022e0351a6f40bd4cb4ea3ac2b4b, type: 3}
+    - target: {fileID: 1396922289, guid: b8793e8c4808ef544859487e6315cd8e, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 19da81148948492499f9548c608663f3, type: 3}
     - target: {fileID: 2933339856333097301, guid: b8793e8c4808ef544859487e6315cd8e, type: 3}
       propertyPath: m_Name
       value: RewardUIPanel
