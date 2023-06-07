@@ -54,14 +54,13 @@ namespace Game
             };
             this.SendEvent(refillHandCardEvent);
             
-            // 计时测试 todo delete test 在main场景增加UpdateManager
-            var updateGO = GameObject.Find("UpdateManager");
-            if (updateGO != null)
-            {
-                var updateMan = GameObject.Find("UpdateManager").GetComponent<UpdateManager>();
-                updateMan.ScheduleExecute(CountTest, false, 1);
-                this.GetSystem<IRelicSystem>().StartCountTime();   
-            }
+            // 计时测试
+            var updateSystem = this.GetSystem<IUpdateSystem>();
+            updateSystem.Reset();
+            updateSystem.updateMan.ScheduleExecute(CountTest, false, 1f);
+            
+            // 遗物系统开始接受计时
+            this.GetSystem<IRelicSystem>().StartCountTime();
         }
 
         void CountTest()
