@@ -54,12 +54,13 @@ public class BuffQuackFrog : BuffToPiece
 {
     private float atkSpdDiff;
     Monster monster;
-
-    public BuffQuackFrog(ViewPieceBase _piece, float _dur)
+    bool soundSensitive;
+    public BuffQuackFrog(Monster _piece, float _dur, bool _soundSensitive)
     {
         target = _piece;
         duration = _dur;
-        monster = _piece as Monster;
+        monster = _piece;
+        soundSensitive = _soundSensitive;
     }
 
     public override bool OnBuffCreate()
@@ -76,8 +77,17 @@ public class BuffQuackFrog : BuffToPiece
     public override void OnBuffStart()
     {
         Debug.Log("BuffFrog: start");
-        atkSpdDiff = monster.atkSpeed > 0.3f ? 0.3f : monster.atkSpeed;
-        monster.atkSpeed.Value -= atkSpdDiff;
+        if (soundSensitive)
+        {
+            atkSpdDiff = monster.atkSpeed > 0.6f ? 0.6f : monster.atkSpeed;
+            monster.atkSpeed.Value -= atkSpdDiff;
+        }
+        else
+        {
+            atkSpdDiff = monster.atkSpeed > 0.3f ? 0.3f : monster.atkSpeed;
+            monster.atkSpeed.Value -= atkSpdDiff;
+        }
+        
     }
 
     public override void OnBuffRefresh()
@@ -155,7 +165,6 @@ public class BuffChangeGridSpeed : BuffToGrid
 /// </summary>
 public class BuffConfusion : BuffToPiece
 {
-    private float atkSpdDiff;
 
     public BuffConfusion(ViewPieceBase _piece, float _dur)
     {
@@ -218,11 +227,11 @@ public class BuffConfusion : BuffToPiece
 }
 
 /// <summary>
-/// AtkSpeed减半，持续3s
+/// 藤蔓buff，moveSpeed减半，持续3s，
 /// </summary>
 public class BuffVine : BuffToPiece
 {
-    private float atkSpdDiff;
+    private float moveSpeedDiff;
     private Monster monster;
 
     public BuffVine(ViewPieceBase _piece, float _dur)
@@ -238,8 +247,8 @@ public class BuffVine : BuffToPiece
     public override void OnBuffStart()
     {
         Debug.Log("BuffVein1: start");
-        atkSpdDiff = monster.atkSpeed / 2;
-        monster.atkSpeed.Value -= atkSpdDiff;
+        moveSpeedDiff = monster.moveSpeed / 2;
+        monster.moveSpeed.Value -= moveSpeedDiff;
     }
 
     public override void OnBuffRefresh()
@@ -255,7 +264,7 @@ public class BuffVine : BuffToPiece
     {
         Debug.Log("BuffVein1 remove");
         if(target != null)
-            monster.atkSpeed.Value += atkSpdDiff;
+            monster.atkSpeed.Value += moveSpeedDiff;
     }
 }
 

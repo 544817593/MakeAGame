@@ -192,7 +192,7 @@ namespace Game
             {
                 if (piece.pieceId == pieceId) return false;
             }
-            Debug.LogError("当前地图上没有棋子匹配想查找的棋子id");
+            Debug.Log("当前地图上没有棋子匹配想查找的棋子id");
             return false;
         }
 
@@ -202,7 +202,7 @@ namespace Game
             {
                 if (piece.pieceId == pieceId) return piece;
             }
-            Debug.LogError($"id: {pieceId}，此id不在友方棋子列表内");
+            Debug.Log($"id: {pieceId}，此id不在友方棋子列表内");
             return null;
         }
         
@@ -212,7 +212,7 @@ namespace Game
             {
                 if (piece.pieceId == pieceId) return piece;
             }
-            Debug.LogError($"id: {pieceId}，此id不在怪物棋子列表内");
+            Debug.Log($"id: {pieceId}，此id不在怪物棋子列表内");
             return null;
         }
     }
