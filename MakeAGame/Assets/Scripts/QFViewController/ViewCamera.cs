@@ -59,11 +59,4 @@ namespace Game
             return GameEntry.Interface;
         }
     }
-
-    public struct ChangeCameraTargetEvent
-    {
-        public Transform target;
-        public Vector3 cameraAngle;
-        public float cameraDist;
-    }
 }
