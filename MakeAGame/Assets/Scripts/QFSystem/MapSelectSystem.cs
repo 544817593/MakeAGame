@@ -153,7 +153,7 @@ namespace Game
              
              PrintSelectedGrids();
              
-             // todo 二次筛选
+             // 二次筛选
              validSelectedGrids.Clear();
              foreach (var grid in selectedGrids)
              {
@@ -164,7 +164,6 @@ namespace Game
                      validSelectedGrids.Add(grid);
                  }
              }
-             // validSelectedGrids = selectedGrids;
 
              foreach (var grid in validSelectedGrids)
              {

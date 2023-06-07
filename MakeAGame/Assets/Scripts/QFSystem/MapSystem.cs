@@ -99,7 +99,7 @@ namespace Game
                 {
                     var newGrid = gridGenerator.CreateGrid(i, j, root);
                     
-                    // todo 地图格子真正赋值数据的地方
+                    // 地图格子真正赋值数据的地方
                     newGrid.terrain.Value = data.mapTerrain[i, j];
                     newGrid.timeMultiplier.Value = data.mapTimeMultiplier[i, j];
                     newGrid.edgeRes.Value = data.edgeResources[i, j];

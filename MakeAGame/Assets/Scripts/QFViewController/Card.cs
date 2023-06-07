@@ -84,11 +84,6 @@ namespace Game
             PrintData();
         }
 
-        void Func()
-        {
-            // todo 获取初始数值后，根据各种影响获得这张卡的最终数值
-        }
-
         /// <summary>
         /// 添加特性
         /// </summary>

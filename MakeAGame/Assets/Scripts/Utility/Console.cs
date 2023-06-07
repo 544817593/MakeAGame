@@ -55,7 +55,7 @@ namespace Game
                     output = AddHandCard(args.GetRange(1, args.Count - 1));
                     break;
 
-                // todo 更多命令写在这里
+                // 更多命令写在这里
                 
                 default:
                     output = ErrorInvalidCommand;

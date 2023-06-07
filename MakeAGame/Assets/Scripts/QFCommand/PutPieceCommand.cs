@@ -27,7 +27,7 @@ namespace Game
             this.SendCommand(new SubHandCardCommand(viewCard));
             // 扣除混沌值
             UIKit.GetPanel<UIHandCard>().OnSanChange(-(int)viewCard.card.sanCost);
-            // todo 再添加棋子
+            // 再添加棋子
             this.GetSystem<IPieceSystem>().AddPieceFriend(viewCard.card, grids);
 
             // 直接调用，会导致棋子事件尚未注册时就调用CheckAllPieceAtkRange，棋子收不到进入战斗的事件
@@ -41,7 +41,7 @@ namespace Game
         void OnPutPieceFinish()
         {
             InitFeatures();
-            // Debug.Log("[TODO] add piece");
+            // 落地检查攻击范围
             this.GetSystem<IPieceBattleSystem>().CheckAllPieceAtkRange();
         }
 

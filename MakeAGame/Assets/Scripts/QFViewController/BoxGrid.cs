@@ -109,7 +109,7 @@ namespace Game
 
         private void OnTimeMultiplierChanged(TimeMultiplierEnum tm)
         {
-            // todo 速度变化触发的效果
+            // 速度变化触发的效果
             
         }
         private void OnEdgeResChanged(EdgeSprite res)

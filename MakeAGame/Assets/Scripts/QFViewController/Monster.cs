@@ -252,7 +252,6 @@ public class Monster : ViewPieceBase
     public override void Attack()
     {
         Debug.Log($"monster {this.ToString()} is about to attack");
-        // todo attack
         this.SendEvent<PieceAttackReadyEvent>();
         this.SendCommand<PieceAttackCommand>(new PieceAttackCommand(this));
     }

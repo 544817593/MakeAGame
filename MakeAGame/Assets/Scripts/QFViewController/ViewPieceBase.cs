@@ -196,14 +196,12 @@ namespace Game
         
         protected virtual void OnMoveReadyEvent(PieceMoveReadyEvent e)
         {
-            // todo 
-            // Debug.Log("ViewPieceBase receive MoveReadyEvent");
+
         }
         
         protected virtual void OnMoveFinishEvent(PieceMoveFinishEvent e)
         {
-            // todo
-            // Debug.Log("ViewPieceBase receive MoveFinishEvent");
+
         }
 
         protected virtual void OnAttackStartEvent(PieceAttackStartEvent e)
@@ -262,7 +260,7 @@ namespace Game
     // 即将发起攻击
     public class PieceAttackReadyEvent
     {
-        // todo 一些战斗数据...
+        // 一些战斗数据...
         public float damage;
         public float accuracy;
     }
