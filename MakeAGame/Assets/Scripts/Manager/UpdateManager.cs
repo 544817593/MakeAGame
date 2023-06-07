@@ -147,6 +147,12 @@ namespace Game
                 {isFrameDelay = false, second = secondCount, leftSecond = secondCount, leftTriggerTime = triggerTime};
             dictToAddSchedules.Add(act, sch);
         }
+
+        public void Clear()
+        {
+            Debug.Log($"UpdateManager: Clear {dictSchedules.Count} schedules");
+            dictSchedules.Clear();
+        }
         
 
 
