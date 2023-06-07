@@ -22,7 +22,6 @@ public class SkipIntro : MonoBehaviour
             {
                 Card createdCard = new Card(i);
                 inventorySystem.SpawnBagCardInBag(createdCard);
-                UIKit.GetPanel<BagUIPanel>().UpdateLayout();
             }
         }
 

@@ -172,20 +172,19 @@ namespace Game
             ICardGeneratorSystem CardSystem = this.GetSystem<ICardGeneratorSystem>();
             cardItem = CardSystem.CreateBagCard(m_card);
             card_Object = cardItem.gameObject;
-            var cardBase = card_Object.GetComponent<ViewBagCard>();
-            cardBase.OnFocusAction = () =>
+            cardItem.OnFocusAction = () =>
                 {
                     UIKit.GetPanel<BagUIPanel>().CardDescription.Show();
 
-                    UIKit.GetPanel<BagUIPanel>().CardDescription.GetComponent<LoadCardDetail>()?.ShowDetail(cardBase.card);
+                    UIKit.GetPanel<BagUIPanel>().CardDescription.GetComponent<LoadCardDetail>()?.ShowDetail(cardItem.card);
                 };
-            cardBase.OnUnFocusAction = () =>
+            cardItem.OnUnFocusAction = () =>
                 {
                     UIKit.GetPanel<BagUIPanel>().CardDescription.Hide();
                 };
 
            
-            cardBagList.Value.Add(cardBase);
+            cardBagList.Value.Add(cardItem);
             ShuffleCard();
             UIKit.GetPanel<BagUIPanel>().UpdateLayout();
         }
