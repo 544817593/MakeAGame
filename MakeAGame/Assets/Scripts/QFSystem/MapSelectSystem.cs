@@ -228,15 +228,6 @@ namespace Game
         }
     }
 
-    public struct SelectMapStartEvent { }
-    public struct SelectMapEndEvent{ }
-    // 符合摆放棋子条件时，通知手牌
-    public struct PutPieceByHandCardEvent
-    {
-        public ViewCard viewCard;
-        public List<BoxGrid> pieceGrids;
-    }
-
     public struct SelectArea
     {
         public int width;
