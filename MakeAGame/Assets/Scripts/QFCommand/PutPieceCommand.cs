@@ -35,7 +35,7 @@ namespace Game
             // OnPutPieceFinish();
             
             // 延时一帧
-            this.GetSystem<IUpdateSystem>().updateMan.ScheduleExecute(OnPutPieceFinish, true, 1, 1);
+            this.GetSystem<IUpdateSystem>().DelayExecute(OnPutPieceFinish, true, 1);
         }
 
         void OnPutPieceFinish()

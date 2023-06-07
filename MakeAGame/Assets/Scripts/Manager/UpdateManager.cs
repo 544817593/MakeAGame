@@ -134,6 +134,17 @@ namespace Game
                 ScheduleSecondExecute(act, count, triggerTime);
         }
 
+        /// <summary>
+        /// 延时数帧/秒后执行一次
+        /// </summary>
+        /// <param name="act">要执行的方法</param>
+        /// <param name="isFrame">是否为帧延时</param>
+        /// <param name="count">帧数/秒数</param>
+        public void DelayExecute(Action act, bool isFrame, float count)
+        {
+            ScheduleExecute(act, isFrame, count, 1);
+        }
+
         void ScheduleFrameExecute(Action act, int frameCount, int triggerTime)
         {
             ScheduleData sch = new ScheduleData()

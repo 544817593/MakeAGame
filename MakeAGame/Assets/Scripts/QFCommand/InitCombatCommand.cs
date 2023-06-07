@@ -57,7 +57,7 @@ namespace Game
             // 计时测试
             var updateSystem = this.GetSystem<IUpdateSystem>();
             updateSystem.Reset();
-            updateSystem.updateMan.ScheduleExecute(CountTest, false, 1f);
+            updateSystem.ScheduleExecute(CountTest, false, 1f);
             
             // 遗物系统开始接受计时
             this.GetSystem<IRelicSystem>().StartCountTime();
