@@ -38,6 +38,8 @@ namespace Game
             RoomEnum m_room = roomList[0];
             roomList.RemoveAt(0);
             //UIKit.CloseAllPanel();
+            UIKit.HideAllPanel();
+            UIKit.ClosePanel<DialogueUI.DialoguePanel?>();
             if(Pre_Room == RoomEnum.Combat.ToString())
             {
                 IMapSystem mapSystem = GameEntry.Interface.GetSystem<IMapSystem>();
