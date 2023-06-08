@@ -2,9 +2,9 @@ using UnityEngine;
 
 namespace Game
 {
-    public class RelicInstantEffectExample1 : RelicBase
+    public class RelicInstantExample1 : RelicBase
     {
-        public RelicInstantEffectExample1(SORelic so): base(so)
+        public RelicInstantExample1(SORelic so): base(so)
         {
         }
 
@@ -22,9 +22,9 @@ namespace Game
         }
     }
     
-    public class RelicInstantEffectExample2 : RelicBase
+    public class RelicInstantExample2 : RelicBase
     {
-        public RelicInstantEffectExample2(SORelic so): base(so)
+        public RelicInstantExample2(SORelic so): base(so)
         {
         }
 

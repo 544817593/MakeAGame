@@ -28,7 +28,7 @@ namespace Game
         public Action<object> act;
     }
 
-    public class RelicSystem: AbstractSystem, IRelicSystem
+    public class RelicSystem: AbstractSystem, IRelicSystem  // todo 一些结束时统一inactivate的处理
     {
         protected override void OnInit()
         {
@@ -36,8 +36,10 @@ namespace Game
             
             Debug.Log("RelicSystem: add test relic");
             var so = Extensions.GetTestSORelic();
-            relics.Add(new RelicInstantEffectExample1(so));
-            relics.Add(new RelicInstantEffectExample2(so));
+            relics.Add(new RelicInstantExample1(so));
+            relics.Add(new RelicRecycleExample(so));
+            relics.Add(new RelicChargeExample(so));
+            relics.Add(new RelicConsumableExample(so));
             
             ActivateRelics();
         }
@@ -57,7 +59,8 @@ namespace Game
                 var conflictRelics = IsCanceledByPlayerRelics(relic);
                 if (conflictRelics.Count == 0)
                 {
-                    relic.Activate(this);   
+                    relic.Activate(this);
+                    relic.isActive = true;
                 }
                 else
                 {
