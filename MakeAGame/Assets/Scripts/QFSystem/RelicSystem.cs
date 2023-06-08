@@ -33,8 +33,6 @@ namespace Game
         {
             Debug.Log("RelicSystem: OnInit");
             
-            
-            
             Debug.Log("RelicSystem: add test relic");
             var so = Extensions.GetTestSORelic();
             relics.Add(new RelicInstantEffect(so));
@@ -80,6 +78,7 @@ namespace Game
             countTimeUnregister.UnRegister();
         }
 
+        // 只从遗物内部调用
         public void RegisterRelicEvent<T>(RelicBase relic, Action<object> act)
         {
             var type = typeof(T);
@@ -145,7 +144,7 @@ namespace Game
         void CountTime(CountTimeEvent e)
         {
             totalSecs++;
-            Debug.Log(totalSecs);
+            Debug.Log($"RelicSystem: count time {totalSecs}");
         }
     }
 }

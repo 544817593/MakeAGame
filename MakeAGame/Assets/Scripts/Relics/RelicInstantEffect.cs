@@ -10,7 +10,6 @@ namespace Game
 
         public override void Activate(IRelicSystem sys)
         {
-            // RegisterRelicEvent<PieceMoveFinishEvent>(InstantEffect);
             sys.RegisterRelicEvent<PieceMoveFinishEvent>(this, InstantEffect);
         }
 
@@ -31,7 +30,6 @@ namespace Game
 
         public override void Activate(IRelicSystem sys)
         {
-            // RegisterRelicEvent<PieceMoveFinishEvent>(InstantEffect);
             sys.RegisterRelicEvent<PieceMoveReadyEvent>(this, InstantEffect);
         }
 
