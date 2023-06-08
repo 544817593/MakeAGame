@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using QFramework;
 using UnityEngine;
 
@@ -35,8 +36,8 @@ namespace Game
             
             Debug.Log("RelicSystem: add test relic");
             var so = Extensions.GetTestSORelic();
-            relics.Add(new RelicInstantEffect(so));
-            relics.Add(new RelicInstantEffect2(so));
+            relics.Add(new RelicInstantEffectExample1(so));
+            relics.Add(new RelicInstantEffectExample2(so));
             
             ActivateRelics();
         }
@@ -52,8 +53,47 @@ namespace Game
             Debug.Log($"RelicSystem: ActivateRelics count {relics.Count}");
             foreach (var relic in relics)
             {
-                relic.Activate(this);
+                // 玩家当前的所有遗物中，没有遗物会取消其效果
+                var conflictRelics = IsCanceledByPlayerRelics(relic);
+                if (conflictRelics.Count == 0)
+                {
+                    relic.Activate(this);   
+                }
+                else
+                {
+                    string s = String.Empty;
+                    foreach (var conflict in conflictRelics)
+                    {
+                        s += conflict.so.name + " ";
+                    }
+                    Debug.Log($"relic actvate failed, {relic.so.name} is canceled by {s}");
+                }
             }
+        }
+
+        // 遗物是否被已经拥有的遗物取消效果
+        List<RelicBase> IsCanceledByPlayerRelics(RelicBase relic)
+        {
+            List<RelicBase> ret = new List<RelicBase>();
+            foreach (var playerRelic in relics)
+            {
+                if (playerRelic.so.toCancelRelics.Contains(relic.so.relicID))
+                    ret.Add(playerRelic);
+            }
+
+            return ret;
+        }
+        
+        List<RelicBase> WillCancelPlayerRelics(RelicBase relic)
+        {
+            List<RelicBase> ret = new List<RelicBase>();
+            foreach (var playerRelic in relics)
+            {
+                if (playerRelic.so.beCanceledRelics.Contains(relic.so.relicID))
+                    ret.Add(playerRelic);
+            }
+
+            return ret;
         }
 
         public void AddRelic()
@@ -89,34 +129,34 @@ namespace Game
                 RelicEventData newData = new RelicEventData() {priority = relic.so.effectPriority, relic = relic, act = act};
                 dictRelicEvents[type].Add(newData);
             }
-            else // 该事件已经有其他遗物在监听，做判断
+            else // 该事件已经有其他遗物在监听，做判断   // 移到上层处理了
             {
-                // 遗物是否会取消现有遗物效果
-                List<RelicEventData> toRemoveDatas = new List<RelicEventData>();
-                foreach (var data in datas)
-                {
-                    if (data.relic.so.beCanceledRelics.Contains(relic.so.relicID))
-                    {
-                        toRemoveDatas.Add(data);
-                    }
-                }
-                foreach (var data in toRemoveDatas)
-                {
-                    datas.Remove(data);
-                }
-                toRemoveDatas.Clear();
-
-                // 现有遗物是否会取消该遗物效果
-                bool isCanceled = false;
-                foreach (var data in datas)
-                {
-                    if (data.relic.so.toCancelRelics.Contains(relic.so.relicID))
-                    {
-                        isCanceled = true;
-                        break;
-                    }
-                }
-                if (isCanceled) return;
+                // // 遗物是否会取消现有遗物效果
+                // List<RelicEventData> toRemoveDatas = new List<RelicEventData>();
+                // foreach (var data in datas)
+                // {
+                //     if (data.relic.so.beCanceledRelics.Contains(relic.so.relicID))
+                //     {
+                //         toRemoveDatas.Add(data);
+                //     }
+                // }
+                // foreach (var data in toRemoveDatas)
+                // {
+                //     datas.Remove(data);
+                // }
+                // toRemoveDatas.Clear();
+                //
+                // // 现有遗物是否会取消该遗物效果
+                // bool isCanceled = false;
+                // foreach (var data in datas)
+                // {
+                //     if (data.relic.so.toCancelRelics.Contains(relic.so.relicID))
+                //     {
+                //         isCanceled = true;
+                //         break;
+                //     }
+                // }
+                // if (isCanceled) return;
 
                 // 按优先级插入
                 RelicEventData newData = new RelicEventData() {priority = relic.so.effectPriority, relic = relic, act = act};
@@ -128,6 +168,15 @@ namespace Game
                 else
                     datas.Insert(index, newData);
             }
+
+            string s = $"relic {relic.so.name} register event {type.Name}, act {act.Method.Name}\n";
+            var listData = dictRelicEvents[type];
+            for (int i = 0; i < listData.Count; i++)
+            {
+                var data = listData[i];
+                s += $"{i}-{data.priority}-{data.relic.so.name}-{data.act.Method.Name}\n";
+            }
+            Debug.Log(s);
         }
 
         // 实际执行遗物方法
