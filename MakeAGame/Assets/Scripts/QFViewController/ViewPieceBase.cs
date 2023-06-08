@@ -84,6 +84,7 @@ namespace Game
             OnPieceUnderAttack += OnUnderAttackEvent;
             
             hp.Register(e => OnCurrHpChanged(e));
+            
         }
 
         /// <summary>

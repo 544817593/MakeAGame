@@ -67,10 +67,22 @@ namespace Game
             // OnPieceMoveReady += e => { Debug.Log("add action test"); };  // 在这里加是没有用的，不知道为啥
             // OnPieceMoveReady += OnMoveReadyEvent;
             // OnPieceMoveFinish += OnMoveFinishEvent;
+
+            currLife.Register(e => OnCurrLifeChanged(e));
             
             // 从可选方向中随机一个方向
             int dirIndex = UnityEngine.Random.Range(0, dirs.Value.Count);
             direction = dirs.Value[dirIndex];
+        }
+
+        private void Update()
+        {
+            currLife.Value -= Time.deltaTime;
+        }
+
+        private void OnCurrLifeChanged(float e)
+        {
+            lifeBar.SetBarFillAmount((float)e/maxLife);
         }
 
         void InitView()
