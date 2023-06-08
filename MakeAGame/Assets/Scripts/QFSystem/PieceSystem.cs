@@ -26,6 +26,12 @@ namespace Game
         
         // 获得两个棋子的最小距离（占地多个格子的情况下）
         public int GetPieceDist(ViewPieceBase vpb1, ViewPieceBase vpb2);
+        // 检查传入的id是当前场上的Monster还是ViewPiece
+        public bool IsPieceMonster(int pieceId);
+        // 根据id获取ViewPiece
+        public ViewPiece getViewPieceById(int pieceId);
+        // 根据id获取Monster
+        public Monster getMonsterById(int pieceId);
     }
     
     public class PieceSystem: AbstractSystem, IPieceSystem
@@ -182,7 +188,32 @@ namespace Game
             {
                 if (monster.pieceId == pieceId) return true;
             }
+            foreach(ViewPiece piece in pieceFriendList)
+            {
+                if (piece.pieceId == pieceId) return false;
+            }
+            Debug.Log("当前地图上没有棋子匹配想查找的棋子id");
             return false;
+        }
+
+        public ViewPiece getViewPieceById(int pieceId)
+        {
+            foreach (ViewPiece piece in pieceFriendList)
+            {
+                if (piece.pieceId == pieceId) return piece;
+            }
+            Debug.Log($"id: {pieceId}，此id不在友方棋子列表内");
+            return null;
+        }
+        
+        public Monster getMonsterById(int pieceId)
+        {
+            foreach (Monster piece in pieceEnemyList)
+            {
+                if (piece.pieceId == pieceId) return piece;
+            }
+            Debug.Log($"id: {pieceId}，此id不在怪物棋子列表内");
+            return null;
         }
     }
 }

@@ -84,8 +84,9 @@ public class Dialogue : ViewController
         StoryUI();
         UIKit.OpenPanel<UIOpenPackPanel>();
         UIKit.HidePanel<UIOpenPackPanel>();
-        UIKit.OpenPanel<BagUIPanel>();
-        UIKit.HidePanel<BagUIPanel>();
+        // 挪到Inventorysystem里了，刚开始就加载这个，这段看到后可删
+        //UIKit.OpenPanel<BagUIPanel>();
+        //UIKit.HidePanel<BagUIPanel>();
 
         m_Pack = UIKit.GetPanel<UIOpenPackPanel>()?.GetComponent<UIOpenPackPanel>();
         for (int i = 0; i < ChoiceP.Length; i++)
@@ -183,8 +184,13 @@ public class Dialogue : ViewController
     {
         UIKit.OpenPanel<DialoguePanel>();
         EraseUI();
-       
+        
         story_text = Instantiate(text_Pre) as TextMeshProUGUI;
+
+        
+        
+      
+        LoadStory();
         ChoiceP = UIKit.GetPanel<DialoguePanel>().choice.GetComponentsInChildren<Button>(true);
         choicesText = new TextMeshProUGUI[ChoiceP.Length];
         int index = 0;
@@ -195,8 +201,8 @@ public class Dialogue : ViewController
         }
 
 
-        LoadStory();
-
+       
+       
         story_text.transform.SetParent(UIKit.GetPanel<DialoguePanel>().dialogue, false);
         
         
@@ -207,6 +213,10 @@ public class Dialogue : ViewController
         for(int i=0; i< UIKit.GetPanel<DialoguePanel>().dialogue.childCount; i++)
         {
             Destroy(UIKit.GetPanel<DialoguePanel>().dialogue.GetChild(i).gameObject);
+        }
+        for(int j=0; j<ChoiceP.Length; j++)
+        {
+            ChoiceP[j].gameObject.SetActive(false);
         }
     }
 
@@ -335,10 +345,10 @@ public class Dialogue : ViewController
                     StopCoroutine(displayCoroutine);
                 }
                 displayCoroutine = StartCoroutine(DisplayText(story.Continue()));
-           
+
+
+
             
-            DisplayChoices();
-           
         }
         
 
@@ -361,6 +371,7 @@ public class Dialogue : ViewController
         story_text.maxVisibleCharacters = 0;
        
         canContinue = false;
+        
         foreach (char letter in line.ToCharArray())
         {
             if (GetSubmitPressed())
@@ -372,7 +383,9 @@ public class Dialogue : ViewController
             story_text.maxVisibleCharacters++;
             yield return new WaitForSeconds(typingSpeed);
         }
+        DisplayChoices();
         canContinue = true;
+
         
     }
     void HandleTags(List<string> current_Tag)

@@ -23,13 +23,8 @@ MonoBehaviour:
   attack: 5
   moveSpd: 4
   defend: 2
-  features:
-  - {fileID: 11400000, guid: f007a800c279440949bbffd1a6c2b2da, type: 2}
-  - {fileID: 11400000, guid: b975ec5136cfb4184a98c7a91ed0b0d6, type: 2}
-  - {fileID: 11400000, guid: e8784077c29c94e708f13b8d2ab9a80d, type: 2}
-  specialFeatures:
-  - {fileID: 11400000, guid: 38bbdcc62da1e4bd19fa39eeb4b0283c, type: 2}
-  - {fileID: 11400000, guid: 2300db490e6d54b9495fa8d805234c5c, type: 2}
+  features: 030000000400000015000000
+  specialFeatures: 1a0000001b000000
   pieceSprite: {fileID: 21300000, guid: 56faece66524b4eb891e72950ee7869e, type: 3}
   width: 1
   height: 1

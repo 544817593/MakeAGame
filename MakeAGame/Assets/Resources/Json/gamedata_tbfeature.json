@@ -192,9 +192,21 @@
     "typeName": ""
   },
   {
+    "featureID": 33,
+    "featureName": "洞察",
+    "desc": "经过的格子在接下来的20秒任何伪装失效(包括隐身)，并且时间流逝速率修正为正常。",
+    "typeName": ""
+  },
+  {
     "featureID": 34,
     "featureName": "藤蔓",
     "desc": "被攻击到的敌人移动速度减半，持续3秒。",
+    "typeName": ""
+  },
+  {
+    "featureID": 35,
+    "featureName": "水疗",
+    "desc": "为距离为3的友军每3秒回复10点生命值，如果该距离内有水，每3秒则回复20点。",
     "typeName": ""
   }
 ]

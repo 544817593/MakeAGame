@@ -35,7 +35,8 @@ namespace BagUI
 			// please add init code here
 			mCardRoot = SlotPosition.GetComponent<Transform>();
 			mListSlotPosition = new List<Transform>();
-			cardList = mData.inventorySystem.GetBagCardList();
+			cardList = new List<ViewBagCard>();
+		    cardList = mData.inventorySystem.GetBagCardList();
 			
 
 			var rootChilds = mCardRoot.GetComponentInChildren<Transform>(includeInactive: true);
@@ -57,10 +58,12 @@ namespace BagUI
 		
 		protected override void OnOpen(IUIData uiData = null)
 		{
+			
 		}
 		
 		protected override void OnShow()
 		{
+			UpdateLayout();
 		}
 		
 		protected override void OnHide()
@@ -72,7 +75,7 @@ namespace BagUI
 			
 		}
 
-		private void RefreshLayout()
+		public void RefreshLayout()
 		{
 			totalPage = cardList.Count != 0 ? (int)Math.Ceiling((double)cardList.Count / gridNum) : 1;
 			// 页数显示
@@ -97,7 +100,7 @@ namespace BagUI
 		}
 		public void UpdateLayout()
         {
-			int minIndex = Mathf.Min(cardList.Count, mListSlotPosition.Count);
+            int minIndex = Mathf.Min(cardList.Count, mListSlotPosition.Count);
 			int index;
 			if (cardList.Count <= mListSlotPosition.Count)
 			{
@@ -105,9 +108,13 @@ namespace BagUI
 				{
 					cardList[index].transform.SetParent(mListSlotPosition[index].transform);
 					cardList[index].transform.position = mListSlotPosition[index].transform.position;
-					cardList[index].transform.GetComponent<Canvas>().sortingLayerName = "UI";
-		
+					cardList[index].transform.GetComponent<Canvas>().sortingLayerName = "UI";		
 				}
+				// 牌被抽走后在背包的显示里清除(此时bagCardList已经更新完毕)
+				for (index = minIndex; index < mListSlotPosition.Count; index++)
+				{
+					mListSlotPosition[index].transform.DestroyChildren();
+                }
 
 			}
 			else
@@ -141,7 +148,6 @@ namespace BagUI
 		public void AddCard(Card cardData)
         {
 			mData.inventorySystem.SpawnBagCardInBag(cardData);
-			UpdateLayout();
 		}
 
 		private void updateIndex()
