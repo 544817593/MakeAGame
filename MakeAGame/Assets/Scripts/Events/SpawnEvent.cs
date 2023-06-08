@@ -1,3 +1,5 @@
+using Ink.Parsed;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Game
@@ -31,5 +33,14 @@ namespace Game
     public struct SpawnCardEvent
     {
         public int cardId;
+    }
+
+    /// <summary>
+    /// 由SpawnSystem发出的亡灵生成事件
+    /// </summary>
+    public struct SpawnUndeadEvent
+    {
+        public int undeadSpawnPositionX;
+        public int undeadSpawnPositionY;
     }
 }

@@ -52,12 +52,6 @@ namespace Game
         List<Monster> GetMonsterList();
 
         /// <summary>
-        /// 返回友军棋子列表
-        /// </summary>
-        /// <returns></returns>
-        List<TempAllyScript> GetAllyList();
-
-        /// <summary>
         /// 返还上一个被Spawner生成的卡牌
         /// </summary>
         /// <returns>上一个被Spawner生成的卡牌</returns>
@@ -80,7 +74,6 @@ namespace Game
 
         // 怪物和友军的列表
         private List<Monster> monsterList = new List<Monster>();
-        private List<TempAllyScript> allyList = new List<TempAllyScript>();
         // interactableList待添加
 
         // 上一个生成的卡牌
@@ -138,11 +131,6 @@ namespace Game
         public List<Monster> GetMonsterList()
         {
             return monsterList;
-        }
-
-        public List<TempAllyScript> GetAllyList()
-        {
-            return allyList;
         }
 
         public void SpawnCard(int cardId)

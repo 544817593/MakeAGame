@@ -16,28 +16,11 @@ public class Monster : ViewPieceBase
     public SOMonsterBase data;
 
     #region 怪物数据
-    //public int rarity; // 稀有度 0 白 -- 4 橙
-    //public int monsterId; // 怪物的ID，辨认品种
-    //public int pieceId; // 棋子ID，每个棋子独一份
-    //public (int, int) pieceSize; // 怪物尺寸
-
-    //public BindableProperty<float> moveSpeed; // 移动速度
-    //public BindableProperty<int> hp; // 当前生命值
-    //public BindableProperty<int> maxHp; // 最大生命值
-    //public BindableProperty<float> atkSpeed; // 攻速
-    //public BindableProperty<float> atkDmg; // 攻击力
-    //public BindableProperty<float> defense; // 防御力
-    //public BindableProperty<float> accuracy; // 命中率
-    //public BindableProperty<int> atkRange; // 射程
-    //public BindableProperty<List<PropertyEnum>> features; // 特性
-    //public BindableProperty<List<DirEnum>> dirs; // 可移动方向
-    //public BindableProperty<bool> isAttacking; // 是否在发起攻击
-    //public BindableProperty<bool> isDying; // 是否正在死亡中                         
-    //public BindableProperty<(int, int)> leftTopGridPos; // 怪物当前左上角位置
-    //public BindableProperty<(int, int)> botRightGridPos; // 怪物当前右下角位置
+    public BindableProperty<(int, int)> leftTopGridPos; // 当前左上角位置
+    public BindableProperty<(int, int)> botRightGridPos; // 当前右下角位置
     #endregion
 
-    public TempAllyScript currentTarget; // 当前目标
+    public ViewPiece currentTarget; // 当前目标
     // public DirEnum currentDir = DirEnum.None; // 当前移动方向
 
     // private IMapSystem mapSystem; // 地图系统
@@ -82,41 +65,6 @@ public class Monster : ViewPieceBase
                 break;
         }
     }
-
-    // 更新速度的过程换到PieceEnemyMovingState中
-    // private void OnBeforeMonsterMoveSpeedChanged(float oldSpeed)
-    // {
-    //     this.oldSpeed = oldSpeed;
-    // }
-
-    // private void OnMonsterMoveSpeedChanged(float newMoveSpeed)
-    // {
-    //     // 移动速度改变时同时改变移动冷却计时器
-    //     float differential = newMoveSpeed - oldSpeed;
-    //
-    //     gameObject.GetComponent<MonsterMovement>().movementCooldown += differential;
-    // }
-
-    /// <summary>
-    /// 怪物位置改变前一瞬间
-    /// </summary>
-    /// <param name="oldPosition">原位置</param>
-    // private void OnBeforeMonsterPositionChanged((int, int) oldPosition)
-    // {
-    //     // 更新格子上储存的信息
-    //     // mapSystem.Grids()[oldPosition.Item1, oldPosition.Item2].occupation = 0;
-    // }
-
-    /// <summary>
-    /// 怪物改变位置后一瞬间
-    /// </summary>
-    /// <param name="newPosition">新位置</param>
-    // private void OnMonsterPositionChanged((int,int) newPosition)
-    // {
-    //     // 更新格子上储存的信息
-    //     // mapSystem.Grids()[newPosition.Item1, newPosition.Item2].occupation = pieceId;       
-    //     foreach (var oldGrid in pieceGrids) oldGrid.occupation = pieceId;
-    // }
     
     public void Move()
     {
@@ -160,10 +108,9 @@ public class Monster : ViewPieceBase
         DoMove();
     }
 
-    private IMovementSystem movementSystem;
     /// <summary>
     /// 根据目标，找到怪物的下一个移动方向
-    /// 返回移动后的左下角格子坐标，若无法移动，则返回(-1, -1)
+    /// 返回移动后的左上角格子坐标，若无法移动，则返回(-1, -1)
     /// </summary>
     private (int, int) FindMovementDir()
     {
@@ -171,13 +118,13 @@ public class Monster : ViewPieceBase
         (int, int) positionAfterMovement = leftTopGridPos.Value; // 怪物移动后的坐标
 
         // 若目标不存在或就是当前位置
-        if (currentTarget == null || currentTarget.leftTopGridPos == original)
+        if (currentTarget == null)
             return (-1, -1);
         
 
         // A* 寻路
         List<BoxGrid> aStarPath = PathFinding.FindPath(original.Item1, original.Item2,
-            currentTarget.leftTopGridPos.Item1, currentTarget.leftTopGridPos.Item2, this);
+            currentTarget.pieceGrids[0].row, currentTarget.pieceGrids[0].col, this);
 
         // 路径存在
         if (aStarPath != null && aStarPath.Count != 0)

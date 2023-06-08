@@ -42,13 +42,6 @@ namespace Game
             isDying = new BindableProperty<bool>(false);
             currLife = new BindableProperty<float>(pieceData.maxLife);
             maxLife = new BindableProperty<float>(pieceData.maxLife);
-
-
-            //(int, int) temp = (data.row, data.col);
-            //leftTopGridPos = new BindableProperty<(int, int)>(temp);
-            //(int, int) temp2 = (data.row + somb.height - 1, data.col + somb.width - 1);
-            //botRightGridPos = new BindableProperty<(int, int)>(temp2);
-
         }
 
         private void Start()
@@ -93,6 +86,7 @@ namespace Game
             if(touchArea)
                 touchArea.GetComponent<BoxCollider2D>().size = spPiece.sprite.bounds.size;
         }
+
         
         public override void SetGrids(List<BoxGrid> grids)
         {

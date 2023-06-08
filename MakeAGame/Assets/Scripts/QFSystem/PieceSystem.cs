@@ -9,6 +9,8 @@ namespace Game
         List<ViewPiece> pieceFriendList { get; }    // 友方棋子
         List<Monster> pieceEnemyList { get; }    // 敌方棋子
 
+        ViewPiece undead { get; set; } // 亡灵
+
         public bool AddPieceFriend(Card card, List<BoxGrid> grids);
 
         public bool AddPieceEnemy(Monster monster, List<BoxGrid> grids);
@@ -32,6 +34,7 @@ namespace Game
         public ViewPiece getViewPieceById(int pieceId);
         // 根据id获取Monster
         public Monster getMonsterById(int pieceId);
+
     }
     
     public class PieceSystem: AbstractSystem, IPieceSystem
@@ -39,6 +42,8 @@ namespace Game
         private ViewDirectionWheel viewDirectionWheel;
         public List<ViewPiece> pieceFriendList { get; } = new List<ViewPiece>();
         public List<Monster> pieceEnemyList { get; } = new List<Monster>();
+
+        public ViewPiece undead { get; set; }
 
         private ViewPiece lastSpawnedFriend;
         private ViewPiece lastSpawnedInvestigator;
