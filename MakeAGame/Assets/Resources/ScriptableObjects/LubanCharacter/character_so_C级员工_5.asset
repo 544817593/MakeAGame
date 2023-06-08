@@ -23,14 +23,13 @@ MonoBehaviour:
   attack: 3
   moveSpd: 3.5
   defend: 1
-  features:
-  - {fileID: 11400000, guid: ba75046eaa4274d19a86b061c8a39cda, type: 2}
-  specialFeatures: []
+  features: 06000000
+  specialFeatures: 
   pieceSprite: {fileID: 21300000, guid: 86e12fd6b3fa3b048a3377dc586ed10b, type: 3}
   width: 1
   height: 1
   moveDirections: 01000000020000000300000004000000
-  attackSpd: 1.67
+  attackSpd: 1.7
   accuracy: 0.7
   attackRange: 1
   life: 999

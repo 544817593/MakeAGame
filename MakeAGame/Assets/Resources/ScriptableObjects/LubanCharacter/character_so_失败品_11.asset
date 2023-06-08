@@ -10,38 +10,38 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0432a95699a342929361599b7939f299, type: 3}
-  m_Name: "character_so_B\u7EA7\u5458\u5DE5_6"
+  m_Name: "character_so_\u5931\u8D25\u54C1_11"
   m_EditorClassIdentifier: 
-  characterID: 6
-  characterName: "B\u7EA7\u5458\u5DE5"
-  rarity: 3
+  characterID: 11
+  characterName: "\u5931\u8D25\u54C1"
+  rarity: 1
   cardPack: 1
-  sanCost: 20
-  deathFuncDescription: "\u5BF94*4\u7684\u683C\u5B50\u9020\u621025\u70B9\u4F24\u5BB3\uFF0C20%\u7684\u6982\u7387\u83B7\u5F97\u4E00\u5F20C\u7EA7\u5458\u5DE5\u3002"
-  cardSprite: {fileID: 21300000, guid: 943a4851b209b184dae4226598f2aed6, type: 3}
-  hp: 50
+  sanCost: 30
+  deathFuncDescription: "\u4E3A\u4E00\u4E2A\u53CB\u65B9\u5355\u4F4D\u6062\u590D35\u70B9\u751F\u547D\u503C\u3002"
+  cardSprite: {fileID: 21300000, guid: 3a222082b03b6f940851d39cfd4a1359, type: 3}
+  hp: 10
   attack: 4
-  moveSpd: 2.5
-  defend: 2
-  features: 0600000007000000
+  moveSpd: 4
+  defend: 0
+  features: 0b000000
   specialFeatures: 
-  pieceSprite: {fileID: 21300000, guid: 111ecdf8e16b3374bafeb18a060d01f7, type: 3}
+  pieceSprite: {fileID: 21300000, guid: 706b1c62cb78c3e45b62875133d9a0fa, type: 3}
   width: 1
   height: 1
   moveDirections: 01000000020000000300000004000000
-  attackSpd: 1.7
+  attackSpd: 2
   accuracy: 0.8
   attackRange: 1
   life: 999
   sanCostBonus:
     stat: 6
-    multiple: -0.06
+    multiple: -0.05
   hpBonus:
     stat: 4
-    multiple: 3
+    multiple: 4
   atkBonus:
+    stat: 3
+    multiple: 1
+  atkSpdBonus:
     stat: 0
     multiple: 0
-  atkSpdBonus:
-    stat: 5
-    multiple: 0.01
