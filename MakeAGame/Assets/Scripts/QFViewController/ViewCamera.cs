@@ -23,7 +23,7 @@ namespace Game
                 // cameraDist = (lookAtTarget.transform.position - transform.position).magnitude;
             }
 
-            this.RegisterEvent<ChangeCameraTargetEvent>(e => OnTargetChange(e));
+            this.RegisterEvent<ChangeCameraTargetEvent>(e => OnTargetChange(e)).UnRegisterWhenGameObjectDestroyed(gameObject);
             
             if(lookAtTarget != null)
                 CameraLookatPos(cameraAngle, cameraDist);
