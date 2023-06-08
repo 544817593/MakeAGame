@@ -75,8 +75,9 @@ namespace Game
             direction = dirs.Value[dirIndex];
         }
 
-        private void Update()
+        private new void Update()
         {
+            base.Update();
             currLife.Value -= Time.deltaTime;
         }
 

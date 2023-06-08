@@ -113,7 +113,7 @@ namespace Game
 
         }
 
-        private void Update()
+        protected void Update()
         {
             state.Update();
         }
