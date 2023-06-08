@@ -84,9 +84,7 @@ public class Dialogue : ViewController
         StoryUI();
         UIKit.OpenPanel<UIOpenPackPanel>();
         UIKit.HidePanel<UIOpenPackPanel>();
-        // 挪到Inventorysystem里了，刚开始就加载这个，这段看到后可删
-        //UIKit.OpenPanel<BagUIPanel>();
-        //UIKit.HidePanel<BagUIPanel>();
+     
 
         m_Pack = UIKit.GetPanel<UIOpenPackPanel>()?.GetComponent<UIOpenPackPanel>();
         for (int i = 0; i < ChoiceP.Length; i++)

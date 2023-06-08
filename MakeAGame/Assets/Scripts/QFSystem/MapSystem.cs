@@ -193,6 +193,10 @@ namespace Game
 
         public void SetNUllMap()
         {
+            foreach (var grid in mGrids)
+            {
+                GameObject.Destroy(grid.gameObject);
+            }
             mGrids = null;
         }
        
