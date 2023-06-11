@@ -35,35 +35,48 @@ namespace PackOpen
 		/// </summary>
 		public void ShowNewCard()
 		{
-			int newCardId = 1;
+			int newCardId ;
 			
-			//if (m_ui.blueSecure ==true)
-			//{
-			//	newCardId = PackProbability.DrawCard(0, false, true);
-			//	m_ui.blueDrawn = true;
-			//	m_ui.blueSecure = false;
-			//}
-			//else if (m_ui.count == 1 && !m_ui.greenDrawn)
-			//{
-			//	newCardId = PackProbability.DrawCard(0, true);
-			//}
-			//else
-			//{
-			//	newCardId = PackProbability.DrawCard(0); // 暂时设为0（卡包为基础包）
-			//	if (IdToSO.FindCardSOByID(newCardId).rarity == 1) m_ui.greenDrawn = true;
-			//	if (IdToSO.FindCardSOByID(newCardId).rarity == 2)
-			//	{
-			//		m_ui.blueDrawn = true;
-			//		m_ui.blueSecure = false;
-			//	}
-			//}
+			if (m_ui.blueSecure ==true)
+			{
+				newCardId = PackProbability.DrawCard(0, false, true);
+				m_ui.blueDrawn = true;
+				m_ui.blueSecure = false;
+			}
+			else if (m_ui.count == 1 && !m_ui.greenDrawn)
+			{
+				newCardId = PackProbability.DrawCard(0, true);
+			}
+			else
+			{
+				newCardId = PackProbability.DrawCard(0); // 暂时设为0（卡包为基础包）
+				if (IdToSO.FindCardSOByID(newCardId).rarity == RarityEnum.Green) m_ui.greenDrawn = true;
+				if (IdToSO.FindCardSOByID(newCardId).rarity == RarityEnum.Blue)
+				{
+					m_ui.blueDrawn = true;
+					m_ui.blueSecure = false;
+				}
+			}
 
-
+			if (( GameSceneManager.Instance.GetCurrentSceneName() == "Intro") && m_ui.count > 2)
+			{
+				if (m_ui.count == 3)
+				{
+					newCardId = 1;
+				}
+				else
+				{
+					newCardId = 5;
+				}
+				m_ui.greenDrawn = false;
+				m_ui.blueDrawn = false;
+				m_ui.blueSecure = false;
+			}
 
 
 			//Debug.Log("Card drawn with ID: " + newCardId);
 
-			
+
 			Game.ISpawnSystem spawnSystem = Game.GameEntry.Interface.GetSystem<Game.ISpawnSystem>();
 			
 			GameObject new_Card;
@@ -102,7 +115,7 @@ namespace PackOpen
 			//Invoke("OpenNewPack", 3f);
 			if (m_ui.count <=0)
 			{
-			//	if (m_ui.blueDrawn == false) m_ui.blueSecure = true;
+				if (m_ui.blueDrawn == false) m_ui.blueSecure = true;
 				Invoke("OpenNewPack", 3f);
 
 				}

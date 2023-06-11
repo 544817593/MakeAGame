@@ -2,7 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
-
+using QFramework;
+using Game;
 public class GameManager : MonoBehaviour
 {
     private static GameManager instance = null; // GM实例
@@ -46,7 +47,8 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void PauseCombat()
     {
-
+        Time.timeScale = 0;
+           
     }
 
     /// <summary>
@@ -62,7 +64,7 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void ResumeCombat()
     {
-
+        Time.timeScale = 1;
     }
     
 }
