@@ -60,12 +60,13 @@ public class Dialogue : ViewController
     bool waitForScene = false;
     public bool waitForControl = false;
     public bool waitForInGamecontrol = false;
+    public bool getControl = false;
     private bool nextLine = false;
     bool reward = false;
     bool waitForPass = false;
     public bool showGift = false;
     public double controlTime = 5f;
-
+   
     public GameObject npc;
     public GameObject backGround;
     //private bool canContinueNext = false;
@@ -115,7 +116,7 @@ public class Dialogue : ViewController
         {
             StoryUI();
         }
-
+       
     }
     public void ShowBG(int choice)
     {
@@ -403,29 +404,38 @@ public class Dialogue : ViewController
     void InGameControl()
     {
         if (waitForInGamecontrol)
-        {
-            
-            string name = GameEntry.Interface.GetSystem<IPieceSystem>().GetLastSpawnedFriend(true).card.charaName;
-            if (name == "弗朗西斯·维兰德·瑟斯顿")
-            {
-                waitForInGamecontrol = false;
-                nextLine = true;
-                story.variablesState["CheckControl"] = true;
-            }
-            StartCoroutine(WaitTime());
-
+        {    
+                StartCoroutine(WaitTime());
+                getControl = false;           
         }
 
         
     }
 
+    void WaitForPass()
+    {
+        //检测该房间游戏是否通关
+        //如果通关
+        UIKit.ShowPanel<DialoguePanel>();
+        waitForPass = false;
+    }
     IEnumerator WaitTime()
     {
         
         yield return new WaitForSeconds(5f);
-        waitForInGamecontrol = false;
-        nextLine = true;
-        story.variablesState["CheckControl"] = false;
+        if (getControl)
+        {
+            waitForInGamecontrol = false;
+            nextLine = true;
+            story.variablesState["CheckControl"] = true;
+        }
+        else if (!getControl)
+        {
+            waitForInGamecontrol = false;
+            nextLine = true;
+            story.variablesState["CheckControl"] = false;
+        }
+        
     }
     void HandleTags(List<string> current_Tag)
     {
@@ -485,9 +495,10 @@ public class Dialogue : ViewController
                     npc.SetActive(true);
                     UIKit.HidePanel<DialoguePanel>();
                     break;
-
                 case Pass_TAG:
                     waitForPass = true;
+                    UIKit.HidePanel<DialoguePanel>();
+                    WaitForPass();
                     break;
                 case Reward_TAG:
                     reward = true;
