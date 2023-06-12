@@ -11,258 +11,284 @@ using UnityEditor;
 using UnityEngine;
 
 
-
-public class Monster : ViewPieceBase
+namespace Game
 {
-    // 怪物初始SO数据
-    public SOMonsterBase data;
-
-    #region 怪物数据
-    public BindableProperty<(int, int)> leftTopGridPos; // 当前左上角位置
-    public BindableProperty<(int, int)> botRightGridPos; // 当前右下角位置
-    #endregion
-
-    public ViewPiece currentTarget; // 当前目标
-    // public DirEnum currentDir = DirEnum.None; // 当前移动方向
-
-    // private IMapSystem mapSystem; // 地图系统
-    // private float oldSpeed; // 记录移动速度被改变前的旧值
-
-    void Awake()
+    public class Monster : ViewPieceBase
     {
-        mapSystem = this.GetSystem<IMapSystem>();
-    }
-    
-    void Start()
-    {
-        base.Start();
-    
-        // 注意顺序，先放action，再regsiter
-        this.RegisterEvent<PieceMoveReadyEvent>(OnPieceMoveReady).UnRegisterWhenGameObjectDestroyed(gameObject);
-        this.RegisterEvent<PieceMoveFinishEvent>(OnPieceMoveFinish).UnRegisterWhenGameObjectDestroyed(gameObject);
-        this.RegisterEvent<PieceAttackStartEvent>(OnPieceAttackStart).UnRegisterWhenGameObjectDestroyed(gameObject);
-        this.RegisterEvent<PieceAttackEndEvent>(OnPieceAttackEnd).UnRegisterWhenGameObjectDestroyed(gameObject);
-        this.RegisterEvent<PieceUnderAttackEvent>(OnPieceUnderAttack).UnRegisterWhenGameObjectDestroyed(gameObject);
+        // 怪物初始SO数据
+        public SOMonsterBase data;
+
+        #region 怪物数据
+        public BindableProperty<(int, int)> leftTopGridPos; // 当前左上角位置
+        public BindableProperty<(int, int)> botRightGridPos; // 当前右下角位置
+        #endregion
+
+        public ViewPiece currentTarget; // 当前目标
         
-        this.SendCommand(new MonsterTargetSelectionCommand(this));
-    }
+        private ItemController itemController = ItemController.Instance;
+        public TriggerHelper mouseHelper;
+        public GameObject touchArea;
 
-
-    public override void SetGrids(List<BoxGrid> grids)
-    {
-        base.SetGrids(grids);
-        foreach (var grid in pieceGrids)
+        void Awake()
         {
-            grid.occupation = pieceId;
-        }
-    }
-
-    public override void InitState()
-    {
-        switch (stateFlag)
-        {
-            case PieceStateEnum.Moving:
-                var newState = new PieceEnemyMovingState(this);
-                ChangeStateTo(newState);
-                break;
-        }
-    }
-    
-    public void Move()
-    {
-        if (movementSystem == null)
-            movementSystem = this.GetSystem<IMovementSystem>();
-        
-        // 发送准备移动事件
-        this.SendEvent<PieceMoveReadyEvent>(new PieceMoveReadyEvent() {viewPieceBase = this});
-        
-        var nextLTCorr = FindMovementDir();
-        
-        // 无法移动
-        if (nextLTCorr.Item1 == -1 && nextLTCorr.Item2 == -1)
-        {
-            return;
-        }
-        
-        // 更新数据
-        int diffR = nextLTCorr.Item1 - leftTopGridPos.Value.Item1;
-        int diffC = nextLTCorr.Item2 - leftTopGridPos.Value.Item2;
-        List<BoxGrid> nextGrids = new List<BoxGrid>();
-        foreach (var crtGrid in pieceGrids)
-        {
-            nextGrids.Add(mapSystem.Grids()[crtGrid.row + diffR, crtGrid.col + diffC]);
+            mapSystem = this.GetSystem<IMapSystem>();
         }
 
-        foreach (var oldGrid in pieceGrids)
+        void Start()
         {
-            oldGrid.occupation = 0;
-            oldGrid.gridStatus.Value = GridStatusEnum.Unoccupied;
+            base.Start();
+            InitBind();
+
+            // 注意顺序，先放action，再regsiter
+            this.RegisterEvent<PieceMoveReadyEvent>(OnPieceMoveReady).UnRegisterWhenGameObjectDestroyed(gameObject);
+            this.RegisterEvent<PieceMoveFinishEvent>(OnPieceMoveFinish).UnRegisterWhenGameObjectDestroyed(gameObject);
+            this.RegisterEvent<PieceAttackStartEvent>(OnPieceAttackStart).UnRegisterWhenGameObjectDestroyed(gameObject);
+            this.RegisterEvent<PieceAttackEndEvent>(OnPieceAttackEnd).UnRegisterWhenGameObjectDestroyed(gameObject);
+            this.RegisterEvent<PieceUnderAttackEvent>(OnPieceUnderAttack).UnRegisterWhenGameObjectDestroyed(gameObject);
+
+            this.SendCommand(new MonsterTargetSelectionCommand(this));
         }
-        pieceGrids = nextGrids;
-        foreach (var newGrid in pieceGrids)
-        {
-            newGrid.occupation = pieceId;
-            newGrid.gridStatus.Value = GridStatusEnum.MonsterPiece;
+
+        private void InitBind()
+        {            
+            mouseHelper = touchArea.AddComponent<TriggerHelper>();
+            mouseHelper.OnMouseDownEvent = MouseDown;
+            mouseHelper.OnMouseUpEvent = MouseUp;
         }
 
-        leftTopGridPos.Value = nextLTCorr;
-        
-        DoMove();
-    }
-
-    /// <summary>
-    /// 根据目标，找到怪物的下一个移动方向
-    /// 返回移动后的左上角格子坐标，若无法移动，则返回(-1, -1)
-    /// </summary>
-    private (int, int) FindMovementDir()
-    {
-        (int, int) original = leftTopGridPos.Value; // 当前左上坐标
-        (int, int) positionAfterMovement = leftTopGridPos.Value; // 怪物移动后的坐标
-
-        // 若目标不存在或就是当前位置
-        if (currentTarget == null)
-            return (-1, -1);
-        
-
-        // A* 寻路
-        List<BoxGrid> aStarPath = PathFinding.FindPath(original.Item1, original.Item2,
-            currentTarget.pieceGrids[0].row, currentTarget.pieceGrids[0].col, this);
-
-        // 路径存在
-        if (aStarPath != null && aStarPath.Count != 0)
+        public override void SetGrids(List<BoxGrid> grids)
         {
-            // 场景显示路线
-            Color randColor = UnityEngine.Random.ColorHSV();
-            for (int i = 0; i < aStarPath.Count - 1; i++)
+            base.SetGrids(grids);
+            foreach (var grid in pieceGrids)
             {
-                Debug.DrawLine(aStarPath[i].transform.position - new Vector3(0, 0, 0.3f), aStarPath[i + 1].transform.position - new Vector3(0, 0, 0.3f), randColor, 3f);
+                grid.occupation = pieceId;
+            }
+        }
+
+        public override void InitState()
+        {
+            switch (stateFlag)
+            {
+                case PieceStateEnum.Moving:
+                    var newState = new PieceEnemyMovingState(this);
+                    ChangeStateTo(newState);
+                    break;
+            }
+        }
+
+        public void Move()
+        {
+            if (movementSystem == null)
+                movementSystem = this.GetSystem<IMovementSystem>();
+
+            // 发送准备移动事件
+            this.SendEvent<PieceMoveReadyEvent>(new PieceMoveReadyEvent() { viewPieceBase = this });
+
+            var nextLTCorr = FindMovementDir();
+
+            // 无法移动
+            if (nextLTCorr.Item1 == -1 && nextLTCorr.Item2 == -1)
+            {
+                return;
             }
 
-            // 设置移动方向
-            direction = movementSystem.NeighbourBoxGridsToDir(this.GetSystem<IMapSystem>().Grids()
-                [leftTopGridPos.Value.Item1, leftTopGridPos.Value.Item2], aStarPath[1]);
+            // 更新数据
+            int diffR = nextLTCorr.Item1 - leftTopGridPos.Value.Item1;
+            int diffC = nextLTCorr.Item2 - leftTopGridPos.Value.Item2;
+            List<BoxGrid> nextGrids = new List<BoxGrid>();
+            foreach (var crtGrid in pieceGrids)
+            {
+                nextGrids.Add(mapSystem.Grids()[crtGrid.row + diffR, crtGrid.col + diffC]);
+            }
 
-            // 更新想要去的格子
-            positionAfterMovement = this.GetSystem<IMovementSystem>().CalculateNextPosition(original, direction);
-            // nextIntendPos = positionAfterMovement;
-            return positionAfterMovement;
+            foreach (var oldGrid in pieceGrids)
+            {
+                oldGrid.occupation = 0;
+                oldGrid.gridStatus.Value = GridStatusEnum.Unoccupied;
+            }
+            pieceGrids = nextGrids;
+            foreach (var newGrid in pieceGrids)
+            {
+                newGrid.occupation = pieceId;
+                newGrid.gridStatus.Value = GridStatusEnum.MonsterPiece;
+            }
+
+            leftTopGridPos.Value = nextLTCorr;
+
+            DoMove();
         }
-        else
+
+        /// <summary>
+        /// 根据目标，找到怪物的下一个移动方向
+        /// 返回移动后的左上角格子坐标，若无法移动，则返回(-1, -1)
+        /// </summary>
+        private (int, int) FindMovementDir()
         {
-            return (-1, -1);
+            (int, int) original = leftTopGridPos.Value; // 当前左上坐标
+            (int, int) positionAfterMovement = leftTopGridPos.Value; // 怪物移动后的坐标
+
+            // 若目标不存在或就是当前位置
+            if (currentTarget == null)
+                return (-1, -1);
+
+
+            // A* 寻路
+            List<BoxGrid> aStarPath = PathFinding.FindPath(original.Item1, original.Item2,
+                currentTarget.pieceGrids[0].row, currentTarget.pieceGrids[0].col, this);
+
+            // 路径存在
+            if (aStarPath != null && aStarPath.Count != 0)
+            {
+                // 场景显示路线
+                Color randColor = UnityEngine.Random.ColorHSV();
+                for (int i = 0; i < aStarPath.Count - 1; i++)
+                {
+                    Debug.DrawLine(aStarPath[i].transform.position - new Vector3(0, 0, 0.3f), aStarPath[i + 1].transform.position - new Vector3(0, 0, 0.3f), randColor, 3f);
+                }
+
+                // 设置移动方向
+                direction = movementSystem.NeighbourBoxGridsToDir(this.GetSystem<IMapSystem>().Grids()
+                    [leftTopGridPos.Value.Item1, leftTopGridPos.Value.Item2], aStarPath[1]);
+
+                // 更新想要去的格子
+                positionAfterMovement = this.GetSystem<IMovementSystem>().CalculateNextPosition(original, direction);
+                // nextIntendPos = positionAfterMovement;
+                return positionAfterMovement;
+            }
+            else
+            {
+                return (-1, -1);
+            }
         }
-    }
-    
-    /// <summary>
-    /// 根据行走方向和下一位置的情况，检查是否可以移动
-    /// </summary>
-    /// <param name="curMoveDir"></param>
-    /// <param name="currentX"></param>
-    /// <param name="currentY"></param>
-    /// <returns></returns>
-    public bool CheckIfMovable(DirEnum curMoveDir, int currentX, int currentY)
-    {
-        if (isAttacking)
+
+        /// <summary>
+        /// 根据行走方向和下一位置的情况，检查是否可以移动
+        /// </summary>
+        /// <param name="curMoveDir"></param>
+        /// <param name="currentX"></param>
+        /// <param name="currentY"></param>
+        /// <returns></returns>
+        public bool CheckIfMovable(DirEnum curMoveDir, int currentX, int currentY)
         {
-            return false;
+            if (isAttacking)
+            {
+                return false;
+            }
+
+            // 获取下一步坐标
+            (int, int) intendPos = movementSystem.CalculateNextPosition((currentX, currentY), curMoveDir);
+            // 对下一步坐标做基础检查
+            if (!movementSystem.MovementBaseCheck(intendPos)) return false;
+            // 对下一步的格子做检查
+            BoxGrid grid = mapSystem.Grids()[intendPos.Item1, intendPos.Item2];
+            if (!CheckIfOneGridCanMove(grid)) return false;
+
+            return true;
         }
 
-        // 获取下一步坐标
-        (int, int) intendPos = movementSystem.CalculateNextPosition((currentX, currentY), curMoveDir);
-        // 对下一步坐标做基础检查
-        if (!movementSystem.MovementBaseCheck(intendPos)) return false;
-        // 对下一步的格子做检查
-        BoxGrid grid = mapSystem.Grids()[intendPos.Item1, intendPos.Item2];
-        if (!CheckIfOneGridCanMove(grid)) return false;
-
-        return true;
-    }
-    
-    /// <summary>
-    /// 怪物执行移动
-    /// </summary>
-    public void DoMove()
-    {
-        // 更新画面
-        // var grid2DList = this.GetSystem<IMapSystem>().Grids();
-        // var newGridTransPos = grid2DList[nextIntendPos.Item1, nextIntendPos.Item2].transform.position;
-        // this.gameObject.transform.position = newGridTransPos;
-        // monster.leftTopGridPos.Value = nextIntendPos;
-
-        // 如果移动动画协程还在执行，但又触发DoMove了，那么强制停止之前的
-        if (movementCoroutine != null)
+        /// <summary>
+        /// 怪物执行移动
+        /// </summary>
+        public void DoMove()
         {
-            StopCoroutine(movementCoroutine);
-            movementCoroutine = null;
+            // 更新画面
+            // var grid2DList = this.GetSystem<IMapSystem>().Grids();
+            // var newGridTransPos = grid2DList[nextIntendPos.Item1, nextIntendPos.Item2].transform.position;
+            // this.gameObject.transform.position = newGridTransPos;
+            // monster.leftTopGridPos.Value = nextIntendPos;
+
+            // 如果移动动画协程还在执行，但又触发DoMove了，那么强制停止之前的
+            if (movementCoroutine != null)
+            {
+                StopCoroutine(movementCoroutine);
+                movementCoroutine = null;
+            }
+
+            // 找到位置
+            var nextPos = GetGridsCenterPos();
+
+            // 如果有动画，则播放动画并启动移动协程，否则直接更改怪物位置
+            if (animator != null)
+            {
+                animator.SetBool("isMove", true);
+                movementCoroutine = StartCoroutine(MoveToTarget(nextPos));
+            }
+            else
+            {
+                transform.DOMove(nextPos, 0.3f).OnComplete(OnMoveFinish);
+            }
+
         }
 
-        // 找到位置
-        var nextPos = GetGridsCenterPos();
 
-        // 如果有动画，则播放动画并启动移动协程，否则直接更改怪物位置
-        if (animator != null)
+
+        public override void Attack()
         {
-            animator.SetBool("isMove", true);
-            movementCoroutine = StartCoroutine(MoveToTarget(nextPos));
+            Debug.Log($"monster {this.ToString()} is about to attack");
+            this.SendEvent<PieceAttackReadyEvent>();
+            this.SendCommand<PieceAttackCommand>(new PieceAttackCommand(this));
         }
-        else
+
+        public override bool Hit(int damage)
         {
-            transform.DOMove(nextPos, 0.3f).OnComplete(OnMoveFinish);
+            this.SendEvent<PieceHitReadyEvent>();
+
+            hp.Value -= damage;
+            Debug.Log($"Monster Hit, damage: {damage} hp: {hp.Value}");
+
+            this.SendEvent<PieceHitFinishEvent>(new PieceHitFinishEvent { piece = this });
+
+            return hp.Value <= 0;
         }
-        
-    }
 
+        protected override void OnMoveReadyEvent(PieceMoveReadyEvent e)
+        {
+            base.OnMoveReadyEvent(e);
+            Debug.Log("Monster recv OnMoveReadyEvent");
+        }
 
-    
-    public override void Attack()
-    {
-        Debug.Log($"monster {this.ToString()} is about to attack");
-        this.SendEvent<PieceAttackReadyEvent>();
-        this.SendCommand<PieceAttackCommand>(new PieceAttackCommand(this));
-    }
+        protected override void OnMoveFinishEvent(PieceMoveFinishEvent e)
+        {
+            base.OnMoveFinishEvent(e);
+            Debug.Log("Monster recv OnMoveFinishEvent");
+        }
 
-    public override bool Hit(int damage)
-    {
-        this.SendEvent<PieceHitReadyEvent>();
+        protected override void OnAttackStartEvent(PieceAttackStartEvent e)
+        {
+            // 若不是给自己的通知，不作相应
+            if (e.viewPieceBase != this) return;
+            ChangeStateTo(new PieceEnemyAttackingState(this));
+        }
 
-        hp.Value -= damage;
-        Debug.Log($"Monster Hit, damage: {damage} hp: {hp.Value}");
-        
-        this.SendEvent<PieceHitFinishEvent>();
+        protected override void OnAttackEndEvent(PieceAttackEndEvent e)
+        {
+            if (e.vpb != this) return;
+            ChangeStateTo(new PieceEnemyMovingState(this));
+        }
 
-        return hp.Value <= 0;
-    }
+        protected override void OnUnderAttackEvent(PieceUnderAttackEvent e)
+        {
+            base.OnUnderAttackEvent(e);
+        }
 
-    protected override void OnMoveReadyEvent(PieceMoveReadyEvent e)
-    {
-        base.OnMoveReadyEvent(e);
-        Debug.Log("Monster recv OnMoveReadyEvent");
-    }
+        private void MouseDown()
+        {
+            Debug.Log("mouse down monster");
+        }
 
-    protected override void OnMoveFinishEvent(PieceMoveFinishEvent e)
-    {
-        base.OnMoveFinishEvent(e);
-        Debug.Log("Monster recv OnMoveFinishEvent");
-    }
-    
-    protected override void OnAttackStartEvent(PieceAttackStartEvent e)
-    {
-        // 若不是给自己的通知，不作相应
-        if (e.viewPieceBase != this) return;
-        ChangeStateTo(new PieceEnemyAttackingState(this));
-    }
-
-    protected override void OnAttackEndEvent(PieceAttackEndEvent e)
-    {
-        if (e.vpb != this) return;
-        ChangeStateTo(new PieceEnemyMovingState(this));
-    }
-
-    protected override void OnUnderAttackEvent(PieceUnderAttackEvent e)
-    {
-        base.OnUnderAttackEvent(e);
+        private void MouseUp()
+        {
+            Debug.Log("mouse up monster");
+            if (itemController.isMarking)
+            {
+                ItemController.Instance.markerFunction(this);
+                itemController.CancelMarking();
+                itemController.AfterUseCombatItem(itemController.markerItem);
+            }
+        }
     }
 }
+
 
 
 #if UNITY_EDITOR

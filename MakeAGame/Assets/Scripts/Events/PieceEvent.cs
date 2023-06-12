@@ -54,7 +54,9 @@ namespace Game
     
     public class PieceHitFinishEvent    // 受击处理完毕
     {
-        
+        public ViewPieceBase piece;
+        public ViewPieceBase attacker;
+        public float damage;
     }
 
     #endregion

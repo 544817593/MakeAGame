@@ -17,6 +17,8 @@ namespace Game
         public BindableProperty<float> currLife; // 寿命
         public BindableProperty<float> maxLife; // 最大寿命
 
+        private ItemController itemController = ItemController.Instance;
+
         public void SetDataWithCard(Card _card)
         {
             card = _card;
@@ -256,8 +258,8 @@ namespace Game
 
             hp.Value -= damage;
             Debug.Log($"Piece Hit, damage: {damage} hp: {hp}");
-        
-            this.SendEvent<PieceHitFinishEvent>();
+
+            this.SendEvent<PieceHitFinishEvent>(new PieceHitFinishEvent { piece = this });
 
             return hp <= 0;
         }
@@ -314,13 +316,25 @@ namespace Game
         private void MouseDown()
         {
             Debug.Log("mouse down piece");
-            this.GetSystem<IPieceSystem>().ShowDirectionWheel(this);
+            if (!ItemController.Instance.isMarking)
+            {
+                this.GetSystem<IPieceSystem>().ShowDirectionWheel(this);
+            }
         }
 
         private void MouseUp()
         {
             Debug.Log("mouse up piece");
-            this.SendCommand<ChangePieceDirectionCommand>(new ChangePieceDirectionCommand());
+            if (itemController.isMarking)
+            {
+                ItemController.Instance.markerFunction(this);
+                itemController.CancelMarking();
+                itemController.AfterUseCombatItem(itemController.markerItem);
+            }
+            else
+            {
+                this.SendCommand<ChangePieceDirectionCommand>(new ChangePieceDirectionCommand());
+            }
         }
 
         /// <summary>

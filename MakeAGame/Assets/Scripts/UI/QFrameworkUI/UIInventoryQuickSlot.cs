@@ -96,7 +96,7 @@ namespace InventoryQuickslotUI
 				itemSlotRectTransform.Find("ItemAmount").GetComponent<TextMeshProUGUI>().text = item.amount.ToString();
 				y++;
 				// 快捷栏只显示五个物品，物品每次改动都会重新Sort一下所以前五个一定是优先显示的物品
-				if (y >= 4) break;
+				if (y > 4) break;
 			}
 			activeQuickSlotCount = y;
 

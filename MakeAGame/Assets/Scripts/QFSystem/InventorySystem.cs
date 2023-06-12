@@ -100,11 +100,15 @@ namespace Game
             SOItemBase MinorSapphirePotion = Resources.Load<SOItemBase>("ScriptableObjects/Items/Minor Sapphire Potion");
             SOItemBase IntermediateEmeraldPotion = Resources.Load<SOItemBase>("ScriptableObjects/Items/Intermediate Emerald Potion");
             SOItemBase Type_DMinorEnhancementPotion = Resources.Load<SOItemBase>("ScriptableObjects/Items/Type-D Minor Enhancement Potion");
-            AddItem(new Item { amount = 1, data = IntermediateSapphirePotion });
+            SOItemBase LightNavyQuillPen = Resources.Load<SOItemBase>("ScriptableObjects/Items/Light-Navy Quill Pen");
+            SOItemBase NavyQuillPen = Resources.Load<SOItemBase>("ScriptableObjects/Items/Navy Quill Pen");
             AddItem(new Item { amount = 2, data = MinorSapphirePotion });
             AddItem(new Item { amount = 1, data = MinorSapphirePotion });
-            AddItem(new Item { amount = 3, data = IntermediateEmeraldPotion });
+            AddItem(new Item { amount = 1, data = IntermediateSapphirePotion });
+            AddItem(new Item { amount = 1, data = IntermediateEmeraldPotion });
             AddItem(new Item { amount = 1, data = Type_DMinorEnhancementPotion });
+            AddItem(new Item { amount = 4, data = LightNavyQuillPen });
+            AddItem(new Item { amount = 3, data = NavyQuillPen });
 
 
 
@@ -151,19 +155,6 @@ namespace Game
             return itemList;
         }
 
-        // 目前SpawnSystem.SpawnCard返还的是viewBagCard不是viewCard，不能放入手牌，暂时不确定是否需要这个函数
-        //public void SpawnHandCard(int cardid)
-        //{
-            
-        //    GameObject cardItem;
-        //    ISpawnSystem SpawnSystem = this.GetSystem<ISpawnSystem>();
-        //    SpawnSystem.SpawnCard(cardid);
-        //    cardItem = SpawnSystem.GetLastSpawnedCard();
-        //    var cardBase = cardItem.GetComponent<ViewCard>();
-        //    cardBase.GetComponent<Transform>().localScale = new Vector3(0.05f, 0.07f, 1);
-        //    handCardList.Value.Add(cardBase);
-        //    UIKit.GetPanel<BagUI.BagUIPanel>().UpdateLayout();
-        //}
 
         public void SpawnBagCardInBag(Card m_card)
         {

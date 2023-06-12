@@ -48,11 +48,15 @@ MonoBehaviour:
   direction: 0
   inCombat: 0
   listBuffs: 
+  animator: {fileID: 0}
   rarity: 0
   generalId: 0
   pieceId: 0
   data: {fileID: 0}
   currentTarget: {fileID: 0}
+  mouseHelper: {fileID: 0}
+  spPiece: {fileID: 5959409964620542870}
+  touchArea: {fileID: 0}
 --- !u!1 &4275257158394155866
 GameObject:
   m_ObjectHideFlags: 0

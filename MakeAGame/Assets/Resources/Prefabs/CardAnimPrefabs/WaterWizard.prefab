@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 417943868991713182}
   - component: {fileID: 417943868991713177}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: "\u6C34\u7CBE-\u8EAB\u4F53"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -95,7 +95,7 @@ GameObject:
   - component: {fileID: 417943869309911081}
   - component: {fileID: 3592079020436128896}
   - component: {fileID: 1956568942734109805}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: WaterWizard
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -201,7 +201,7 @@ GameObject:
   m_Component:
   - component: {fileID: 417943869429502804}
   - component: {fileID: 417943869429502807}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: "\u6C34\u7CBE-\u524D\u9CCD"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -285,7 +285,7 @@ GameObject:
   m_Component:
   - component: {fileID: 417943870546626531}
   - component: {fileID: 417943870546626530}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: "\u6C34\u7CBE-\u540E\u9CCD"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -369,7 +369,7 @@ GameObject:
   m_Component:
   - component: {fileID: 417943870647128684}
   - component: {fileID: 417943870647128687}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: "\u6C34\u7CBE-\u5C3E\u9CCD"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -453,7 +453,7 @@ GameObject:
   m_Component:
   - component: {fileID: 417943870966206844}
   - component: {fileID: 417943870966206847}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: "\u6C34\u7CBE-\u80CC\u9CCD"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -536,7 +536,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6379194857137582289}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -573,7 +573,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2467014621529952660}
   - component: {fileID: 4668353532552848513}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: "\u6C34\u7CBE-\u5E272"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
