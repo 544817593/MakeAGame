@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using DG.Tweening;
 using System.Threading;
 using System.Collections;
+using DamageNumbersPro;
+using Unity.VisualScripting;
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
@@ -227,7 +229,7 @@ public class Monster : ViewPieceBase
 
         hp.Value -= damage;
         Debug.Log($"Monster Hit, damage: {damage} hp: {hp.Value}");
-        
+        MonsterDamageNumer.Spawn(this.Position(), damage);
         this.SendEvent<PieceHitFinishEvent>();
 
         return hp.Value <= 0;
