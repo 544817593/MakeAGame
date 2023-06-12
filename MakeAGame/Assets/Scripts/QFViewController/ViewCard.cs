@@ -25,7 +25,7 @@ namespace Game
             var uiHelper = touchArea.AddComponent<UIEventHelper>();
             
             canvas.overrideSorting = true;
-            canvas.sortingOrder = 100;
+            canvas.sortingOrder = 101;
             transform.localScale = new Vector3(UIHandCard.normalScale, UIHandCard.normalScale, 1f);
 
             var uiHandCard = UIKit.GetPanel<UIHandCard>();

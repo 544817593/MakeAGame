@@ -163,7 +163,7 @@ namespace Game
 		{
 			// if (isDragging) return;
 			
-			viewCardsList[focusIndex].canvas.sortingOrder = 100;
+			viewCardsList[focusIndex].canvas.sortingOrder = 101;
 			
 			Debug.Log($"UIHandCard: OnUnfocusCard {focusIndex}");
 
