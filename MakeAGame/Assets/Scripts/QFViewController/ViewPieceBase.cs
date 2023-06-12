@@ -1,7 +1,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using DamageNumbersPro;
 using QFramework;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Game
@@ -11,6 +13,9 @@ namespace Game
     /// </summary>
     public partial class ViewPieceBase: MonoBehaviour, IController, ICanSendEvent
     {
+        // 怪物受到棋子伤害的数字弹出样式资源，棋子受到怪物伤害的数字弹出样式资源
+        protected DamageNumberMesh MonsterDamageNumer = Resources.Load("Prefabs/Damage Number Prefab/Monster Damage").GetComponent<DamageNumberMesh>(); 
+
         // protected Transform healthBar;
 
         protected IMapSystem mapSystem;

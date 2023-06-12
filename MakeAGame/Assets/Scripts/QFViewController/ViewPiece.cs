@@ -1,8 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Threading;
+using DamageNumbersPro;
 using DG.Tweening;
 using QFramework;
+using Unity.VisualScripting;
 using UnityEngine;
 using Random = System.Random;
 
@@ -258,7 +260,7 @@ namespace Game
 
             hp.Value -= damage;
             Debug.Log($"Piece Hit, damage: {damage} hp: {hp}");
-
+            MonsterDamageNumer.Spawn(this.Position(), damage);
             this.SendEvent<PieceHitFinishEvent>(new PieceHitFinishEvent { piece = this });
 
             return hp <= 0;
