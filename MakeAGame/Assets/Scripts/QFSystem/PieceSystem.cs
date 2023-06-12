@@ -137,7 +137,8 @@ namespace Game
             
             var viewPiece = viewPB as ViewPiece;
             viewDirectionWheel.SetValidDirections(viewPiece.dirs);
-            viewDirectionWheel.gameObject.transform.localPosition = Extensions.WorldToUIPos(viewPB.transform.position);
+            var pieceScreenPos = Camera.main.WorldToScreenPoint(viewPB.transform.position);
+            viewDirectionWheel.gameObject.transform.localPosition = Extensions.ScreenToUIPos(pieceScreenPos);
             viewDirectionWheel.gameObject.SetActive(true);
             if (viewPiece.card.charaName == "弗朗西斯·维兰德·瑟斯顿")
             {

@@ -194,12 +194,29 @@ namespace Game
 			// todo 优化 不要在update里写if
 			if (isDragging)
 			{
-				var pos = Input.mousePosition;
-					// Debug.Log($"mouse pos: {pos} screen width: {Screen.width} height: {Screen.height}");
-					pos -= new Vector3(Screen.width / 2f, Screen.height / 2f, 0f);
-					PieceIcon.localPosition = pos;
-					// Debug.Log($"mouseImg localpos: {mouseImg.localPosition} pos: {mouseImg.position}");
+				// var canvas = UIKit.Root.Canvas;
+				// Vector2 uisize = canvas.GetComponent<RectTransform>().sizeDelta;//得到画布的尺寸
+				
+				// var pos = Input.mousePosition;
+				// pos -= new Vector3(Screen.width / 2f, Screen.height / 2f, 0f);
+				// pos.x = pos.x * (uisize.x / Screen.width);
+				// pos.y = pos.y * (uisize.y / Screen.height);
+				// PieceIcon.localPosition = pos;
+
+				PieceIcon.localPosition = Extensions.ScreenToUIPos(Input.mousePosition);
+
+				// SetPieceIconPosition();
 			}
+		}
+
+		void SetPieceIconPosition()
+		{
+			// var iconScreenPos = Camera.main.WorldToScreenPoint(PieceIcon.transform.position);
+			// var mouseScreenPos = new Vector3(Input.mousePosition.x, Input.mousePosition.y, iconScreenPos.z);
+			var mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+			var canvas = UIKit.Root.Canvas;
+			var uiPos = canvas.transform.InverseTransformPoint(mouseWorldPos);
+			Debug.Log($"mouseScreenPos: {mouseWorldPos} uiPos: {uiPos}");
 		}
 
 		public void OnDragCardEnd()
