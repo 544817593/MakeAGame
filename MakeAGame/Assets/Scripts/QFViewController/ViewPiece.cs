@@ -66,6 +66,7 @@ namespace Game
             // 从可选方向中随机一个方向
             int dirIndex = UnityEngine.Random.Range(0, dirs.Value.Count);
             direction = dirs.Value[dirIndex];
+
         }
 
         private new void Update()
@@ -261,6 +262,19 @@ namespace Game
             return hp <= 0;
         }
 
+        public override void Die()
+        {
+            // 亡灵死亡，游戏失败，发送事件
+            if (generalId == 0)
+            {
+                this.SendEvent<CombatDefeatEvent>(new CombatDefeatEvent());
+            }
+            else
+            {
+                base.Die();
+            }
+        }
+
         protected override void OnMoveReadyEvent(PieceMoveReadyEvent e)
         {
             base.OnMoveReadyEvent(e);
@@ -271,6 +285,14 @@ namespace Game
         protected override void OnMoveFinishEvent(PieceMoveFinishEvent e)
         {
             base.OnMoveFinishEvent(e);
+
+            // 亡灵到达房间终点，关卡通过，发送事件
+            if (e.viewPieceBase.generalId == 0 &&
+                e.viewPieceBase.pieceGrids[0].terrain.Value == (int)TerrainEnum.Door)
+            {
+                this.SendEvent<CombatVictoryEvent>(new CombatVictoryEvent());
+            }
+
             Debug.Log("ViewPiece receive MoveFinishEvent");
             // testAction += () => Debug.Log("test");   // 但这里是有效的！如果有什么需要叠加的函数，可以加在这里
             // testAction.Invoke();

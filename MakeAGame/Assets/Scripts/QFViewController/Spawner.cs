@@ -68,7 +68,9 @@ namespace Game
             viewPiece.SetGrids(grids);
             viewPiece.InitState();
 
-            this.GetSystem<IPieceSystem>().undead = viewPiece;
+            this.GetSystem<IPieceSystem>().pieceFriendList.Add(viewPiece);
+            this.GetSystem<IPieceBattleSystem>().CheckAllPieceAtkRange();
+
         }
 
         /// <summary>

@@ -47,7 +47,7 @@ public enum FeatureEnum
 /// </summary>
 public enum TerrainEnum
 {
-    Invalid, Road, Wall, Water, Fire, Poison, Edge
+    Invalid, Road, Wall, Water, Fire, Poison, Edge, Door
 }
 
 /// <summary>
@@ -64,7 +64,7 @@ public enum EdgeSprite
     Wall_High_Grass, //墙-上带草
     Wall_Mid, //墙中
     Wall_Mid_Candle, //墙中带蜡烛 
-    Wall_Low // 墙下
+    Wall_Low, // 墙下
 }
 
 /// <summary>
