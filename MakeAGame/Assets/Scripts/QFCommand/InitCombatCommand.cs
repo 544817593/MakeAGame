@@ -26,6 +26,9 @@ namespace Game
             UIKit.OpenPanel<UIInventoryQuickSlot>();
             UIKit.OpenPanel<UIAbilityPanel>();
 
+            // 亡灵
+            this.SendEvent(new SpawnUndeadEvent { undeadSpawnPositionX = info.undeadSpawnPositionX, 
+                undeadSpawnPositionY = info.undeadSpawnPositionY });
 
             // 怪物
             if (info.monsterSpawnSettings != null)

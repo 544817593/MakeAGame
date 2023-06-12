@@ -42,13 +42,6 @@ namespace Game
             isDying = new BindableProperty<bool>(false);
             currLife = new BindableProperty<float>(pieceData.maxLife);
             maxLife = new BindableProperty<float>(pieceData.maxLife);
-
-
-            //(int, int) temp = (data.row, data.col);
-            //leftTopGridPos = new BindableProperty<(int, int)>(temp);
-            //(int, int) temp2 = (data.row + somb.height - 1, data.col + somb.width - 1);
-            //botRightGridPos = new BindableProperty<(int, int)>(temp2);
-
         }
 
         private void Start()
@@ -67,10 +60,23 @@ namespace Game
             // OnPieceMoveReady += e => { Debug.Log("add action test"); };  // 在这里加是没有用的，不知道为啥
             // OnPieceMoveReady += OnMoveReadyEvent;
             // OnPieceMoveFinish += OnMoveFinishEvent;
+
+            currLife.Register(e => OnCurrLifeChanged(e));
             
             // 从可选方向中随机一个方向
             int dirIndex = UnityEngine.Random.Range(0, dirs.Value.Count);
             direction = dirs.Value[dirIndex];
+        }
+
+        private new void Update()
+        {
+            base.Update();
+            currLife.Value -= Time.deltaTime;
+        }
+
+        private void OnCurrLifeChanged(float e)
+        {
+            lifeBar.SetBarFillAmount((float)e/maxLife);
         }
 
         void InitView()
@@ -80,6 +86,7 @@ namespace Game
             if(touchArea)
                 touchArea.GetComponent<BoxCollider2D>().size = spPiece.sprite.bounds.size;
         }
+
         
         public override void SetGrids(List<BoxGrid> grids)
         {

@@ -9,6 +9,8 @@ namespace Game
         List<ViewPiece> pieceFriendList { get; }    // 友方棋子
         List<Monster> pieceEnemyList { get; }    // 敌方棋子
 
+        ViewPiece undead { get; set; } // 亡灵
+
         public bool AddPieceFriend(Card card, List<BoxGrid> grids);
 
         public bool AddPieceEnemy(Monster monster, List<BoxGrid> grids);
@@ -32,6 +34,7 @@ namespace Game
         public ViewPiece getViewPieceById(int pieceId);
         // 根据id获取Monster
         public Monster getMonsterById(int pieceId);
+
     }
     
     public class PieceSystem: AbstractSystem, IPieceSystem
@@ -39,6 +42,8 @@ namespace Game
         private ViewDirectionWheel viewDirectionWheel;
         public List<ViewPiece> pieceFriendList { get; } = new List<ViewPiece>();
         public List<Monster> pieceEnemyList { get; } = new List<Monster>();
+
+        public ViewPiece undead { get; set; }
 
         private ViewPiece lastSpawnedFriend;
         private ViewPiece lastSpawnedInvestigator;
@@ -130,6 +135,11 @@ namespace Game
             viewDirectionWheel.SetValidDirections(viewPiece.dirs);
             viewDirectionWheel.gameObject.transform.localPosition = Extensions.WorldToUIPos(viewPB.transform.position);
             viewDirectionWheel.gameObject.SetActive(true);
+            if (viewPiece.card.charaName == "弗朗西斯·维兰德·瑟斯顿")
+            {
+                Dialogue dialogue = GameObject.Find("Dialogue")?.GetComponent<Dialogue>();
+                dialogue.getControl = true;
+            }
         }
         
         void CheckDirectionWheelExist()
@@ -153,7 +163,8 @@ namespace Game
             {
                 var newDirection = viewDirectionWheel.crtDirection;
                 crtSelectedPiece.direction = newDirection;
-                Debug.Log($"change piece direction to {newDirection}");   
+                Debug.Log($"change piece direction to {newDirection}");
+               
             }
 
             viewDirectionWheel.gameObject.SetActive(false);

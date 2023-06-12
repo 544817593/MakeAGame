@@ -63,6 +63,7 @@ namespace Game
 			imgSan = transform.Find("Root/ScrollBaseMask/ScrollBase/BaseBottom/ImgMP").GetComponent<Image>();
 			imgSan.fillAmount = 1f;
 			SetMaxSanity(0);
+			SetCrtSanityToMaxSan();
 
 			#region 测试按钮
 
@@ -103,6 +104,11 @@ namespace Game
 		{
 			maxSan = PlayerManager.Instance.player.GetMaxSan();
 			Debug.Log($"UIHandCard: SetMaxSanity {maxSan}");
+		}
+
+		public void SetCrtSanityToMaxSan()
+		{
+			crtSan = maxSan;
 		}
 
 		void OnSecond(CountTimeEvent e)

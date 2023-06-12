@@ -2,7 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
-
+using QFramework;
+using Game;
 public class GameManager : MonoBehaviour
 {
     private static GameManager instance = null; // GM实例
@@ -32,4 +33,38 @@ public class GameManager : MonoBehaviour
             return instance; 
         }
     }
+
+    /// <summary>
+    /// 暂停游戏，例如玩家点击了设置按钮
+    /// </summary>
+    public void PauseGame()
+    {
+
+    }
+
+    /// <summary>
+    /// 暂停战斗，战斗外操作如对话仍可继续进行
+    /// </summary>
+    public void PauseCombat()
+    {
+        Time.timeScale = 0;
+           
+    }
+
+    /// <summary>
+    /// 彻底恢复游戏，从完全暂停状态
+    /// </summary>
+    public void ResumeGame()
+    {
+
+    }
+
+    /// <summary>
+    /// 恢复战斗
+    /// </summary>
+    public void ResumeCombat()
+    {
+        Time.timeScale = 1;
+    }
+    
 }

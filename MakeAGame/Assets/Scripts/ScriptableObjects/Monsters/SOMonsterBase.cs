@@ -21,5 +21,8 @@ public class SOMonsterBase : ScriptableObject
     public List<FeatureEnum> properties; // 特性
     public List<DirEnum> dirs; // 可移动方向
 
-   
+   public virtual GameObject GetChildAnim()
+    {
+        return null;
+    }
 }

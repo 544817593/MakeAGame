@@ -125,7 +125,7 @@ public enum PieceStateEnum
 /// </summary>
 public enum RarityEnum
 {
-    None, White, Green, Blue, Purple, Orange
+    White, Green, Blue, Purple, Orange
 }
 
 /// <summary>

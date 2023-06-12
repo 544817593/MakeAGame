@@ -33,8 +33,7 @@ namespace Game
             this.RegisterEvent<ConstantSpawnMonsterEvent>(data => 
             { 
                 StartCoroutine(OnConstantSpawnMonsterEvent(data)); 
-            })
-                .UnRegisterWhenGameObjectDestroyed(gameObject);
+            }).UnRegisterWhenGameObjectDestroyed(gameObject);
 
             // 监听创建卡牌事件
             this.RegisterEvent<SpawnCardEvent>(data =>
@@ -48,6 +47,28 @@ namespace Game
                 OnHandCardRefillEvent(data);
             }).UnRegisterWhenGameObjectDestroyed(gameObject);
 
+            // 监听亡灵生成事件
+            this.RegisterEvent<SpawnUndeadEvent>(data =>
+            {
+                SpawnUndead(data.undeadSpawnPositionX, data.undeadSpawnPositionY);
+            }).UnRegisterWhenGameObjectDestroyed(gameObject);
+
+        }
+
+        public void SpawnUndead(int x, int y)
+        {
+            // 棋子实例化，挂载组件，部分初始化
+            GameObject pieceGO = this.GetSystem<IPieceGeneratorSystem>().CreatePieceFriend();
+            var viewPiece = pieceGO.AddComponent<ViewPiece>();
+            // 接收数据，初始化显示
+            viewPiece.SetDataWithCard(new Card(0));
+            BoxGrid grid = this.GetSystem<IMapSystem>().Grids()[x, y];
+            List<BoxGrid> grids = new List<BoxGrid>();
+            grids.Add(grid);
+            viewPiece.SetGrids(grids);
+            viewPiece.InitState();
+
+            this.GetSystem<IPieceSystem>().undead = viewPiece;
         }
 
         /// <summary>
@@ -105,8 +126,6 @@ namespace Game
             // piece.transform.Rotate(90, 0, 0);
             Monster monster = piece.GetComponent<Monster>();
             monster.data = so;
-            // monster.data = AssetDatabase.LoadAssetAtPath<SOMonsterBase>
-            // ("Assets/Resources/ScriptableObjects/Monsters/" + data.name + ".asset");
 
             piece.transform.Find("Root/SpritePiece").GetComponent<SpriteRenderer>().sprite = monster.data.monsterSprite;
             InitialiseMonsterValues(monster, data);

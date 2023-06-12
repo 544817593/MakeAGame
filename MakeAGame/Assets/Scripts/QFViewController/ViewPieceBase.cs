@@ -63,8 +63,6 @@ namespace Game
         public BindableProperty<List<DirEnum>> dirs; // 可移动方向
         public BindableProperty<bool> isAttacking; // 是否在发起攻击
         public BindableProperty<bool> isDying; // 是否正在死亡中                         
-        public BindableProperty<(int, int)> leftTopGridPos; // 当前左上角位置
-        public BindableProperty<(int, int)> botRightGridPos; // 当前右下角位置
         #endregion
 
         // public List<BoxGrid> attadkRangeGrids = new List<BoxGrid>(); // todo
@@ -84,6 +82,7 @@ namespace Game
             OnPieceUnderAttack += OnUnderAttackEvent;
             
             hp.Register(e => OnCurrHpChanged(e));
+            
         }
 
         /// <summary>
@@ -112,7 +111,7 @@ namespace Game
 
         }
 
-        private void Update()
+        protected void Update()
         {
             state.Update();
         }

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Game;
+using QFramework;
 public class CombatDialogueControl : MonoBehaviour
 {
     [SerializeField]
@@ -12,6 +13,8 @@ public class CombatDialogueControl : MonoBehaviour
         if(SceneFlow.combatSceneCount == 1)
         {
             m_gameObject.SetActive(true);
+            GameManager.Instance.PauseCombat();
+            UIKit.HidePanel<UIHandCard>();
             
         }else
         {
