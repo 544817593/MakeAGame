@@ -22,6 +22,7 @@ namespace Game
         /// </summary>
         /// <param name="SOResPath"></param>
         void CreateMapBySO(string SOResPath);
+        void CreateMapBySO(SOMapData data);
 
         /// <summary>
         /// 地图格子数组Getter
@@ -35,7 +36,12 @@ namespace Game
         /// <param name="boxgrid">需要被检查的格子</param>
         /// <returns></returns>
         bool GridCanMoveTo(BoxGrid boxgrid);
-        
+
+        int GetGridDist(BoxGrid grid1, BoxGrid grid2);
+
+        void Clear();
+        void SetNUllMap();
+
         /// 地图中央位置，用于摄像头设置
         /// </summary>
         BoxGrid centerGrid { get; }
@@ -47,6 +53,7 @@ namespace Game
     public class MapSystem : AbstractSystem, IMapSystem
     {
         public BoxGrid[,] mGrids; // 地图格子数组
+
         public int mapRow => mGrids.GetLength(0);    // 总行数
         public int mapCol => mGrids.GetLength(1);    // 总列数
 
@@ -75,6 +82,11 @@ namespace Game
                 return;
             }
 
+            CreateMapBySO(data);
+        }
+
+        public void CreateMapBySO(SOMapData data)
+        {
             int row = data.row;
             int col = data.col;
             mGrids = new BoxGrid[row, col];
@@ -87,10 +99,10 @@ namespace Game
                 {
                     var newGrid = gridGenerator.CreateGrid(i, j, root);
                     
-                    // todo 地图格子真正赋值数据的地方
+                    // 地图格子真正赋值数据的地方
                     newGrid.terrain.Value = data.mapTerrain[i, j];
                     newGrid.timeMultiplier.Value = data.mapTimeMultiplier[i, j];
-                    
+                    newGrid.edgeRes.Value = data.edgeResources[i, j];
                     
                     mGrids[i, j] = newGrid;
                     Debug.Log(mGrids[i, j]);
@@ -156,12 +168,37 @@ namespace Game
 
         public bool GridCanMoveTo(BoxGrid boxgrid)
         {
+            if (!boxgrid.IsEmpty()) return false;
             if (boxgrid.terrain.Value == (int)TerrainEnum.Invalid) return false;
             if (boxgrid.terrain.Value == (int)TerrainEnum.Wall) return false;
+            if (boxgrid.terrain.Value == (int)TerrainEnum.Edge) return false;
             if (boxgrid.gridStatus.Value == GridStatusEnum.AllyPiece) return false;
             if (boxgrid.gridStatus.Value == GridStatusEnum.MonsterPiece) return false;
 
             return true;
         }
+
+        public int GetGridDist(BoxGrid grid1, BoxGrid grid2)
+        {
+            return Mathf.Abs(grid1.row - grid2.row) + Mathf.Abs(grid1.col - grid2.col);
+        }
+        
+        public void Clear()
+        {
+            foreach (var grid in mGrids)
+            {
+                GameObject.Destroy(grid.gameObject);
+            }
+        }
+
+        public void SetNUllMap()
+        {
+            foreach (var grid in mGrids)
+            {
+                GameObject.Destroy(grid.gameObject);
+            }
+            mGrids = null;
+        }
+       
     }
 }

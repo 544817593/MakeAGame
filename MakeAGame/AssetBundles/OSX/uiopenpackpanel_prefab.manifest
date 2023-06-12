@@ -1,12 +1,12 @@
 ManifestFileVersion: 0
-CRC: 1120885406
+CRC: 3989660487
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 0ce2b9657a069bf6397177623fefcdb1
+    Hash: 9b729588097f31665df4f1e02211bd99
   TypeTreeHash:
     serializedVersion: 2
-    Hash: 85737af784515a5bd6bcad58857408d7
+    Hash: e27707576aaea14e2d2a81d459853160
 HashAppended: 0
 ClassTypes:
 - Class: 1
@@ -28,6 +28,12 @@ ClassTypes:
 - Class: 114
   Script: {fileID: 11500000, guid: 8fecaeade4566f3469fd2fbf07889008, type: 3}
 - Class: 114
+  Script: {fileID: 11500000, guid: 30516904f8323c84b9d530435d46bc3d, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 06415f5559be5f74a8c30dad423324d9, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+- Class: 114
   Script: {fileID: 11500000, guid: 0d51f3a7c41ab0346b49ae50d456bece, type: 3}
 - Class: 115
   Script: {instanceID: 0}
@@ -41,7 +47,15 @@ ClassTypes:
   Script: {instanceID: 0}
 SerializeReferenceClassIdentifiers:
 - AssemblyName: UnityEngine.CoreModule
+  ClassName: UnityEngine.Events.ArgumentCache
+- AssemblyName: UnityEngine.CoreModule
   ClassName: UnityEngine.Events.PersistentCallGroup
+- AssemblyName: UnityEngine.CoreModule
+  ClassName: UnityEngine.Events.PersistentListenerMode
+- AssemblyName: UnityEngine.UI
+  ClassName: UnityEngine.EventSystems.EventTrigger/Entry
+- AssemblyName: UnityEngine.UI
+  ClassName: UnityEngine.EventSystems.EventTrigger/TriggerEvent
 - AssemblyName: UnityEngine.UI
   ClassName: UnityEngine.UI.AnimationTriggers
 - AssemblyName: UnityEngine.UI
@@ -58,4 +72,5 @@ SerializeReferenceClassIdentifiers:
   ClassName: UnityEngine.UI.SpriteState
 Assets:
 - Assets/Resources/Prefabs/UIOpenPackPanel.prefab
-Dependencies: []
+Dependencies:
+- /Users/centurygame/MakeAGame/MakeAGame/AssetBundles/OSX/baguipanel_prefab

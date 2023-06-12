@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1017564794344549527}
   - component: {fileID: 1017564794344549526}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: "\u5471\u5471\u86D9-\u5C0F\u81C2"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -94,7 +94,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1017564794422002234}
   - component: {fileID: 1017564794422002237}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: "\u5471\u5471\u86D9-\u5C0F\u81C2"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -178,7 +178,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1017564794577316785}
   - component: {fileID: 1017564794577316784}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: "\u5471\u5471\u86D9\u5C0F\u817F"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -262,7 +262,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1017564794744011023}
   - component: {fileID: 1017564794744011022}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: "\u5471\u5471\u86D9-\u5927\u81C2"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -347,7 +347,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1017564794953715827}
   - component: {fileID: 1017564794953715824}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Gagawa
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -401,7 +401,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1017564795442227158}
   - component: {fileID: 1017564795442227161}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: "\u5471\u5471\u86D9-\u5927\u817F"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -486,7 +486,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1017564795634230919}
   - component: {fileID: 1017564795634230918}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: "\u5471\u5471\u86D9\u5C0F\u817F"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -570,7 +570,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1017564795743299072}
   - component: {fileID: 1017564795743299075}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: "\u5934"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -654,7 +654,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1017564795767609379}
   - component: {fileID: 1017564795767609378}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: "\u5471\u5471\u86D9-\u8EAB\u4F53"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -738,7 +738,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1017564795951107964}
   - component: {fileID: 1017564795951107967}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: "\u5471\u5471\u86D9-\u5927\u817F"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -822,7 +822,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1017564796173004285}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -858,7 +858,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1017564796308755685}
   - component: {fileID: 1017564796308755684}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: "\u5471\u5471\u86D9-\u5927\u81C2"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -942,7 +942,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3351604640582367592}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: "\u817F"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -975,7 +975,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2957465375422840389}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: "\u817F2"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1007,7 +1007,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6921184514412157575}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: "\u5DE6\u81C2"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1039,7 +1039,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2431712553039440306}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: "\u53F3\u81C2"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1071,7 +1071,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5299716680175567729}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: "\u817F1"
   m_TagString: Untagged
   m_Icon: {fileID: 0}

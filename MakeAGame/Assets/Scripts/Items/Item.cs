@@ -7,6 +7,6 @@ using UnityEngine;
 public class Item
 {
     public SOItemBase data; // 物品数据
-    public int amount;
+    public int amount; // 物品数量
 
 }

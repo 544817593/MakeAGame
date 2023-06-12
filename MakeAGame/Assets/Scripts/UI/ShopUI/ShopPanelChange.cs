@@ -11,25 +11,30 @@ public class ShopPanelChange
     /// </summary>
     /// <param name="currentPanel"></param>
     /// <param name="button"></param>
-    public static void changeShopPanel(UIPanel currentPanel, Button button)
+    public static void ChangeShopPanel(UIPanel currentPanel, Button button)
     {
         button.onClick.AddListener(() =>
         {
             Debug.Log($"点击了{button.name}按钮");
             if (button.name == "Buy")
             {
+                currentPanel.CloseSelf();
                 UIKit.OpenPanel<ShopBuyUI.ShopBuyUI>();
             }
             else if(button.name == "Sell")
             {
-
+                currentPanel.CloseSelf();
+                UIKit.OpenPanel<ShopSellUI.ShopSellUI>();
             }
-            else if(button.name == "LevelUp")
-            {
-
-            }else if(button.name == "Close")
+            else if(button.name == "Enhance")
             {
                 currentPanel.CloseSelf();
+                UIKit.OpenPanel<ShopEnhanceUI.ShopEnhanceUI>();
+            }
+            else if(button.name == "Close")
+            {
+                currentPanel.CloseSelf();
+                UIKit.OpenPanel<ShopMainUI.ShopMainUI>();
             }
             
         });

@@ -14,14 +14,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   monsterSprite: {fileID: 21300000, guid: 4104dfa448167344a8143443654f24a7, type: 3}
   moveSpeed: 3
-  maxHp: 50
-  atkSpeed: 0
+  maxHp: 5
+  atkSpeed: 1
   atkDmg: 0
   defense: 0
   accuracy: 0
   rarity: 0
-  atkRange: 0
+  atkRange: 1
   monsterId: 9998
-  properties: 00000000
-  dirs: 00000000020000000300000001000000
-  anim: {fileID: 253148829480533371, guid: 531d2c6fb69620a4d95b3041e216db8e, type: 3}
+  width: 0
+  height: 0
+  properties: 
+  dirs: 04000000020000000300000001000000

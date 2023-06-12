@@ -11,7 +11,8 @@ namespace Game
     {
         public Action OnMouseEnterEvent;
         public Action OnMouseExitEvent;
-        
+        public Action OnMouseDownEvent;
+        public Action OnMouseUpEvent;
         
         private void OnMouseEnter()
         {
@@ -21,6 +22,16 @@ namespace Game
         private void OnMouseExit()
         {
             OnMouseExitEvent?.Invoke();
+        }
+
+        private void OnMouseDown()
+        {
+            OnMouseDownEvent?.Invoke();
+        }
+
+        private void OnMouseUp()
+        {
+            OnMouseUpEvent?.Invoke();
         }
     }
 }

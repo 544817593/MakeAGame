@@ -10,7 +10,7 @@ namespace Game
     /// <summary>
     /// 用来实际生成各种卡牌/棋子
     /// </summary>
-    public class Spawner : MonoBehaviour, IController
+    public class Spawner : MonoBehaviour, IController, ICanSendEvent
     {
 
         /// <summary>
@@ -33,25 +33,75 @@ namespace Game
             this.RegisterEvent<ConstantSpawnMonsterEvent>(data => 
             { 
                 StartCoroutine(OnConstantSpawnMonsterEvent(data)); 
-            })
-                .UnRegisterWhenGameObjectDestroyed(gameObject);
+            }).UnRegisterWhenGameObjectDestroyed(gameObject);
 
             // 监听创建卡牌事件
             this.RegisterEvent<SpawnCardEvent>(data =>
             {
-                OnSpawnCardEvent();
+                OnSpawnCardEvent(data);
             }).UnRegisterWhenGameObjectDestroyed(gameObject);
 
+            // 监听持续抽取卡牌事件
+            this.RegisterEvent<RefillHandCardEvent>(data =>
+            {
+                OnHandCardRefillEvent(data);
+            }).UnRegisterWhenGameObjectDestroyed(gameObject);
+
+            // 监听亡灵生成事件
+            this.RegisterEvent<SpawnUndeadEvent>(data =>
+            {
+                SpawnUndead(data.undeadSpawnPositionX, data.undeadSpawnPositionY);
+            }).UnRegisterWhenGameObjectDestroyed(gameObject);
+
+        }
+
+        public void SpawnUndead(int x, int y)
+        {
+            // 棋子实例化，挂载组件，部分初始化
+            GameObject pieceGO = this.GetSystem<IPieceGeneratorSystem>().CreatePieceFriend();
+            var viewPiece = pieceGO.AddComponent<ViewPiece>();
+            // 接收数据，初始化显示
+            viewPiece.SetDataWithCard(new Card(0));
+            BoxGrid grid = this.GetSystem<IMapSystem>().Grids()[x, y];
+            List<BoxGrid> grids = new List<BoxGrid>();
+            grids.Add(grid);
+            viewPiece.SetGrids(grids);
+            viewPiece.InitState();
+
+            this.GetSystem<IPieceSystem>().pieceFriendList.Add(viewPiece);
+            this.GetSystem<IPieceBattleSystem>().CheckAllPieceAtkRange();
+
+        }
+
+        /// <summary>
+        /// 收到持续抽卡事件后开始持续抽卡
+        /// </summary>
+        /// <param name="data"></param>
+        /// <returns></returns>
+        private IEnumerator OnHandCardRefillEvent(RefillHandCardEvent data)
+        {
+            IInventorySystem inventorySystem = this.GetSystem<IInventorySystem>();
+            IHandCardSystem handCardSystem = this.GetSystem<IHandCardSystem>();
+            while(GameManager.Instance.gameSceneMan.GetCurrentSceneName() == "Combat")
+            {
+                if (inventorySystem.GetBagCardList().Count != 0 &&
+                    handCardSystem.handCardList.Value.Count < handCardSystem.maxCardCount)
+                {
+                    Card card = inventorySystem.DrawCard();
+                    this.SendCommand<AddHandCardCommand>(new AddHandCardCommand(card));
+                }
+                yield return new WaitForSeconds(data.drawCardCooldown);
+            }
         }
 
         /// <summary>
         /// 收到卡牌生成事件后处理
         /// </summary>
-        private void OnSpawnCardEvent()
+        private void OnSpawnCardEvent(SpawnCardEvent data)
         {
             GameObject cardItem = (GameObject)Instantiate(Resources.Load("Prefabs/CardItem"));
-            ViewCard viewCard = cardItem.AddComponent<ViewCard>();
-            viewCard.card = new Card(1);
+            ViewBagCard viewCard = cardItem.AddComponent<ViewBagCard>();
+            viewCard.card = new Card(data.cardId);
             this.GetSystem<ISpawnSystem>().SetLastSpawnedCard(cardItem);
         }
 
@@ -61,37 +111,56 @@ namespace Game
         /// <param name="data"></param>
         private void OnSpawnMonsterEvent(SpawnMonsterEvent data)
         {
+            // 拦下不合法怪物名字
+            var so = Resources.Load<SOMonsterBase>("ScriptableObjects/Monsters/" + data.name);
+            if (so == null)
+            {
+                Debug.LogError($"no monster so: {data.name}");
+                return;
+            }
+            
             var grid = this.GetSystem<IMapSystem>().Grids();
             Transform gridTransform = grid[data.row, data.col].transform;
             GameObject piece = (GameObject)Instantiate(Resources.Load("Prefabs/EnemyPiece"));
             // 置于MonsterPosition父物体下，该物体比地图略高一些
             piece.transform.SetParent(GameObject.Find("MonsterPosition").transform);
             piece.transform.position = gridTransform.position;
-            piece.transform.Rotate(90, 0, 0);
+            // piece.transform.Rotate(90, 0, 0);
             Monster monster = piece.GetComponent<Monster>();
-            monster.data = Resources.Load<SOMonsterBase>("ScriptableObjects/Monsters/" + data.name);
+            monster.data = so;
 
+            monster.touchArea = monster.transform.Find("Root/SpritePiece").gameObject;
+            monster.touchArea.GetComponent<BoxCollider2D>().size = monster.data.monsterSprite.bounds.size;
+            
             //动画部分
             GameObject animGO = monster.data.GetChildAnim();
             if (animGO != null)
             {
                 GameObject monsterAnim = Instantiate(animGO);
-                piece.GetComponent<MonsterMovement>().animator = monsterAnim.GetComponent<Animator>();
+                piece.GetComponent<Monster>().animator = monsterAnim.GetComponent<Animator>();
                 monsterAnim.transform.SetParent(piece.transform);
                 monsterAnim.transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
                 monsterAnim.transform.localPosition = new Vector3(0, 0.25f, -0.25f); // 确保不会被棋盘遮住
                 monsterAnim.transform.localRotation = Quaternion.Euler(new Vector3(0, 0, 0));
-                Destroy(piece.transform.Find("image").gameObject); // 如果有动画预设体，删除图片，暂时先这样写，直到所有棋子都有动画
+                Destroy(piece.transform.Find("Root/SpritePiece").GetComponent<SpriteRenderer>()); // 如果有动画预设体，删除图片，暂时先这样写，直到所有棋子都有动画
             }
             else
             {
-                piece.transform.Find("image").GetComponent<SpriteRenderer>().sprite = monster.data.monsterSprite;
-
+                piece.transform.Find("Root/SpritePiece").GetComponent<SpriteRenderer>().sprite = monster.data.monsterSprite;
             }
 
             InitialiseMonsterValues(monster, data);
             grid[data.row, data.col].gridStatus.Value = GridStatusEnum.MonsterPiece;
             this.GetSystem<ISpawnSystem>().GetMonsterList().Add(piece.GetComponent<Monster>());
+            
+            // 在棋子系统中登记 // todo 目前假设怪物都占据一个格子
+            List<BoxGrid> crtGrids = new List<BoxGrid>();
+            crtGrids.Add(grid[data.row, data.col]);
+            this.GetSystem<IPieceSystem>().AddPieceEnemy(monster, crtGrids);
+
+            // 发送棋子生成后触发的特性event
+            SpecialitiesSpawnCheckEvent e = new SpecialitiesSpawnCheckEvent { piece = monster };
+            this.SendEvent(e);
         }
 
         /// <summary>
@@ -128,23 +197,25 @@ namespace Game
             SOMonsterBase somb = monster.data;
             monster.pieceId = data.pieceId;           
             monster.rarity = somb.rarity;
-            monster.monsterId = somb.monsterId;
+            monster.generalId = somb.monsterId;
             monster.moveSpeed = new BindableProperty<float>(somb.moveSpeed);
-            monster.hp = new BindableProperty<float>(somb.maxHp);
-            monster.maxHp = new BindableProperty<float>(somb.maxHp);
+            monster.hp = new BindableProperty<int>(somb.maxHp);
+            monster.maxHp = new BindableProperty<int>(somb.maxHp);
             monster.atkSpeed = new BindableProperty<float>(somb.atkSpeed);
             monster.atkDmg = new BindableProperty<float>(somb.atkDmg);
             monster.defense = new BindableProperty<float>(somb.defense);
             monster.accuracy = new BindableProperty<float>(somb.accuracy);
             monster.atkRange = new BindableProperty<int>(somb.atkRange);
-            monster.properties = new BindableProperty<List<PropertyEnum>>(somb.properties);
+            monster.features = new BindableProperty<List<FeatureEnum>>(somb.properties);
             monster.dirs = new BindableProperty<List<DirEnum>>(somb.dirs);
-            monster.inCombat = new BindableProperty<bool>(false);
+            monster.inCombat = false;
             monster.isAttacking = new BindableProperty<bool>(false);
             monster.isDying = new BindableProperty<bool>(false);
+
+            // 也许可以删除，用viewpiecebase的pieceGrids
             (int, int) temp = (data.row, data.col);
             monster.leftTopGridPos = new BindableProperty<(int, int)>(temp);
-            (int, int) temp2 = (data.row + somb.pieceSize.Item1 - 1, data.col + somb.pieceSize.Item2 - 1);
+            (int, int) temp2 = (data.row + somb.height - 1, data.col + somb.width - 1);
             monster.botRightGridPos = new BindableProperty<(int, int)>(temp2);
         }
     }

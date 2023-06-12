@@ -1,3 +1,6 @@
+using BagUI;
+using Game;
+using QFramework;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,8 +13,21 @@ public class SkipIntro : MonoBehaviour
 
     void ToCombatScene()
     {
+        ICardGeneratorSystem cardGeneratorSystem = GameEntry.Interface.GetSystem<ICardGeneratorSystem>();
+        IInventorySystem inventorySystem = GameEntry.Interface.GetSystem<IInventorySystem>();
+
+        for (int j = 0; j < 2; j++)
+        {
+            for (int i = 1; i < 6; i++)
+            {
+                Card createdCard = new Card(i);
+                inventorySystem.SpawnBagCardInBag(createdCard);
+            }
+        }
+
         StartCoroutine(GameManager.Instance.gameSceneMan.LoadScene("Combat", false));
-        StartCoroutine(GameManager.Instance.gameSceneMan.UnloadScene("Main"));       
+        StartCoroutine(GameManager.Instance.gameSceneMan.UnloadScene("Main"));
+
     }
 
     void ToAnimScene()

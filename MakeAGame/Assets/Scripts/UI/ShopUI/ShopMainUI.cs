@@ -15,10 +15,10 @@ namespace ShopMainUI
 			mData = uiData as ShopMainUIData ?? new ShopMainUIData();
             
 			// 监听按钮点击，跳转panel
-            ShopPanelChange.changeShopPanel(this, Buy);
-			ShopPanelChange.changeShopPanel(this, Sell);
-            ShopPanelChange.changeShopPanel(this, LevelUp);
-            ShopPanelChange.changeShopPanel(this, ShopNPC);
+            ShopPanelChange.ChangeShopPanel(this, Buy);
+			ShopPanelChange.ChangeShopPanel(this, Sell);
+            ShopPanelChange.ChangeShopPanel(this, LevelUp);
+            ShopPanelChange.ChangeShopPanel(this, ShopNPC);
         }
 		
 		protected override void OnOpen(IUIData uiData = null)

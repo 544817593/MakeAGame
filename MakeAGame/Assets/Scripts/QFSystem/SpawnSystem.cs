@@ -52,12 +52,6 @@ namespace Game
         List<Monster> GetMonsterList();
 
         /// <summary>
-        /// 返回友军棋子列表
-        /// </summary>
-        /// <returns></returns>
-        List<TempAllyScript> GetAllyList();
-
-        /// <summary>
         /// 返还上一个被Spawner生成的卡牌
         /// </summary>
         /// <returns>上一个被Spawner生成的卡牌</returns>
@@ -75,12 +69,11 @@ namespace Game
 
     public class SpawnSystem : AbstractSystem, ISpawnSystem
     {
-        // 棋子ID，每个棋子独一份，设置为从1开始，因为BoxGrid.isEmpty()插空为格子上的occupation是否为0
+        // 棋子ID，每个棋子独一份，设置为从1开始，因为BoxGrid.isEmpty()查空为格子上的occupation是否为0
         private int pieceIdCounter = 1; 
 
         // 怪物和友军的列表
         private List<Monster> monsterList = new List<Monster>();
-        private List<TempAllyScript> allyList = new List<TempAllyScript>();
         // interactableList待添加
 
         // 上一个生成的卡牌
@@ -90,6 +83,7 @@ namespace Game
         {
             
         }
+
 
         public void SpawnMonster(int row, int col, string name)
         {
@@ -139,11 +133,6 @@ namespace Game
             return monsterList;
         }
 
-        public List<TempAllyScript> GetAllyList()
-        {
-            return allyList;
-        }
-
         public void SpawnCard(int cardId)
         {
             var spawnCardEvent = new SpawnCardEvent { cardId = cardId };
@@ -159,36 +148,5 @@ namespace Game
         {
             lastSpawnedCard = card;
         }
-    }
-
-    /// <summary>
-    /// 由SpawnSystem发出的怪物生成事件
-    /// </summary>
-    public struct SpawnMonsterEvent
-    {
-        public int row;
-        public int col;
-        public string name;
-        public int pieceId;
-    }
-
-    /// <summary>
-    /// 由SpawnSystem发出的怪物持续生成事件
-    /// </summary>
-    public struct ConstantSpawnMonsterEvent
-    {
-        public Vector2Int spawnPoint;
-        public int spawnProbability;
-        public int duration;
-        public int cooldown;
-        public string name;
-    }
-
-    /// <summary>
-    /// 由SpawnSystem发出的生成卡牌事件
-    /// </summary>
-    public struct SpawnCardEvent
-    {
-        public int cardId;
     }
 }

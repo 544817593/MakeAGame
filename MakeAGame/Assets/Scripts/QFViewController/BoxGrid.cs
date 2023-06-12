@@ -1,6 +1,8 @@
 using System;
+using System.Collections.Generic;
 using QFramework;
 using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 
 namespace Game
 {
@@ -10,6 +12,18 @@ namespace Game
     public struct GridConst
     {
         public static string TerrainResPathPrefix = "Sprites/Grids/terrain";    // 地块图片Resources路径前缀
+        public static Dictionary<EdgeSprite, string> EdgeResMap = new Dictionary<EdgeSprite, string>() 
+        {
+            {EdgeSprite.None, "Sprites/Grids/terrain1"},
+            {EdgeSprite.Tile_Tomb, "Sprites/Grids/地砖-带墓碑"},
+            {EdgeSprite.Tile_Grass, "Sprites/Grids/地砖-带草"},
+            {EdgeSprite.Tile, "Sprites/Grids/地砖"},
+            {EdgeSprite.Wall_High, "Sprites/Grids/墙-上"},
+            {EdgeSprite.Wall_High_Grass, "Sprites/Grids/墙-上（带草）"},
+            {EdgeSprite.Wall_Mid, "Sprites/Grids/墙-中"},
+            {EdgeSprite.Wall_Mid_Candle, "Sprites/Grids/墙-中（带蜡烛）"},
+            {EdgeSprite.Wall_Low, "Sprites/Grids/墙-下"},
+        };
     }
     
     /// <summary>
@@ -23,9 +37,14 @@ namespace Game
         public BindableProperty<TimeMultiplierEnum> timeMultiplier = new BindableProperty<TimeMultiplierEnum>();  // 时间流逝倍数
         public int occupation; // 当前格子上的单位的ID
         public BindableProperty<GridStatusEnum> gridStatus = new BindableProperty<GridStatusEnum>(); // 格子状态
-        
+        public BindableProperty<EdgeSprite> edgeRes = new BindableProperty<EdgeSprite>(); // 格子图片资源
+
         // components
         private SpriteRenderer srFloor; // 地形图片
+        public void setSrFloor(Sprite sp)
+        {
+            srFloor.sprite = sp;
+        }
         private SpriteRenderer srHint;  // 提示颜色图片
         public GameObject touchArea;    // 鼠标响应区域
         public TriggerHelper mouseHelper;
@@ -55,11 +74,12 @@ namespace Game
             // 注册属性改变时会触发的方法
             terrain.RegisterWithInitValue(terr => OnTerrainChanged(terr));
             timeMultiplier.RegisterWithInitValue(tm => OnTimeMultiplierChanged(tm));
-            
+            edgeRes.RegisterWithInitValue(res => OnEdgeResChanged(res));
+
             // 开始选择格子时
-            this.RegisterEvent<SelectMapStartEvent>(e => OnSelectStart(e));
+            this.RegisterEvent<SelectMapStartEvent>(e => OnSelectStart(e)).UnRegisterWhenGameObjectDestroyed(this);
             // 结束选择格子
-            this.RegisterEvent<SelectMapEndEvent>(e => OnSelectEnd(e));
+            this.RegisterEvent<SelectMapEndEvent>(e => OnSelectEnd(e)).UnRegisterWhenGameObjectDestroyed(this);
         }
 
 
@@ -72,6 +92,18 @@ namespace Game
                 tmpColor.a = 0f;
                 srFloor.color = tmpColor;
             }
+            else if(terr == (int) TerrainEnum.Edge)
+            {
+                if(edgeRes.Value == EdgeSprite.None)
+                {
+                    Color tmpColor = srFloor.color;
+                    tmpColor.a = 0f;
+                    srFloor.color = tmpColor;
+                    return;
+                }
+                Sprite sprite = Resources.Load<Sprite>(GridConst.EdgeResMap[edgeRes.Value]);
+                srFloor.sprite = sprite;
+            }
             else
             {
                 var sprite = Resources.Load<Sprite>(GridConst.TerrainResPathPrefix + terr);
@@ -81,8 +113,12 @@ namespace Game
 
         private void OnTimeMultiplierChanged(TimeMultiplierEnum tm)
         {
-            // todo 速度变化触发的效果
+            // 速度变化触发的效果
             
+        }
+        private void OnEdgeResChanged(EdgeSprite res)
+        {
+            //srFloor.sprite = Resources.Load<Sprite>(GridConst.EdgeResMap[res]);
         }
 
         IMapSelectSystem mapSelectSystem;
@@ -193,6 +229,44 @@ namespace Game
         public bool IsEmpty()
         {
             return occupation == 0;
+        }
+
+        public void LevelDownTimeMultiplier()
+        {
+            switch (timeMultiplier.Value)
+            {
+                case TimeMultiplierEnum.Superfast:
+                    timeMultiplier.Value = TimeMultiplierEnum.Fast;
+                    break;
+                case TimeMultiplierEnum.Fast:
+                    timeMultiplier.Value = TimeMultiplierEnum.Normal;
+                    break;
+                case TimeMultiplierEnum.Normal:
+                    timeMultiplier.Value = TimeMultiplierEnum.Slow;
+                    break;
+                case TimeMultiplierEnum.Slow:
+                    timeMultiplier.Value = TimeMultiplierEnum.Superslow;
+                    break;
+            }
+        }
+
+        public void LevelUpTimeMultiplier()
+        {
+            switch (timeMultiplier.Value)
+            {
+                case TimeMultiplierEnum.Fast:
+                    timeMultiplier.Value = TimeMultiplierEnum.Superfast;
+                    break;
+                case TimeMultiplierEnum.Normal:
+                    timeMultiplier.Value = TimeMultiplierEnum.Fast;
+                    break;
+                case TimeMultiplierEnum.Slow:
+                    timeMultiplier.Value = TimeMultiplierEnum.Normal;
+                    break;
+                case TimeMultiplierEnum.Superslow:
+                    timeMultiplier.Value = TimeMultiplierEnum.Slow;
+                    break;
+            }
         }
     }
 }

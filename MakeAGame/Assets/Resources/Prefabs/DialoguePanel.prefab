@@ -63,7 +63,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0}
+  m_Color: {r: 0.9716981, g: 0.9487807, b: 0.9487807, a: 0}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -169,7 +169,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1080642688}
-  - component: {fileID: 1251236339881009249}
+  - component: {fileID: 2270727631378714578}
   m_Layer: 0
   m_Name: choice
   m_TagString: Untagged
@@ -195,14 +195,14 @@ RectTransform:
   - {fileID: 1843415273}
   - {fileID: 1753047593}
   m_Father: {fileID: 2666995674316990825}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 742.04, y: -6}
+  m_AnchoredPosition: {x: 742.04, y: -10}
   m_SizeDelta: {x: 435.89, y: 350.16}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1251236339881009249
+--- !u!114 &2270727631378714578
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -282,7 +282,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.02745098}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -1222,8 +1222,8 @@ RectTransform:
   m_Children:
   - {fileID: 8646113415240053683}
   - {fileID: 1844979100}
-  - {fileID: 1080642688}
   - {fileID: 6087658172399197349}
+  - {fileID: 1080642688}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1247,7 +1247,7 @@ MonoBehaviour:
   NPC: {fileID: 5345559335001395038}
   Player: {fileID: 267294652377830669}
   dialogue: {fileID: 1844979100}
-  choice: {fileID: 1251236339881009249}
+  choice: {fileID: 2270727631378714578}
   DialogueBg: {fileID: 3497092348648990454}
 --- !u!1 &2097820243694457565
 GameObject:
@@ -1281,7 +1281,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2666995674316990825}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}

@@ -5,16 +5,19 @@ using QFramework;
 
 namespace InventoryQuickslotUI
 {
-	// Generate Id:486f6f12-45fa-4c8b-9bfe-9f63f2ad2281
+	// Generate Id:1017da5f-dc0b-4f15-abdc-cc695a5bddbc
 	public partial class UIInventoryQuickSlot
 	{
 		public const string Name = "UIInventoryQuickSlot";
 		
+		[SerializeField]
+		public UnityEngine.UI.Button CombatSceneButton;
 		
 		private UIInventoryQuickSlotData mPrivateData = null;
 		
 		protected override void ClearUIComponents()
 		{
+			CombatSceneButton = null;
 			
 			mData = null;
 		}

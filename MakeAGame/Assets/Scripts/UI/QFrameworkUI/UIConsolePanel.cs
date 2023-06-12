@@ -22,6 +22,8 @@ namespace Game
 			SetMode(WindowMode.Window);
 			InputField.ActivateInputField();
 			BtnConsole.onClick.AddListener(() => SetMode(WindowMode.FullScreen));
+
+			this.GetComponent<Canvas>().sortingLayerName = "AlwaysTopUI";
 		}
 
 		protected override void OnOpen(IUIData uiData = null)

@@ -15,13 +15,14 @@ MonoBehaviour:
   monsterSprite: {fileID: 21300000, guid: bc81dc96773a1504a8ee6ef980447f56, type: 3}
   moveSpeed: 4
   maxHp: 120
-  atkSpeed: 0.4
+  atkSpeed: 2.5
   atkDmg: 12
   defense: 0
   accuracy: 75
   rarity: 1
   atkRange: 3
   monsterId: 9993
+  width: 0
+  height: 0
   properties: 00000000
-  dirs: 00000000020000000300000001000000
-  anim: {fileID: 92196424691538514, guid: 752f480b9a69c3842b28f803a214b518, type: 3}
+  dirs: 04000000020000000300000001000000

@@ -19,6 +19,7 @@ namespace Game
 	{
 		private Transform nodeTooltip;
 		private TextMeshProUGUI tmpTooltip;
+		public ViewDirectionWheel viewDirectionWheel;
 		
 		private Animator anim;
 
@@ -40,6 +41,9 @@ namespace Game
 			nodeTooltip = transform.Find("Root/Tooltip");
 			nodeTooltip.gameObject.SetActive(false);
 			tmpTooltip = nodeTooltip.GetChild(0).GetComponent<TextMeshProUGUI>();
+
+			viewDirectionWheel = new ViewDirectionWheel(transform.Find("DirectionWheel").gameObject);
+			viewDirectionWheel.gameObject.SetActive(false);
 			
 			PieceIcon.gameObject.SetActive(false);
 			
@@ -56,17 +60,23 @@ namespace Game
 			viewCardsList = handCardSystem.handCardList;
 			focusIndex = -1;
 
+			imgSan = transform.Find("Root/ScrollBaseMask/ScrollBase/BaseBottom/ImgMP").GetComponent<Image>();
+			imgSan.fillAmount = 1f;
+			SetMaxSanity(0);
+			SetCrtSanityToMaxSan();
+
 			#region 测试按钮
 
 			ButtonAddCardTest.onClick.AddListener(() =>
 			{
-				GameEntry.Interface.SendCommand<AddHandCardCommand>(new AddHandCardCommand(new Card(1)));
+				var randomInfo = IdToSO.GetRandomCardSO();
+				GameEntry.Interface.SendCommand<AddHandCardCommand>(new AddHandCardCommand(new Card(randomInfo.characterID)));
 			});
 			ButtonSubCardTest.onClick.AddListener(() =>
 			{
-				if (handCardSystem.handCardList.Count > 0)
+				if (handCardSystem.handCardList.Value.Count > 0)
 				{
-					GameEntry.Interface.SendCommand<SubHandCardCommand>(new SubHandCardCommand(handCardSystem.handCardList[0]));	
+					GameEntry.Interface.SendCommand<SubHandCardCommand>(new SubHandCardCommand(handCardSystem.handCardList.Value[0]));	
 				}
 			});
 
@@ -81,6 +91,35 @@ namespace Game
 			});
 
 			#endregion
+
+			// 计时
+			GameEntry.Interface.RegisterEvent<CountTimeEvent>(OnSecond);
+		}
+
+		// todo 混沌值初始化 要取到一个初始数据	// 现在没个地方存玩家数据，暂时由手牌ui直接处理事件
+		private Image imgSan;	// todo 一时半会忘了怎么自动bind，先手动
+		private int maxSan;
+		public int crtSan;
+		public void SetMaxSanity(int san)
+		{
+			maxSan = PlayerManager.Instance.player.GetMaxSan();
+			Debug.Log($"UIHandCard: SetMaxSanity {maxSan}");
+		}
+
+		public void SetCrtSanityToMaxSan()
+		{
+			crtSan = maxSan;
+		}
+
+		void OnSecond(CountTimeEvent e)
+		{
+			OnSanChange(1);
+		}
+
+		public void OnSanChange(int amount)
+		{
+			crtSan = Mathf.Clamp(crtSan + amount, 0, maxSan);
+			imgSan.fillAmount = (float)crtSan / maxSan;
 		}
 
 

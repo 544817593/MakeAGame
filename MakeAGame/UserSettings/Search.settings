@@ -7,6 +7,9 @@ onBoardingDoNotAskAgain = true
 showPackageIndexes = false
 showStatusBar = false
 scopes = {
+	"last_search.2138236A" = "Assets/Scripts/ScriptableObjects/Maps"
+	"OpenInspectorPreview.2138236A" = "0"
+	"currentGroup.2138236A" = "_group_provider_Files"
 }
 providers = {
 	adb = {
@@ -53,6 +56,7 @@ providers = {
 objectSelectors = {
 }
 recentSearches = [
+	"Assets/Scripts/ScriptableObjects/Maps"
 ]
 searchItemFavorites = [
 ]

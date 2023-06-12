@@ -32,7 +32,7 @@ public class Door : MonoBehaviour
     private void OnMouseDown()
     {
         Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
-       // LoadScene();
+        LoadScene();
        
 
     }
@@ -46,14 +46,11 @@ public class Door : MonoBehaviour
     {
         Cursor.SetCursor(defaultCursor, Vector2.zero, CursorMode.ForceSoftware);
     }
-    //public void LoadScene()
-    //{
-    //    Loading.instance.LoadingScene(GameManager.Instance.currSceneName);
-    //    // �˴�������ڽ��棬�ټ���DoNotDestroy�����ڵ�����
-    //    GameManager.Instance.mapMan.gameObject.SetActive(true);
-    //    GameManager.Instance.pieceMan.gameObject.SetActive(true);
+    public void LoadScene()
+    {
+        GameObject.Find("GameSceneManager")?.transform.GetComponent<Game.SceneFlow>().LoadRoom();
 
-    //}
+    }
     // Update is called once per frame
     void Update()
     {

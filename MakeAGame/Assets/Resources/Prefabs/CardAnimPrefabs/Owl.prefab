@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1167865959689710933}
   - component: {fileID: 1167865959689710922}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: "\u732B\u5934\u9E70-\u8EAB\u4F53"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -94,7 +94,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1167865959873194255}
   - component: {fileID: 1167865959873194252}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: "\u732B\u5934\u9E70-\u811A3"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -178,7 +178,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1167865959895514884}
   - component: {fileID: 1167865959895514885}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: "\u732B\u5934\u9E70-\u7FC5\u8180\u53F3"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -262,7 +262,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1167865960095006960}
   - component: {fileID: 1167865960095006963}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Owl
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -319,7 +319,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1167865960464966274}
   - component: {fileID: 1167865960464966275}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: "\u732B\u5934\u9E70-\u811A2"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -403,7 +403,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1167865960810269939}
   - component: {fileID: 1167865960810269936}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: "\u732B\u5934\u9E70-\u7FC5\u8180\u5DE6"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
