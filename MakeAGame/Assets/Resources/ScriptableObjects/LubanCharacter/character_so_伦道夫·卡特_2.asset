@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterID: 2
   characterName: "\u4F26\u9053\u592B\xB7\u5361\u7279"
+  anim: {fileID: 5878722406761387808, guid: f2eaa584e3fe6ad4da84a93a2368b9e5, type: 3}
   rarity: 5
   cardPack: 1
   sanCost: 90

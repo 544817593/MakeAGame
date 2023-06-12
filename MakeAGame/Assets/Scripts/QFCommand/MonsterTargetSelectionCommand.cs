@@ -36,19 +36,13 @@ public class MonsterTargetSelectionCommand : AbstractCommand
             // 在目标列表里寻找最近的
             foreach (ViewPiece targetPiece in targetList)
             {
-                if (targetPiece.generalId != 0)
-                {
-                    (int, int) targetPosition = (targetPiece.pieceGrids[0].row, targetPiece.pieceGrids[0].col);
-                    int dist = ManhattanDist(monsterPosition, targetPosition);
-                    if (dist < targetDist) targetAlly = targetPiece;
-                    targetDist = dist;
-                }
+                (int, int) targetPosition = (targetPiece.pieceGrids[0].row, targetPiece.pieceGrids[0].col);
+                int dist = ManhattanDist(monsterPosition, targetPosition);
+                if (dist < targetDist) targetAlly = targetPiece;
+                targetDist = dist;
             }
         }
-        else
-        {
-            monster.currentTarget = this.GetSystem<IPieceSystem>().undead;
-        }       
+        monster.currentTarget = targetAlly;
     }
 
     public int ManhattanDist((int,int) original, (int, int) target)

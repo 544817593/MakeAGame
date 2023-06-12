@@ -1,5 +1,6 @@
 ﻿using DG.Tweening;
 using QFramework;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,9 +9,19 @@ namespace Game
 {
     public class ItemController : MonoBehaviour, IController
     {
+        private static ItemController instance;
+        public static ItemController Instance { get { return instance; } }
         private PlayerManager playerManager;
         private IInventorySystem inventorySystem;
         private IShopSystem shopSystem;
+
+        // 部分战斗中物品需要使用后选择目标
+        public Texture2D markingCursor; // 标记状态鼠标指针
+        public LayerMask allyLayer; // 可标记的单位图层
+        public bool isMarking = false; // 是否在标记状态
+        public delegate void MarkerFunction(ViewPieceBase piece); // 标记模式下成功标记后所执行的委托类
+        public MarkerFunction markerFunction; // 实际委托变量
+        public Item markerItem; // 标记模式下所使用的物品
 
         public IArchitecture GetArchitecture()
         {
@@ -18,7 +29,17 @@ namespace Game
         }
 
         void Awake()
-        {          
+        {
+            // 确保单例
+            if (instance != null && instance != this)
+            {
+                Destroy(gameObject);
+            }
+            else
+            {
+                instance = this;
+            }
+
             this.RegisterEvent<UseItemEvent>(e => OnUseItemEvent(e));
         }
 
@@ -27,6 +48,15 @@ namespace Game
             playerManager = GameManager.Instance.playerMan;
             inventorySystem = this.GetSystem<IInventorySystem>();
             shopSystem = this.GetSystem<IShopSystem>();
+        }
+
+        void Update()
+        {
+            // 右键取消标记状态
+            if (isMarking && Input.GetMouseButtonDown(1))
+            {
+                CancelMarking();
+            }
         }
 
         /// <summary>
@@ -72,10 +102,13 @@ namespace Game
                     viewBagCard.card.AddLife(5f);
                     break;
                 case "E-型初级强化药剂":
+                    viewBagCard.card.deathEnhancement.damageIncrease += 10;
                     break;
                 case "F-型初级强化药剂":
+                    viewBagCard.card.deathEnhancement.healthIncrease += 20;
                     break;
                 case "G-型初级强化药剂":
+                    viewBagCard.card.deathEnhancement.statusTimeIncrease += 5;
                     break;
                 case "A-型中级强化药剂":
                     rand = UnityEngine.Random.Range(0, 10);
@@ -114,17 +147,59 @@ namespace Game
                     AfterUseMerchantItem(item, viewBagCard, false);
                     return;
                 case "E-型中级强化药剂":
-                    break;
+                    rand = UnityEngine.Random.Range(0, 10);
+                    if (rand > 0)
+                    {
+                        viewBagCard.card.deathEnhancement.damageIncrease += 10;
+                        break;
+                    }
+                    AfterUseMerchantItem(item, viewBagCard, false);
+                    return;
                 case "F-型中级强化药剂":
-                    break;
+                    rand = UnityEngine.Random.Range(0, 10);
+                    if (rand > 0)
+                    {
+                        viewBagCard.card.deathEnhancement.healthIncrease += 20;
+                        break;
+                    }
+                    AfterUseMerchantItem(item, viewBagCard, false);
+                    return;
                 case "G-型中级强化药剂":
-                    break;
+                    rand = UnityEngine.Random.Range(0, 10);
+                    if (rand > 0)
+                    {
+                        viewBagCard.card.deathEnhancement.statusTimeIncrease += 5;
+                        break;
+                    }
+                    AfterUseMerchantItem(item, viewBagCard, false);
+                    return;
                 case "A-型腐朽的锤子":
-                    break;
+                    rand = UnityEngine.Random.Range(0, 100);
+                    if (rand > 14)
+                    {
+                        viewBagCard.card.AddFeature(FeatureEnum.Camouflaged);
+                        break;
+                    }
+                    AfterUseMerchantItem(item, viewBagCard, false);
+                    return;
                 case "B-型腐朽的锤子":
-                    break;
+                    rand = UnityEngine.Random.Range(0, 100);
+                    if (rand > 14)
+                    {
+                        viewBagCard.card.AddFeature(FeatureEnum.Dominant);
+                        break;
+                    }
+                    AfterUseMerchantItem(item, viewBagCard, false);
+                    return;
                 case "C-型腐朽的锤子":
-                    break;
+                    rand = UnityEngine.Random.Range(0, 100);
+                    if (rand > 14)
+                    {
+                        viewBagCard.card.AddFeature(FeatureEnum.Greedy);
+                        break;
+                    }
+                    AfterUseMerchantItem(item, viewBagCard, false);
+                    return;
                 case "A-型高级强化药剂":
                     rand = UnityEngine.Random.Range(0, 100);
                     if (rand > 14)
@@ -162,19 +237,68 @@ namespace Game
                     AfterUseMerchantItem(item, viewBagCard, false);
                     return;
                 case "E-型高级强化药剂":
-                    break;
+                    rand = UnityEngine.Random.Range(0, 100);
+                    if (rand > 14)
+                    {
+                        viewBagCard.card.deathEnhancement.damageIncrease += 15;
+                        break;
+                    }
+                    AfterUseMerchantItem(item, viewBagCard, false);
+                    return;
                 case "F-型高级强化药剂":
-                    break;
+                    rand = UnityEngine.Random.Range(0, 100);
+                    if (rand > 14)
+                    {
+                        viewBagCard.card.deathEnhancement.extraDamageEffect = true;
+                        break;
+                    }
+                    AfterUseMerchantItem(item, viewBagCard, false);
+                    return;
                 case "G-型高级强化药剂":
-                    break;
+                    rand = UnityEngine.Random.Range(0, 100);
+                    if (rand > 14)
+                    {
+                        viewBagCard.card.deathEnhancement.statusTimeIncrease += 10;
+                        break;
+                    }
+                    AfterUseMerchantItem(item, viewBagCard, false);
+                    return;
                 case "A-型破旧的锤子":
-                    break;
+                    rand = UnityEngine.Random.Range(0, 100);
+                    if (rand > 19)
+                    {
+                        viewBagCard.card.AddFeature(FeatureEnum.Lazy);
+                        break;
+                    }
+                    AfterUseMerchantItem(item, viewBagCard, false);
+                    return;
                 case "B-型破旧的锤子":
-                    break;
+                    rand = UnityEngine.Random.Range(0, 100);
+                    if (rand > 19)
+                    {
+                        viewBagCard.card.AddFeature(FeatureEnum.Laborer);
+                        break;
+                    }
+                    AfterUseMerchantItem(item, viewBagCard, false);
+                    return;
                 case "C-型破旧的锤子":
-                    break;
+                    rand = UnityEngine.Random.Range(0, 100);
+                    if (rand > 19)
+                    {
+                        viewBagCard.card.AddFeature(FeatureEnum.Bloodthirsty);
+                        break;
+                    }
+                    AfterUseMerchantItem(item, viewBagCard, false);
+                    return;
                 case "D-型破旧的锤子":
-                    break;
+                    rand = UnityEngine.Random.Range(0, 100);
+                    if (rand > 19)
+                    {
+                        viewBagCard.card.AddFeature(FeatureEnum.Toxicologist);
+                        break;
+                    }
+                    AfterUseMerchantItem(item, viewBagCard, false);
+                    return;
                 case "木制起钉器":
                     if (GameManager.Instance.gameSceneMan.GetCurrentSceneName() != "Merchant") return;
                     viewBagCard.card.RemoveFeature(e.soFeature);
@@ -293,15 +417,35 @@ namespace Game
                 case "深黄色药水":
                     break;
                 case "祈福法杖":
+                    if (GameManager.Instance.gameSceneMan.GetCurrentSceneName() == "Combat")
+                    {
+                        if (inventorySystem.GetBagCardList().Count != 0 &&
+                            this.GetSystem<IHandCardSystem>().handCardList.Value.Count <
+                            this.GetSystem<IHandCardSystem>().maxCardCount)
+                        {
+                            Card card = inventorySystem.DrawCard();
+                            this.SendCommand<AddHandCardCommand>(new AddHandCardCommand(card));
+                        }                       
+                    }
+                    else
+                    {
+                        return;
+                    }
                     break;
                 case "传送卷轴":
                     break;
                 case "高级传送卷轴":
                     break;
                 case "深蓝色羽毛笔":
-                    break;
+                    markerFunction = Navy_Quill_Pen;
+                    markerItem = e.item;
+                    ActivateMarkingMode();
+                    return;
                 case "浅蓝色羽毛笔":
-                    break;
+                    markerFunction = Light_Navy_Quill_Pen;
+                    markerItem = e.item;
+                    ActivateMarkingMode();
+                    return;
                 case "炼金沙":
                     float removeLife = e.viewPiece.maxLife / 2;
                     e.viewPiece.AddCurrLife(-removeLife);
@@ -321,11 +465,21 @@ namespace Game
             AfterUseCombatItem(item);
         }
 
+        private void Navy_Quill_Pen(ViewPieceBase piece)
+        {
+            GameManager.Instance.buffMan.AddBuff(new BuffNavyQuillPen(piece as Monster));
+        }
+
+        private void Light_Navy_Quill_Pen(ViewPieceBase piece)
+        {
+            GameManager.Instance.buffMan.AddBuff(new BuffLightNavyQuillPen(piece as ViewPiece));
+        }
+
         /// <summary>
         /// 使用完战斗中可用的物品后处理
         /// </summary>
         /// <param name="item">使用过的物品</param>
-        private void AfterUseCombatItem(Item item)
+        public void AfterUseCombatItem(Item item)
         {
             item.amount -= 1;
 
@@ -340,6 +494,24 @@ namespace Game
                 UIKit.GetPanel("UIInventoryQuickSlot")?.Invoke("RefreshInventoryItems", 0f);
             }
             
+        }
+
+        /// <summary>
+        /// 激活标记模式
+        /// </summary>
+        public void ActivateMarkingMode()
+        {
+            isMarking = true;
+            Cursor.SetCursor(markingCursor, Vector2.zero, CursorMode.Auto);
+        }
+
+        /// <summary>
+        /// 取消标记模式
+        /// </summary>
+        public void CancelMarking()
+        {
+            isMarking = false;
+            Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
         }
 
         /// <summary>

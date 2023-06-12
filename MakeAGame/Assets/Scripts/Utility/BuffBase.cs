@@ -2,6 +2,8 @@ using System;
 using UnityEngine;
 using Game;
 using System.Threading;
+using QFramework;
+using static UnityEngine.GraphicsBuffer;
 
 public abstract class BuffBase
 {
@@ -421,6 +423,119 @@ public class DebuffPoison : BuffToPiece
        
     }
 }
+
+/// <summary>
+/// 标记一个友军，每当他受到伤害时，获得2金币
+/// </summary>
+public class BuffLightNavyQuillPen : BuffToPiece, ICanRegisterEvent
+{
+    public BuffLightNavyQuillPen(ViewPiece _piece)
+    {
+        target = _piece;
+    }
+
+    public override bool OnBuffCreate()
+    {
+        return true;
+    }
+
+    public override void OnBuffStart()
+    {
+        Debug.Log("BuffLightNavyQuillPen: start");
+
+        GameManager.Instance.buffMan.SetBuffIcon((ViewPiece) target, "使用型道具-52");
+
+        this.RegisterEvent<PieceHitFinishEvent>(e => 
+        {
+            if (e.piece == target)
+            { 
+                PlayerManager.Instance.player.AddGold(2); 
+            }
+        }
+        );
+
+    }
+
+    public override void OnBuffRefresh()
+    {
+        if (target == null)
+        {
+            Debug.Log("target died, to remove buff");
+
+            // 移除buff
+            GameManager.Instance.buffMan.RemoveBuff(this);
+        }
+    }
+
+    public override void OnBuffRemove()
+    {
+        Debug.Log("BuffLightNavyQuillPen: remove");
+
+    }
+
+    public IArchitecture GetArchitecture()
+    {
+        return GameEntry.Interface;
+    }
+}
+
+/// <summary>
+/// 标记一个敌人，友方对其进行攻击时吸血10%，无法标记BOSS
+/// </summary>
+public class BuffNavyQuillPen : BuffToPiece, ICanRegisterEvent
+{
+    public BuffNavyQuillPen(Monster _piece)
+    {
+        target = _piece;
+    }
+
+    public override bool OnBuffCreate()
+    {
+        return true;
+    }
+
+    public override void OnBuffStart()
+    {
+        Debug.Log("BuffNavyQuillPen: start");
+
+        GameManager.Instance.buffMan.SetBuffIcon((Monster)target, "使用型道具-51");
+
+        this.RegisterEvent<PieceHitFinishEvent>(e =>
+        {
+            if (e.piece == target && e.attacker != null)
+            {
+                e.attacker.hp.Value += (int)(e.damage * 0.1f);
+                if (e.attacker.hp > e.attacker.maxHp) e.attacker.hp = e.attacker.maxHp;
+            }
+        }
+        );
+
+    }
+
+    public override void OnBuffRefresh()
+    {
+        if (target == null)
+        {
+            Debug.Log("target died, to remove buff");
+
+            // 移除buff
+            GameManager.Instance.buffMan.RemoveBuff(this);
+        }
+    }
+
+    public override void OnBuffRemove()
+    {
+        Debug.Log("BuffNavyQuillPen: remove");
+
+    }
+
+    public IArchitecture GetArchitecture()
+    {
+        return GameEntry.Interface;
+    }
+}
+
+
 
 public enum BuffType
 {

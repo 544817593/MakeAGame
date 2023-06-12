@@ -997,7 +997,10 @@ MonoBehaviour:
   pauseD: 0
   d_finish: 0
   waitForControl: 0
+  waitForInGamecontrol: 0
+  getControl: 0
   showGift: 0
+  controlTime: 5
   npc: {fileID: 0}
   backGround: {fileID: 0}
 --- !u!4 &1330122363

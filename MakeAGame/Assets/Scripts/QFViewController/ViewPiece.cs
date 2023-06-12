@@ -1,8 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Threading;
+using DamageNumbersPro;
 using DG.Tweening;
 using QFramework;
+using Unity.VisualScripting;
 using UnityEngine;
 using Random = System.Random;
 
@@ -16,6 +18,8 @@ namespace Game
 
         public BindableProperty<float> currLife; // 寿命
         public BindableProperty<float> maxLife; // 最大寿命
+
+        private ItemController itemController = ItemController.Instance;
 
         public void SetDataWithCard(Card _card)
         {
@@ -66,6 +70,7 @@ namespace Game
             // 从可选方向中随机一个方向
             int dirIndex = UnityEngine.Random.Range(0, dirs.Value.Count);
             direction = dirs.Value[dirIndex];
+
         }
 
         private new void Update()
@@ -83,8 +88,22 @@ namespace Game
         {
             spPiece.sprite = card.pieceSprite;
             // 重置collider大小以贴合图片    // todo collider有点太大了
-            if(touchArea)
+            if (touchArea)
                 touchArea.GetComponent<BoxCollider2D>().size = spPiece.sprite.bounds.size;
+
+            //动画部分
+            GameObject animGO = IdToSO.FindCardSOByID(card.charaID).GetAnim();
+            if (animGO != null)
+            {
+                GameObject pieceAnim = GameObject.Instantiate(animGO);
+                animator = pieceAnim.GetComponent<Animator>();
+                pieceAnim.transform.SetParent(gameObject.transform);
+                pieceAnim.transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
+                pieceAnim.transform.localPosition = new Vector3(0, 0.25f, -0.25f); // 确保不会被棋盘遮住
+                pieceAnim.transform.localRotation = Quaternion.Euler(new Vector3(0, 0, 0));
+                Destroy(gameObject.transform.Find("Root/SpritePiece").GetComponent<SpriteRenderer>());
+            }
+
         }
 
         
@@ -196,16 +215,29 @@ namespace Game
         /// </summary>
         private void DoMove()
         {
+            // 如果移动动画协程还在执行，但又触发DoMove了，那么强制停止之前的
+            if (movementCoroutine != null)
+            {
+                StopCoroutine(movementCoroutine);
+                movementCoroutine = null;
+            }
+
+            // 找到位置
             var nextPos = GetGridsCenterPos();
 
-            transform.DOMove(nextPos, 0.3f).OnComplete(OnMoveFinish);
+            // 如果有动画，则播放动画并启动移动协程，否则直接更改怪物位置
+            if (animator != null)
+            {
+                animator.SetBool("isMove", true);
+                movementCoroutine = StartCoroutine(MoveToTarget(nextPos));
+            }
+            else
+            {
+                transform.DOMove(nextPos, 0.3f).OnComplete(OnMoveFinish);
+            }
         }
 
-        private void OnMoveFinish()
-        {
-            // 发送结束移动事件
-            GetArchitecture().SendEvent<PieceMoveFinishEvent>(new PieceMoveFinishEvent() {viewPieceBase = this});
-        }
+
         
         /// <summary>
         /// 强行移动，参数待定，可能用于击退、传送等
@@ -228,10 +260,23 @@ namespace Game
 
             hp.Value -= damage;
             Debug.Log($"Piece Hit, damage: {damage} hp: {hp}");
-        
-            this.SendEvent<PieceHitFinishEvent>();
+            MonsterDamageNumer.Spawn(this.Position(), damage);
+            this.SendEvent<PieceHitFinishEvent>(new PieceHitFinishEvent { piece = this });
 
             return hp <= 0;
+        }
+
+        public override void Die()
+        {
+            // 亡灵死亡，游戏失败，发送事件
+            if (generalId == 0)
+            {
+                this.SendEvent<CombatDefeatEvent>(new CombatDefeatEvent());
+            }
+            else
+            {
+                base.Die();
+            }
         }
 
         protected override void OnMoveReadyEvent(PieceMoveReadyEvent e)
@@ -244,6 +289,14 @@ namespace Game
         protected override void OnMoveFinishEvent(PieceMoveFinishEvent e)
         {
             base.OnMoveFinishEvent(e);
+
+            // 亡灵到达房间终点，关卡通过，发送事件
+            if (e.viewPieceBase.generalId == 0 &&
+                e.viewPieceBase.pieceGrids[0].terrain.Value == (int)TerrainEnum.Door)
+            {
+                this.SendEvent<CombatVictoryEvent>(new CombatVictoryEvent());
+            }
+
             Debug.Log("ViewPiece receive MoveFinishEvent");
             // testAction += () => Debug.Log("test");   // 但这里是有效的！如果有什么需要叠加的函数，可以加在这里
             // testAction.Invoke();
@@ -265,13 +318,25 @@ namespace Game
         private void MouseDown()
         {
             Debug.Log("mouse down piece");
-            this.GetSystem<IPieceSystem>().ShowDirectionWheel(this);
+            if (!ItemController.Instance.isMarking)
+            {
+                this.GetSystem<IPieceSystem>().ShowDirectionWheel(this);
+            }
         }
 
         private void MouseUp()
         {
             Debug.Log("mouse up piece");
-            this.SendCommand<ChangePieceDirectionCommand>(new ChangePieceDirectionCommand());
+            if (itemController.isMarking)
+            {
+                ItemController.Instance.markerFunction(this);
+                itemController.CancelMarking();
+                itemController.AfterUseCombatItem(itemController.markerItem);
+            }
+            else
+            {
+                this.SendCommand<ChangePieceDirectionCommand>(new ChangePieceDirectionCommand());
+            }
         }
 
         /// <summary>

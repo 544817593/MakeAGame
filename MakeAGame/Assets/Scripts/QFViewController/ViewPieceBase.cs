@@ -1,6 +1,9 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
+using DamageNumbersPro;
 using QFramework;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Game
@@ -10,6 +13,9 @@ namespace Game
     /// </summary>
     public partial class ViewPieceBase: MonoBehaviour, IController, ICanSendEvent
     {
+        // 怪物受到棋子伤害的数字弹出样式资源，棋子受到怪物伤害的数字弹出样式资源
+        protected DamageNumberMesh MonsterDamageNumer = Resources.Load("Prefabs/Damage Number Prefab/Monster Damage").GetComponent<DamageNumberMesh>(); 
+
         // protected Transform healthBar;
 
         protected IMapSystem mapSystem;
@@ -27,7 +33,10 @@ namespace Game
         public Action<PieceAttackStartEvent> OnPieceAttackStart;
         public Action<PieceAttackEndEvent> OnPieceAttackEnd;
         public Action<PieceUnderAttackEvent> OnPieceUnderAttack;
-        
+
+        public Animator animator; // 动画组件
+        protected Coroutine movementCoroutine; // 移动协程
+
         public List<BoxGrid> pieceGrids { get; protected set; } = new List<BoxGrid>();
         // 经过所有占地格子计算出来的时间流速
         public float crtTimeMultiplier
@@ -164,6 +173,39 @@ namespace Game
             if (!FeatureController.instance.Hydrophobia(this, grid)) return false;
             
             return true;
+        }
+
+        /// <summary>
+        /// 移动时执行动画的协程
+        /// </summary>
+        /// <param name="newGridTransPos">新位置</param>
+        /// <param name="duration">持续时间</param>
+        /// <returns></returns>
+        protected IEnumerator MoveToTarget(Vector3 newGridTransPos, float duration = 0.5f)
+        {
+            Vector3 startPosition = transform.position;
+            float elapsedTime = 0f;
+            while (elapsedTime < duration)
+            {
+                elapsedTime += Time.deltaTime;
+                float t = Mathf.Clamp01(elapsedTime / duration);
+                transform.position = Vector3.Lerp(startPosition, newGridTransPos, t);
+                yield return null;
+            }
+
+            if (animator != null)
+            {
+                animator.SetBool("isMove", false);
+            }
+
+            movementCoroutine = null;
+            OnMoveFinish();
+        }
+
+        protected void OnMoveFinish()
+        {
+            // 发送结束移动事件
+            GetArchitecture().SendEvent<PieceMoveFinishEvent>(new PieceMoveFinishEvent() { viewPieceBase = this });
         }
 
         // 发起攻击

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Threading;
 using QFramework;
 using UnityEngine;
 
@@ -65,6 +66,9 @@ namespace Game
             viewPiece.SetDataWithCard(card);
             // viewCard.InitView(); // 在这里写会先于start执行，不对    // 转由start触发
             viewPiece.SetGrids(grids);
+
+
+
             viewPiece.InitState();            
             
 

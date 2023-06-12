@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4385907037613375333}
   - component: {fileID: 7388833664879146153}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: "\u6E21\u9E26-\u8EAB\u4F53"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -94,7 +94,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9119614208966993049}
   - component: {fileID: 4137387875871979140}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: "\u6E21\u9E26-\u540E\u817F"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -178,7 +178,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7649776221849535326}
   - component: {fileID: 9158386489571381400}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Raven
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -233,7 +233,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6595657411174508636}
   - component: {fileID: 4273738576972145055}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: "\u6E21\u9E26-\u817F-\u524D"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
