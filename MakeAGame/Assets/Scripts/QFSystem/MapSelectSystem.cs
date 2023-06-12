@@ -157,8 +157,9 @@ namespace Game
              validSelectedGrids.Clear();
              foreach (var grid in selectedGrids)
              {
-                 // 上方已经有其他棋子
-                 if (!grid.IsEmpty()) {}
+                 // 1.地形无法放置；2.上方已经有其他棋子
+                 if (grid.terrain.Value == (int)TerrainEnum.Edge || grid.terrain.Value == (int)TerrainEnum.Invalid
+                     || !grid.IsEmpty()) {}
                  else
                  {
                      validSelectedGrids.Add(grid);

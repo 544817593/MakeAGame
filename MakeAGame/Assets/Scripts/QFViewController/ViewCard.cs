@@ -37,7 +37,7 @@ namespace Game
             uiHelper.OnUIPointExit += uiHandCard.OnUnfocusCard;
             uiHelper.OnUIBeginDrag += OnDragStart;
             uiHelper.OnUIBeginDrag += () => uiHandCard.OnDragCardStart(this);
-            uiHelper.OnUIDrag = OnDrag;
+            // uiHelper.OnUIDrag = OnDrag;
             uiHelper.OnUIEndDrag += uiHandCard.OnDragCardEnd;
             uiHelper.OnUIEndDrag += OnDragEnd;
             
@@ -105,16 +105,16 @@ namespace Game
             }
         }
 
-        void OnDrag()
-        {
-            // Debug.Log("is dragging");
-        }
+        // void OnDrag()
+        // {
+        //     // Debug.Log("is dragging");
+        // }
 
         void OnDragEnd()
         {
             if (isDraging)
             {
-                Debug.Log("ViewCard: OnDragEnd");
+                // Debug.Log("ViewCard: OnDragEnd");
                 canvasGroup.alpha = 1f;
                 this.SendCommand<SelectMapEndCommand>(new SelectMapEndCommand(this));
 
