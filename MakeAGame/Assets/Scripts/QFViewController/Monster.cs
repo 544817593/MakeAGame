@@ -3,6 +3,8 @@ using QFramework;
 using System;
 using System.Collections.Generic;
 using DG.Tweening;
+using System.Threading;
+using System.Collections;
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
@@ -186,15 +188,31 @@ public class Monster : ViewPieceBase
         // var newGridTransPos = grid2DList[nextIntendPos.Item1, nextIntendPos.Item2].transform.position;
         // this.gameObject.transform.position = newGridTransPos;
         // monster.leftTopGridPos.Value = nextIntendPos;
+
+        // 如果移动动画协程还在执行，但又触发DoMove了，那么强制停止之前的
+        if (movementCoroutine != null)
+        {
+            StopCoroutine(movementCoroutine);
+            movementCoroutine = null;
+        }
+
+        // 找到位置
         var nextPos = GetGridsCenterPos();
-        transform.DOMove(nextPos, 0.3f).OnComplete(OnMoveFinish);
+
+        // 如果有动画，则播放动画并启动移动协程，否则直接更改怪物位置
+        if (animator != null)
+        {
+            animator.SetBool("isMove", true);
+            movementCoroutine = StartCoroutine(MoveToTarget(nextPos));
+        }
+        else
+        {
+            transform.DOMove(nextPos, 0.3f).OnComplete(OnMoveFinish);
+        }
+        
     }
 
-    void OnMoveFinish()
-    {
-        // 发送结束移动事件
-        GetArchitecture().SendEvent<PieceMoveFinishEvent>(new PieceMoveFinishEvent() {viewPieceBase = this});
-    }
+
     
     public override void Attack()
     {

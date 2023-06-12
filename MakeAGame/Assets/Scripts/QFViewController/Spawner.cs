@@ -127,7 +127,23 @@ namespace Game
             Monster monster = piece.GetComponent<Monster>();
             monster.data = so;
 
-            piece.transform.Find("Root/SpritePiece").GetComponent<SpriteRenderer>().sprite = monster.data.monsterSprite;
+            //动画部分
+            GameObject animGO = monster.data.GetChildAnim();
+            if (animGO != null)
+            {
+                GameObject monsterAnim = Instantiate(animGO);
+                piece.GetComponent<Monster>().animator = monsterAnim.GetComponent<Animator>();
+                monsterAnim.transform.SetParent(piece.transform);
+                monsterAnim.transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
+                monsterAnim.transform.localPosition = new Vector3(0, 0.25f, -0.25f); // 确保不会被棋盘遮住
+                monsterAnim.transform.localRotation = Quaternion.Euler(new Vector3(0, 0, 0));
+                Destroy(piece.transform.Find("Root/SpritePiece").GetComponent<SpriteRenderer>()); // 如果有动画预设体，删除图片，暂时先这样写，直到所有棋子都有动画
+            }
+            else
+            {
+                piece.transform.Find("Root/SpritePiece").GetComponent<SpriteRenderer>().sprite = monster.data.monsterSprite;
+            }
+
             InitialiseMonsterValues(monster, data);
             grid[data.row, data.col].gridStatus.Value = GridStatusEnum.MonsterPiece;
             this.GetSystem<ISpawnSystem>().GetMonsterList().Add(piece.GetComponent<Monster>());

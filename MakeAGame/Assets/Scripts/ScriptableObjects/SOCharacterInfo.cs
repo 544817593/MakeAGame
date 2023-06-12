@@ -10,7 +10,8 @@ namespace Game
     {
         public int characterID;         // 角色id
         public string characterName;    // 角色名字
-        
+        public GameObject anim;         // 动画预设体
+
         [FoldoutGroup("Card Information", true)]
         public RarityEnum rarity;       // 稀有度
         [FoldoutGroup("Card Information")] 
@@ -60,7 +61,10 @@ namespace Game
         public PlayerBonus atkBonus;        // 攻击力玩家属性加成
         [FoldoutGroup("Player Stat Bonus")]
         public PlayerBonus atkSpdBonus;     // 攻速玩家属性加成
-        
+        public GameObject GetAnim()
+        {
+            return anim;
+        }
 
         [Serializable]
         public class PlayerBonus
