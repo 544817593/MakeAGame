@@ -235,8 +235,8 @@ namespace Game
         {
             this.SendEvent<PieceHitReadyEvent>();
 
-        hp.Value -= damage;
-        Debug.Log($"Monster Hit, damage: {damage} hp: {hp.Value}");
+            hp.Value -= damage;
+            Debug.Log($"Monster Hit, damage: {damage} hp: {hp.Value}");
             MonsterDamageNumer.Spawn(this.Position(), damage);
             this.SendEvent<PieceHitFinishEvent>(new PieceHitFinishEvent { piece = this });
 
