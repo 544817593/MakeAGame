@@ -89,14 +89,20 @@ namespace Game
             OnUpdate.Remove(ShowTooltip);
         }
 
+        private bool isDraging;
         void OnDragStart()
         {
-            // Debug.Log("ViewCard: OnDragStart");
-            canvasGroup.alpha = 0.5f;
+            if (Input.GetMouseButton(0))
+            {
+                isDraging = true;
+                
+                // Debug.Log("ViewCard: OnDragStart");
+                canvasGroup.alpha = 0.5f;
 
-            SelectMapStartCommand comm = new SelectMapStartCommand();
-            comm.area = new SelectArea() {width = card.width, height = card.height};
-            this.SendCommand<SelectMapStartCommand>(comm);
+                SelectMapStartCommand comm = new SelectMapStartCommand();
+                comm.area = new SelectArea() {width = card.width, height = card.height};
+                this.SendCommand<SelectMapStartCommand>(comm);   
+            }
         }
 
         void OnDrag()
@@ -106,9 +112,14 @@ namespace Game
 
         void OnDragEnd()
         {
-            Debug.Log("ViewCard: OnDragEnd");
-            canvasGroup.alpha = 1f;
-            this.SendCommand<SelectMapEndCommand>(new SelectMapEndCommand(this));
+            if (isDraging)
+            {
+                Debug.Log("ViewCard: OnDragEnd");
+                canvasGroup.alpha = 1f;
+                this.SendCommand<SelectMapEndCommand>(new SelectMapEndCommand(this));
+
+                isDraging = false;
+            }
         }
 
         void ShowTooltip()

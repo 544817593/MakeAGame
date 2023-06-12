@@ -13,9 +13,7 @@ namespace Game
     /// </summary>
     public partial class ViewPieceBase: MonoBehaviour, IController, ICanSendEvent
     {
-        // 怪物受到棋子伤害的数字弹出样式资源，棋子受到怪物伤害的数字弹出样式资源
-        protected DamageNumberMesh MonsterDamageNumer = Resources.Load("Prefabs/Damage Number Prefab/Monster Damage").GetComponent<DamageNumberMesh>(); 
-
+        protected DamageNumberMesh MonsterDamageNumer;
         // protected Transform healthBar;
 
         protected IMapSystem mapSystem;
@@ -80,9 +78,12 @@ namespace Game
         {
             InitBind();
             
+            // 怪物受到棋子伤害的数字弹出样式资源，棋子受到怪物伤害的数字弹出样式资源
+            MonsterDamageNumer = Resources.Load("Prefabs/Damage Number Prefab/Monster Damage").GetComponent<DamageNumberMesh>();
+            
             mapSystem = this.GetSystem<IMapSystem>();
             movementSystem = this.GetSystem<IMovementSystem>();
-            
+
             // 棋子自身也会监听棋子（包括自己）
             OnPieceMoveReady += OnMoveReadyEvent;
             OnPieceMoveFinish += OnMoveFinishEvent;
@@ -91,7 +92,6 @@ namespace Game
             OnPieceUnderAttack += OnUnderAttackEvent;
             
             hp.Register(e => OnCurrHpChanged(e));
-            
         }
 
         /// <summary>

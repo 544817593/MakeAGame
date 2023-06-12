@@ -178,12 +178,15 @@ namespace Game
 
 		public void OnDragCardStart(ViewCard viewCard)
 		{
-			isDragging = true;
-			
-			ImgPieceIcon.sprite = viewCard.card.pieceSprite;
-			ImgPieceIcon.SetNativeSize();	// 恢复原大小
-			PieceIcon.gameObject.SetActive(true);
-			anim.Play("Down", -1, 0);
+			if (Input.GetMouseButton(0))
+			{
+				isDragging = true;
+				
+				ImgPieceIcon.sprite = viewCard.card.pieceSprite;
+				ImgPieceIcon.SetNativeSize();	// 恢复原大小
+				PieceIcon.gameObject.SetActive(true);
+				anim.Play("Down", -1, 0);
+			}
 		}
 		
 		private void Update()
@@ -201,11 +204,14 @@ namespace Game
 
 		public void OnDragCardEnd()
 		{
-			isDragging = false;
+			if (isDragging)
+			{
+				isDragging = false;
 			
-			PieceIcon.gameObject.SetActive(false);
-			anim.Play("Up", -1, 0);
-			UpdateLayout();
+				PieceIcon.gameObject.SetActive(false);
+				anim.Play("Up", -1, 0);
+				UpdateLayout();	
+			}
 		}
 		
 		public void UpdateLayout()
