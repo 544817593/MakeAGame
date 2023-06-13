@@ -170,6 +170,7 @@ namespace Game
         #region 右键点击 死面
 
         private bool isInDeathFunc;
+        public DeathFuncBase deathFunc;
         void OnRightClick()
         {
             if (!isInDeathFunc && Input.GetMouseButtonUp(1))  // 右键
@@ -182,12 +183,26 @@ namespace Game
                 //     return;
                 // }
                 
+                // 这里要得到死面的范围信息
+                string deathFuncName = Extensions.GetDeathFuncTypeName(card.charaID);
+                if (deathFuncName.IsNullOrEmpty())
+                {
+                    Debug.LogError("failed to load death func");
+                    return;
+                }
+                
                 Debug.Log("start death func");
                 isInDeathFunc = true;
                 OnUpdate = CheckDeathFuncMouse;
-                
+
+                Type methodType = Type.GetType("Game." + deathFuncName);
+                var obj = methodType.Assembly.CreateInstance("Game." + deathFuncName);
+                deathFunc = obj as DeathFuncBase;
+                deathFunc.viewCard = this;
+
                 SelectMapStartCommand comm = new SelectMapStartCommand();
-                comm.area = new SelectArea() {width = card.width, height = card.height, selectStage = MapSelectStage.IsPutDeathFunc};
+                // comm.area = new SelectArea() {width = card.width, height = card.height, selectStage = MapSelectStage.IsPutDeathFunc};
+                comm.area = deathFunc.area;
                 this.SendCommand<SelectMapStartCommand>(comm);
             }
         }
@@ -202,6 +217,19 @@ namespace Game
                     isInDeathFunc = false;
                     OnUpdate = null;
                     this.SendCommand<SelectMapEndCommand>(new SelectMapEndCommand(this, true));
+                    deathFunc = null;
+                    return;
+                }
+            }
+            else if (Input.GetMouseButtonDown(0))   // 左键施放死面功能
+            {
+                if (isInDeathFunc)
+                {
+                    Debug.Log("execute death func");
+                    isInDeathFunc = false;
+                    OnUpdate = null;
+                    this.SendCommand<SelectMapEndCommand>(new SelectMapEndCommand(this, false));
+                    deathFunc = null;
                     return;
                 }
             }

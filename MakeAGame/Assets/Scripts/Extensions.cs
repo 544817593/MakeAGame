@@ -139,5 +139,16 @@ namespace Game
             var so = Resources.Load<SORelic>($"ScriptableObjects/Relics/SORelic_test");
             return so;
         }
+
+        public static string GetDeathFuncTypeName(int charaID)
+        {
+            switch (charaID)
+            {
+                case 1:
+                    return "Francis_Wayland_Thurston";
+                default:
+                    return "Francis_Wayland_Thurston";  // todo test
+            }
+        }
     }
 }

@@ -220,7 +220,7 @@ namespace Game
             }
             else if (stage == MapSelectStage.IsPutDeathFunc)    // 死面判断
             {
-                
+                viewCard.deathFunc.OnExecute(validSelectedGrids);
             }
             
             
