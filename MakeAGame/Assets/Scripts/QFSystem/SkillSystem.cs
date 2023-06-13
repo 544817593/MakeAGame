@@ -112,11 +112,40 @@ namespace Game
         public List<SkillNameEnum> equippedSkillsList { get; private set; } // 装备中的技能
         public List<SkillNameEnum> availableSkillsList { get; private set; } // 可使用的技能
 
+        public static Dictionary<SkillNameEnum, string> skillIDNameDic = new Dictionary<SkillNameEnum, string>()
+        {
+            {SkillNameEnum.None, ""},
+            {SkillNameEnum.Alienation1, "Alienation1" },
+            {SkillNameEnum.Alienation2, "Alienation2" },
+            {SkillNameEnum.Earthquake1, "Earthquake1" },
+            {SkillNameEnum.Darkarrival, "Darkarrival" },
+            {SkillNameEnum.Focus1, "Focus1" },
+            {SkillNameEnum.Focus2, "Focus2" },
+            {SkillNameEnum.Ghost, "Ghost" },
+            {SkillNameEnum.DimentionalPortal, "DimentionalPortal" },
+            {SkillNameEnum.Inferno, "Inferno" },
+            {SkillNameEnum.Oceanic, "Oceanic" }
+        }; // 所有技能枚举map到对应资源的名字
+
         protected override void OnInit()
         {
             unlockedSkillsList = new List<SkillNameEnum>();
             equippedSkillsList = new List<SkillNameEnum>(2); // 只可以携带两个技能
             availableSkillsList = new List<SkillNameEnum>();
+            skillIDNameDic = new Dictionary<SkillNameEnum, string>()
+            {
+                {SkillNameEnum.None, ""},
+                {SkillNameEnum.Alienation1, "Alienation1" },
+                {SkillNameEnum.Alienation2, "Alienation2" },
+                {SkillNameEnum.Earthquake1, "Earthquake1" },
+                {SkillNameEnum.Darkarrival, "Darkarrival" },
+                {SkillNameEnum.Focus1, "Focus1" },
+                {SkillNameEnum.Focus2, "Focus2" },
+                {SkillNameEnum.Ghost, "Ghost" },
+                {SkillNameEnum.DimentionalPortal, "DimentionalPortal" },
+                {SkillNameEnum.Inferno, "Inferno" },
+                {SkillNameEnum.Oceanic, "Oceanic" }
+            };
         }
 
         public List<SkillNameEnum> GetUnlockedSkills()
@@ -246,29 +275,29 @@ namespace Game
             switch (id)
             {
                 case SkillNameEnum.None:
-                    return "无";
+                    return "";
                 case SkillNameEnum.Alienation1:
-                    return "异化I";
+                    return "Alienation1";
                 case SkillNameEnum.Earthquake1:
-                    return "地震I";
+                    return "Earthquake1";
                 case SkillNameEnum.Darkarrival:
-                    return "黑暗降临";
+                    return "Darkarrival";
                 case SkillNameEnum.Focus1:
-                    return "聚焦I";
+                    return "Focus1";
                 case SkillNameEnum.Alienation2:
-                    return "异化II";
+                    return "Alienation2";
                 case SkillNameEnum.Focus2:
-                    return "聚焦II";
+                    return "Focus2";
                 case SkillNameEnum.Ghost:
-                    return "疾跑";
+                    return "Ghost";
                 case SkillNameEnum.LastResort:
-                    return "破釜沉舟";
+                    return "LastResort";
                 case SkillNameEnum.DimentionalPortal:
-                    return "次元门";
+                    return "DimentionalPortal";
                 case SkillNameEnum.Inferno:
-                    return "炼狱";
+                    return "Inferno";
                 case SkillNameEnum.Oceanic:
-                    return "沧海";
+                    return "Oceanic";
                 default:
                     return "";
             }

@@ -5,7 +5,7 @@ using QFramework;
 
 namespace RestUI
 {
-	// Generate Id:3136be85-6bd5-41c0-bf70-81e26a766917
+	// Generate Id:81daf20f-5b56-4067-b2e7-70c0377ed5db
 	public partial class RestUI
 	{
 		public const string Name = "RestUI";
@@ -41,15 +41,11 @@ namespace RestUI
 		[SerializeField]
 		public UnityEngine.UI.Image CurAbilityBackground;
 		[SerializeField]
-		public TMPro.TextMeshProUGUI TextCurAbility;
-		[SerializeField]
 		public UnityEngine.UI.Button CurAbility01;
 		[SerializeField]
 		public UnityEngine.UI.Button CurAbility02;
 		[SerializeField]
 		public UnityEngine.UI.Image UnlockedAbilityBackground;
-		[SerializeField]
-		public TMPro.TextMeshProUGUI TextUnlockedAbility;
 		[SerializeField]
 		public UnityEngine.UI.Button UnlockedAbility01;
 		[SerializeField]
@@ -62,6 +58,20 @@ namespace RestUI
 		public UnityEngine.UI.Button UnlockedAbility05;
 		[SerializeField]
 		public UnityEngine.UI.Button UnlockedAbility06;
+		[SerializeField]
+		public UnityEngine.UI.Button UnlockedAbility07;
+		[SerializeField]
+		public UnityEngine.UI.Button UnlockedAbility08;
+		[SerializeField]
+		public UnityEngine.UI.Button BtnNextPage;
+		[SerializeField]
+		public UnityEngine.UI.Button BtnPrePage;
+		[SerializeField]
+		public TMPro.TextMeshProUGUI TextPageNum;
+		[SerializeField]
+		public TMPro.TextMeshProUGUI TextCurAbility;
+		[SerializeField]
+		public TMPro.TextMeshProUGUI TextUnlockedAbility;
 		[SerializeField]
 		public UnityEngine.UI.Button CloseChangeSkillPanel;
 		
@@ -84,17 +94,22 @@ namespace RestUI
 			BtnLeaveRoom = null;
 			ChangeSkillPanel = null;
 			CurAbilityBackground = null;
-			TextCurAbility = null;
 			CurAbility01 = null;
 			CurAbility02 = null;
 			UnlockedAbilityBackground = null;
-			TextUnlockedAbility = null;
 			UnlockedAbility01 = null;
 			UnlockedAbility02 = null;
 			UnlockedAbility03 = null;
 			UnlockedAbility04 = null;
 			UnlockedAbility05 = null;
 			UnlockedAbility06 = null;
+			UnlockedAbility07 = null;
+			UnlockedAbility08 = null;
+			BtnNextPage = null;
+			BtnPrePage = null;
+			TextPageNum = null;
+			TextCurAbility = null;
+			TextUnlockedAbility = null;
 			CloseChangeSkillPanel = null;
 			
 			mData = null;
