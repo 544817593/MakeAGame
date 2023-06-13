@@ -6,6 +6,7 @@ using DamageNumbersPro;
 using QFramework;
 using Unity.VisualScripting;
 using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 
 namespace Game
 {
@@ -133,6 +134,23 @@ namespace Game
             state = newState;
             state.EnterState();
             stateFlag = state.stateEnum;
+        }
+
+        /// <summary>
+        /// 棋子所占格子内是否包含了传入的格子类型
+        /// </summary>
+        /// <param name="terrianType"></param>
+        /// <returns></returns>
+        public bool PieceOnTerrianType(TerrainEnum terrianType)
+        {
+            foreach (BoxGrid grid in pieceGrids)
+            {
+                if (grid.terrain.Value == (int)terrianType)
+                {
+                    return true;
+                }
+            }
+            return false;
         }
 
         public PieceStateEnum GetPieceState()

@@ -3,7 +3,9 @@ using UnityEngine;
 using Game;
 using System.Threading;
 using QFramework;
+using static System.Math;
 using static UnityEngine.GraphicsBuffer;
+using Sirenix.OdinInspector.Editor.StateUpdaters;
 
 public abstract class BuffBase
 {
@@ -48,6 +50,102 @@ public abstract class BuffToGrid : BuffBase
 {
     public BoxGrid target;
 }
+
+public class BuffTerrianFire : BuffToPiece
+{
+    // 每层buff掉最大生命值百分比
+    private float damagePerLevel;
+    // 当前buff层数
+    private int curLevel;
+    // 检查buff层数增加的计时器
+    private float buffEnhanceTimer;
+    // 每秒触发1次扣血
+    private float damageTriggerTime;
+    // 每层buff的计时器，5秒重置一次
+    private float curLevelTimer;
+    public BuffTerrianFire(ViewPieceBase _piece, float _duration)
+    {
+        target = _piece;
+        duration = _duration;
+        leftTime = duration;
+        damagePerLevel = 0.01f;
+        curLevel = 1;
+        buffEnhanceTimer = 0;
+        damageTriggerTime = 0;
+        curLevelTimer = 0;
+    }
+
+    
+
+    public override bool OnBuffCreate()
+    {
+        // 如果已经有炽焰buff，不需要添加buff，由原有炽焰buff的refresh逻辑叠加层数
+        if (target.listBuffs.Contains(BuffType.Terrian_Fire))
+        {
+            return false;
+        }
+        return target.PieceOnTerrianType(TerrainEnum.Fire);
+    }
+    public override void OnBuffStart()
+    {
+        Debug.Log("BuffTerrianFire: start");
+        target.listBuffs.Add(BuffType.Terrian_Fire);
+        target.takeDamage((int) damagePerLevel * curLevel * target.maxHp);
+    }
+
+    public override void OnBuffRefresh()
+    {
+        Debug.Log("BuffTerrianFire: refresh");
+        // 如果当前在火格子上，每5秒加1层buff，每加1层 持续时间和伤害都递增
+        // 如果不在，剩余时间减少
+        if (target != null && target.PieceOnTerrianType(TerrainEnum.Fire))
+        {
+            buffEnhanceTimer += Time.deltaTime;
+            if(buffEnhanceTimer >= 5)
+            {
+                curLevel++;
+                duration += 5f;
+                leftTime = duration;
+                buffEnhanceTimer = 0;
+                curLevelTimer = 0;
+            }
+        }
+        else
+        {
+            leftTime -= Time.deltaTime;
+            curLevelTimer += Time.deltaTime;
+            buffEnhanceTimer = 0;
+            // 如果当前buff等级的剩余时间结束，buff降级
+            if(curLevelTimer >= 5)
+            {
+                curLevel--;
+                duration -= 5f;
+                curLevelTimer = 0;
+            }
+            // 如果时间结束 移除buff
+            if(target == null || leftTime <= 0)
+            {
+                GameManager.Instance.buffMan.RemoveBuff(this);
+                return;
+            }
+        }
+        // 每1秒结算1次伤害，如果当前帧触发buff增加/减少，就按触发后的结果算
+        damageTriggerTime += Time.deltaTime;
+        if(damageTriggerTime >= 1)
+        {
+            target.takeDamage((int)damagePerLevel * curLevel * target.maxHp);
+            damageTriggerTime = 0;
+        }
+    }
+
+    public override void OnBuffRemove()
+    {
+        Debug.Log("BuffTerrianFire: remove");
+    }
+
+    
+}
+
 
 /// <summary>
 /// 若buff目标处于战斗中，atkSpeed减0.3，持续至战斗结束（包括目标死亡的情况）
@@ -398,6 +496,7 @@ public class DebuffPoison : BuffToPiece
 
     public override void OnBuffStart()
     {
+        target.listBuffs.Add(BuffType.Poison);
         if (monster != null) monster.hp.Value = (int) (0.9f * monster.hp);
         if (viewPiece != null) viewPiece.hp.Value = (int)(0.9f * viewPiece.hp);
     }
@@ -540,5 +639,8 @@ public class BuffNavyQuillPen : BuffToPiece, ICanRegisterEvent
 public enum BuffType
 {
     Confusion,
-    Poison
+    Poison,
+    Terrian_Fire,
+    Terrian_Water,
+    Terrian_Poison
 }
