@@ -350,7 +350,8 @@ namespace Game
 
         public void SetColliderEnable(bool isEnable)
         {
-            collider2d.enabled = isEnable;
+            if(collider2d != null)  // 刚放下的情况
+                collider2d.enabled = isEnable;
         }
     }
 }

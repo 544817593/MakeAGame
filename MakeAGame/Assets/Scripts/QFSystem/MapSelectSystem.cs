@@ -143,7 +143,7 @@ namespace Game
              }
 
              // 从左到右、从上到下存储格子
-             if (areaInfo.pattern.Count == 0)   // 没有指定图案的情况
+             if (areaInfo.pattern == null || areaInfo.pattern.Count == 0)   // 没有指定图案的情况
              {
                  for (int r = boundUp; r <= boundDown; r++)
                  {
