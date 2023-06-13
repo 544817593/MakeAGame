@@ -41,10 +41,11 @@ public sealed partial class Character :  Bright.Config.BeanBase
         { if(!_json["accuracy"].IsNumber) { throw new SerializationException(); }  Accuracy = _json["accuracy"]; }
         { if(!_json["atkRange"].IsNumber) { throw new SerializationException(); }  AtkRange = _json["atkRange"]; }
         { if(!_json["life"].IsNumber) { throw new SerializationException(); }  Life = _json["life"]; }
+        { if(!_json["DeathFuncName"].IsString) { throw new SerializationException(); }  DeathFuncName = _json["DeathFuncName"]; }
         PostInit();
     }
 
-    public Character(int characterID, string characterName, GameData.Rarity rarity, GameData.CardPack cardPack, int sanCost, GameData.PlayerBonus sanCostBonus, string deathDesc, float hp, GameData.PlayerBonus hpBonus, float atk, GameData.PlayerBonus atkBonus, float moveSpd, float def, System.Collections.Generic.List<int> feature, System.Collections.Generic.List<int> specialFeature, int width, int height, System.Collections.Generic.List<GameData.MoveDir> moveDirections, float atkSpd, GameData.PlayerBonus atkSpdBonus, float accuracy, int atkRange, int life ) 
+    public Character(int characterID, string characterName, GameData.Rarity rarity, GameData.CardPack cardPack, int sanCost, GameData.PlayerBonus sanCostBonus, string deathDesc, float hp, GameData.PlayerBonus hpBonus, float atk, GameData.PlayerBonus atkBonus, float moveSpd, float def, System.Collections.Generic.List<int> feature, System.Collections.Generic.List<int> specialFeature, int width, int height, System.Collections.Generic.List<GameData.MoveDir> moveDirections, float atkSpd, GameData.PlayerBonus atkSpdBonus, float accuracy, int atkRange, int life, string DeathFuncName ) 
     {
         this.CharacterID = characterID;
         this.CharacterName = characterName;
@@ -69,6 +70,7 @@ public sealed partial class Character :  Bright.Config.BeanBase
         this.Accuracy = accuracy;
         this.AtkRange = atkRange;
         this.Life = life;
+        this.DeathFuncName = DeathFuncName;
         PostInit();
     }
 
@@ -171,6 +173,10 @@ public sealed partial class Character :  Bright.Config.BeanBase
     /// 寿命（秒）
     /// </summary>
     public int Life { get; private set; }
+    /// <summary>
+    /// 死面方法的类名
+    /// </summary>
+    public string DeathFuncName { get; private set; }
 
     public const int __ID__ = -1827334537;
     public override int GetTypeId() => __ID__;
@@ -220,6 +226,7 @@ public sealed partial class Character :  Bright.Config.BeanBase
         + "Accuracy:" + Accuracy + ","
         + "AtkRange:" + AtkRange + ","
         + "Life:" + Life + ","
+        + "DeathFuncName:" + DeathFuncName + ","
         + "}";
     }
     
