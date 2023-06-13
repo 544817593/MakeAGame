@@ -143,7 +143,7 @@ namespace Game
         public static string GetDeathFuncTypeName(int charaID)
         {
             // return IdToSO.FindCardSOByID(charaID).deathFuncName;
-            return "Abigal_Miller";
+            return "B_Ranked_Staff";
         }
     }
 }
