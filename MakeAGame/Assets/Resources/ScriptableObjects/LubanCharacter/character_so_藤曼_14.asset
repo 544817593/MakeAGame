@@ -14,7 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterID: 14
   characterName: "\u85E4\u66FC"
-  anim: {fileID: 2561219391890680551, guid: 9c8d74c10dd6c8e44961ee53ff5fbeba, type: 3}
   rarity: 1
   cardPack: 1
   sanCost: 14
@@ -24,6 +23,7 @@ MonoBehaviour:
   attack: 0
   moveSpd: 6
   defend: 2
+  deathFuncName: Vine
   features: 
   specialFeatures: 22000000
   pieceSprite: {fileID: 21300000, guid: aa134295d463a604e94f5a292a629f74, type: 3}
@@ -34,6 +34,7 @@ MonoBehaviour:
   accuracy: 1
   attackRange: 2
   life: 999
+  anim: {fileID: 2561219391890680551, guid: 9c8d74c10dd6c8e44961ee53ff5fbeba, type: 3}
   sanCostBonus:
     stat: 0
     multiple: 0

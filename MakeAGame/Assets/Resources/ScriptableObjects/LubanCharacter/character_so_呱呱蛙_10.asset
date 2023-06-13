@@ -14,7 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterID: 10
   characterName: "\u5471\u5471\u86D9"
-  anim: {fileID: 1017564794953715825, guid: 48f24513d415b8148ac7eecc04ee3c21, type: 3}
   rarity: 1
   cardPack: 1
   sanCost: 24
@@ -24,6 +23,7 @@ MonoBehaviour:
   attack: 3
   moveSpd: 2
   defend: 0
+  deathFuncName: Quack_Frog
   features: 0f00000012000000
   specialFeatures: 
   pieceSprite: {fileID: 21300000, guid: 790d67962ca5459479a36b93df83f6ac, type: 3}
@@ -34,6 +34,7 @@ MonoBehaviour:
   accuracy: 0.8
   attackRange: 1
   life: 999
+  anim: {fileID: 1017564794953715825, guid: 48f24513d415b8148ac7eecc04ee3c21, type: 3}
   sanCostBonus:
     stat: 0
     multiple: 0

@@ -10,7 +10,6 @@ namespace Game
     {
         public int characterID;         // 角色id
         public string characterName;    // 角色名字
-        public GameObject anim;         // 动画预设体
 
         [FoldoutGroup("Card Information", true)]
         public RarityEnum rarity;       // 稀有度
@@ -30,6 +29,8 @@ namespace Game
         public float moveSpd;           // 行动速度
         [FoldoutGroup("Card Information")]
         public float defend;            // 防御力
+        [FoldoutGroup("Card Information")]
+        public string deathFuncName;    // 死面功能类名
 
         [FoldoutGroup("Features", true)]
         public List<FeatureEnum> features;// 特性
@@ -52,6 +53,8 @@ namespace Game
         public int attackRange;         // 攻击范围
         [FoldoutGroup("Piece Information")]
         public float life;              // 寿命
+        [FoldoutGroup("Piece Information")]
+        public GameObject anim;         // 动画预设体
 
         [FoldoutGroup("Player Stat Bonus", true)]
         public PlayerBonus sanCostBonus;    // 精神消耗玩家属性加成
@@ -61,6 +64,7 @@ namespace Game
         public PlayerBonus atkBonus;        // 攻击力玩家属性加成
         [FoldoutGroup("Player Stat Bonus")]
         public PlayerBonus atkSpdBonus;     // 攻速玩家属性加成
+
         public GameObject GetAnim()
         {
             return anim;

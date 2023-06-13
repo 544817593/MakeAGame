@@ -39,6 +39,8 @@ namespace Game.LubanDataLoad
         public string CardIconResFolder = "Sprites/Cards/Character";
         // 棋子图片资源路径
         public string PieceIconResFolder = "Sprites/Piece";
+        // 棋子动画资源路径
+        public string PieceAnimResFolder = "Prefabs/CardAnimPrefabs";
 
 #if UNITY_EDITOR
         private void Start()
@@ -196,6 +198,9 @@ namespace Game.LubanDataLoad
             if (json.AtkSpdBonus.Property != PlayerStats.None)
                 so.atkSpdBonus = new SOCharacterInfo.PlayerBonus()
                     {stat = (PlayerStatsEnum) json.AtkSpdBonus.Property, multiple = json.AtkSpdBonus.Multiple};
+
+            so.anim = LoadPieceAnim(json);
+            so.deathFuncName = json.DeathFuncName;
         }
 
         Sprite LoadCardSprite(Character json)
@@ -249,6 +254,17 @@ namespace Game.LubanDataLoad
                 return null;
             }
             return Resources.Load<Sprite>($@"{PieceIconResFolder}/{pieceSpriteName}");
+        }
+
+        GameObject LoadPieceAnim(Character json)
+        {
+            string pieceAnimGO = Extensions.GetFileWithTail(PieceAnimResFolder, $"_{json.CharacterID}", "prefab");
+            if (string.IsNullOrEmpty(pieceAnimGO))
+            {
+                Debug.LogError($"character {json.CharacterName} piece anim null");
+                return null;
+            }
+            return Resources.Load<GameObject>($@"{PieceAnimResFolder}/{pieceAnimGO}");
         }
 
 

@@ -14,7 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterID: 12
   characterName: "\u7231\u7B11\u732B"
-  anim: {fileID: 957386048066178094, guid: 9c0751bb44fdc5644963dc980d0b507f, type: 3}
   rarity: 1
   cardPack: 1
   sanCost: 30
@@ -24,6 +23,7 @@ MonoBehaviour:
   attack: 2
   moveSpd: 2
   defend: 0
+  deathFuncName: Laughing_Cat
   features: 100000001100000012000000
   specialFeatures: 
   pieceSprite: {fileID: 21300000, guid: 384751c9763dcf941adf1fef59c62cda, type: 3}
@@ -34,6 +34,7 @@ MonoBehaviour:
   accuracy: 0.8
   attackRange: 1
   life: 999
+  anim: {fileID: 957386048066178094, guid: 9c0751bb44fdc5644963dc980d0b507f, type: 3}
   sanCostBonus:
     stat: 6
     multiple: -0.1

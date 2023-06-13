@@ -14,7 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterID: 3
   characterName: "\u963F\u6BD4\u76D6\u5C14\xB7\u7C73\u52D2"
-  anim: {fileID: 1546366866069525409, guid: f7b0be1c0938eac418d4d8df52279f7e, type: 3}
   rarity: 5
   cardPack: 1
   sanCost: 90
@@ -24,6 +23,7 @@ MonoBehaviour:
   attack: 3
   moveSpd: 5
   defend: 0
+  deathFuncName: Abigal_Miller
   features: 0500000015000000
   specialFeatures: 1f00000020000000
   pieceSprite: {fileID: 21300000, guid: 978b64b6f784d4beda0ca86099689d05, type: 3}
@@ -34,6 +34,7 @@ MonoBehaviour:
   accuracy: 0.7
   attackRange: 2
   life: 999
+  anim: {fileID: 1546366866069525409, guid: f7b0be1c0938eac418d4d8df52279f7e, type: 3}
   sanCostBonus:
     stat: 0
     multiple: 0

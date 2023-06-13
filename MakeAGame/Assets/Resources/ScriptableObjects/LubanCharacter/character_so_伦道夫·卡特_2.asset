@@ -14,7 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterID: 2
   characterName: "\u4F26\u9053\u592B\xB7\u5361\u7279"
-  anim: {fileID: 5878722406761387808, guid: f2eaa584e3fe6ad4da84a93a2368b9e5, type: 3}
   rarity: 5
   cardPack: 1
   sanCost: 90
@@ -24,6 +23,7 @@ MonoBehaviour:
   attack: 0
   moveSpd: 1
   defend: 0
+  deathFuncName: Randolph_Carter
   features: 0200000015000000
   specialFeatures: 1c0000001d0000001e000000
   pieceSprite: {fileID: 21300000, guid: e982c2cb503864f06a44a514fc134b83, type: 3}
@@ -34,6 +34,7 @@ MonoBehaviour:
   accuracy: 0.7
   attackRange: 2
   life: 999
+  anim: {fileID: 5878722406761387808, guid: f2eaa584e3fe6ad4da84a93a2368b9e5, type: 3}
   sanCostBonus:
     stat: 0
     multiple: 0
