@@ -30,6 +30,7 @@ namespace Game
         private ItemController itemController = ItemController.Instance;
         public TriggerHelper mouseHelper;
         public GameObject touchArea;
+        public BoxCollider2D collider2d;
 
         void Awake()
         {
@@ -54,6 +55,7 @@ namespace Game
         private void InitBind()
         {            
             mouseHelper = touchArea.AddComponent<TriggerHelper>();
+            
             mouseHelper.OnMouseDownEvent = MouseDown;
             mouseHelper.OnMouseUpEvent = MouseUp;
         }
@@ -287,6 +289,11 @@ namespace Game
                 itemController.CancelMarking();
                 itemController.AfterUseCombatItem(itemController.markerItem);
             }
+        }
+        
+        public void SetColliderEnable(bool isEnable)
+        {
+            collider2d.enabled = isEnable;
         }
     }
 }

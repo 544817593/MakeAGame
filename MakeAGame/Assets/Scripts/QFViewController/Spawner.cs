@@ -131,6 +131,7 @@ namespace Game
 
             monster.touchArea = monster.transform.Find("Root/SpritePiece").gameObject;
             monster.touchArea.GetComponent<BoxCollider2D>().size = monster.data.monsterSprite.bounds.size;
+            monster.collider2d = monster.transform.Find("Root/SpritePiece").GetComponent<BoxCollider2D>();
             
             //动画部分
             GameObject animGO = monster.data.GetChildAnim();

@@ -347,5 +347,10 @@ namespace Game
         {
             currLife.Value += value;
         }
+
+        public void SetColliderEnable(bool isEnable)
+        {
+            collider2d.enabled = isEnable;
+        }
     }
 }

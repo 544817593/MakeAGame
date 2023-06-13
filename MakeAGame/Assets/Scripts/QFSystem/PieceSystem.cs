@@ -52,7 +52,22 @@ namespace Game
 
         protected override void OnInit()
         {
-            
+
+            this.RegisterEvent<SelectMapStartEvent>(e => SetPieceCollidersEnable(false));
+            this.RegisterEvent<SelectMapEndEvent>(e => SetPieceCollidersEnable(true));
+        }
+
+        void SetPieceCollidersEnable(bool isEnable)
+        {
+            foreach (var vPiece in pieceFriendList)
+            {
+                vPiece.SetColliderEnable(isEnable);
+            }
+
+            foreach (var monster in pieceEnemyList)
+            {
+                monster.SetColliderEnable(isEnable);
+            }
         }
         
         public bool AddPieceFriend(Card card, List<BoxGrid> grids)

@@ -279,6 +279,11 @@ namespace Game
             return stateFlag == PieceStateEnum.Attacking;
         }
 
+        public void SetTouchAreaEnable(bool isEnable)
+        {
+            
+        }
+
         public IArchitecture GetArchitecture()
         {
             return GameEntry.Interface;
