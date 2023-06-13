@@ -52,6 +52,7 @@ namespace RestUI
             //Sprite x = Resources.Load<Sprite>("Sprites/Rest/0");
             //Debug.Log(x != null);
             //Dice01.sprite = x;
+            ChangeSkillPanel.gameObject.SetActive(false);
             AllButtonListen();
         }
 		
