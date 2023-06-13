@@ -21,7 +21,7 @@ namespace Game
         public BindableProperty<int> mouseDirection { get; set; }
 
         void SelectMapStart(SelectArea area);
-        void SelectMapEnd(ViewCard viewCard);
+        void SelectMapEnd(ViewCard viewCard, bool isCancel);
     }
     
     public class MapSelectSystem: AbstractSystem, IMapSelectSystem
@@ -168,7 +168,7 @@ namespace Game
 
              foreach (var grid in validSelectedGrids)
              {
-                 grid.ShowHint("selected");
+                 grid.ShowHint(stage);
              }
         }
 
@@ -186,34 +186,45 @@ namespace Game
         public void SelectMapStart(SelectArea area)
         {
             Debug.Log($"MapSelectSystem: SelectMapStart, area w: {area.width} h: {area.height}");
-            stage = MapSelectStage.IsPutPiece;
+            stage = area.selectStage;
             areaInfo = area;
         }
 
-        public void SelectMapEnd(ViewCard viewCard)
+        public void SelectMapEnd(ViewCard viewCard, bool isCancel)
         {
-            Debug.Log("MapSelectSystem: SelectMapEnd");
-            stage = MapSelectStage.None;
-            
-            // 判断是否成功放置棋子
-            // 1.格子数量
-            bool isGridCountCorrect = validSelectedGrids.Count == areaInfo.width * areaInfo.height;
-            // 2.蓝是否足够
-            int crtSan = UIKit.GetPanel<UIHandCard>().crtSan;
-            bool isSanEnough = viewCard.card.sanCost <= crtSan;
-            if (isGridCountCorrect && isSanEnough)
-            {
-                Debug.Log("it's ok to put piece");
-                PutPieceByHandCardEvent e = new PutPieceByHandCardEvent()
-                    {viewCard = viewCard, pieceGrids = validSelectedGrids};
-                this.SendEvent<PutPieceByHandCardEvent>(e);
-            }
-            else
-            {
-                Debug.Log(
-                    $"put piece failed, ret1: {isGridCountCorrect} ret2: {isSanEnough}");
-            }
+            Debug.Log($"MapSelectSystem: SelectMapEnd, isCancel: {isCancel}, stage: {stage}");
 
+            if (isCancel)   // 取消当前操作
+            {
+            }
+            else if (stage == MapSelectStage.IsPutPiece)    // 放置棋子判断
+            {
+                // 判断是否成功放置棋子
+                // 1.格子数量
+                bool isGridCountCorrect = validSelectedGrids.Count == areaInfo.width * areaInfo.height;
+                // 2.蓝是否足够
+                int crtSan = UIKit.GetPanel<UIHandCard>().crtSan;
+                bool isSanEnough = viewCard.card.sanCost <= crtSan;
+                if (isGridCountCorrect && isSanEnough)
+                {
+                    Debug.Log("it's ok to put piece");
+                    PutPieceByHandCardEvent e = new PutPieceByHandCardEvent()
+                        {viewCard = viewCard, pieceGrids = validSelectedGrids};
+                    this.SendEvent<PutPieceByHandCardEvent>(e);
+                }
+                else
+                {
+                    Debug.Log(
+                        $"put piece failed, ret1: {isGridCountCorrect} ret2: {isSanEnough}");
+                }   
+            }
+            else if (stage == MapSelectStage.IsPutDeathFunc)    // 死面判断
+            {
+                
+            }
+            
+            
+            stage = MapSelectStage.None;
             crtGrid.Value = null;
             mouseDirection.Value = -1;
             selectedGrids.Clear();
@@ -234,8 +245,8 @@ namespace Game
         public int width;
         public int height;
         public List<int> pattern;
-
-        public string ToString => $"w: {width} h: {height}";
+        public MapSelectStage selectStage;
+        public string ToString => $"w: {width} h: {height} pattern count: {pattern.Count} selectStage: {selectStage}";
     }
 
     #region 旧的rangeselector

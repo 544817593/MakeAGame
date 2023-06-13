@@ -173,19 +173,22 @@ namespace Game
             mapSelectSystem.mouseDirection.Value = mouseDirection;
         }
 
-        public void ShowHint(string hintType)
+        public void ShowHint(MapSelectStage stage)
         {
             if(!srHint.gameObject.activeSelf)
                 srHint.gameObject.SetActive(true);
             
-            switch (hintType)
+            switch (stage)
             {
-                case "selected":
+                case MapSelectStage.IsPutPiece:
                     srHint.color = Color.yellow;
                     break;
-                case "attackRange":
-                    srHint.color = Color.blue;
+                case MapSelectStage.IsPutDeathFunc:
+                    srHint.color = Color.green;
                     break;
+                // default:
+                //     srHint.color = Color.blue;
+                //     break;
             }
         }
 
