@@ -25,7 +25,7 @@ namespace Game
             var uiHelper = touchArea.AddComponent<UIEventHelper>();
             
             canvas.overrideSorting = true;
-            canvas.sortingOrder = 100;
+            canvas.sortingOrder = 101;
             transform.localScale = new Vector3(UIHandCard.normalScale, UIHandCard.normalScale, 1f);
 
             var uiHandCard = UIKit.GetPanel<UIHandCard>();
@@ -37,7 +37,7 @@ namespace Game
             uiHelper.OnUIPointExit += uiHandCard.OnUnfocusCard;
             uiHelper.OnUIBeginDrag += OnDragStart;
             uiHelper.OnUIBeginDrag += () => uiHandCard.OnDragCardStart(this);
-            uiHelper.OnUIDrag = OnDrag;
+            // uiHelper.OnUIDrag = OnDrag;
             uiHelper.OnUIEndDrag += uiHandCard.OnDragCardEnd;
             uiHelper.OnUIEndDrag += OnDragEnd;
             
@@ -89,26 +89,37 @@ namespace Game
             OnUpdate.Remove(ShowTooltip);
         }
 
+        private bool isDraging;
         void OnDragStart()
         {
-            // Debug.Log("ViewCard: OnDragStart");
-            canvasGroup.alpha = 0.5f;
+            if (Input.GetMouseButton(0))
+            {
+                isDraging = true;
+                
+                // Debug.Log("ViewCard: OnDragStart");
+                canvasGroup.alpha = 0.5f;
 
-            SelectMapStartCommand comm = new SelectMapStartCommand();
-            comm.area = new SelectArea() {width = card.width, height = card.height};
-            this.SendCommand<SelectMapStartCommand>(comm);
+                SelectMapStartCommand comm = new SelectMapStartCommand();
+                comm.area = new SelectArea() {width = card.width, height = card.height};
+                this.SendCommand<SelectMapStartCommand>(comm);   
+            }
         }
 
-        void OnDrag()
-        {
-            // Debug.Log("is dragging");
-        }
+        // void OnDrag()
+        // {
+        //     // Debug.Log("is dragging");
+        // }
 
         void OnDragEnd()
         {
-            Debug.Log("ViewCard: OnDragEnd");
-            canvasGroup.alpha = 1f;
-            this.SendCommand<SelectMapEndCommand>(new SelectMapEndCommand(this));
+            if (isDraging)
+            {
+                // Debug.Log("ViewCard: OnDragEnd");
+                canvasGroup.alpha = 1f;
+                this.SendCommand<SelectMapEndCommand>(new SelectMapEndCommand(this));
+
+                isDraging = false;
+            }
         }
 
         void ShowTooltip()

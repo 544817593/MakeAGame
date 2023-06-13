@@ -163,7 +163,7 @@ namespace Game
 		{
 			// if (isDragging) return;
 			
-			viewCardsList[focusIndex].canvas.sortingOrder = 100;
+			viewCardsList[focusIndex].canvas.sortingOrder = 101;
 			
 			Debug.Log($"UIHandCard: OnUnfocusCard {focusIndex}");
 
@@ -178,12 +178,15 @@ namespace Game
 
 		public void OnDragCardStart(ViewCard viewCard)
 		{
-			isDragging = true;
-			
-			ImgPieceIcon.sprite = viewCard.card.pieceSprite;
-			ImgPieceIcon.SetNativeSize();	// 恢复原大小
-			PieceIcon.gameObject.SetActive(true);
-			anim.Play("Down", -1, 0);
+			if (Input.GetMouseButton(0))
+			{
+				isDragging = true;
+				
+				ImgPieceIcon.sprite = viewCard.card.pieceSprite;
+				ImgPieceIcon.SetNativeSize();	// 恢复原大小
+				PieceIcon.gameObject.SetActive(true);
+				anim.Play("Down", -1, 0);
+			}
 		}
 		
 		private void Update()
@@ -191,21 +194,41 @@ namespace Game
 			// todo 优化 不要在update里写if
 			if (isDragging)
 			{
-				var pos = Input.mousePosition;
-					// Debug.Log($"mouse pos: {pos} screen width: {Screen.width} height: {Screen.height}");
-					pos -= new Vector3(Screen.width / 2f, Screen.height / 2f, 0f);
-					PieceIcon.localPosition = pos;
-					// Debug.Log($"mouseImg localpos: {mouseImg.localPosition} pos: {mouseImg.position}");
+				// var canvas = UIKit.Root.Canvas;
+				// Vector2 uisize = canvas.GetComponent<RectTransform>().sizeDelta;//得到画布的尺寸
+				
+				// var pos = Input.mousePosition;
+				// pos -= new Vector3(Screen.width / 2f, Screen.height / 2f, 0f);
+				// pos.x = pos.x * (uisize.x / Screen.width);
+				// pos.y = pos.y * (uisize.y / Screen.height);
+				// PieceIcon.localPosition = pos;
+
+				PieceIcon.localPosition = Extensions.ScreenToUIPos(Input.mousePosition);
+
+				// SetPieceIconPosition();
 			}
+		}
+
+		void SetPieceIconPosition()
+		{
+			// var iconScreenPos = Camera.main.WorldToScreenPoint(PieceIcon.transform.position);
+			// var mouseScreenPos = new Vector3(Input.mousePosition.x, Input.mousePosition.y, iconScreenPos.z);
+			var mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+			var canvas = UIKit.Root.Canvas;
+			var uiPos = canvas.transform.InverseTransformPoint(mouseWorldPos);
+			Debug.Log($"mouseScreenPos: {mouseWorldPos} uiPos: {uiPos}");
 		}
 
 		public void OnDragCardEnd()
 		{
-			isDragging = false;
+			if (isDragging)
+			{
+				isDragging = false;
 			
-			PieceIcon.gameObject.SetActive(false);
-			anim.Play("Up", -1, 0);
-			UpdateLayout();
+				PieceIcon.gameObject.SetActive(false);
+				anim.Play("Up", -1, 0);
+				UpdateLayout();	
+			}
 		}
 		
 		public void UpdateLayout()

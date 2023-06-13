@@ -7,6 +7,10 @@
     "rarity": 1,
     "ToCancelRelics": [],
     "BeCanceledRelics": [],
-    "effectPriority": 0
+    "effectPriority": 0,
+    "Params": [
+      3
+    ],
+    "ParamsDesc": "增加最大混沌值"
   }
 ]

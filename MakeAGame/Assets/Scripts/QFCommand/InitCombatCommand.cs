@@ -66,6 +66,8 @@ namespace Game
             
             // 遗物系统开始接受计时
             this.GetSystem<IRelicSystem>().StartCountTime();
+            
+            this.SendEvent<RoomCombatStartEvent>();
         }
 
         void CountTest()

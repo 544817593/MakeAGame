@@ -26,10 +26,12 @@ public sealed partial class Relic :  Bright.Config.BeanBase
         { var __json0 = _json["ToCancelRelics"]; if(!__json0.IsArray) { throw new SerializationException(); } ToCancelRelics = new System.Collections.Generic.List<int>(__json0.Count); foreach(JSONNode __e0 in __json0.Children) { int __v0;  { if(!__e0.IsNumber) { throw new SerializationException(); }  __v0 = __e0; }  ToCancelRelics.Add(__v0); }   }
         { var __json0 = _json["BeCanceledRelics"]; if(!__json0.IsArray) { throw new SerializationException(); } BeCanceledRelics = new System.Collections.Generic.List<int>(__json0.Count); foreach(JSONNode __e0 in __json0.Children) { int __v0;  { if(!__e0.IsNumber) { throw new SerializationException(); }  __v0 = __e0; }  BeCanceledRelics.Add(__v0); }   }
         { if(!_json["effectPriority"].IsNumber) { throw new SerializationException(); }  EffectPriority = _json["effectPriority"]; }
+        { var __json0 = _json["Params"]; if(!__json0.IsArray) { throw new SerializationException(); } Params = new System.Collections.Generic.List<float>(__json0.Count); foreach(JSONNode __e0 in __json0.Children) { float __v0;  { if(!__e0.IsNumber) { throw new SerializationException(); }  __v0 = __e0; }  Params.Add(__v0); }   }
+        { if(!_json["ParamsDesc"].IsString) { throw new SerializationException(); }  ParamsDesc = _json["ParamsDesc"]; }
         PostInit();
     }
 
-    public Relic(int relicID, string relicName, string desc, string effectDesc, GameData.Rarity rarity, System.Collections.Generic.List<int> ToCancelRelics, System.Collections.Generic.List<int> BeCanceledRelics, int effectPriority ) 
+    public Relic(int relicID, string relicName, string desc, string effectDesc, GameData.Rarity rarity, System.Collections.Generic.List<int> ToCancelRelics, System.Collections.Generic.List<int> BeCanceledRelics, int effectPriority, System.Collections.Generic.List<float> Params, string ParamsDesc ) 
     {
         this.RelicID = relicID;
         this.RelicName = relicName;
@@ -39,6 +41,8 @@ public sealed partial class Relic :  Bright.Config.BeanBase
         this.ToCancelRelics = ToCancelRelics;
         this.BeCanceledRelics = BeCanceledRelics;
         this.EffectPriority = effectPriority;
+        this.Params = Params;
+        this.ParamsDesc = ParamsDesc;
         PostInit();
     }
 
@@ -81,6 +85,14 @@ public sealed partial class Relic :  Bright.Config.BeanBase
     /// 与其他遗物同时作用于同一数值时，两者的先后顺序
     /// </summary>
     public int EffectPriority { get; private set; }
+    /// <summary>
+    /// 参数
+    /// </summary>
+    public System.Collections.Generic.List<float> Params { get; private set; }
+    /// <summary>
+    /// 参数说明
+    /// </summary>
+    public string ParamsDesc { get; private set; }
 
     public const int __ID__ = -1964165695;
     public override int GetTypeId() => __ID__;
@@ -107,6 +119,8 @@ public sealed partial class Relic :  Bright.Config.BeanBase
         + "ToCancelRelics:" + Bright.Common.StringUtil.CollectionToString(ToCancelRelics) + ","
         + "BeCanceledRelics:" + Bright.Common.StringUtil.CollectionToString(BeCanceledRelics) + ","
         + "EffectPriority:" + EffectPriority + ","
+        + "Params:" + Bright.Common.StringUtil.CollectionToString(Params) + ","
+        + "ParamsDesc:" + ParamsDesc + ","
         + "}";
     }
     
