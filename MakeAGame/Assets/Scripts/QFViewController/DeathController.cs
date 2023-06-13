@@ -153,27 +153,11 @@ public class DeathController : MonoBehaviour, IController
             if (pieceSystem.IsPieceMonster(grid.occupation))
             {
                 Monster monster = pieceSystem.getMonsterById(grid.occupation);
-                monster.hp.Value -= damage;
-                MonsterDeathCheck(monster);
+                monster.takeDamage(damage);
             }
         }
     }
 
-    /// <summary>
-    /// 对传入怪物进行死亡检查，如果生命值小于等于0则进行死亡一系列处理，参考PieceAttackCommand中最后的循环
-    /// </summary>
-    /// <param name="monster"></param>
-    public void MonsterDeathCheck(Monster monster)
-    {
-        if (monster.hp <= 0)
-        {
-            this.GetSystem<IPieceBattleSystem>().EndBattle(monster);
-            // 再从棋子系统中注销
-            this.GetSystem<IPieceSystem>().RemovePiece(monster);
-            // 最后处理自身的死亡
-            monster.Die();
-        }
-    }
     /// <summary>
     /// 对地图上随机RandMonsterCount个怪物造成传入治疗量的伤害，这个伤害可以享受卡牌的伤害加成强化效果，
     /// 包含了怪物死亡检查MonsterDeathCheck
@@ -196,8 +180,7 @@ public class DeathController : MonoBehaviour, IController
             {
                 foreach (Monster monster in pieceSystem.pieceEnemyList)
                 {
-                    monster.hp.Value -= damage;
-                    MonsterDeathCheck(monster);
+                    monster.takeDamage(damage);
                 }
             }
             else
@@ -216,8 +199,7 @@ public class DeathController : MonoBehaviour, IController
                 for (int i = 0; i < RandMonsterCount; i++)
                 {
                     Monster monster = pieceSystem.pieceEnemyList[numbers[i]];
-                    monster.hp.Value -= damage;
-                    MonsterDeathCheck(monster);
+                    monster.takeDamage(damage);
                 }
             }
         }

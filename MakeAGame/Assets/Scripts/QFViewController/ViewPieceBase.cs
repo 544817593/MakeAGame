@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using DamageNumbersPro;
 using QFramework;
 using Unity.VisualScripting;
@@ -13,7 +14,9 @@ namespace Game
     /// </summary>
     public partial class ViewPieceBase: MonoBehaviour, IController, ICanSendEvent
     {
+        // 怪物受到棋子伤害的数字弹出样式资源，棋子受到怪物伤害的数字弹出样式资源
         protected DamageNumberMesh MonsterDamageNumer;
+
         // protected Transform healthBar;
 
         protected IMapSystem mapSystem;
@@ -78,12 +81,9 @@ namespace Game
         {
             InitBind();
             
-            // 怪物受到棋子伤害的数字弹出样式资源，棋子受到怪物伤害的数字弹出样式资源
-            MonsterDamageNumer = Resources.Load("Prefabs/Damage Number Prefab/Monster Damage").GetComponent<DamageNumberMesh>();
-            
             mapSystem = this.GetSystem<IMapSystem>();
             movementSystem = this.GetSystem<IMovementSystem>();
-
+            
             // 棋子自身也会监听棋子（包括自己）
             OnPieceMoveReady += OnMoveReadyEvent;
             OnPieceMoveFinish += OnMoveFinishEvent;
@@ -92,6 +92,7 @@ namespace Game
             OnPieceUnderAttack += OnUnderAttackEvent;
             
             hp.Register(e => OnCurrHpChanged(e));
+            MonsterDamageNumer = Resources.Load("Prefabs/Damage Number Prefab/Monster Damage").GetComponent<DamageNumberMesh>();
         }
 
         /// <summary>
@@ -223,6 +224,19 @@ namespace Game
             return false;
         }
 
+        // 受到棋子以外的东西的伤害，地块，死面之类的，包含掉血后的死亡检查
+        public void takeDamage(int damage)
+        { 
+            hp.Value -= damage;
+            if (hp <= 0)
+            {
+                this.GetSystem<IPieceBattleSystem>().EndBattle(this); // 不确定是不是需要
+                // 再从棋子系统中注销
+                this.GetSystem<IPieceSystem>().RemovePiece(this);
+                // 最后处理自身的死亡
+                Die();
+            }
+        }
         public virtual void Die()
         {
             state = new PieceStateIdle(this);
