@@ -143,26 +143,73 @@ namespace Game
              }
 
              // 从左到右、从上到下存储格子
-             for (int r = boundUp; r <= boundDown; r++)
+             if (areaInfo.pattern.Count == 0)   // 没有指定图案的情况
              {
-                 for (int c = boundLeft; c <= boundRight; c++)
+                 for (int r = boundUp; r <= boundDown; r++)
                  {
-                     selectedGrids.Add(mapSystem.Grids()[r,c]);
+                     for (int c = boundLeft; c <= boundRight; c++)
+                     {
+                         selectedGrids.Add(mapSystem.Grids()[r,c]);
+                     }
                  }
              }
-             
+             else // 有指定图案的情况
+             {
+                 int patIndex = 0;
+                 int[] offset = areaInfo.pattern[patIndex];
+                 int patCount = areaInfo.pattern.Count;
+                 for (int r = boundUp; r <= boundDown; r++)
+                 {
+                     for (int c = boundLeft; c <= boundRight; c++)
+                     {
+                         // Debug.Log($"check {r} {c} == {crtGrid.Value.row}+{offset[0]} {crtGrid.Value.col}+{offset[1]}");
+                         if (r == crtGrid.Value.row + offset[0] && c == crtGrid.Value.col + offset[1])
+                         {
+                             // Debug.Log($"check ok");
+                             selectedGrids.Add(mapSystem.Grids()[r,c]);
+                             if (patIndex + 1 < patCount)
+                             {
+                                 patIndex++;
+                                 offset = areaInfo.pattern[patIndex];
+                                 // Debug.Log($"next offset {offset[0]} {offset[1]}");
+                             }
+                         }
+                     }
+                 }
+             }
+
              PrintSelectedGrids();
              
              // 二次筛选
              validSelectedGrids.Clear();
-             foreach (var grid in selectedGrids)
+
+             if (stage == MapSelectStage.IsPutPiece)
              {
-                 // 1.地形无法放置；2.上方已经有其他棋子
-                 if (grid.terrain.Value == (int)TerrainEnum.Edge || grid.terrain.Value == (int)TerrainEnum.Invalid
-                     || !grid.IsEmpty()) {}
-                 else
+                 foreach (var grid in selectedGrids)
                  {
-                     validSelectedGrids.Add(grid);
+                     // 1.地形无法放置；2.上方已经有其他棋子
+                     if (grid.terrain.Value == (int)TerrainEnum.Edge || grid.terrain.Value == (int)TerrainEnum.Invalid
+                                                                     || !grid.IsEmpty()) {}
+                     else
+                     {
+                         validSelectedGrids.Add(grid);
+                     }
+                 }
+             }
+             else if (stage == MapSelectStage.IsPutDeathFunc)
+             {
+                 foreach (var grid in selectedGrids)
+                 {
+                     // 1.地形无法放置
+                     if (grid.terrain.Value == (int) TerrainEnum.Edge ||
+                         grid.terrain.Value == (int) TerrainEnum.Invalid)
+                     {
+                         
+                     }
+                     else
+                     {
+                         validSelectedGrids.Add(grid);
+                     }
                  }
              }
 
@@ -244,7 +291,7 @@ namespace Game
     {
         public int width;
         public int height;
-        public List<int> pattern;
+        public List<int[]> pattern;    // [rOffset, cOffset] 从左上往右下写
         public MapSelectStage selectStage;
         public string ToString => $"w: {width} h: {height} pattern count: {pattern.Count} selectStage: {selectStage}";
     }

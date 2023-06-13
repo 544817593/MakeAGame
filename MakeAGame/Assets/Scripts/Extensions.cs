@@ -142,13 +142,8 @@ namespace Game
 
         public static string GetDeathFuncTypeName(int charaID)
         {
-            switch (charaID)
-            {
-                case 1:
-                    return "Francis_Wayland_Thurston";
-                default:
-                    return "Francis_Wayland_Thurston";  // todo test
-            }
+            // return IdToSO.FindCardSOByID(charaID).deathFuncName;
+            return "Abigal_Miller";
         }
     }
 }
