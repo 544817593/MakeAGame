@@ -134,7 +134,9 @@ public class BuffTerrianFire : BuffToPiece
         if(damageTriggerTime >= 1)
         {
             Debug.Log($"BuffTerrianFire伤害：{damagePerLevel * curLevel * target.maxHp}, {(int)(damagePerLevel * curLevel * target.maxHp)}");
-            target.takeDamage((int) (damagePerLevel * curLevel * target.maxHp), TerrainEnum.Fire);
+            // 伤害为0-1之间的时候取1
+            int dmg = ((int)(damagePerLevel * curLevel * target.maxHp)) == 0 ? 1 : (int)(damagePerLevel * curLevel * target.maxHp);
+            target.takeDamage(dmg, TerrainEnum.Fire);
             damageTriggerTime = 0;
         }
     }
@@ -247,12 +249,10 @@ public class BuffTerrianPoison : BuffToPiece
 public class BuffTerrianWater : BuffToPiece
 {
     private float moveSpeedDown;
-    private float timer;
     public BuffTerrianWater(ViewPieceBase _piece)
     {
         target = _piece;
         moveSpeedDown = 0.5f;
-        timer = 0;
     }
     public override bool OnBuffCreate()
     {
@@ -320,14 +320,14 @@ public class BuffDrowning : BuffToPiece
     public override bool OnBuffCreate()
     {
         // 已携带溺亡就不叠加
-        if (target.listBuffs.Contains(BuffType.Drowning))
+        if (target == null || target.listBuffs.Contains(BuffType.Drowning))
         {
             return false;
         }
-        else if(target != null && target.moveSpeed < 10 && target.PieceOnTerrianType(TerrainEnum.Water))
+        else if (target != null && target.moveSpeed < 10 && target.PieceOnTerrianType(TerrainEnum.Water))
         {
             return true;
-        }
+        }   
         else
         {
             return false;
