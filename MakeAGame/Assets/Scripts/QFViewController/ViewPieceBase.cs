@@ -40,6 +40,7 @@ namespace Game
 
         public Animator animator; // 动画组件
         protected Coroutine movementCoroutine; // 移动协程
+        public bool isFacingRight = true; // 棋子目前预设体是否朝向右侧
 
         public List<BoxGrid> pieceGrids { get; protected set; } = new List<BoxGrid>();
         // 经过所有占地格子计算出来的时间流速
@@ -295,7 +296,29 @@ namespace Game
             
             Destroy(gameObject);
         }
-        
+
+        /// <summary>
+        /// 更改方向后可能需要旋转棋子预设体的朝向
+        /// </summary>
+        /// <param name="newDir">新方向</param>
+        /// <returns></returns>
+        public void PieceFlip(DirEnum newDir)
+        {
+            if (isFacingRight && Extensions.leftDirs.Contains(newDir) ||
+                !isFacingRight && Extensions.rightDirs.Contains(newDir))
+            {
+                Vector3 currentEulerAngles = transform.eulerAngles;
+                Vector3 newEulerAngles = new Vector3(
+                    currentEulerAngles.x,
+                    (currentEulerAngles.y + 180) % 360,
+                    currentEulerAngles.z
+                );
+                transform.rotation = Quaternion.Euler(newEulerAngles);
+                isFacingRight = !isFacingRight;
+            }
+
+        }
+
         protected virtual void OnMoveReadyEvent(PieceMoveReadyEvent e)
         {
 

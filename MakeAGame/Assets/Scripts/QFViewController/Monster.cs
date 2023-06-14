@@ -151,8 +151,10 @@ namespace Game
                 }
 
                 // 设置移动方向
-                direction = movementSystem.NeighbourBoxGridsToDir(this.GetSystem<IMapSystem>().Grids()
+                DirEnum newDirection = movementSystem.NeighbourBoxGridsToDir(this.GetSystem<IMapSystem>().Grids()
                     [leftTopGridPos.Value.Item1, leftTopGridPos.Value.Item2], aStarPath[1]);
+                PieceFlip(newDirection);
+                direction = newDirection;
 
                 // 更新想要去的格子
                 positionAfterMovement = this.GetSystem<IMovementSystem>().CalculateNextPosition(original, direction);

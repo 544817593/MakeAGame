@@ -125,7 +125,6 @@ namespace Game
             // 置于MonsterPosition父物体下，该物体比地图略高一些
             piece.transform.SetParent(GameObject.Find("MonsterPosition").transform);
             piece.transform.position = gridTransform.position;
-            // piece.transform.Rotate(90, 0, 0);
             Monster monster = piece.GetComponent<Monster>();
             monster.data = so;
 
@@ -142,7 +141,9 @@ namespace Game
                 monsterAnim.transform.SetParent(piece.transform);
                 monsterAnim.transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
                 monsterAnim.transform.localPosition = new Vector3(0, 0.25f, -0.25f); // 确保不会被棋盘遮住
-                monsterAnim.transform.localRotation = Quaternion.Euler(new Vector3(0, 0, 0));
+                monsterAnim.transform.localRotation = animGO.transform.localRotation;
+                monster.isFacingRight = false;
+
                 Destroy(piece.transform.Find("Root/SpritePiece").GetComponent<SpriteRenderer>()); // 如果有动画预设体，删除图片，暂时先这样写，直到所有棋子都有动画
             }
             else

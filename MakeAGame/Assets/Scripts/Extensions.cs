@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using QFramework;
@@ -12,7 +13,19 @@ namespace Game
     public static class Extensions
     {
         public const string DefaultCharacterInfoPath = "ScriptableObjects/Characters/FrancisWaylandThurston";    // 默认角色信息资源
-        
+
+        /// <summary>
+        /// 向左走的方向
+        /// </summary>
+        public static List<DirEnum> leftDirs = new List<DirEnum>()
+            { DirEnum.Topleft, DirEnum.Left, DirEnum.Downleft};
+
+        /// <summary>
+        /// 向右走的方向
+        /// </summary>
+        public static List<DirEnum> rightDirs = new List<DirEnum>()
+            { DirEnum.Topright, DirEnum.Right, DirEnum.Downright };
+
         /// <summary>
         /// 获取角色信息so
         /// </summary>
@@ -144,5 +157,6 @@ namespace Game
         {
             return IdToSO.FindCardSOByID(charaID).deathFuncName;
         }
+
     }
 }

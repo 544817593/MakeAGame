@@ -254,7 +254,8 @@ namespace Game
             if (e.viewCard.card.charaName == "弗朗西斯·维兰德·瑟斯顿")
             {
                 Dialogue dialogue = GameObject.Find("Dialogue")?.GetComponent<Dialogue>();
-                 dialogue.getControl = true;
+                if (dialogue != null) dialogue.getControl = true;
+
             }
             // todo 手牌使用后的后续处理（此时已经移出手牌系统并隐藏），如返回背包、销毁...
             Debug.Log("after card use as life card");

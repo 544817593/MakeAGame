@@ -94,13 +94,14 @@ namespace Game
             //动画部分
             GameObject animGO = IdToSO.FindCardSOByID(card.charaID).GetAnim();
             if (animGO != null)
-            {
-                GameObject pieceAnim = GameObject.Instantiate(animGO);
+            {                
+                GameObject pieceAnim = GameObject.Instantiate(animGO);                
                 animator = pieceAnim.GetComponent<Animator>();
                 pieceAnim.transform.SetParent(gameObject.transform);
-                pieceAnim.transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
+                pieceAnim.transform.localScale = animGO.transform.localScale * 0.1f;
                 pieceAnim.transform.localPosition = new Vector3(0, 0.25f, -0.25f); // 确保不会被棋盘遮住
-                pieceAnim.transform.localRotation = Quaternion.Euler(new Vector3(0, 0, 0));
+                pieceAnim.transform.localRotation = animGO.transform.localRotation;
+
                 Destroy(gameObject.transform.Find("Root/SpritePiece").GetComponent<SpriteRenderer>());
             }
 
