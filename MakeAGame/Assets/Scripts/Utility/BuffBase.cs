@@ -61,13 +61,13 @@ public class BuffTerrianFire : BuffToPiece
     private float buffEnhanceTimer;
     // 每秒触发1次扣血
     private float damageTriggerTime;
-    // 每层buff的计时器，5秒重置一次
+    // 当前层buff的计时器
     private float curLevelTimer;
-    public BuffTerrianFire(ViewPieceBase _piece, float _duration)
+    public BuffTerrianFire(ViewPieceBase _piece)
     {
         target = _piece;
-        duration = _duration;
-        leftTime = duration;
+        duration = 5f;
+        leftTime = 5f;
         damagePerLevel = 0.01f;
         curLevel = 1;
         buffEnhanceTimer = 0;
@@ -90,7 +90,7 @@ public class BuffTerrianFire : BuffToPiece
     {
         Debug.Log("BuffTerrianFire: start");
         target.listBuffs.Add(BuffType.Terrian_Fire);
-        target.takeDamage((int) damagePerLevel * curLevel * target.maxHp);
+        target.takeDamage((int)(damagePerLevel * curLevel * target.maxHp), TerrainEnum.Fire);
     }
 
     public override void OnBuffRefresh()
@@ -133,7 +133,8 @@ public class BuffTerrianFire : BuffToPiece
         damageTriggerTime += Time.deltaTime;
         if(damageTriggerTime >= 1)
         {
-            target.takeDamage((int)damagePerLevel * curLevel * target.maxHp);
+            Debug.Log($"BuffTerrianFire伤害：{damagePerLevel * curLevel * target.maxHp}, {(int)(damagePerLevel * curLevel * target.maxHp)}");
+            target.takeDamage((int) (damagePerLevel * curLevel * target.maxHp), TerrainEnum.Fire);
             damageTriggerTime = 0;
         }
     }
@@ -141,9 +142,223 @@ public class BuffTerrianFire : BuffToPiece
     public override void OnBuffRemove()
     {
         Debug.Log("BuffTerrianFire: remove");
+        if (target != null)
+        {
+            target.listBuffs.Remove(BuffType.Terrian_Fire);
+        }
+    }
+}
+
+public class BuffTerrianPoison : BuffToPiece
+{
+    // 每层buff掉血量
+    private int damagePerLevel;
+    // 当前buff层数
+    private int curLevel;
+    // 检查buff层数增加的计时器
+    private float buffEnhanceTimer;
+    // 每秒触发1次扣血
+    private float damageTriggerTime;
+    // 当前层buff的计时器
+    private float curLevelTimer;
+    public BuffTerrianPoison(ViewPieceBase _piece)
+    {
+        target = _piece;
+        duration = 5f;
+        leftTime = 5f;
+        damagePerLevel = 1;
+        curLevel = 1;
+        buffEnhanceTimer = 0;
+        damageTriggerTime = 0;
+        curLevelTimer = 0;
+    }
+    public override bool OnBuffCreate()
+    {
+        // 如果已经有毒沼buff，不需要添加buff，由原有毒沼buff的refresh逻辑叠加层数
+        if (target.listBuffs.Contains(BuffType.Terrian_Poison))
+        {
+            return false;
+        }
+        return target.PieceOnTerrianType(TerrainEnum.Poison);
+    }
+    public override void OnBuffStart()
+    {
+        Debug.Log("BuffTerrianPoison: start");
+        target.listBuffs.Add(BuffType.Terrian_Poison);
+        target.takeDamage(damagePerLevel * curLevel, TerrainEnum.Poison);
     }
 
-    
+    public override void OnBuffRefresh()
+    {
+        Debug.Log("BuffTerrianPoison: refresh");
+        // 如果当前在毒沼格子上，每5秒加1层buff，每加1层 持续时间和伤害都递增
+        // 如果不在，剩余时间减少
+        if (target != null && target.PieceOnTerrianType(TerrainEnum.Poison))
+        {
+            buffEnhanceTimer += Time.deltaTime;
+            if (buffEnhanceTimer >= 5)
+            {
+                curLevel++;
+                duration += 5f;
+                leftTime = duration;
+                buffEnhanceTimer = 0;
+                curLevelTimer = 0;
+            }
+        }
+        else
+        {
+            leftTime -= Time.deltaTime;
+            curLevelTimer += Time.deltaTime;
+            buffEnhanceTimer = 0;
+            // 如果当前buff等级的剩余时间结束，buff降级
+            if (curLevelTimer >= 5)
+            {
+                curLevel--;
+                duration -= 5f;
+                curLevelTimer = 0;
+            }
+            // 如果时间结束 移除buff
+            if (target == null || leftTime <= 0)
+            {
+                GameManager.Instance.buffMan.RemoveBuff(this);
+                return;
+            }
+        }
+        // 每1秒结算1次伤害，如果当前帧触发buff增加/减少，就按触发后的结果算
+        damageTriggerTime += Time.deltaTime;
+        if (damageTriggerTime >= 1)
+        {
+            Debug.Log($"BuffTerrianPoison伤害：{damagePerLevel * curLevel}");
+            target.takeDamage(damagePerLevel * curLevel, TerrainEnum.Poison);
+            damageTriggerTime = 0;
+        }
+    }
+
+    public override void OnBuffRemove()
+    {
+        Debug.Log("BuffTerrianPoison: remove");
+        if (target != null)
+        {
+            target.listBuffs.Remove(BuffType.Terrian_Poison);
+        }
+    }
+}
+
+public class BuffTerrianWater : BuffToPiece
+{
+    private float moveSpeedDown;
+    private float timer;
+    public BuffTerrianWater(ViewPieceBase _piece)
+    {
+        target = _piece;
+        moveSpeedDown = 0.5f;
+        timer = 0;
+    }
+    public override bool OnBuffCreate()
+    {
+        // 如果在水潭上并且已经有水潭buff就减移速，如果移速小于10就加溺亡buff
+        // 如果在水潭上没有水潭buff，return true去添加水潭buff
+        if(target != null && target.PieceOnTerrianType(TerrainEnum.Water))
+        {   
+            if (target.listBuffs.Contains(BuffType.Terrian_Water))
+            {
+                target.moveSpeed.Value -= moveSpeedDown;
+                if(target.moveSpeed.Value < 10)
+                {
+                    GameManager.Instance.buffMan.AddBuff(new BuffDrowning(target));
+                }
+            }
+            else
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+    public override void OnBuffStart()
+    {
+        Debug.Log("BuffTerrianWater OnBuffStart: Add Terrian_Water");
+        target.listBuffs.Add(BuffType.Terrian_Water);
+    }
+
+    public override void OnBuffRefresh()
+    {
+        Debug.Log("BuffTerrianWater refresh");
+        // 离开水潭就移除水潭buff
+        if (target != null && !target.PieceOnTerrianType(TerrainEnum.Water)) 
+        {
+            GameManager.Instance.buffMan.RemoveBuff(this);
+        }
+    }
+
+    public override void OnBuffRemove()
+    {
+        Debug.Log("BuffTerrianWater: remove");
+        if (target != null)
+        {
+            target.listBuffs.Remove(BuffType.Terrian_Water);
+        }
+    }
+}
+/// <summary>
+/// 溺亡Buff
+/// </summary>
+public class BuffDrowning : BuffToPiece
+{
+    // 最大生命值百分比的伤害
+    private float damagePercent;
+    private float timer;
+    public BuffDrowning(ViewPieceBase _piece)
+    {
+        target = _piece;
+        damagePercent = 0.1f;
+        timer = 0;
+        leftTime = 99999999;
+        duration = 99999999;
+    }
+    // 移速小于10并且在水潭上就获得溺亡buff
+    public override bool OnBuffCreate()
+    {
+        // 已携带溺亡就不叠加
+        if (target.listBuffs.Contains(BuffType.Drowning))
+        {
+            return false;
+        }
+        else if(target != null && target.moveSpeed < 10 && target.PieceOnTerrianType(TerrainEnum.Water))
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+    public override void OnBuffStart()
+    {
+        target.takeDamage((int) (damagePercent * target.maxHp), TerrainEnum.Water);
+    }
+
+    public override void OnBuffRefresh()
+    {
+        Debug.Log("BuffDrowning: refresh");
+        if(target == null)
+        {
+            GameManager.Instance.buffMan.RemoveBuff(this);
+        }
+        timer += Time.deltaTime;
+        // 每3秒造成1次伤害
+        if(timer >= 3) 
+        {
+            target.takeDamage((int)(damagePercent * target.maxHp), TerrainEnum.Water);
+            timer = 0;
+        }
+    }
+
+    public override void OnBuffRemove()
+    {
+        // 溺亡buff无法移除
+        Debug.Log("BuffDrowning: remove");
+    }
 }
 
 
@@ -519,7 +734,10 @@ public class DebuffPoison : BuffToPiece
 
     public override void OnBuffRemove()
     {
-       
+        if (target != null)
+        {
+            target.listBuffs.Remove(BuffType.Poison);
+        }
     }
 }
 
@@ -642,5 +860,6 @@ public enum BuffType
     Poison,
     Terrian_Fire,
     Terrian_Water,
-    Terrian_Poison
+    Terrian_Poison,
+    Drowning
 }

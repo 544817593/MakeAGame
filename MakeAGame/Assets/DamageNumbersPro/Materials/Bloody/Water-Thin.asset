@@ -97,7 +97,7 @@ Material:
     m_Colors:
     - _ClipRect: {r: -32767, g: -32767, b: 32767, a: 32767}
     - _EnvMatrixRotation: {r: 0, g: 0, b: 0, a: 0}
-    - _FaceColor: {r: 0.013157889, g: 0.25, b: 0.052631594, a: 1}
+    - _FaceColor: {r: 0, g: 0.018627167, b: 1, a: 1}
     - _GlowColor: {r: 0, g: 1, b: 0.16666651, a: 1}
     - _MaskCoord: {r: 0, g: 0, b: 32767, a: 32767}
     - _OutlineColor: {r: 0, g: 0, b: 0, a: 1}
@@ -163,11 +163,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 71c1514a6bd24e1e882cebbe1904ce04, type: 3}
-  m_Name: Poison-Thin
+  m_Name: Water-Thin
   m_EditorClassIdentifier: 
-  hashCode: 521813650
+  hashCode: 662126787
   material: {fileID: -8637183786855169142}
-  materialHashCode: -865231886
+  materialHashCode: 2060221955
   m_Version: 1.1.0
   m_SourceFontFileGUID: 74d8a71eb219a13469eac2c2e0801ffc
   m_SourceFontFile_EditorRef: {fileID: 12800000, guid: 74d8a71eb219a13469eac2c2e0801ffc, type: 3}
