@@ -307,13 +307,13 @@ namespace Game
             if (isFacingRight && Extensions.leftDirs.Contains(newDir) ||
                 !isFacingRight && Extensions.rightDirs.Contains(newDir))
             {
-                Vector3 currentEulerAngles = transform.eulerAngles;
+                Vector3 currentEulerAngles = animator.transform.eulerAngles;
                 Vector3 newEulerAngles = new Vector3(
                     currentEulerAngles.x,
                     (currentEulerAngles.y + 180) % 360,
                     currentEulerAngles.z
                 );
-                transform.rotation = Quaternion.Euler(newEulerAngles);
+                animator.transform.rotation = Quaternion.Euler(newEulerAngles);
                 isFacingRight = !isFacingRight;
             }
 
