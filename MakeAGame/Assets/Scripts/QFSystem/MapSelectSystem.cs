@@ -21,7 +21,7 @@ namespace Game
         public BindableProperty<int> mouseDirection { get; set; }
 
         void SelectMapStart(SelectArea area);
-        void SelectMapEnd(ViewCard viewCard);
+        void SelectMapEnd(ViewCard viewCard, bool isCancel);
     }
     
     public class MapSelectSystem: AbstractSystem, IMapSelectSystem
@@ -143,31 +143,79 @@ namespace Game
              }
 
              // 从左到右、从上到下存储格子
-             for (int r = boundUp; r <= boundDown; r++)
+             if (areaInfo.pattern == null || areaInfo.pattern.Count == 0)   // 没有指定图案的情况
              {
-                 for (int c = boundLeft; c <= boundRight; c++)
+                 for (int r = boundUp; r <= boundDown; r++)
                  {
-                     selectedGrids.Add(mapSystem.Grids()[r,c]);
+                     for (int c = boundLeft; c <= boundRight; c++)
+                     {
+                         selectedGrids.Add(mapSystem.Grids()[r,c]);
+                     }
                  }
              }
-             
+             else // 有指定图案的情况
+             {
+                 int patIndex = 0;
+                 int[] offset = areaInfo.pattern[patIndex];
+                 int patCount = areaInfo.pattern.Count;
+                 for (int r = boundUp; r <= boundDown; r++)
+                 {
+                     for (int c = boundLeft; c <= boundRight; c++)
+                     {
+                         // Debug.Log($"check {r} {c} == {crtGrid.Value.row}+{offset[0]} {crtGrid.Value.col}+{offset[1]}");
+                         if (r == crtGrid.Value.row + offset[0] && c == crtGrid.Value.col + offset[1])
+                         {
+                             // Debug.Log($"check ok");
+                             selectedGrids.Add(mapSystem.Grids()[r,c]);
+                             if (patIndex + 1 < patCount)
+                             {
+                                 patIndex++;
+                                 offset = areaInfo.pattern[patIndex];
+                                 // Debug.Log($"next offset {offset[0]} {offset[1]}");
+                             }
+                         }
+                     }
+                 }
+             }
+
              PrintSelectedGrids();
              
              // 二次筛选
              validSelectedGrids.Clear();
-             foreach (var grid in selectedGrids)
+
+             if (stage == MapSelectStage.IsPutPiece)
              {
-                 // 上方已经有其他棋子
-                 if (!grid.IsEmpty()) {}
-                 else
+                 foreach (var grid in selectedGrids)
                  {
-                     validSelectedGrids.Add(grid);
+                     // 1.地形无法放置；2.上方已经有其他棋子
+                     if (grid.terrain.Value == (int)TerrainEnum.Edge || grid.terrain.Value == (int)TerrainEnum.Invalid
+                                                                     || !grid.IsEmpty()) {}
+                     else
+                     {
+                         validSelectedGrids.Add(grid);
+                     }
+                 }
+             }
+             else if (stage == MapSelectStage.IsPutDeathFunc)
+             {
+                 foreach (var grid in selectedGrids)
+                 {
+                     // 1.地形无法放置
+                     if (grid.terrain.Value == (int) TerrainEnum.Edge ||
+                         grid.terrain.Value == (int) TerrainEnum.Invalid)
+                     {
+                         
+                     }
+                     else
+                     {
+                         validSelectedGrids.Add(grid);
+                     }
                  }
              }
 
              foreach (var grid in validSelectedGrids)
              {
-                 grid.ShowHint("selected");
+                 grid.ShowHint(stage);
              }
         }
 
@@ -185,34 +233,45 @@ namespace Game
         public void SelectMapStart(SelectArea area)
         {
             Debug.Log($"MapSelectSystem: SelectMapStart, area w: {area.width} h: {area.height}");
-            stage = MapSelectStage.IsPutPiece;
+            stage = area.selectStage;
             areaInfo = area;
         }
 
-        public void SelectMapEnd(ViewCard viewCard)
+        public void SelectMapEnd(ViewCard viewCard, bool isCancel)
         {
-            Debug.Log("MapSelectSystem: SelectMapEnd");
-            stage = MapSelectStage.None;
-            
-            // 判断是否成功放置棋子
-            // 1.格子数量
-            bool isGridCountCorrect = validSelectedGrids.Count == areaInfo.width * areaInfo.height;
-            // 2.蓝是否足够
-            int crtSan = UIKit.GetPanel<UIHandCard>().crtSan;
-            bool isSanEnough = viewCard.card.sanCost <= crtSan;
-            if (isGridCountCorrect && isSanEnough)
-            {
-                Debug.Log("it's ok to put piece");
-                PutPieceByHandCardEvent e = new PutPieceByHandCardEvent()
-                    {viewCard = viewCard, pieceGrids = validSelectedGrids};
-                this.SendEvent<PutPieceByHandCardEvent>(e);
-            }
-            else
-            {
-                Debug.Log(
-                    $"put piece failed, ret1: {isGridCountCorrect} ret2: {isSanEnough}");
-            }
+            Debug.Log($"MapSelectSystem: SelectMapEnd, isCancel: {isCancel}, stage: {stage}");
 
+            if (isCancel)   // 取消当前操作
+            {
+            }
+            else if (stage == MapSelectStage.IsPutPiece)    // 放置棋子判断
+            {
+                // 判断是否成功放置棋子
+                // 1.格子数量
+                bool isGridCountCorrect = validSelectedGrids.Count == areaInfo.width * areaInfo.height;
+                // 2.蓝是否足够
+                int crtSan = UIKit.GetPanel<UIHandCard>().crtSan;
+                bool isSanEnough = viewCard.card.sanCost <= crtSan;
+                if (isGridCountCorrect && isSanEnough)
+                {
+                    Debug.Log("it's ok to put piece");
+                    PutPieceByHandCardEvent e = new PutPieceByHandCardEvent()
+                        {viewCard = viewCard, pieceGrids = validSelectedGrids};
+                    this.SendEvent<PutPieceByHandCardEvent>(e);
+                }
+                else
+                {
+                    Debug.Log(
+                        $"put piece failed, ret1: {isGridCountCorrect} ret2: {isSanEnough}");
+                }   
+            }
+            else if (stage == MapSelectStage.IsPutDeathFunc)    // 死面判断
+            {
+                viewCard.deathFunc.OnExecute(validSelectedGrids);
+            }
+            
+            
+            stage = MapSelectStage.None;
             crtGrid.Value = null;
             mouseDirection.Value = -1;
             selectedGrids.Clear();
@@ -232,9 +291,9 @@ namespace Game
     {
         public int width;
         public int height;
-        public List<int> pattern;
-
-        public string ToString => $"w: {width} h: {height}";
+        public List<int[]> pattern;    // [rOffset, cOffset] 从左上往右下写
+        public MapSelectStage selectStage;
+        public string ToString => $"w: {width} h: {height} pattern count: {pattern.Count} selectStage: {selectStage}";
     }
 
     #region 旧的rangeselector

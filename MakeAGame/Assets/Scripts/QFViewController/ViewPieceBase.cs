@@ -6,6 +6,7 @@ using DamageNumbersPro;
 using QFramework;
 using Unity.VisualScripting;
 using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 
 namespace Game
 {
@@ -16,7 +17,9 @@ namespace Game
     {
         // 怪物受到棋子伤害的数字弹出样式资源，棋子受到怪物伤害的数字弹出样式资源
         protected DamageNumberMesh MonsterDamageNumer;
-
+        protected DamageNumberMesh TerrianFireDamageNumer;
+        protected DamageNumberMesh TerrianPoisonDamageNumer;
+        protected DamageNumberMesh TerrianWaterDamageNumer;
         // protected Transform healthBar;
 
         protected IMapSystem mapSystem;
@@ -37,6 +40,7 @@ namespace Game
 
         public Animator animator; // 动画组件
         protected Coroutine movementCoroutine; // 移动协程
+        public bool isFacingRight = true; // 棋子目前预设体是否朝向右侧
 
         public List<BoxGrid> pieceGrids { get; protected set; } = new List<BoxGrid>();
         // 经过所有占地格子计算出来的时间流速
@@ -93,6 +97,9 @@ namespace Game
             
             hp.Register(e => OnCurrHpChanged(e));
             MonsterDamageNumer = Resources.Load("Prefabs/Damage Number Prefab/Monster Damage").GetComponent<DamageNumberMesh>();
+            TerrianFireDamageNumer = Resources.Load("Prefabs/Damage Number Prefab/Terrian Fire Damage").GetComponent<DamageNumberMesh>();
+            TerrianPoisonDamageNumer = Resources.Load("Prefabs/Damage Number Prefab/Terrian Poison Damage").GetComponent<DamageNumberMesh>();
+            TerrianWaterDamageNumer = Resources.Load("Prefabs/Damage Number Prefab/Terrian Water Damage").GetComponent<DamageNumberMesh>();
         }
 
         /// <summary>
@@ -133,6 +140,23 @@ namespace Game
             state = newState;
             state.EnterState();
             stateFlag = state.stateEnum;
+        }
+
+        /// <summary>
+        /// 棋子所占格子内是否包含了传入的格子类型
+        /// </summary>
+        /// <param name="terrianType"></param>
+        /// <returns></returns>
+        public bool PieceOnTerrianType(TerrainEnum terrianType)
+        {
+            foreach (BoxGrid grid in pieceGrids)
+            {
+                if (grid.terrain.Value == (int)terrianType)
+                {
+                    return true;
+                }
+            }
+            return false;
         }
 
         public PieceStateEnum GetPieceState()
@@ -237,6 +261,30 @@ namespace Game
                 Die();
             }
         }
+        // 重载，被地块buff调用，弹出不同资源的伤害数字
+        public void takeDamage(int damage, TerrainEnum terrian)
+        {
+            hp.Value -= damage;
+            if (terrian == TerrainEnum.Fire)
+            {
+                TerrianFireDamageNumer.Spawn(this.Position(), damage);
+            }else if(terrian == TerrainEnum.Poison)
+            {
+                TerrianPoisonDamageNumer.Spawn(this.Position(), damage);
+            }else if(terrian == TerrainEnum.Water)
+            {
+                TerrianWaterDamageNumer.Spawn(this.Position(), damage);
+            }
+            
+            if (hp <= 0)
+            {
+                this.GetSystem<IPieceBattleSystem>().EndBattle(this); // 不确定是不是需要
+                // 再从棋子系统中注销
+                this.GetSystem<IPieceSystem>().RemovePiece(this);
+                // 最后处理自身的死亡
+                Die();
+            }
+        }
         public virtual void Die()
         {
             state = new PieceStateIdle(this);
@@ -248,7 +296,29 @@ namespace Game
             
             Destroy(gameObject);
         }
-        
+
+        /// <summary>
+        /// 更改方向后可能需要旋转棋子预设体的朝向
+        /// </summary>
+        /// <param name="newDir">新方向</param>
+        /// <returns></returns>
+        public void PieceFlip(DirEnum newDir)
+        {
+            if (isFacingRight && Extensions.leftDirs.Contains(newDir) ||
+                !isFacingRight && Extensions.rightDirs.Contains(newDir))
+            {
+                Vector3 currentEulerAngles = transform.eulerAngles;
+                Vector3 newEulerAngles = new Vector3(
+                    currentEulerAngles.x,
+                    (currentEulerAngles.y + 180) % 360,
+                    currentEulerAngles.z
+                );
+                transform.rotation = Quaternion.Euler(newEulerAngles);
+                isFacingRight = !isFacingRight;
+            }
+
+        }
+
         protected virtual void OnMoveReadyEvent(PieceMoveReadyEvent e)
         {
 
@@ -256,7 +326,13 @@ namespace Game
         
         protected virtual void OnMoveFinishEvent(PieceMoveFinishEvent e)
         {
-
+            if (PieceOnTerrianType(TerrainEnum.Fire))
+            {
+                GameManager.Instance.buffMan.AddBuff(new BuffTerrianFire(this));
+            }else if (PieceOnTerrianType(TerrainEnum.Poison))
+            {
+                GameManager.Instance.buffMan.AddBuff(new BuffTerrianPoison(this));
+            }
         }
 
         protected virtual void OnAttackStartEvent(PieceAttackStartEvent e)
@@ -277,6 +353,11 @@ namespace Game
         public bool IsAttacking()
         {
             return stateFlag == PieceStateEnum.Attacking;
+        }
+
+        public void SetTouchAreaEnable(bool isEnable)
+        {
+            
         }
 
         public IArchitecture GetArchitecture()

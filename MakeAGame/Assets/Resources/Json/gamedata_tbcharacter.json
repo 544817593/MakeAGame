@@ -46,7 +46,8 @@
     },
     "accuracy": 0.9,
     "atkRange": 1,
-    "life": 999
+    "life": 999,
+    "DeathFuncName": "Francis_Wayland_Thurston"
   },
   {
     "characterID": 2,
@@ -95,7 +96,8 @@
     },
     "accuracy": 0.7,
     "atkRange": 2,
-    "life": 999
+    "life": 999,
+    "DeathFuncName": "Randolph_Carter"
   },
   {
     "characterID": 3,
@@ -143,7 +145,8 @@
     },
     "accuracy": 0.7,
     "atkRange": 2,
-    "life": 999
+    "life": 999,
+    "DeathFuncName": "Abigal_Miller"
   },
   {
     "characterID": 4,
@@ -185,7 +188,8 @@
     },
     "accuracy": 0.6,
     "atkRange": 1,
-    "life": 999
+    "life": 999,
+    "DeathFuncName": "D_Ranked_Staff"
   },
   {
     "characterID": 5,
@@ -229,7 +233,8 @@
     },
     "accuracy": 0.7,
     "atkRange": 1,
-    "life": 999
+    "life": 999,
+    "DeathFuncName": "C_Ranked_Staff"
   },
   {
     "characterID": 6,
@@ -274,7 +279,8 @@
     },
     "accuracy": 0.8,
     "atkRange": 1,
-    "life": 999
+    "life": 999,
+    "DeathFuncName": "B_Ranked_Staff"
   },
   {
     "characterID": 7,
@@ -320,7 +326,8 @@
     },
     "accuracy": 0.9,
     "atkRange": 1,
-    "life": 999
+    "life": 999,
+    "DeathFuncName": "A_Ranked_Staff"
   },
   {
     "characterID": 8,
@@ -362,7 +369,8 @@
     },
     "accuracy": 0.5,
     "atkRange": 5,
-    "life": 999
+    "life": 999,
+    "DeathFuncName": "Devil_Bug"
   },
   {
     "characterID": 9,
@@ -408,7 +416,8 @@
     },
     "accuracy": 1,
     "atkRange": 3,
-    "life": 999
+    "life": 999,
+    "DeathFuncName": "Owl"
   },
   {
     "characterID": 10,
@@ -451,7 +460,8 @@
     },
     "accuracy": 0.8,
     "atkRange": 1,
-    "life": 999
+    "life": 999,
+    "DeathFuncName": "Quack_Frog"
   },
   {
     "characterID": 11,
@@ -495,7 +505,8 @@
     },
     "accuracy": 0.8,
     "atkRange": 1,
-    "life": 999
+    "life": 999,
+    "DeathFuncName": "Failure"
   },
   {
     "characterID": 12,
@@ -541,7 +552,8 @@
     },
     "accuracy": 0.8,
     "atkRange": 1,
-    "life": 999
+    "life": 999,
+    "DeathFuncName": "Laughing_Cat"
   },
   {
     "characterID": 13,
@@ -588,7 +600,8 @@
     },
     "accuracy": 0,
     "atkRange": 0,
-    "life": 999
+    "life": 999,
+    "DeathFuncName": "Raven"
   },
   {
     "characterID": 14,
@@ -630,7 +643,8 @@
     },
     "accuracy": 1,
     "atkRange": 2,
-    "life": 999
+    "life": 999,
+    "DeathFuncName": "Vine"
   },
   {
     "characterID": 15,
@@ -676,6 +690,7 @@
     },
     "accuracy": 0,
     "atkRange": 3,
-    "life": 999
+    "life": 999,
+    "DeathFuncName": "Water_Wizard"
   }
 ]

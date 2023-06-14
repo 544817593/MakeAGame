@@ -14,7 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterID: 1
   characterName: "\u5F17\u6717\u897F\u65AF\xB7\u7EF4\u5170\u5FB7\xB7\u745F\u65AF\u987F"
-  anim: {fileID: 8325856528082571668, guid: a72051786b4ad3b4cac35cab7754eee8, type: 3}
   rarity: 5
   cardPack: 1
   sanCost: 90
@@ -24,6 +23,7 @@ MonoBehaviour:
   attack: 5
   moveSpd: 4
   defend: 2
+  deathFuncName: Francis_Wayland_Thurston
   features: 030000000400000015000000
   specialFeatures: 1a0000001b000000
   pieceSprite: {fileID: 21300000, guid: 56faece66524b4eb891e72950ee7869e, type: 3}
@@ -34,6 +34,7 @@ MonoBehaviour:
   accuracy: 0.9
   attackRange: 1
   life: 999
+  anim: {fileID: 8325856528082571668, guid: a72051786b4ad3b4cac35cab7754eee8, type: 3}
   sanCostBonus:
     stat: 0
     multiple: 0

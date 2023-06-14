@@ -388,7 +388,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4162783769214881551, guid: c547f81eeabb623419f3bfc2df12afcf, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6253227765994580896, guid: c547f81eeabb623419f3bfc2df12afcf, type: 3}
       propertyPath: m_Pivot.x
@@ -570,6 +570,10 @@ PrefabInstance:
     - target: {fileID: 6707097478979315101, guid: f31af1efcca92f04696007900185a848, type: 3}
       propertyPath: m_Name
       value: ShopEnhanceUI
+      objectReference: {fileID: 0}
+    - target: {fileID: 6707097478979315101, guid: f31af1efcca92f04696007900185a848, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f31af1efcca92f04696007900185a848, type: 3}

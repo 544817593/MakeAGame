@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using QFramework;
 using ShootingEditor2D;
+using SnakeGame;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -11,8 +12,7 @@ namespace Game
 {
     public partial class ViewCard: MonoBehaviour, IController
     {
-        // 卡牌数据
-        public Card card;
+        public Card card;   // 卡牌数据
 
         private Action<SOFeature> OnShowTooltip;
 
@@ -25,7 +25,7 @@ namespace Game
             var uiHelper = touchArea.AddComponent<UIEventHelper>();
             
             canvas.overrideSorting = true;
-            canvas.sortingOrder = 100;
+            canvas.sortingOrder = UIHandCard.normalSortingLayer;
             transform.localScale = new Vector3(UIHandCard.normalScale, UIHandCard.normalScale, 1f);
 
             var uiHandCard = UIKit.GetPanel<UIHandCard>();
@@ -37,11 +37,9 @@ namespace Game
             uiHelper.OnUIPointExit += uiHandCard.OnUnfocusCard;
             uiHelper.OnUIBeginDrag += OnDragStart;
             uiHelper.OnUIBeginDrag += () => uiHandCard.OnDragCardStart(this);
-            uiHelper.OnUIDrag = OnDrag;
             uiHelper.OnUIEndDrag += uiHandCard.OnDragCardEnd;
             uiHelper.OnUIEndDrag += OnDragEnd;
-            
-            //uiHelper.OnUIDrag += uiHandCard.OnDragCard;  // todo 看拖拽手牌时手牌ui是否需要响应
+            uiHelper.OnUIPointClick += OnRightClick;
 
             this.RegisterEvent<PutPieceByHandCardEvent>(OnUseAsLifeCard).UnRegisterWhenGameObjectDestroyed(this);
 
@@ -69,48 +67,36 @@ namespace Game
             }
         }
 
-        private List<Action> OnUpdate = new List<Action>();
+        private Action OnUpdate = null;
+        // private List<Action> OnUpdate = new List<Action>();
         private void Update()
         {
-            foreach (var act in OnUpdate)
-            {
-                act.Invoke();
-            }
+            // foreach (var act in OnUpdate)
+            // {
+            //     act.Invoke();
+            // }
+            OnUpdate?.Invoke();
         }
+
+        #region 查看
 
         private bool isFocused;
         void OnFocus()
         {
-            OnUpdate.Add(ShowTooltip);
+            if (!isInDeathFunc)
+            {
+                OnUpdate = ShowTooltip;   
+            }
         }
 
         void OnUnfocus()
         {
-            OnUpdate.Remove(ShowTooltip);
+            if (!isInDeathFunc)
+            {
+                OnUpdate = null;   
+            }
         }
-
-        void OnDragStart()
-        {
-            // Debug.Log("ViewCard: OnDragStart");
-            canvasGroup.alpha = 0.5f;
-
-            SelectMapStartCommand comm = new SelectMapStartCommand();
-            comm.area = new SelectArea() {width = card.width, height = card.height};
-            this.SendCommand<SelectMapStartCommand>(comm);
-        }
-
-        void OnDrag()
-        {
-            // Debug.Log("is dragging");
-        }
-
-        void OnDragEnd()
-        {
-            Debug.Log("ViewCard: OnDragEnd");
-            canvasGroup.alpha = 1f;
-            this.SendCommand<SelectMapEndCommand>(new SelectMapEndCommand(this));
-        }
-
+        
         void ShowTooltip()
         {
             // 这样是能检测到image的，但如果后面还有其他东西，估计也会检测到
@@ -121,10 +107,8 @@ namespace Game
             
             foreach (var ret in rayRet)
             {
-                // Debug.Log(ret.ToString());
                 if (featureTouchArea.Contains(ret.gameObject))
                 {
-                    // Debug.Log($"mouse in feature with tooltipTrans active: {tooltipTrans.gameObject.activeSelf}");
                     if (!tooltipTrans.gameObject.activeSelf)
                     {
                         int index = featureTouchArea.IndexOf(ret.gameObject);
@@ -151,6 +135,109 @@ namespace Game
             // }
         }
 
+        #endregion
+
+        #region 左键拖拽 生面
+
+        private bool isDraging;
+        void OnDragStart()
+        {
+            if (Input.GetMouseButton(0))
+            {
+                isDraging = true;
+                
+                canvasGroup.alpha = 0.5f;
+
+                SelectMapStartCommand comm = new SelectMapStartCommand();
+                comm.area = new SelectArea() {width = card.width, height = card.height, selectStage = MapSelectStage.IsPutPiece};
+                this.SendCommand<SelectMapStartCommand>(comm);   
+            }
+        }
+
+        void OnDragEnd()
+        {
+            if (isDraging)
+            {
+                canvasGroup.alpha = 1f;
+                this.SendCommand<SelectMapEndCommand>(new SelectMapEndCommand(this, false));
+
+                isDraging = false;
+            }
+        }
+
+        #endregion
+
+        #region 右键点击 死面
+
+        private bool isInDeathFunc;
+        public DeathFuncBase deathFunc;
+        void OnRightClick()
+        {
+            if (!isInDeathFunc && Input.GetMouseButtonUp(1))  // 右键
+            {
+                // if (isInDeathFunc)  // 死面状态下再次右键点击卡牌，取消死面功能施放
+                // {
+                //     Debug.Log("cancel death func");
+                //     isInDeathFunc = false;
+                //     this.SendCommand<SelectMapEndCommand>(new SelectMapEndCommand(this, true));
+                //     return;
+                // }
+                
+                // 这里要得到死面的范围信息
+                string deathFuncName = Extensions.GetDeathFuncTypeName(card.charaID);
+                if (deathFuncName.IsNullOrEmpty())
+                {
+                    Debug.LogError("failed to load death func");
+                    return;
+                }
+                
+                Debug.Log("start death func");
+                isInDeathFunc = true;
+                OnUpdate = CheckDeathFuncMouse;
+
+                Type methodType = Type.GetType("Game." + deathFuncName);
+                var obj = methodType.Assembly.CreateInstance("Game." + deathFuncName);
+                deathFunc = obj as DeathFuncBase;
+                deathFunc.viewCard = this;
+
+                SelectMapStartCommand comm = new SelectMapStartCommand();
+                // comm.area = new SelectArea() {width = card.width, height = card.height, selectStage = MapSelectStage.IsPutDeathFunc};
+                comm.area = deathFunc.area;
+                this.SendCommand<SelectMapStartCommand>(comm);
+            }
+        }
+
+        void CheckDeathFuncMouse()
+        {
+            if (Input.GetMouseButtonDown(1))
+            {
+                if (isInDeathFunc)  // 死面状态下再次右键点击卡牌，取消死面功能施放
+                {
+                    Debug.Log("cancel death func");
+                    isInDeathFunc = false;
+                    OnUpdate = null;
+                    this.SendCommand<SelectMapEndCommand>(new SelectMapEndCommand(this, true));
+                    deathFunc = null;
+                    return;
+                }
+            }
+            else if (Input.GetMouseButtonDown(0))   // 左键施放死面功能
+            {
+                if (isInDeathFunc)
+                {
+                    Debug.Log("execute death func");
+                    isInDeathFunc = false;
+                    OnUpdate = null;
+                    this.SendCommand<SelectMapEndCommand>(new SelectMapEndCommand(this, false));
+                    deathFunc = null;
+                    return;
+                }
+            }
+        }
+        
+        #endregion
+        
+        
         void OnUseAsLifeCard(PutPieceByHandCardEvent e)
         {
             // 检测通知的是不是自己
@@ -167,7 +254,8 @@ namespace Game
             if (e.viewCard.card.charaName == "弗朗西斯·维兰德·瑟斯顿")
             {
                 Dialogue dialogue = GameObject.Find("Dialogue")?.GetComponent<Dialogue>();
-                 dialogue.getControl = true;
+                if (dialogue != null) dialogue.getControl = true;
+
             }
             // todo 手牌使用后的后续处理（此时已经移出手牌系统并隐藏），如返回背包、销毁...
             Debug.Log("after card use as life card");

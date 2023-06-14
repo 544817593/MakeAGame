@@ -1,6 +1,8 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using QFramework;
 using UnityEngine;
 
 namespace Game
@@ -11,7 +13,19 @@ namespace Game
     public static class Extensions
     {
         public const string DefaultCharacterInfoPath = "ScriptableObjects/Characters/FrancisWaylandThurston";    // 默认角色信息资源
-        
+
+        /// <summary>
+        /// 向左走的方向
+        /// </summary>
+        public static List<DirEnum> leftDirs = new List<DirEnum>()
+            { DirEnum.Topleft, DirEnum.Left, DirEnum.Downleft};
+
+        /// <summary>
+        /// 向右走的方向
+        /// </summary>
+        public static List<DirEnum> rightDirs = new List<DirEnum>()
+            { DirEnum.Topright, DirEnum.Right, DirEnum.Downright };
+
         /// <summary>
         /// 获取角色信息so
         /// </summary>
@@ -77,12 +91,30 @@ namespace Game
         /// </summary>
         /// <param name="pos"></param>
         /// <returns></returns>
-        public static Vector3 WorldToUIPos(Vector3 pos)
+        public static Vector3 ScreenToUIPos(Vector3 pos)
         {
-            pos = Camera.main.WorldToScreenPoint(pos);
+            // pos = Camera.main.WorldToScreenPoint(pos);
+            // pos -= new Vector3(Screen.width / 2f, Screen.height / 2f, 0f);
+            // return pos;
+
+            Debug.Log($"start pos: {pos}");
+            
+            if (uiSize == Vector2.zero)
+            {
+                var uiRootCanvas = UIKit.Root.Canvas;
+                uiSize = uiRootCanvas.GetComponent<RectTransform>().sizeDelta;//得到画布的尺寸
+            }
+            
             pos -= new Vector3(Screen.width / 2f, Screen.height / 2f, 0f);
+            pos.x = pos.x * (uiSize.x / Screen.width);
+            pos.y = pos.y * (uiSize.y / Screen.height);
+            
+            Debug.Log($"return pos: {pos}");
             return pos;
         }
+
+        private static Vector2 uiSize = Vector2.zero;
+        
 
         public static Card GetCopy(this Card oldCard)
         {
@@ -114,5 +146,17 @@ namespace Game
             }
             return iconFileName;
         }
+
+        public static SORelic GetTestSORelic()
+        {
+            var so = Resources.Load<SORelic>($"ScriptableObjects/Relics/SORelic_test");
+            return so;
+        }
+
+        public static string GetDeathFuncTypeName(int charaID)
+        {
+            return IdToSO.FindCardSOByID(charaID).deathFuncName;
+        }
+
     }
 }

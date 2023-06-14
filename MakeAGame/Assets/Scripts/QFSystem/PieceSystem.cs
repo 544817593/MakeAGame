@@ -52,7 +52,22 @@ namespace Game
 
         protected override void OnInit()
         {
-            
+
+            this.RegisterEvent<SelectMapStartEvent>(e => SetPieceCollidersEnable(false));
+            this.RegisterEvent<SelectMapEndEvent>(e => SetPieceCollidersEnable(true));
+        }
+
+        void SetPieceCollidersEnable(bool isEnable)
+        {
+            foreach (var vPiece in pieceFriendList)
+            {
+                vPiece.SetColliderEnable(isEnable);
+            }
+
+            foreach (var monster in pieceEnemyList)
+            {
+                monster.SetColliderEnable(isEnable);
+            }
         }
         
         public bool AddPieceFriend(Card card, List<BoxGrid> grids)
@@ -137,12 +152,14 @@ namespace Game
             
             var viewPiece = viewPB as ViewPiece;
             viewDirectionWheel.SetValidDirections(viewPiece.dirs);
-            viewDirectionWheel.gameObject.transform.localPosition = Extensions.WorldToUIPos(viewPB.transform.position);
+            var pieceScreenPos = Camera.main.WorldToScreenPoint(viewPB.transform.position);
+            viewDirectionWheel.gameObject.transform.localPosition = Extensions.ScreenToUIPos(pieceScreenPos);
             viewDirectionWheel.gameObject.SetActive(true);
+
             if (viewPiece.card.charaName == "弗朗西斯·维兰德·瑟斯顿")
             {
                 Dialogue dialogue = GameObject.Find("Dialogue")?.GetComponent<Dialogue>();
-                dialogue.getControl = true;
+                if (dialogue != null) dialogue.getControl = true;
             }
         }
         
@@ -166,9 +183,10 @@ namespace Game
             else
             {
                 var newDirection = viewDirectionWheel.crtDirection;
+                crtSelectedPiece.PieceFlip(newDirection);
                 crtSelectedPiece.direction = newDirection;
                 Debug.Log($"change piece direction to {newDirection}");
-               
+              
             }
 
             viewDirectionWheel.gameObject.SetActive(false);

@@ -30,6 +30,7 @@ namespace Game
         private ItemController itemController = ItemController.Instance;
         public TriggerHelper mouseHelper;
         public GameObject touchArea;
+        public BoxCollider2D collider2d;
 
         void Awake()
         {
@@ -54,6 +55,7 @@ namespace Game
         private void InitBind()
         {            
             mouseHelper = touchArea.AddComponent<TriggerHelper>();
+            
             mouseHelper.OnMouseDownEvent = MouseDown;
             mouseHelper.OnMouseUpEvent = MouseUp;
         }
@@ -149,8 +151,10 @@ namespace Game
                 }
 
                 // 设置移动方向
-                direction = movementSystem.NeighbourBoxGridsToDir(this.GetSystem<IMapSystem>().Grids()
+                DirEnum newDirection = movementSystem.NeighbourBoxGridsToDir(this.GetSystem<IMapSystem>().Grids()
                     [leftTopGridPos.Value.Item1, leftTopGridPos.Value.Item2], aStarPath[1]);
+                PieceFlip(newDirection);
+                direction = newDirection;
 
                 // 更新想要去的格子
                 positionAfterMovement = this.GetSystem<IMovementSystem>().CalculateNextPosition(original, direction);
@@ -287,6 +291,12 @@ namespace Game
                 itemController.CancelMarking();
                 itemController.AfterUseCombatItem(itemController.markerItem);
             }
+        }
+        
+        public void SetColliderEnable(bool isEnable)
+        {
+            if(collider2d != null)  // 可能刚放下的情况
+                collider2d.enabled = isEnable;
         }
     }
 }

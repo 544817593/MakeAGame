@@ -26,3 +26,4 @@ MonoBehaviour:
   height: 0
   properties: 
   dirs: 04000000020000000300000001000000
+  anim: {fileID: 685128172593742579, guid: 7925d004f510bf54dbb243f958dfa226, type: 3}

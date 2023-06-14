@@ -14,7 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterID: 8
   characterName: "\u9B54\u866B"
-  anim: {fileID: 3982071379780313651, guid: d62a9833e9113e04b8423999f3fec302, type: 3}
   rarity: 1
   cardPack: 1
   sanCost: 12
@@ -24,6 +23,7 @@ MonoBehaviour:
   attack: 3
   moveSpd: 2.5
   defend: 0
+  deathFuncName: Devil_Bug
   features: 
   specialFeatures: 
   pieceSprite: {fileID: 21300000, guid: 9a8a6d7ff3503614295a42b81764f528, type: 3}
@@ -34,6 +34,7 @@ MonoBehaviour:
   accuracy: 0.5
   attackRange: 5
   life: 999
+  anim: {fileID: 3982071379780313651, guid: d62a9833e9113e04b8423999f3fec302, type: 3}
   sanCostBonus:
     stat: 0
     multiple: 0
