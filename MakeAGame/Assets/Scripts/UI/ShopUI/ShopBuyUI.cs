@@ -3,10 +3,7 @@ using UnityEngine.UI;
 using QFramework;
 using Game;
 using System.Collections.Generic;
-using Unity.PlasticSCM.Editor.WebApi;
 using TMPro;
-using System.Reflection;
-using System;
 using UnityEngine.Assertions;
 
 namespace ShopBuyUI
@@ -20,6 +17,7 @@ namespace ShopBuyUI
         // TODO 读取玩家当前金币数量，暂时使用hardcode
         public int playerGold = 50;
         private int buyCount = 1;
+		private int gridNum = 10; // 购买栏位上限
 		private Dictionary<Button, Item> activeButtons = new Dictionary<Button, Item>();
 		private Item selectedItem = null;
 		private Button selectedButton = null;
@@ -29,13 +27,13 @@ namespace ShopBuyUI
 			mData = uiData as ShopBuyUIData ?? new ShopBuyUIData();
 
             // 监听按钮点击，跳转panel
-            ShopPanelChange.changeShopPanel(this, Close);
+            ShopPanelChange.ChangeShopPanel(this, Close);
             // TODO: 读取玩家当前金币数量，暂时使用hardcode
-             playerGold = PlayerManager.Instance.player.GetGold();
+            //playerGold = PlayerManager.Instance.player.GetGold();
 
-			updateAndShowShopItems();
-			showItemInfo();
-			counterLogic();
+			UpdateAndShowShopItems();
+			ShowItemInfo();
+			CounterLogic();
 			buyItem();
 		}
 		
@@ -57,9 +55,13 @@ namespace ShopBuyUI
 		/// <summary>
 		/// 购买页面的初始化
 		/// </summary>
-        private void updateAndShowShopItems()
+        private void UpdateAndShowShopItems()
         {
-			List<Item> shopItemList = mData.shopSystem.getshopItemList();
+			List<Item> shopItemList = mData.shopSystem.GetshopItemList();
+			if (shopItemList.Count > ShopGridPanel.GetComponentInChildren<Transform>(includeInactive: true).childCount) 
+			{
+				Debug.LogError($"商店购买栏位上限为{gridNum}，超过上限，只能显示数组中倒数{gridNum}种物品");
+			}
 			int idx = 0;
             
 			// 玩家金币读取
@@ -96,12 +98,13 @@ namespace ShopBuyUI
                 Debug.Log(transform.gameObject.name);
 				idx++;
             }
+			
         }
 
 		/// <summary>
 		/// 监听每个active的物品，点击后显示对应描述，更新selectedItem
 		/// </summary>
-        private void showItemInfo()
+        private void ShowItemInfo()
 		{
 			foreach(Button btn in activeButtons.Keys)
 			{
@@ -120,7 +123,7 @@ namespace ShopBuyUI
 		/// 增加数量后的总花费不能超过持有金币，并且不能超过商店物品数量上限
 		/// 减少数量最少为1
 		/// </summary>
-		private void counterLogic()
+		private void CounterLogic()
 		{
 			BtnAdd.onClick.AddListener(() => 
 			{
@@ -152,6 +155,10 @@ namespace ShopBuyUI
                     buyCount--;
                     TextCount.text = $"{buyCount}";
                 }
+                else
+                {
+					Debug.Log("无法减少购买数量");
+                }
             });
         }
 		private void buyItem()
@@ -174,7 +181,7 @@ namespace ShopBuyUI
 				{
 					// 物品入包，更新所有相关内容
 					buyItemList.Add(new Item { amount = buyCount, data = selectedItem.data });
-					updateViewAfterBuy();
+					UpdateViewAfterBuy();
 				}
 			});
 		}
@@ -183,10 +190,10 @@ namespace ShopBuyUI
         /// 更新 1.物品剩余数量 2. 玩家剩余金币 
 		///	重置	 1. counter重置  2. selectedItem selectedButton重置为null 3. 文本描述重置为空
         /// </summary>
-        private void updateViewAfterBuy()
+        private void UpdateViewAfterBuy()
 		{
 			// 更新
-			Assert.IsNotNull(selectedItem, "updateViewAfterBuy()中selectedItem不能为null");
+			Assert.IsNotNull(selectedItem, "UpdateViewAfterBuy()中selectedItem不能为null");
             selectedItem.amount -= buyCount;
             selectedButton.transform.Find("ItemNum").GetComponent<TextMeshProUGUI>().text = selectedItem.amount.ToString();
 			playerGold -= buyCount * selectedItem.data.buyCost;
@@ -200,7 +207,7 @@ namespace ShopBuyUI
 			//TextItemInfo.text = null;
             //可能需要amount == 0后移除shopItemList，activeButtons中对应的元素？
 
-            //Debug.Log($"{mData.shopSystem.getshopItemList()[0].amount}");
+            //Debug.Log($"{mData.shopSystem.GetshopItemList()[0].amount}");
         }
 
     }

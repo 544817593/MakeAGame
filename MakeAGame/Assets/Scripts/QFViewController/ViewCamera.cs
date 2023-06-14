@@ -11,12 +11,19 @@ namespace Game
         public Vector3 cameraAngle;
         public float cameraDist = 12f;
 
-        private void Start()
-        {
-            cameraAngle = transform.eulerAngles;
-            // cameraDist = (lookAtTarget.transform.position - transform.position).magnitude;
+        [Header("是否使用写入的参数设置摄像机，若否，则根据场景开始运行时摄像机本身的参数进行设置")]
+        public bool ForceSetValue;
 
-            this.RegisterEvent<ChangeCameraTargetEvent>(e => OnTargetChange(e));
+        // 通过主动调用进行初始化
+        public void Init()
+        {
+            if (!ForceSetValue)
+            {
+                cameraAngle = transform.eulerAngles;
+                // cameraDist = (lookAtTarget.transform.position - transform.position).magnitude;
+            }
+
+            this.RegisterEvent<ChangeCameraTargetEvent>(e => OnTargetChange(e)).UnRegisterWhenGameObjectDestroyed(gameObject);
             
             if(lookAtTarget != null)
                 CameraLookatPos(cameraAngle, cameraDist);
@@ -51,12 +58,5 @@ namespace Game
         {
             return GameEntry.Interface;
         }
-    }
-
-    public struct ChangeCameraTargetEvent
-    {
-        public Transform target;
-        public Vector3 cameraAngle;
-        public float cameraDist;
     }
 }

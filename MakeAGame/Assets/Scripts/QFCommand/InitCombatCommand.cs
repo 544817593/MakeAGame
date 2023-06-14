@@ -1,4 +1,5 @@
-﻿using InventoryQuickslotUI;
+﻿using BagUI;
+using InventoryQuickslotUI;
 using QFramework;
 using UnityEngine;
 
@@ -18,6 +19,62 @@ namespace Game
         
         protected override void OnExecute()
         {
+            InitMap();
+            
+            // 界面
+            UIKit.OpenPanel<UIHandCard>();
+            UIKit.OpenPanel<UIInventoryQuickSlot>();
+            UIKit.OpenPanel<UIAbilityPanel>();
+
+            // 亡灵
+            this.SendEvent(new SpawnUndeadEvent { undeadSpawnPositionX = info.undeadSpawnPositionX, 
+                undeadSpawnPositionY = info.undeadSpawnPositionY });
+
+            // 怪物
+            if (info.monsterSpawnSettings != null)
+            {
+                var spawnSystem = this.GetSystem<ISpawnSystem>();
+                spawnSystem.ConstantSpawnMonster(info.monsterSpawnSettings);
+            }
+
+            // 从背包里抽出七张手牌
+            var inventorySystem = this.GetSystem<IInventorySystem>();
+            for (int i = 0; i < this.GetSystem<IHandCardSystem>().maxCardCount; i++)
+            {
+                if (inventorySystem.GetBagCardList().Count != 0)
+                {
+                    Card card = inventorySystem.DrawCard();
+                    this.SendCommand<AddHandCardCommand>(new AddHandCardCommand(card));
+                }
+                else
+                {
+                    break;
+                }
+            }
+
+            // 持续抽卡协程
+            var refillHandCardEvent = new RefillHandCardEvent
+            {
+                drawCardCooldown = 5f
+            };
+            this.SendEvent(refillHandCardEvent);
+            
+            // 计时测试
+            var updateSystem = this.GetSystem<IUpdateSystem>();
+            updateSystem.Reset();
+            updateSystem.ScheduleExecute(CountTest, false, 1f);
+            
+            // 遗物系统开始接受计时
+            this.GetSystem<IRelicSystem>().StartCountTime();
+        }
+
+        void CountTest()
+        {
+            this.SendEvent<CountTimeEvent>();
+        }
+
+        private void InitMap()
+        {
             // 地图
             var mapSystem = this.GetSystem<IMapSystem>();
             mapSystem.CreateMapBySO(info.mapDataResPath);
@@ -28,19 +85,6 @@ namespace Game
                 target = mapSystem.centerGrid.transform
             };
             this.SendEvent<ChangeCameraTargetEvent>(setCameraCenterEvent);
-
-            // 界面
-            UIKit.OpenPanel<UIHandCard>();
-            UIKit.OpenPanel<UIInventoryQuickSlot>();
-            UIKit.OpenPanel<UIAbilityPanel>();
-
-            // 怪物
-            var spawnSystem = this.GetSystem<ISpawnSystem>();
-            spawnSystem.ConstantSpawnMonster(info.monsterSpawnSettings);
-
-            // 测试使用物品
-            var useItemEvent = new UseItemEvent { item = this.GetSystem<IInventorySystem>().GetItemList()[0] };
-            this.SendCommand(new UseItemCommand(useItemEvent));
         }
     }
 }

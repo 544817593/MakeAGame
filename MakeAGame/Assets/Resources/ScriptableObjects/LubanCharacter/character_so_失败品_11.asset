@@ -1,0 +1,48 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0432a95699a342929361599b7939f299, type: 3}
+  m_Name: "character_so_\u5931\u8D25\u54C1_11"
+  m_EditorClassIdentifier: 
+  characterID: 11
+  characterName: "\u5931\u8D25\u54C1"
+  anim: {fileID: 2665300380114651598, guid: 58655d13e090e0f449fd55543390d5e5, type: 3}
+  rarity: 1
+  cardPack: 1
+  sanCost: 30
+  deathFuncDescription: "\u4E3A\u4E00\u4E2A\u53CB\u65B9\u5355\u4F4D\u6062\u590D35\u70B9\u751F\u547D\u503C\u3002"
+  cardSprite: {fileID: 21300000, guid: 3a222082b03b6f940851d39cfd4a1359, type: 3}
+  hp: 10
+  attack: 4
+  moveSpd: 4
+  defend: 0
+  features: 0b000000
+  specialFeatures: 
+  pieceSprite: {fileID: 21300000, guid: 706b1c62cb78c3e45b62875133d9a0fa, type: 3}
+  width: 1
+  height: 1
+  moveDirections: 01000000020000000300000004000000
+  attackSpd: 2
+  accuracy: 0.8
+  attackRange: 1
+  life: 999
+  sanCostBonus:
+    stat: 6
+    multiple: -0.05
+  hpBonus:
+    stat: 4
+    multiple: 4
+  atkBonus:
+    stat: 3
+    multiple: 1
+  atkSpdBonus:
+    stat: 0
+    multiple: 0

@@ -4,6 +4,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
+using Random = UnityEngine.Random;
+using BagUI;
+using Unity.VisualScripting;
+using UnityEngine.UIElements;
 
 namespace Game
 {
@@ -16,21 +20,68 @@ namespace Game
         void AddItem(Item item);
 
         /// <summary>
+        /// 从背包里删除一个物品
+        /// </summary>
+        /// <param name="item"></param>
+        void RemoveItem(Item item);
+
+        /// <summary>
+        /// 使用一个物品
+        /// </summary>
+        /// <param name="item"></param>
+        void UseItem(Item item);
+
+        /// <summary>
         /// 返回背包里的物品列表
         /// </summary>
         List<Item> GetItemList();
 
+
+        // 目前SpawnSystem.SpawnCard返还的是viewBagCard不是viewCard，不能放入手牌，暂时不确定是否需要这个函数
         /// <summary>
         /// 创建一个卡牌实体Prefab，并放入背包内
         /// </summary>
         /// <param name="cardId">卡牌id</param>
-        public void SpawnCardInBag(int cardId);
+        //void SpawnHandCard(int cardId);
+
+
+        /// <summary>
+        /// 创建一个卡牌实体Prefab，并放入背包中
+        /// </summary>
+        /// <param name="m_card">卡牌</param>
+        void SpawnBagCardInBag(Card m_card);
+
+        /// <summary>
+        /// 返回背包里的卡牌ViewBagCard列表
+        /// </summary>
+        /// <returns></returns>
+        List<ViewBagCard> GetBagCardList();
+
+        /// <summary>
+        /// 整理itemList也就是背包道具的顺序，优先级为：战斗中使用道具>任何时间使用的道具>其它可使用道具>不可使用道具。
+        /// 同一道具类型下稀有度低的在前，稀有度高的在后。每次背包道具有变动自动调用。
+        /// </summary>
+        void SortItemList();
+
+        /// <summary>
+        /// Knuth-Durstenfeld Shuffle算法，给背包中的牌随机排序
+        /// </summary>
+        void ShuffleCard();
+
+        /// <summary>
+        /// 从背包里抽取一张牌，返还抽到的卡牌数据
+        /// </summary>
+        /// <returns></returns>
+        Card DrawCard();
+
+
+
     }
 
     public class InventorySystem : AbstractSystem, IInventorySystem
     {
         public BindableProperty<List<Item>> itemList = new BindableProperty<List<Item>>(); // 物品列表
-        public BindableProperty<List<ViewCard>> cardList = new BindableProperty<List<ViewCard>>(); // 卡牌列表
+        private BindableProperty<List<ViewBagCard>> cardBagList = new BindableProperty<List<ViewBagCard>>();// 背包卡牌列表
         public Transform inventoryRoot; // 生成的物品Prefab悬挂的父物体位置
 
         protected override void OnInit()
@@ -39,18 +90,36 @@ namespace Game
             itemList.Register((newItemList) => OnItemListChanged());
             inventoryRoot = GameObject.Find("InventoryRoot")?.transform;
 
-            cardList.SetValueWithoutEvent(new List<ViewCard>());
+            cardBagList.SetValueWithoutEvent(new List<ViewBagCard>());
 
-            SOItemBase testItem = Resources.Load<SOItemBase>("ScriptableObjects/Items/Item31");
+            UIKit.OpenPanel<BagUIPanel>();
+            UIKit.HidePanel<BagUIPanel>();
 
-            AddItem(new Item { amount = 1, data = testItem });
-            AddItem(new Item { amount = 2, data = testItem });
+            // 测试用代码
+            SOItemBase IntermediateSapphirePotion = Resources.Load<SOItemBase>("ScriptableObjects/Items/Intermediate Sapphire Potion");
+            SOItemBase MinorSapphirePotion = Resources.Load<SOItemBase>("ScriptableObjects/Items/Minor Sapphire Potion");
+            SOItemBase IntermediateEmeraldPotion = Resources.Load<SOItemBase>("ScriptableObjects/Items/Intermediate Emerald Potion");
+            SOItemBase Type_DMinorEnhancementPotion = Resources.Load<SOItemBase>("ScriptableObjects/Items/Type-D Minor Enhancement Potion");
+            SOItemBase LightNavyQuillPen = Resources.Load<SOItemBase>("ScriptableObjects/Items/Light-Navy Quill Pen");
+            SOItemBase NavyQuillPen = Resources.Load<SOItemBase>("ScriptableObjects/Items/Navy Quill Pen");
+            AddItem(new Item { amount = 2, data = MinorSapphirePotion });
+            AddItem(new Item { amount = 1, data = MinorSapphirePotion });
+            AddItem(new Item { amount = 1, data = IntermediateSapphirePotion });
+            AddItem(new Item { amount = 1, data = IntermediateEmeraldPotion });
+            AddItem(new Item { amount = 1, data = Type_DMinorEnhancementPotion });
+            AddItem(new Item { amount = 4, data = LightNavyQuillPen });
+            AddItem(new Item { amount = 3, data = NavyQuillPen });
+
+
 
 
         }
 
+
+
         private void OnItemListChanged()
         {
+            SortItemList();
             UIKit.GetPanel("UIInventoryQuickSlot")?.Invoke("RefreshInventoryItems", 0f);
         }
 
@@ -74,20 +143,93 @@ namespace Game
             itemList.Value = newList;
         }
 
+        public void RemoveItem(Item item)
+        {
+            List<Item> newList = new List<Item>(itemList.Value);
+            newList.Remove(item);
+            itemList.Value = newList;
+        }
+
         public List<Item> GetItemList()
         {
             return itemList;
         }
 
-        public void SpawnCardInBag(int cardId)
+
+        public void SpawnBagCardInBag(Card m_card)
         {
-            GameObject cardItem;
-            ISpawnSystem spawnSystem = this.GetSystem<ISpawnSystem>();
-            spawnSystem.SpawnCard(cardId);
-            cardItem = spawnSystem.GetLastSpawnedCard();
-            var cardBase = cardItem.GetComponent<ViewCard>();
-            cardList.Value.Add(cardBase);
+            GameObject card_Object;
+            ViewBagCard cardItem;
+            ICardGeneratorSystem CardSystem = this.GetSystem<ICardGeneratorSystem>();
+            cardItem = CardSystem.CreateBagCard(m_card);
+            card_Object = cardItem.gameObject;
+            cardItem.OnFocusAction = () =>
+                {
+                    UIKit.GetPanel<BagUIPanel>().CardDescription.Show();
+
+                    UIKit.GetPanel<BagUIPanel>().CardDescription.GetComponent<LoadCardDetail>()?.ShowDetail(cardItem.card);
+                };
+            cardItem.OnUnFocusAction = () =>
+                {
+                    UIKit.GetPanel<BagUIPanel>().CardDescription.Hide();
+                };
+
+           
+            cardBagList.Value.Add(cardItem);
+            ShuffleCard();
+            UIKit.GetPanel<BagUIPanel>().UpdateLayout();
         }
+        public List<ViewBagCard> GetBagCardList()
+        {
+            return cardBagList.Value;
+        }
+
+        public void SortItemList()
+        {
+            List<Item> items = itemList.Value;
+
+            items.Sort((item1, item2) =>
+            {
+                // 比较道具使用时间
+                int useTimeComparison = item1.data.itemUseTime.CompareTo(item2.data.itemUseTime);
+                if (useTimeComparison != 0)
+                {
+                    return useTimeComparison;
+                }
+
+                // 如果道具使用时间相同，则比较稀有度
+                int rarityComparison = item1.data.rarity.CompareTo(item2.data.rarity);
+                return rarityComparison;
+            });
+
+            itemList.SetValueWithoutEvent(items);
+        }
+
+        public void UseItem(Item item)
+        {
+            var useItemEvent = new UseItemEvent { item = item };
+            GameEntry.Interface.SendCommand(new UseItemCommand(useItemEvent));
+        }
+
+        public void ShuffleCard()
+        {
+            for (int i = 0; i < cardBagList.Value.Count; i++)
+            {
+                var index = Random.Range(0, cardBagList.Value.Count - i);
+                var tempValue = cardBagList.Value[index];
+                cardBagList.Value[index] = cardBagList.Value[cardBagList.Value.Count - i - 1];
+                cardBagList.Value[cardBagList.Value.Count - i - 1] = tempValue;
+            }
+        }
+
+        public Card DrawCard()
+        {
+            var index = cardBagList.Value.Count - 1;
+            var card = (Card)cardBagList.Value[index].card.Clone();
+            cardBagList.Value.RemoveAt(index);
+            return card;
+        }
+
     }
 }
 

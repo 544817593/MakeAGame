@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56ecb282cab14c5d8106ae3ec684c67e, type: 3}
+  m_Name: Toxicologist
+  m_EditorClassIdentifier: 
+  featureID: 9
+  featureName: "\u65BD\u6BD2\u8005"
+  featureDesc: "\u653B\u51FB\u4F7F\u5BF9\u65B9\u4E2D\u6BD2\uFF0C\u63A5\u4E0B\u67655\u79D2\u6BCF\u79D2\u53D7\u523010%\u5F53\u524D\u751F\u547D\u503C\u7684\u4F24\u5BB3\u3002"
+  icon: {fileID: 21300000, guid: c1dba9408b564594f90b9bc40edb837a, type: 3}

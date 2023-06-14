@@ -40,9 +40,10 @@ namespace Game
             uiHelper.OnUIDrag = OnDrag;
             uiHelper.OnUIEndDrag += uiHandCard.OnDragCardEnd;
             uiHelper.OnUIEndDrag += OnDragEnd;
-            // uiHelper.OnUIDrag += uiHandCard.OnDragCard;  // todo 看拖拽手牌时手牌ui是否需要响应
+            
+            //uiHelper.OnUIDrag += uiHandCard.OnDragCard;  // todo 看拖拽手牌时手牌ui是否需要响应
 
-            this.RegisterEvent<PutPieceByHandCardEvent>(OnUseAsLifeCard);
+            this.RegisterEvent<PutPieceByHandCardEvent>(OnUseAsLifeCard).UnRegisterWhenGameObjectDestroyed(this);
 
             InitView();
         }
@@ -58,11 +59,11 @@ namespace Game
             tmpDefend.text = card.defend.ToString();
             tmpName.text = card.charaName;
             tmpDesc.text = card.deathFuncDesc;
-            for(int i = 0; i < card.features.Length; i++)
+            for(int i = 0; i < card.features.Count; i++)
             {
-                featureTouchArea[i].GetComponent<Image>().sprite = card.features[i].icon;
+                featureTouchArea[i].GetComponent<Image>().sprite = IdToSO.FindFeatureSOByEnum(card.features[i]).icon;
             }
-            for (int i = card.features.Length; i < 3; i++)
+            for (int i = card.features.Count; i < 3; i++)
             {
                 featureTouchArea[i].gameObject.SetActive(false);
             }
@@ -127,7 +128,7 @@ namespace Game
                     if (!tooltipTrans.gameObject.activeSelf)
                     {
                         int index = featureTouchArea.IndexOf(ret.gameObject);
-                        OnShowTooltip.Invoke(card.features[index]);
+                        OnShowTooltip.Invoke(IdToSO.FindFeatureSOByEnum(card.features[index]));
                         tooltipTrans.gameObject.SetActive(true);
                     }
                     return;
@@ -154,11 +155,22 @@ namespace Game
         {
             // 检测通知的是不是自己
             if (e.viewCard != this) return;
+            if (this.GetSystem<IPieceSystem>().GetLastSpawnedFriend(true) != null &&
+                e.viewCard.card.charaID == this.GetSystem<IPieceSystem>().GetLastSpawnedFriend(true).card.charaID &&
+                e.viewCard.card.HasFeature(FeatureEnum.Insomnia))
+            {
+                Debug.Log("失眠症，无法连续放置");
+                return;
+            }
 
             this.SendCommand(new PutPieceCommand(this, e.pieceGrids));
-            
+            if (e.viewCard.card.charaName == "弗朗西斯·维兰德·瑟斯顿")
+            {
+                Dialogue dialogue = GameObject.Find("Dialogue")?.GetComponent<Dialogue>();
+                 dialogue.getControl = true;
+            }
             // todo 手牌使用后的后续处理（此时已经移出手牌系统并隐藏），如返回背包、销毁...
-            Debug.Log("[TODO] after card use as life card");
+            Debug.Log("after card use as life card");
             
         }
 

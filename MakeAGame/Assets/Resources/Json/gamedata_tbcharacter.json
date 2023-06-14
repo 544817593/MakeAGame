@@ -1,0 +1,681 @@
+[
+  {
+    "characterID": 1,
+    "characterName": "弗朗西斯·维兰德·瑟斯顿",
+    "rarity": 5,
+    "cardPack": 1,
+    "sanCost": 90,
+    "sanCostBonus": {
+      "property": 0,
+      "multiple": 0
+    },
+    "deathDesc": "在当前位置放置一个不可摧毁的障碍物，获得一张弗朗西斯。",
+    "hp": 60,
+    "hpBonus": {
+      "property": 4,
+      "multiple": 5
+    },
+    "atk": 5,
+    "atkBonus": {
+      "property": 1,
+      "multiple": 1
+    },
+    "moveSpd": 4,
+    "def": 2,
+    "feature": [
+      3,
+      4,
+      21
+    ],
+    "specialFeature": [
+      26,
+      27
+    ],
+    "width": 1,
+    "height": 1,
+    "moveDirections": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "atkSpd": 1.25,
+    "atkSpdBonus": {
+      "property": 1,
+      "multiple": 0.1
+    },
+    "accuracy": 0.9,
+    "atkRange": 1,
+    "life": 999
+  },
+  {
+    "characterID": 2,
+    "characterName": "伦道夫·卡特",
+    "rarity": 5,
+    "cardPack": 1,
+    "sanCost": 90,
+    "sanCostBonus": {
+      "property": 0,
+      "multiple": 0
+    },
+    "deathDesc": "当前位置的时间流逝速率永久-0.5，获得一张伦道夫。",
+    "hp": 35,
+    "hpBonus": {
+      "property": 4,
+      "multiple": 5
+    },
+    "atk": 0,
+    "atkBonus": {
+      "property": 3,
+      "multiple": 3
+    },
+    "moveSpd": 1,
+    "def": 0,
+    "feature": [
+      2,
+      21
+    ],
+    "specialFeature": [
+      28,
+      29,
+      30
+    ],
+    "width": 1,
+    "height": 1,
+    "moveDirections": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "atkSpd": 1.25,
+    "atkSpdBonus": {
+      "property": 3,
+      "multiple": 0.05
+    },
+    "accuracy": 0.7,
+    "atkRange": 2,
+    "life": 999
+  },
+  {
+    "characterID": 3,
+    "characterName": "阿比盖尔·米勒",
+    "rarity": 5,
+    "cardPack": 1,
+    "sanCost": 90,
+    "sanCostBonus": {
+      "property": 0,
+      "multiple": 0
+    },
+    "deathDesc": "对当前位置以及其上下左右范围为1的格子造成10点伤害，获得一张阿比盖尔。",
+    "hp": 50,
+    "hpBonus": {
+      "property": 4,
+      "multiple": 8
+    },
+    "atk": 3,
+    "atkBonus": {
+      "property": 2,
+      "multiple": 2
+    },
+    "moveSpd": 5,
+    "def": 0,
+    "feature": [
+      5,
+      21
+    ],
+    "specialFeature": [
+      31,
+      32
+    ],
+    "width": 1,
+    "height": 1,
+    "moveDirections": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "atkSpd": 1.25,
+    "atkSpdBonus": {
+      "property": 2,
+      "multiple": 0.02
+    },
+    "accuracy": 0.7,
+    "atkRange": 2,
+    "life": 999
+  },
+  {
+    "characterID": 4,
+    "characterName": "D级员工",
+    "rarity": 1,
+    "cardPack": 1,
+    "sanCost": 20,
+    "sanCostBonus": {
+      "property": 6,
+      "multiple": -0.04
+    },
+    "deathDesc": "对3*3的格子造成15点伤害。",
+    "hp": 25,
+    "hpBonus": {
+      "property": 4,
+      "multiple": 2
+    },
+    "atk": 3,
+    "atkBonus": {
+      "property": 0,
+      "multiple": 0
+    },
+    "moveSpd": 3.5,
+    "def": 0,
+    "feature": [],
+    "specialFeature": [],
+    "width": 1,
+    "height": 1,
+    "moveDirections": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "atkSpd": 2,
+    "atkSpdBonus": {
+      "property": 0,
+      "multiple": 0
+    },
+    "accuracy": 0.6,
+    "atkRange": 1,
+    "life": 999
+  },
+  {
+    "characterID": 5,
+    "characterName": "C级员工",
+    "rarity": 2,
+    "cardPack": 1,
+    "sanCost": 20,
+    "sanCostBonus": {
+      "property": 6,
+      "multiple": -0.05
+    },
+    "deathDesc": "对3*3的格子造成20点伤害，25%的概率获得一张D级员工。",
+    "hp": 35,
+    "hpBonus": {
+      "property": 4,
+      "multiple": 2
+    },
+    "atk": 3,
+    "atkBonus": {
+      "property": 0,
+      "multiple": 0
+    },
+    "moveSpd": 3.5,
+    "def": 1,
+    "feature": [
+      6
+    ],
+    "specialFeature": [],
+    "width": 1,
+    "height": 1,
+    "moveDirections": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "atkSpd": 1.7,
+    "atkSpdBonus": {
+      "property": 0,
+      "multiple": 0
+    },
+    "accuracy": 0.7,
+    "atkRange": 1,
+    "life": 999
+  },
+  {
+    "characterID": 6,
+    "characterName": "B级员工",
+    "rarity": 3,
+    "cardPack": 1,
+    "sanCost": 20,
+    "sanCostBonus": {
+      "property": 6,
+      "multiple": -0.06
+    },
+    "deathDesc": "对4*4的格子造成25点伤害，20%的概率获得一张C级员工。",
+    "hp": 50,
+    "hpBonus": {
+      "property": 4,
+      "multiple": 3
+    },
+    "atk": 4,
+    "atkBonus": {
+      "property": 0,
+      "multiple": 0
+    },
+    "moveSpd": 2.5,
+    "def": 2,
+    "feature": [
+      6,
+      7
+    ],
+    "specialFeature": [],
+    "width": 1,
+    "height": 1,
+    "moveDirections": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "atkSpd": 1.7,
+    "atkSpdBonus": {
+      "property": 5,
+      "multiple": 0.01
+    },
+    "accuracy": 0.8,
+    "atkRange": 1,
+    "life": 999
+  },
+  {
+    "characterID": 7,
+    "characterName": "A级员工",
+    "rarity": 4,
+    "cardPack": 1,
+    "sanCost": 20,
+    "sanCostBonus": {
+      "property": 6,
+      "multiple": -0.07
+    },
+    "deathDesc": "对4*4的格子造成40点伤害，15%的概率获得一张B级员工。",
+    "hp": 75,
+    "hpBonus": {
+      "property": 4,
+      "multiple": 4
+    },
+    "atk": 5,
+    "atkBonus": {
+      "property": 0,
+      "multiple": 0
+    },
+    "moveSpd": 2.5,
+    "def": 2,
+    "feature": [
+      6,
+      7,
+      8
+    ],
+    "specialFeature": [],
+    "width": 1,
+    "height": 1,
+    "moveDirections": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "atkSpd": 1.7,
+    "atkSpdBonus": {
+      "property": 5,
+      "multiple": 0.02
+    },
+    "accuracy": 0.9,
+    "atkRange": 1,
+    "life": 999
+  },
+  {
+    "characterID": 8,
+    "characterName": "魔虫",
+    "rarity": 1,
+    "cardPack": 1,
+    "sanCost": 12,
+    "sanCostBonus": {
+      "property": 0,
+      "multiple": 0
+    },
+    "deathDesc": "在任意2*2的格子上分别召唤1只魔虫。",
+    "hp": 13,
+    "hpBonus": {
+      "property": 0,
+      "multiple": 0
+    },
+    "atk": 3,
+    "atkBonus": {
+      "property": 1,
+      "multiple": 1
+    },
+    "moveSpd": 2.5,
+    "def": 0,
+    "feature": [],
+    "specialFeature": [],
+    "width": 1,
+    "height": 1,
+    "moveDirections": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "atkSpd": 2.5,
+    "atkSpdBonus": {
+      "property": 0,
+      "multiple": 0
+    },
+    "accuracy": 0.5,
+    "atkRange": 5,
+    "life": 999
+  },
+  {
+    "characterID": 9,
+    "characterName": "猫头鹰",
+    "rarity": 1,
+    "cardPack": 1,
+    "sanCost": 40,
+    "sanCostBonus": {
+      "property": 6,
+      "multiple": -0.05
+    },
+    "deathDesc": "选择3*3的格子并将他们的时间流逝速率变为慢，持续30秒。",
+    "hp": 25,
+    "hpBonus": {
+      "property": 4,
+      "multiple": 1
+    },
+    "atk": 2,
+    "atkBonus": {
+      "property": 0,
+      "multiple": 0
+    },
+    "moveSpd": 3.2,
+    "def": 0,
+    "feature": [
+      13,
+      14,
+      19
+    ],
+    "specialFeature": [],
+    "width": 1,
+    "height": 1,
+    "moveDirections": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "atkSpd": 2,
+    "atkSpdBonus": {
+      "property": 0,
+      "multiple": 0
+    },
+    "accuracy": 1,
+    "atkRange": 3,
+    "life": 999
+  },
+  {
+    "characterID": 10,
+    "characterName": "呱呱蛙",
+    "rarity": 1,
+    "cardPack": 1,
+    "sanCost": 24,
+    "sanCostBonus": {
+      "property": 0,
+      "multiple": 0
+    },
+    "deathDesc": "使一个战斗中的敌方单位攻速永久-0.3（最低0.1），如果该单位对声音敏感，则在该场战斗中额外-0.3。",
+    "hp": 20,
+    "hpBonus": {
+      "property": 0,
+      "multiple": 0
+    },
+    "atk": 3,
+    "atkBonus": {
+      "property": 1,
+      "multiple": 1
+    },
+    "moveSpd": 2,
+    "def": 0,
+    "feature": [
+      15,
+      18
+    ],
+    "specialFeature": [],
+    "width": 1,
+    "height": 1,
+    "moveDirections": [
+      1,
+      3
+    ],
+    "atkSpd": 2,
+    "atkSpdBonus": {
+      "property": 5,
+      "multiple": 0.02
+    },
+    "accuracy": 0.8,
+    "atkRange": 1,
+    "life": 999
+  },
+  {
+    "characterID": 11,
+    "characterName": "失败品",
+    "rarity": 1,
+    "cardPack": 1,
+    "sanCost": 30,
+    "sanCostBonus": {
+      "property": 6,
+      "multiple": -0.05
+    },
+    "deathDesc": "为一个友方单位恢复35点生命值。",
+    "hp": 10,
+    "hpBonus": {
+      "property": 4,
+      "multiple": 4
+    },
+    "atk": 4,
+    "atkBonus": {
+      "property": 3,
+      "multiple": 1
+    },
+    "moveSpd": 4,
+    "def": 0,
+    "feature": [
+      11
+    ],
+    "specialFeature": [],
+    "width": 1,
+    "height": 1,
+    "moveDirections": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "atkSpd": 2,
+    "atkSpdBonus": {
+      "property": 0,
+      "multiple": 0
+    },
+    "accuracy": 0.8,
+    "atkRange": 1,
+    "life": 999
+  },
+  {
+    "characterID": 12,
+    "characterName": "爱笑猫",
+    "rarity": 1,
+    "cardPack": 1,
+    "sanCost": 30,
+    "sanCostBonus": {
+      "property": 6,
+      "multiple": -0.1
+    },
+    "deathDesc": "使3*3格子内的敌人混乱15秒，混乱中的敌人将随机移动。",
+    "hp": 18,
+    "hpBonus": {
+      "property": 0,
+      "multiple": 0
+    },
+    "atk": 2,
+    "atkBonus": {
+      "property": 3,
+      "multiple": 1
+    },
+    "moveSpd": 2,
+    "def": 0,
+    "feature": [
+      16,
+      17,
+      18
+    ],
+    "specialFeature": [],
+    "width": 1,
+    "height": 1,
+    "moveDirections": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "atkSpd": 3.3,
+    "atkSpdBonus": {
+      "property": 5,
+      "multiple": 0.04
+    },
+    "accuracy": 0.8,
+    "atkRange": 1,
+    "life": 999
+  },
+  {
+    "characterID": 13,
+    "characterName": "渡鸦",
+    "rarity": 1,
+    "cardPack": 1,
+    "sanCost": 60,
+    "sanCostBonus": {
+      "property": 6,
+      "multiple": -0.2
+    },
+    "deathDesc": "将4*4格子的时间流逝速率修正为正常，持续40秒。",
+    "hp": 1000,
+    "hpBonus": {
+      "property": 0,
+      "multiple": 0
+    },
+    "atk": 0,
+    "atkBonus": {
+      "property": 0,
+      "multiple": 0
+    },
+    "moveSpd": 4,
+    "def": 0,
+    "feature": [
+      13,
+      19
+    ],
+    "specialFeature": [
+      33
+    ],
+    "width": 1,
+    "height": 1,
+    "moveDirections": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "atkSpd": 0,
+    "atkSpdBonus": {
+      "property": 0,
+      "multiple": 0
+    },
+    "accuracy": 0,
+    "atkRange": 0,
+    "life": 999
+  },
+  {
+    "characterID": 14,
+    "characterName": "藤曼",
+    "rarity": 1,
+    "cardPack": 1,
+    "sanCost": 14,
+    "sanCostBonus": {
+      "property": 0,
+      "multiple": 0
+    },
+    "deathDesc": "使1*6格子内的敌人移动速度减半，持续3秒，随后这些格子时间流逝速率永久降低一个级别.",
+    "hp": 30,
+    "hpBonus": {
+      "property": 2,
+      "multiple": 10
+    },
+    "atk": 0,
+    "atkBonus": {
+      "property": 0,
+      "multiple": 0
+    },
+    "moveSpd": 6,
+    "def": 2,
+    "feature": [],
+    "specialFeature": [
+      34
+    ],
+    "width": 2,
+    "height": 1,
+    "moveDirections": [
+      4,
+      2
+    ],
+    "atkSpd": 1,
+    "atkSpdBonus": {
+      "property": 5,
+      "multiple": 0.1
+    },
+    "accuracy": 1,
+    "atkRange": 2,
+    "life": 999
+  },
+  {
+    "characterID": 15,
+    "characterName": "水精",
+    "rarity": 1,
+    "cardPack": 1,
+    "sanCost": 40,
+    "sanCostBonus": {
+      "property": 0,
+      "multiple": 0
+    },
+    "deathDesc": "为3*3格子内的友方单位回复20点生命值，如果该范围内有水，则回复25点。",
+    "hp": 35,
+    "hpBonus": {
+      "property": 2,
+      "multiple": 10
+    },
+    "atk": 0,
+    "atkBonus": {
+      "property": 0,
+      "multiple": 0
+    },
+    "moveSpd": 3.5,
+    "def": 1,
+    "feature": [
+      15
+    ],
+    "specialFeature": [
+      35
+    ],
+    "width": 1,
+    "height": 1,
+    "moveDirections": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "atkSpd": 0,
+    "atkSpdBonus": {
+      "property": 0,
+      "multiple": 0
+    },
+    "accuracy": 0,
+    "atkRange": 3,
+    "life": 999
+  }
+]

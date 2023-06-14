@@ -147,7 +147,7 @@ public class PlayerSkills : MonoBehaviour, IController
         {
             if (counter % 2 == 0)
             {
-                monster.hp.Value = 1f;
+                monster.hp.Value = 1;
             }
             counter++;
         }

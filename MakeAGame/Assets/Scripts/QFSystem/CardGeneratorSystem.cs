@@ -7,7 +7,11 @@ namespace Game
     {
         GameObject mCardPrefab { get; }
 
+        // 单纯创建卡牌实体
         GameObject CreateCard();
+
+        // 创建已经挂上ViewBagCard的卡牌实体
+        ViewBagCard CreateBagCard(Card cardData);
     }
     
     public class CardGeneratorSystem: AbstractSystem, ICardGeneratorSystem
@@ -25,7 +29,17 @@ namespace Game
             var cardGO = GameObject.Instantiate(mCardPrefab);
             return cardGO;
         }
-        
+
+        public ViewBagCard CreateBagCard(Card cardData)
+        {
+            var cardGO = CreateCard();
+            
+            var viewBagCard = cardGO.AddComponent<ViewBagCard>();
+            viewBagCard.card = cardData;
+            
+            return viewBagCard;
+        }
+
         public IArchitecture GetArchitecture()
         {
             return GameEntry.Interface;

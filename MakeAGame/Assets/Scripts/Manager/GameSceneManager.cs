@@ -95,10 +95,10 @@ public class GameSceneManager : MonoBehaviour
     public IEnumerator UnloadScene(string sceneName)
     {
         // 退出局内场景时的处理
-        if (sceneName == "Combat")
-        {
-            // 停止抽卡协程
-        }
+        //if (sceneName == "Combat")
+        //{
+        //    // 停止抽卡协程
+        //}
 
         SceneManager.UnloadSceneAsync(sceneName);
         yield return null;

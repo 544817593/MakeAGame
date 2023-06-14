@@ -3,7 +3,7 @@
 /// </summary>
 public enum DirEnum
 {
-    Top, Right, Down, Left, Topleft, Topright, Downright, Downleft, None
+    None, Top, Right, Down, Left, Topleft, Topright, Downright, Downleft
 }
 
 /// <summary>
@@ -19,7 +19,7 @@ public enum TimeMultiplierEnum
 /// </summary>
 public enum PlayerStatsEnum
 {
-    Strength, Spirit, Skill, Stamina, Charisma
+    None, Strength, Spirit, Skill, Stamina, Charisma, Total
 }
 
 /// <summary>
@@ -34,9 +34,12 @@ public enum SkillNameEnum
 /// <summary>
 /// 特性
 /// </summary>
-public enum PropertyEnum
+public enum FeatureEnum
 {
-    None
+    None, Anthropologist, Writer, Hydrophobia, Insomnia, Psychologist, Dominant,
+    SolitaryHero, Determined, Toxicologist, Camouflaged, Bloodthirsty, MagicResistant,
+    Airborne, AnimalKiller, Aquatic, Feline, SoundSensitive, TinyCreature, Avian,
+    Rodent, Human, Lazy, Laborer, Greedy
 }
 
 /// <summary>
@@ -44,7 +47,24 @@ public enum PropertyEnum
 /// </summary>
 public enum TerrainEnum
 {
-    Invalid, Road, Wall, Water, Fire, Poison
+    Invalid, Road, Wall, Water, Fire, Poison, Edge, Door
+}
+
+/// <summary>
+/// 战斗区域外的背景图片选择
+/// 【千万不要改Enum的顺序！新加Enum加在下面，不要在中间插入！】
+/// </summary>
+public enum EdgeSprite
+{
+    None, 
+    Tile_Tomb, //地砖带墓碑
+    Tile_Grass, //地砖带草
+    Tile, //地砖
+    Wall_High, //墙-上
+    Wall_High_Grass, //墙-上带草
+    Wall_Mid, //墙中
+    Wall_Mid_Candle, //墙中带蜡烛 
+    Wall_Low, // 墙下
 }
 
 /// <summary>
@@ -72,15 +92,14 @@ public enum GridStatusEnum
 }
 
 /// <summary>
-/// 道具类型
+/// 道具类型，枚举顺序【不可以】改变，用来整理背包显示顺序
 /// </summary>
-public enum ItemTypeEnum
+public enum ItemUseTimeEnum
 {
-    Enhancement, // 卡牌强化道具
-    Coin, // 金币
-    Potion, // 药剂
-    Utility, // 功能性道具
-    Misc // 其它
+    Combat, // 战斗场景，主要是药剂
+    AnyTime, // 任何时候可以使用的道具
+    Merchant, // 商店场景，主要是强化道具
+    NotUsable // 无法使用的道具，主要是任务道具、功能型道具
 }
 
 /// <summary>
@@ -91,4 +110,28 @@ public enum ItemVolumeEnum
     Small, 
     Medium,
     Large
+}
+
+/// <summary>
+/// 棋子状态
+/// </summary>
+public enum PieceStateEnum
+{
+    Idle, Moving, Attacking
+}
+
+/// <summary>
+/// 卡牌稀有度
+/// </summary>
+public enum RarityEnum
+{
+    White, Green, Blue, Purple, Orange
+}
+
+/// <summary>
+/// 卡包
+/// </summary>
+public enum CardPackEnum
+{
+    None, Base, Warrior
 }

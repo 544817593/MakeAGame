@@ -20,9 +20,4 @@ namespace Game
 
 
     }
-
-    public struct UseItemEvent
-    {
-        public Item item;
-    }
 }

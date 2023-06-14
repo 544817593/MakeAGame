@@ -1,0 +1,12 @@
+[
+  {
+    "relicID": 1,
+    "relicName": "蛊器",
+    "desc": "这个小盒子里藏着可怖的虫子。它们会吞噬人类的鲜血，但在此过程中，也会让你的心灵变得更加强大。",
+    "effectDesc": "每场战斗结束后，获得3点最大混沌值",
+    "rarity": 1,
+    "ToCancelRelics": [],
+    "BeCanceledRelics": [],
+    "effectPriority": 0
+  }
+]

@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: MonsterSpawnMap1-1a
   m_EditorClassIdentifier: 
   spawnPoints:
-  - {x: 2, y: 14}
-  - {x: 3, y: 14}
-  - {x: 3, y: 11}
+  - {x: 5, y: 20}
+  - {x: 6, y: 20}
+  - {x: 6, y: 17}
   spawnProbability: 5a0000005a00000032000000
   spawnDuration: d2000000d2000000b4000000
   spawnCooldown: 050000000500000007000000

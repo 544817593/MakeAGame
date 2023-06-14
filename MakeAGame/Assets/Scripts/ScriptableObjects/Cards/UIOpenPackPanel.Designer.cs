@@ -5,7 +5,7 @@ using QFramework;
 
 namespace PackOpen
 {
-	// Generate Id:e10e3cbd-373c-4dab-bb69-9f81afbdfe0c
+	// Generate Id:fe6ca777-b21e-4b88-82bd-9f683a10d381
 	public partial class UIOpenPackPanel
 	{
 		public const string Name = "UIOpenPackPanel";
@@ -24,6 +24,18 @@ namespace PackOpen
 		public UnityEngine.UI.Image CardPosition4;
 		[SerializeField]
 		public UnityEngine.UI.Image CardPosition5;
+		[SerializeField]
+		public RectTransform Point;
+		[SerializeField]
+		public RectTransform Point1;
+		[SerializeField]
+		public RectTransform Point2;
+		[SerializeField]
+		public RectTransform Point3;
+		[SerializeField]
+		public RectTransform Point4;
+		[SerializeField]
+		public RectTransform Point5;
 		
 		private UIOpenPackPanelData mPrivateData = null;
 		
@@ -36,6 +48,12 @@ namespace PackOpen
 			CardPosition3 = null;
 			CardPosition4 = null;
 			CardPosition5 = null;
+			Point = null;
+			Point1 = null;
+			Point2 = null;
+			Point3 = null;
+			Point4 = null;
+			Point5 = null;
 			
 			mData = null;
 		}

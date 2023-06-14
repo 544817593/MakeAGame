@@ -18,7 +18,7 @@ public static class PackProbability
     {
         int cardId;
         int number = Random.Range(1, 101); // 随机数
-        int drawResult = 0; // 结果稀有度，0为白，1为绿等等
+        RarityEnum drawResult = 0; // 结果稀有度，0为白，1为绿等等
 
         foreach (int rarityValue in rarity)
         {
@@ -32,11 +32,11 @@ public static class PackProbability
 
         if (isGreen)
         {
-            drawResult = 1; // 绿色稀有度
+            drawResult = RarityEnum.Green; // 绿色稀有度
         }
         else if (isBlue)
         {
-            drawResult = 2; // 蓝色稀有度
+            drawResult = RarityEnum.Blue; // 蓝色稀有度
         }
 
 
@@ -55,7 +55,7 @@ public static class PackProbability
             }
 
             // 卡牌id对应到卡牌稀有度，匹配需要的稀有度跳出循环
-            if (IdToSO.FindCardSOByID(cardId)?.rarity == drawResult) break;
+            if (IdToSO.FindCardSOByID(cardId).rarity == drawResult) break;
 
             break;
         }

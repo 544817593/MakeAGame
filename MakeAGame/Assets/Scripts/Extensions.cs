@@ -1,4 +1,6 @@
 using System;
+using System.IO;
+using System.Linq;
 using UnityEngine;
 
 namespace Game
@@ -40,9 +42,9 @@ namespace Game
         /// </summary>
         /// <param name="rarity"></param>
         /// <returns></returns>
-        public static Sprite GetRaritySprite(int rarity)
+        public static Sprite GetRaritySprite(RarityEnum rarity)
         {
-            Sprite sp = Resources.Load<Sprite>($"Sprites/Cards/Rarity/Card_Rarity_{rarity}");
+            Sprite sp = Resources.Load<Sprite>($"Sprites/Cards/Rarity/Card_Rarity_{(int)rarity}");
             return sp;
         }
 
@@ -68,6 +70,49 @@ namespace Game
                 default:
                     return 1f;
             }
+        }
+
+        /// <summary>
+        /// 世界坐标和以左下角为原点的ui坐标的转换
+        /// </summary>
+        /// <param name="pos"></param>
+        /// <returns></returns>
+        public static Vector3 WorldToUIPos(Vector3 pos)
+        {
+            pos = Camera.main.WorldToScreenPoint(pos);
+            pos -= new Vector3(Screen.width / 2f, Screen.height / 2f, 0f);
+            return pos;
+        }
+
+        public static Card GetCopy(this Card oldCard)
+        {
+            var newObj = oldCard.Clone();
+            var newCard = newObj as Card;
+            if (newCard == null)
+            {
+                Debug.LogError("card copy failed!");
+                return null;
+            }
+            else
+            {
+                return newCard;
+            }
+        }
+
+        public static string GetFileWithTail(string resFolder, string tail, string format)
+        {
+            string iconFileName = String.Empty;
+            string fullFolderPath = Application.dataPath + "/Resources/" + resFolder;
+            var iconFiles = new DirectoryInfo(fullFolderPath).GetFiles();
+            iconFileName = iconFiles.ToList().Find(info => info.Name.EndsWith($"{tail}.{format}"))?.Name;
+
+            if (string.IsNullOrEmpty(iconFileName))
+                return null;
+            else
+            {
+                iconFileName = iconFileName.Split(".")[0];
+            }
+            return iconFileName;
         }
     }
 }
