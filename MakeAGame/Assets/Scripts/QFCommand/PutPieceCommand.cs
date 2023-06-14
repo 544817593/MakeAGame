@@ -27,6 +27,8 @@ namespace Game
             this.SendCommand(new SubHandCardCommand(viewCard));
             // 扣除混沌值
             UIKit.GetPanel<UIHandCard>().OnSanChange(-(int)viewCard.card.sanCost);
+            // 永久增加卡牌的混沌值消耗
+            viewCard.card.sanCost += (int)(0.2 * viewCard.card.sanCost);
             // 再添加棋子
             this.GetSystem<IPieceSystem>().AddPieceFriend(viewCard.card, grids);
 
