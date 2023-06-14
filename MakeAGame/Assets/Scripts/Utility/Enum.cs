@@ -43,11 +43,17 @@ public enum FeatureEnum
 }
 
 /// <summary>
-/// 地形
+/// 地形, Boxgrid.OnTerrainChanged()中设置
 /// </summary>
 public enum TerrainEnum
 {
-    Invalid, Road, Wall, Water, Fire, Poison, Edge, Door
+    Invalid, // 无效
+    Road, // 普通道路
+    Wall, // 墙体
+    Water, Fire, Poison, // 水火毒
+    Edge, // 游戏格子外
+    Door, // 大门
+    RoadPlaceable // 可放置棋子的道路
 }
 
 /// <summary>

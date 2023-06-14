@@ -218,7 +218,7 @@ public class DeathController : MonoBehaviour, IController
         foreach(BoxGrid grid in e.affectArea)
         {
             grid.terrain.Value = (int) TerrainEnum.Wall; // 格子类型
-            grid.setSrFloor(Resources.Load<Sprite>("Sprites/Grids/地砖")); // 更换障碍物资源
+            grid.setSrFloor(Resources.Load<Sprite>("Sprites/Grids/terrain2")); // 更换障碍物资源
             this.GetSystem<IInventorySystem>().SpawnBagCardInBag(e.viewCard.card); // 加入背包
             this.GetSystem<IHandCardSystem>().SubCard(e.viewCard); // 摧毁卡牌
         }
@@ -242,7 +242,7 @@ public class DeathController : MonoBehaviour, IController
     }
 
 
-    // 阿比盖尔  对当前位置以及其上下左右范围为1的格子造成1点伤害，获得一张阿比盖尔。
+    // 阿比盖尔  对当前位置以及其上下左右范围为1的格子造成10点伤害，获得一张阿比盖尔。
     // 传入选择的格子(传入最多5个格子，要在传入前选择好，如果上下左右包含了战斗区域外格子就不要传这些格子)，造成伤害，摧毁卡牌，背包加入卡牌。
     private void Abigal_Miller(DeathCardCheckEvent e)
     {
@@ -252,7 +252,7 @@ public class DeathController : MonoBehaviour, IController
             Debug.LogError("Abigal_Miller传入格子数量错误");
             return;
         }
-        DamageMonster(1, e);
+        DamageMonster(10, e);
         this.GetSystem<IInventorySystem>().SpawnBagCardInBag(e.viewCard.card); // 加入背包
         this.GetSystem<IHandCardSystem>().SubCard(e.viewCard); // 摧毁卡牌
     }
