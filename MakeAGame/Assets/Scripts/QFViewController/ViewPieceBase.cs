@@ -6,6 +6,7 @@ using DamageNumbersPro;
 using QFramework;
 using Unity.VisualScripting;
 using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 
 namespace Game
 {
@@ -16,7 +17,9 @@ namespace Game
     {
         // 怪物受到棋子伤害的数字弹出样式资源，棋子受到怪物伤害的数字弹出样式资源
         protected DamageNumberMesh MonsterDamageNumer;
-
+        protected DamageNumberMesh TerrianFireDamageNumer;
+        protected DamageNumberMesh TerrianPoisonDamageNumer;
+        protected DamageNumberMesh TerrianWaterDamageNumer;
         // protected Transform healthBar;
 
         protected IMapSystem mapSystem;
@@ -93,6 +96,9 @@ namespace Game
             
             hp.Register(e => OnCurrHpChanged(e));
             MonsterDamageNumer = Resources.Load("Prefabs/Damage Number Prefab/Monster Damage").GetComponent<DamageNumberMesh>();
+            TerrianFireDamageNumer = Resources.Load("Prefabs/Damage Number Prefab/Terrian Fire Damage").GetComponent<DamageNumberMesh>();
+            TerrianPoisonDamageNumer = Resources.Load("Prefabs/Damage Number Prefab/Terrian Poison Damage").GetComponent<DamageNumberMesh>();
+            TerrianWaterDamageNumer = Resources.Load("Prefabs/Damage Number Prefab/Terrian Water Damage").GetComponent<DamageNumberMesh>();
         }
 
         /// <summary>
@@ -133,6 +139,23 @@ namespace Game
             state = newState;
             state.EnterState();
             stateFlag = state.stateEnum;
+        }
+
+        /// <summary>
+        /// 棋子所占格子内是否包含了传入的格子类型
+        /// </summary>
+        /// <param name="terrianType"></param>
+        /// <returns></returns>
+        public bool PieceOnTerrianType(TerrainEnum terrianType)
+        {
+            foreach (BoxGrid grid in pieceGrids)
+            {
+                if (grid.terrain.Value == (int)terrianType)
+                {
+                    return true;
+                }
+            }
+            return false;
         }
 
         public PieceStateEnum GetPieceState()
@@ -237,6 +260,30 @@ namespace Game
                 Die();
             }
         }
+        // 重载，被地块buff调用，弹出不同资源的伤害数字
+        public void takeDamage(int damage, TerrainEnum terrian)
+        {
+            hp.Value -= damage;
+            if (terrian == TerrainEnum.Fire)
+            {
+                TerrianFireDamageNumer.Spawn(this.Position(), damage);
+            }else if(terrian == TerrainEnum.Poison)
+            {
+                TerrianPoisonDamageNumer.Spawn(this.Position(), damage);
+            }else if(terrian == TerrainEnum.Water)
+            {
+                TerrianWaterDamageNumer.Spawn(this.Position(), damage);
+            }
+            
+            if (hp <= 0)
+            {
+                this.GetSystem<IPieceBattleSystem>().EndBattle(this); // 不确定是不是需要
+                // 再从棋子系统中注销
+                this.GetSystem<IPieceSystem>().RemovePiece(this);
+                // 最后处理自身的死亡
+                Die();
+            }
+        }
         public virtual void Die()
         {
             state = new PieceStateIdle(this);
@@ -256,7 +303,13 @@ namespace Game
         
         protected virtual void OnMoveFinishEvent(PieceMoveFinishEvent e)
         {
-
+            if (PieceOnTerrianType(TerrainEnum.Fire))
+            {
+                GameManager.Instance.buffMan.AddBuff(new BuffTerrianFire(this));
+            }else if (PieceOnTerrianType(TerrainEnum.Poison))
+            {
+                GameManager.Instance.buffMan.AddBuff(new BuffTerrianPoison(this));
+            }
         }
 
         protected virtual void OnAttackStartEvent(PieceAttackStartEvent e)
