@@ -90,7 +90,7 @@ public class BuffTerrianFire : BuffToPiece
     {
         Debug.Log("BuffTerrianFire: start");
         target.listBuffs.Add(BuffType.Terrian_Fire);
-        target.takeDamage((int)(damagePerLevel * curLevel * target.maxHp), TerrainEnum.Fire);
+        target.TakeDamage((int)(damagePerLevel * curLevel * target.maxHp), TerrainEnum.Fire);
     }
 
     public override void OnBuffRefresh()
@@ -136,7 +136,7 @@ public class BuffTerrianFire : BuffToPiece
             Debug.Log($"BuffTerrianFire伤害：{damagePerLevel * curLevel * target.maxHp}, {(int)(damagePerLevel * curLevel * target.maxHp)}");
             // 伤害为0-1之间的时候取1
             int dmg = ((int)(damagePerLevel * curLevel * target.maxHp)) == 0 ? 1 : (int)(damagePerLevel * curLevel * target.maxHp);
-            target.takeDamage(dmg, TerrainEnum.Fire);
+            target.TakeDamage(dmg, TerrainEnum.Fire);
             damageTriggerTime = 0;
         }
     }
@@ -187,7 +187,7 @@ public class BuffTerrianPoison : BuffToPiece
     {
         Debug.Log("BuffTerrianPoison: start");
         target.listBuffs.Add(BuffType.Terrian_Poison);
-        target.takeDamage(damagePerLevel * curLevel, TerrainEnum.Poison);
+        target.TakeDamage(damagePerLevel * curLevel, TerrainEnum.Poison);
     }
 
     public override void OnBuffRefresh()
@@ -231,7 +231,7 @@ public class BuffTerrianPoison : BuffToPiece
         if (damageTriggerTime >= 1)
         {
             Debug.Log($"BuffTerrianPoison伤害：{damagePerLevel * curLevel}");
-            target.takeDamage(damagePerLevel * curLevel, TerrainEnum.Poison);
+            target.TakeDamage(damagePerLevel * curLevel, TerrainEnum.Poison);
             damageTriggerTime = 0;
         }
     }
@@ -335,7 +335,7 @@ public class BuffDrowning : BuffToPiece
     }
     public override void OnBuffStart()
     {
-        target.takeDamage((int) (damagePercent * target.maxHp), TerrainEnum.Water);
+        target.TakeDamage((int) (damagePercent * target.maxHp), TerrainEnum.Water);
     }
 
     public override void OnBuffRefresh()
@@ -349,7 +349,7 @@ public class BuffDrowning : BuffToPiece
         // 每3秒造成1次伤害
         if(timer >= 3) 
         {
-            target.takeDamage((int)(damagePercent * target.maxHp), TerrainEnum.Water);
+            target.TakeDamage((int)(damagePercent * target.maxHp), TerrainEnum.Water);
             timer = 0;
         }
     }

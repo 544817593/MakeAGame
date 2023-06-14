@@ -31,7 +31,14 @@ namespace Game
                 grid.terrain.Value = (int) TerrainEnum.Wall; // 格子类型
                 grid.setSrFloor(Resources.Load<Sprite>("Sprites/Grids/地砖")); // 更换障碍物资源
             }
-            
+
+            // 死面保护判定
+            if (ItemController.Instance.deathDestroyProtection > 0)
+            {
+                this.GetSystem<IInventorySystem>().SpawnBagCardInBag(viewCard.card);
+                ItemController.Instance.deathDestroyProtection -= 1;
+            }
+
             this.GetSystem<IInventorySystem>().SpawnBagCardInBag(viewCard.card); // 加入背包
             this.GetSystem<IHandCardSystem>().SubCard(viewCard); // 摧毁卡牌
         }

@@ -35,7 +35,14 @@ namespace Game
             // 是否对声音敏感, 99999999代表时间无限, 是否在战斗中由BuffQuackFrog检查
             bool soundSensitive = monster.features.Value.Contains(FeatureEnum.SoundSensitive);
             GameManager.Instance.buffMan.AddBuff(new BuffQuackFrog(monster, 99999999, soundSensitive));
-            
+
+            // 死面保护判定
+            if (ItemController.Instance.deathDestroyProtection > 0)
+            {
+                this.GetSystem<IInventorySystem>().SpawnBagCardInBag(viewCard.card);
+                ItemController.Instance.deathDestroyProtection -= 1;
+            }
+
             this.GetSystem<IHandCardSystem>().SubCard(viewCard); // 摧毁卡牌
         }
     }

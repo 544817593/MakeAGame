@@ -45,6 +45,13 @@ namespace Game
             // 地图上随机3个怪物造成等于回复量的伤害
             DamageRandMonster(addHP, 3);
 
+            // 死面保护判定
+            if (ItemController.Instance.deathDestroyProtection > 0)
+            {
+                this.GetSystem<IInventorySystem>().SpawnBagCardInBag(viewCard.card);
+                ItemController.Instance.deathDestroyProtection -= 1;
+            }
+
             this.GetSystem<IHandCardSystem>().SubCard(viewCard); // 摧毁卡牌
         }
         
@@ -65,7 +72,7 @@ namespace Game
                 {
                     foreach (Monster monster in pieceSystem.pieceEnemyList)
                     {
-                        monster.takeDamage(damage);
+                        monster.TakeDamage(damage);
                     }
                 }
                 else
@@ -84,7 +91,7 @@ namespace Game
                     for (int i = 0; i < RandMonsterCount; i++)
                     {
                         Monster monster = pieceSystem.pieceEnemyList[numbers[i]];
-                        monster.takeDamage(damage);
+                        monster.TakeDamage(damage);
                     }
                 }
             }

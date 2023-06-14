@@ -153,7 +153,7 @@ public class DeathController : MonoBehaviour, IController
             if (pieceSystem.IsPieceMonster(grid.occupation))
             {
                 Monster monster = pieceSystem.getMonsterById(grid.occupation);
-                monster.takeDamage(damage);
+                monster.TakeDamage(damage);
             }
         }
     }
@@ -180,7 +180,7 @@ public class DeathController : MonoBehaviour, IController
             {
                 foreach (Monster monster in pieceSystem.pieceEnemyList)
                 {
-                    monster.takeDamage(damage);
+                    monster.TakeDamage(damage);
                 }
             }
             else
@@ -199,7 +199,7 @@ public class DeathController : MonoBehaviour, IController
                 for (int i = 0; i < RandMonsterCount; i++)
                 {
                     Monster monster = pieceSystem.pieceEnemyList[numbers[i]];
-                    monster.takeDamage(damage);
+                    monster.TakeDamage(damage);
                 }
             }
         }

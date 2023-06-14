@@ -12,6 +12,8 @@ namespace Game
     /// </summary>
     public class Spawner : MonoBehaviour, IController, ICanSendEvent
     {
+        // 战斗场景中持续抽卡的协程
+        private Coroutine drawCardCoroutine;
 
         /// <summary>
         /// 获取Architecture 每个IController都要写
@@ -44,7 +46,7 @@ namespace Game
             // 监听持续抽取卡牌事件
             this.RegisterEvent<RefillHandCardEvent>(data =>
             {
-                OnHandCardRefillEvent(data);
+                drawCardCoroutine = StartCoroutine(OnHandCardRefillEvent(data));
             }).UnRegisterWhenGameObjectDestroyed(gameObject);
 
             // 监听亡灵生成事件
@@ -52,6 +54,19 @@ namespace Game
             {
                 SpawnUndead(data.undeadSpawnPositionX, data.undeadSpawnPositionY);
             }).UnRegisterWhenGameObjectDestroyed(gameObject);
+
+            // 监听战斗胜利/失败事件
+            this.RegisterEvent<CombatDefeatEvent>((data) => 
+            {
+                StopCoroutine(drawCardCoroutine);
+            }
+            ).UnRegisterWhenGameObjectDestroyed(gameObject);
+
+            this.RegisterEvent<CombatVictoryEvent>((data) =>
+            {
+                StopCoroutine(drawCardCoroutine);
+            }
+            ).UnRegisterWhenGameObjectDestroyed(gameObject);
 
         }
 

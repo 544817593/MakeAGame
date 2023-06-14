@@ -241,7 +241,7 @@ namespace Game
 
             hp.Value -= damage;
             Debug.Log($"Monster Hit, damage: {damage} hp: {hp.Value}");
-            MonsterDamageNumer.Spawn(this.Position(), damage);
+            MonsterDamageNumber.Spawn(this.Position(), damage);
             this.SendEvent<PieceHitFinishEvent>(new PieceHitFinishEvent { piece = this });
 
             return hp.Value <= 0;

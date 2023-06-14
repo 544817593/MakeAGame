@@ -16,10 +16,11 @@ namespace Game
     public partial class ViewPieceBase: MonoBehaviour, IController, ICanSendEvent
     {
         // 怪物受到棋子伤害的数字弹出样式资源，棋子受到怪物伤害的数字弹出样式资源
-        protected DamageNumberMesh MonsterDamageNumer;
-        protected DamageNumberMesh TerrianFireDamageNumer;
-        protected DamageNumberMesh TerrianPoisonDamageNumer;
-        protected DamageNumberMesh TerrianWaterDamageNumer;
+        protected DamageNumberMesh MonsterDamageNumber;
+        protected DamageNumberMesh TerrianFireDamageNumber;
+        protected DamageNumberMesh TerrianPoisonDamageNumber;
+        protected DamageNumberMesh TerrianWaterDamageNumber;
+        protected DamageNumberMesh MagicDamageNumber;
         // protected Transform healthBar;
 
         protected IMapSystem mapSystem;
@@ -96,10 +97,11 @@ namespace Game
             OnPieceUnderAttack += OnUnderAttackEvent;
             
             hp.Register(e => OnCurrHpChanged(e));
-            MonsterDamageNumer = Resources.Load("Prefabs/Damage Number Prefab/Monster Damage").GetComponent<DamageNumberMesh>();
-            TerrianFireDamageNumer = Resources.Load("Prefabs/Damage Number Prefab/Terrian Fire Damage").GetComponent<DamageNumberMesh>();
-            TerrianPoisonDamageNumer = Resources.Load("Prefabs/Damage Number Prefab/Terrian Poison Damage").GetComponent<DamageNumberMesh>();
-            TerrianWaterDamageNumer = Resources.Load("Prefabs/Damage Number Prefab/Terrian Water Damage").GetComponent<DamageNumberMesh>();
+            MonsterDamageNumber = Resources.Load("Prefabs/Damage Number Prefab/Monster Damage").GetComponent<DamageNumberMesh>();
+            TerrianFireDamageNumber = Resources.Load("Prefabs/Damage Number Prefab/Terrian Fire Damage").GetComponent<DamageNumberMesh>();
+            TerrianPoisonDamageNumber = Resources.Load("Prefabs/Damage Number Prefab/Terrian Poison Damage").GetComponent<DamageNumberMesh>();
+            TerrianWaterDamageNumber = Resources.Load("Prefabs/Damage Number Prefab/Terrian Water Damage").GetComponent<DamageNumberMesh>();
+            MagicDamageNumber = Resources.Load("Prefabs/Damage Number Prefab/Magic Damage").GetComponent<DamageNumberMesh>();
         }
 
         /// <summary>
@@ -249,9 +251,10 @@ namespace Game
         }
 
         // 受到棋子以外的东西的伤害，地块，死面之类的，包含掉血后的死亡检查
-        public void takeDamage(int damage)
+        public void TakeDamage(int damage)
         { 
             hp.Value -= damage;
+            MagicDamageNumber.Spawn(this.Position(), damage);
             if (hp <= 0)
             {
                 this.GetSystem<IPieceBattleSystem>().EndBattle(this); // 不确定是不是需要
@@ -262,18 +265,18 @@ namespace Game
             }
         }
         // 重载，被地块buff调用，弹出不同资源的伤害数字
-        public void takeDamage(int damage, TerrainEnum terrian)
+        public void TakeDamage(int damage, TerrainEnum terrian)
         {
             hp.Value -= damage;
             if (terrian == TerrainEnum.Fire)
             {
-                TerrianFireDamageNumer.Spawn(this.Position(), damage);
+                TerrianFireDamageNumber.Spawn(this.Position(), damage);
             }else if(terrian == TerrainEnum.Poison)
             {
-                TerrianPoisonDamageNumer.Spawn(this.Position(), damage);
+                TerrianPoisonDamageNumber.Spawn(this.Position(), damage);
             }else if(terrian == TerrainEnum.Water)
             {
-                TerrianWaterDamageNumer.Spawn(this.Position(), damage);
+                TerrianWaterDamageNumber.Spawn(this.Position(), damage);
             }
             
             if (hp <= 0)

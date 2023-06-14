@@ -34,7 +34,14 @@ namespace Game
                     Debug.LogError("TODO 生成魔虫");
                 }
             }
-            
+
+            // 死面保护判定
+            if (ItemController.Instance.deathDestroyProtection > 0)
+            {
+                this.GetSystem<IInventorySystem>().SpawnBagCardInBag(viewCard.card);
+                ItemController.Instance.deathDestroyProtection -= 1;
+            }
+
             this.GetSystem<IHandCardSystem>().SubCard(viewCard); // 摧毁卡牌
         }
     }
