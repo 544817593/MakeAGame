@@ -363,19 +363,20 @@ public class BuffDrowning : BuffToPiece
 
 
 /// <summary>
-/// 若buff目标处于战斗中，atkSpeed减0.3，持续至战斗结束（包括目标死亡的情况）
+/// 使一个战斗中的敌方单位攻速永久-0.3（最低0.1），如果该单位对声音敏感，则在该场战斗中额外-0.3（包括目标死亡的情况）
 /// </summary>
 public class BuffQuackFrog : BuffToPiece
 {
-    private float atkSpdDiff;
-    Monster monster;
-    bool soundSensitive;
+    private float atkSpeedDiff;
+    private float restoreAtkSpeedDiff;
+    private bool soundSensitive;
     public BuffQuackFrog(Monster _piece, float _dur, bool _soundSensitive)
     {
         target = _piece;
         duration = _dur;
-        monster = _piece;
         soundSensitive = _soundSensitive;
+        atkSpeedDiff = 0.3f;
+        restoreAtkSpeedDiff = 0;
     }
 
     public override bool OnBuffCreate()
@@ -394,15 +395,40 @@ public class BuffQuackFrog : BuffToPiece
         Debug.Log("BuffFrog: start");
         if (soundSensitive)
         {
-            atkSpdDiff = monster.atkSpeed > 0.6f ? 0.6f : monster.atkSpeed;
-            monster.atkSpeed.Value -= atkSpdDiff;
+            // 本来攻速大于等于0.7，减0.6，离开战斗需要回复0.3
+            if (target.atkSpeed >= 0.7f)
+            {
+                target.atkSpeed.Value -= (atkSpeedDiff + 0.3f);
+                restoreAtkSpeedDiff = 0.3f;
+            }
+            // 本来攻速0.4-0.7，减到0.1，离开战斗需要回复0.3
+            else if (target.atkSpeed < 0.7f && target.atkSpeed >= 0.4f)
+            {
+                target.atkSpeed.Value = 0.1f;
+                restoreAtkSpeedDiff = 0.3f;
+            }
+            // 本来攻速0.1-0.4，减到0.1，离开战斗不需要回复
+            else if (target.atkSpeed < 0.4f && target.atkSpeed >= 0.1f)
+            {
+                target.atkSpeed.Value = 0.1f;
+            }
+            // 其他情况不需要变动
         }
         else
         {
-            atkSpdDiff = monster.atkSpeed > 0.3f ? 0.3f : monster.atkSpeed;
-            monster.atkSpeed.Value -= atkSpdDiff;
+            // 本来攻速大于等于0.4，减0.3，离开战斗不需要回复
+            if (target.atkSpeed >= 0.4f)
+            {
+                target.atkSpeed.Value -= atkSpeedDiff;
+            }
+            // 本来攻速0.1-0.4，减到0.1，离开战斗不需要回复
+            else if (target.atkSpeed < 0.4f && target.atkSpeed >= 0.1f)
+            {
+                target.atkSpeed.Value = 0.1f;
+            }
+            // 其他情况不需要变动
         }
-        
+
     }
 
     public override void OnBuffRefresh()
@@ -420,9 +446,9 @@ public class BuffQuackFrog : BuffToPiece
     {
         Debug.Log("BuffFrog: remove");
 
-        if (target != null)
+        if (target != null && soundSensitive)
         {
-            monster.atkSpeed.Value += atkSpdDiff;
+            target.atkSpeed.Value += restoreAtkSpeedDiff;
         }
     }
 }
@@ -496,11 +522,11 @@ public class BuffConfusion : BuffToPiece
         // 先查找该棋子是否已有该类型buff，若有，不再挂新的，而是叠加时间
         if (target.listBuffs.Contains(BuffType.Confusion))
         {
-            foreach (var buff in GameManager.Instance.buffMan.listBuffs)
+            foreach (BuffBase buff in GameManager.Instance.buffMan.listBuffs)
             {
                 if (buff is BuffConfusion)
                 {
-                    var pieceBuff = buff as BuffConfusion;
+                    BuffConfusion pieceBuff = (BuffConfusion) buff;
                     if (pieceBuff.target == target)
                     {
                         Debug.Log($"BuffConfusion: already exist, add leftTime {pieceBuff.leftTime} + {leftTime}");
@@ -524,7 +550,7 @@ public class BuffConfusion : BuffToPiece
     public override void OnBuffRefresh()
     {
         leftTime -= Time.deltaTime;
-        if (leftTime <= 0)
+        if (target == null || leftTime <= 0)
         {
             GameManager.Instance.buffMan.RemoveBuff(this);
         }
@@ -547,14 +573,12 @@ public class BuffConfusion : BuffToPiece
 public class BuffVine : BuffToPiece
 {
     private float moveSpeedDiff;
-    private Monster monster;
 
     public BuffVine(ViewPieceBase _piece, float _dur)
     {
         target = _piece;
         duration = _dur;
         leftTime = duration;
-        monster = _piece as Monster;
     }
 
     public override bool OnBuffCreate() { return true; }
@@ -562,14 +586,14 @@ public class BuffVine : BuffToPiece
     public override void OnBuffStart()
     {
         Debug.Log("BuffVein1: start");
-        moveSpeedDiff = monster.moveSpeed / 2;
-        monster.moveSpeed.Value -= moveSpeedDiff;
+        moveSpeedDiff = target.moveSpeed.Value;
+        target.moveSpeed.Value += moveSpeedDiff;
     }
 
     public override void OnBuffRefresh()
     {
         leftTime -= Time.deltaTime;
-        if (leftTime <= 0)
+        if (target == null || leftTime <= 0)
         {
             GameManager.Instance.buffMan.RemoveBuff(this);
         }
@@ -579,12 +603,14 @@ public class BuffVine : BuffToPiece
     {
         Debug.Log("BuffVein1 remove");
         if(target != null)
-            monster.atkSpeed.Value += moveSpeedDiff;
+        {
+            target.atkSpeed.Value -= moveSpeedDiff;
+        }
     }
 }
 
 /// <summary>
-/// 等待三秒BuffVine结束后对格子时间流速降级
+/// 等待duration秒后对格子时间流速降级
 /// </summary>
 public class BuffVine2 : BuffToGrid
 {

@@ -17,5 +17,11 @@ namespace Game
             var uiHelper = this.AddComponent<UIEventHelper>();
             uiHelper.OnUIPointEnter = act;
         }
+
+        public void UIPointerExit(Action act)
+        {
+            var uiHelper = this.AddComponent<UIEventHelper>();
+            uiHelper.OnUIPointExit = act;
+        }
     }
 }

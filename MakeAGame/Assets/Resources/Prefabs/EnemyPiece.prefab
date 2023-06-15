@@ -55,8 +55,8 @@ MonoBehaviour:
   data: {fileID: 0}
   currentTarget: {fileID: 0}
   mouseHelper: {fileID: 0}
-  spPiece: {fileID: 5959409964620542870}
   touchArea: {fileID: 0}
+  collider2d: {fileID: 0}
 --- !u!1 &4275257158394155866
 GameObject:
   m_ObjectHideFlags: 0

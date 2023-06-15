@@ -70,7 +70,8 @@ namespace Game
             // 从可选方向中随机一个方向
             int dirIndex = UnityEngine.Random.Range(0, dirs.Value.Count);
             direction = dirs.Value[dirIndex];
-
+            // 替换当前方向的资源图片
+            gameObject.transform.Find("CurMoveDirection").GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>(ViewDirectionWheel.CurDirectionDict[direction]);
         }
 
         private new void Update()

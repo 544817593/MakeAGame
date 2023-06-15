@@ -185,6 +185,9 @@ namespace Game
                 var newDirection = viewDirectionWheel.crtDirection;
                 crtSelectedPiece.PieceFlip(newDirection);
                 crtSelectedPiece.direction = newDirection;
+                // 替换当前方向的资源图片
+                Sprite curDirection = Resources.Load<Sprite>(ViewDirectionWheel.CurDirectionDict[crtSelectedPiece.direction]);
+                crtSelectedPiece.gameObject.transform.Find("CurMoveDirection").GetComponent<SpriteRenderer>().sprite = curDirection;
                 Debug.Log($"change piece direction to {newDirection}");
               
             }

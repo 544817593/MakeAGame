@@ -40,7 +40,7 @@ namespace Game
                 {
                     GameManager.Instance.buffMan.AddBuff(new BuffVine(monster, duration)); // 移速减半
                 }
-                GameManager.Instance.buffMan.AddBuff(new BuffVine2(grid, 99999999)); // 格子降速，持续时间无限
+                GameManager.Instance.buffMan.AddBuff(new BuffVine2(grid, duration)); // 等待duration秒后格子降速
             }
 
             // 死面保护判定
