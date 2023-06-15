@@ -40,6 +40,7 @@ namespace Game
                 // 开启控制台
                 UIKit.OpenPanel<UIConsolePanel>(UILevel.PopUI);
             }
+            UIKit.OpenPanel<PauseUI.Pause>();
 
             Debug.Log($"GameEntry: Init, isDev {isDev}");
         }

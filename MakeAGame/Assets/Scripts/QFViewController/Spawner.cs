@@ -68,6 +68,16 @@ namespace Game
             }
             ).UnRegisterWhenGameObjectDestroyed(gameObject);
 
+            // 监听切换场景事件
+            this.RegisterEvent<UnloadSceneEvent>((data) =>
+            {
+                if(data.sceneName == "Combat")
+                {
+                    StopCoroutine(drawCardCoroutine);
+                }
+            }
+            ).UnRegisterWhenGameObjectDestroyed(gameObject);
+
         }
 
         public void SpawnUndead(int x, int y)

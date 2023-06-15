@@ -422,6 +422,9 @@ MonoBehaviour:
   markerItem:
     data: {fileID: 0}
     amount: 0
+  sanCostIncreaseProtection: 0
+  deathDestroyProtection: 0
+  sanCostProtection: 0
 --- !u!1 &1270994297
 GameObject:
   m_ObjectHideFlags: 0

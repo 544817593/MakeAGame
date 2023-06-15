@@ -2,8 +2,10 @@ using System.Collections;
 using UnityEngine.UI;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using QFramework;
+using Game;
 
-public class GameSceneManager : MonoBehaviour
+public class GameSceneManager : MonoBehaviour, ICanSendEvent, ICanGetSystem, ICanSendCommand
 {
     private static GameSceneManager instance; // 场景管理器实例
     public Slider slider; // 进度条
@@ -95,12 +97,24 @@ public class GameSceneManager : MonoBehaviour
     public IEnumerator UnloadScene(string sceneName)
     {
         // 退出局内场景时的处理
-        //if (sceneName == "Combat")
-        //{
-        //    // 停止抽卡协程
-        //}
-
-        SceneManager.UnloadSceneAsync(sceneName);
+        this.SendEvent(new UnloadSceneEvent { sceneName = sceneName });
+        if (sceneName == "Combat")
+        {
+            // 停止抽卡协程
+            //Debug.LogError(this.GetSystem<IHandCardSystem>().handCardList == null);
+            for (int i = this.GetSystem<IHandCardSystem>().handCardList.Value.Count - 1; i >= 0; i--)
+            {
+                ViewCard viewCard = this.GetSystem<IHandCardSystem>().handCardList.Value[i];
+                this.GetSystem<IInventorySystem>().SpawnBagCardInBag(viewCard.card);
+                this.SendCommand(new SubHandCardCommand(viewCard));
+            }
+        }
+        yield return SceneManager.UnloadSceneAsync(sceneName);
+        if (sceneName == "Combat")
+        {
+            Debug.Log("进入sceneName == \"Combat\" HideAllPanel");
+            UIKit.HideAllPanel();
+        }
         yield return null;
     }
 
@@ -129,5 +143,10 @@ public class GameSceneManager : MonoBehaviour
     public string GetCurrentSceneName()
     {
         return currentSceneName;
+    }
+
+    public IArchitecture GetArchitecture()
+    {
+        return GameEntry.Interface;
     }
 }

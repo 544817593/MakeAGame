@@ -368,7 +368,6 @@ public class BuffDrowning : BuffToPiece
 public class BuffQuackFrog : BuffToPiece
 {
     private float atkSpeedDiff;
-    private float restoreAtkSpeedDiff;
     private bool soundSensitive;
     public BuffQuackFrog(Monster _piece, float _dur, bool _soundSensitive)
     {
@@ -376,7 +375,6 @@ public class BuffQuackFrog : BuffToPiece
         duration = _dur;
         soundSensitive = _soundSensitive;
         atkSpeedDiff = 0.3f;
-        restoreAtkSpeedDiff = 0;
     }
 
     public override bool OnBuffCreate()
@@ -395,40 +393,16 @@ public class BuffQuackFrog : BuffToPiece
         Debug.Log("BuffFrog: start");
         if (soundSensitive)
         {
-            // 本来攻速大于等于0.7，减0.6，离开战斗需要回复0.3
-            if (target.atkSpeed >= 0.7f)
-            {
-                target.atkSpeed.Value -= (atkSpeedDiff + 0.3f);
-                restoreAtkSpeedDiff = 0.3f;
-            }
-            // 本来攻速0.4-0.7，减到0.1，离开战斗需要回复0.3
-            else if (target.atkSpeed < 0.7f && target.atkSpeed >= 0.4f)
-            {
-                target.atkSpeed.Value = 0.1f;
-                restoreAtkSpeedDiff = 0.3f;
-            }
-            // 本来攻速0.1-0.4，减到0.1，离开战斗不需要回复
-            else if (target.atkSpeed < 0.4f && target.atkSpeed >= 0.1f)
-            {
-                target.atkSpeed.Value = 0.1f;
-            }
-            // 其他情况不需要变动
+            Debug.Log($"呱呱蛙攻速减少前：{target.atkSpeed.Value}");
+            target.atkSpeed.Value += atkSpeedDiff + 0.3f;
+            Debug.Log($"呱呱蛙攻速减少后：{target.atkSpeed.Value}");
         }
         else
         {
-            // 本来攻速大于等于0.4，减0.3，离开战斗不需要回复
-            if (target.atkSpeed >= 0.4f)
-            {
-                target.atkSpeed.Value -= atkSpeedDiff;
-            }
-            // 本来攻速0.1-0.4，减到0.1，离开战斗不需要回复
-            else if (target.atkSpeed < 0.4f && target.atkSpeed >= 0.1f)
-            {
-                target.atkSpeed.Value = 0.1f;
-            }
-            // 其他情况不需要变动
+            Debug.Log($"呱呱蛙攻速减少前：{target.atkSpeed.Value}");
+            target.atkSpeed.Value += atkSpeedDiff;
+            Debug.Log($"呱呱蛙攻速减少后：{target.atkSpeed.Value}");
         }
-
     }
 
     public override void OnBuffRefresh()
@@ -436,7 +410,6 @@ public class BuffQuackFrog : BuffToPiece
         if (target == null || !target.inCombat)
         {
             Debug.Log("target died or left fight, to remove buff");
-
             // 移除buff
             GameManager.Instance.buffMan.RemoveBuff(this);
         }
@@ -448,7 +421,8 @@ public class BuffQuackFrog : BuffToPiece
 
         if (target != null && soundSensitive)
         {
-            target.atkSpeed.Value += restoreAtkSpeedDiff;
+            Debug.Log($"呱呱蛙返还移除的0.3攻速");
+            target.atkSpeed.Value -= 0.3f;
         }
     }
 }

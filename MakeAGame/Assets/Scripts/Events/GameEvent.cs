@@ -13,4 +13,8 @@ namespace Game
     {
 
     }
+    public struct UnloadSceneEvent
+    {
+        public string sceneName;
+    }
 }
