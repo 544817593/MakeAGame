@@ -294,6 +294,7 @@ namespace Game
             foreach (var grid in pieceGrids)
             {
                 grid.occupation = 0;
+                grid.gridStatus.Value = GridStatusEnum.Unoccupied;
             }
             pieceGrids.Clear();
             
