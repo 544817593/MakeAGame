@@ -112,6 +112,14 @@ namespace Game
             // 获取地图中央坐标（若为双数行列，则以左边、上边格子中心为中央）
             centerGrid = mGrids[row / 2, col / 2];
 
+            // 对准背景
+            var bgGo = GameObject.Find("Background");
+            if (bgGo != null && bgGo.GetComponent<SpriteRenderer>() != null)
+            {
+                Vector3 centerPos = centerGrid.transform.position;
+                bgGo.transform.position = new Vector3(centerPos.x, centerPos.y, bgGo.transform.position.z);
+            }
+
             Debug.Log("CreateMap finished");
         }
 
