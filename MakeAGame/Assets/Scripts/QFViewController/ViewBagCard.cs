@@ -55,6 +55,7 @@ namespace Game
             tmpDefend.text = card.defend.ToString();
             tmpName.text = card.charaName;
             tmpDesc.text = card.deathFuncDesc;
+            
             for(int i = 0; i < card.features.Count; i++)
             {
                 featureTouchArea[i].GetComponent<Image>().sprite = IdToSO.FindFeatureSOByEnum(card.features[i]).icon;

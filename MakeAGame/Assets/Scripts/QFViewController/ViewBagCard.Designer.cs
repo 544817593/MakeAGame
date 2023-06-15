@@ -21,6 +21,7 @@ namespace Game
 
         public Image imgRarity;
         public Image imgCharacter;
+        
         public TextMeshProUGUI tmpSanCost;
         public TextMeshProUGUI tmpHP;
         public TextMeshProUGUI tmpMoveSpd;
@@ -28,6 +29,7 @@ namespace Game
         public TextMeshProUGUI tmpDefend;
         public TextMeshProUGUI tmpName;
         public TextMeshProUGUI tmpDesc;
+      
         
         // 绑定各组件
         private void InitBind()
