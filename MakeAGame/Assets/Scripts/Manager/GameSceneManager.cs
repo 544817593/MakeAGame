@@ -96,24 +96,24 @@ public class GameSceneManager : MonoBehaviour, ICanSendEvent, ICanGetSystem, ICa
     /// <returns></returns>
     public IEnumerator UnloadScene(string sceneName)
     {
-        // 退出局内场景时的处理
+        // 发送卸载场景事件，需要监听的系统可以接收并处理（比如说Spawner收到后会关掉抽牌）
         this.SendEvent(new UnloadSceneEvent { sceneName = sceneName });
+        // 退出局内场景时的处理
         if (sceneName == "Combat")
         {
-            // 停止抽卡协程
-            //Debug.LogError(this.GetSystem<IHandCardSystem>().handCardList == null);
-            for (int i = this.GetSystem<IHandCardSystem>().handCardList.Value.Count - 1; i >= 0; i--)
-            {
-                ViewCard viewCard = this.GetSystem<IHandCardSystem>().handCardList.Value[i];
-                this.GetSystem<IInventorySystem>().SpawnBagCardInBag(viewCard.card);
-                this.SendCommand(new SubHandCardCommand(viewCard));
-            }
-        }
-        yield return SceneManager.UnloadSceneAsync(sceneName);
-        if (sceneName == "Combat")
-        {
-            Debug.Log("进入sceneName == \"Combat\" HideAllPanel");
+            // 返还手牌到背包 移动到handcardsystem的event监听下
+            //for (int i = this.GetSystem<IHandCardSystem>().handCardList.Value.Count - 1; i >= 0; i--)
+            //{
+            //    ViewCard viewCard = this.GetSystem<IHandCardSystem>().handCardList.Value[i];
+            //    this.GetSystem<IInventorySystem>().SpawnBagCardInBag(viewCard.card);
+            //    this.SendCommand(new SubHandCardCommand(viewCard));
+            //}
+            yield return SceneManager.UnloadSceneAsync(sceneName);
             UIKit.HideAllPanel();
+        }
+        else
+        {
+            yield return SceneManager.UnloadSceneAsync(sceneName);
         }
         yield return null;
     }

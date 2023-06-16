@@ -14,6 +14,8 @@ namespace Game
     {
         // 战斗场景中持续抽卡的协程
         private Coroutine drawCardCoroutine;
+        // 战斗场景中怪物持续生成的协程
+        private Coroutine constantSpawnMonsterCoroutine;
 
         /// <summary>
         /// 获取Architecture 每个IController都要写
@@ -33,8 +35,8 @@ namespace Game
 
             // 监听怪物持续生成事件
             this.RegisterEvent<ConstantSpawnMonsterEvent>(data => 
-            { 
-                StartCoroutine(OnConstantSpawnMonsterEvent(data)); 
+            {
+                constantSpawnMonsterCoroutine = StartCoroutine(OnConstantSpawnMonsterEvent(data)); 
             }).UnRegisterWhenGameObjectDestroyed(gameObject);
 
             // 监听创建卡牌事件
@@ -59,12 +61,14 @@ namespace Game
             this.RegisterEvent<CombatDefeatEvent>((data) => 
             {
                 StopCoroutine(drawCardCoroutine);
+                StopCoroutine(constantSpawnMonsterCoroutine);
             }
             ).UnRegisterWhenGameObjectDestroyed(gameObject);
 
             this.RegisterEvent<CombatVictoryEvent>((data) =>
             {
                 StopCoroutine(drawCardCoroutine);
+                StopCoroutine(constantSpawnMonsterCoroutine);
             }
             ).UnRegisterWhenGameObjectDestroyed(gameObject);
 
@@ -73,7 +77,8 @@ namespace Game
             {
                 if(data.sceneName == "Combat")
                 {
-                    StopCoroutine(drawCardCoroutine);
+                    if (drawCardCoroutine != null) StopCoroutine(drawCardCoroutine);
+                    if (constantSpawnMonsterCoroutine != null) StopCoroutine(constantSpawnMonsterCoroutine);
                 }
             }
             ).UnRegisterWhenGameObjectDestroyed(gameObject);

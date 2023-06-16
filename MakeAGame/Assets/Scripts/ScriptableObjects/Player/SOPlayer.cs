@@ -14,7 +14,7 @@ namespace Game
         [SerializeField] int san; // 精神值
         [SerializeField] int maxSan; // 最大精神值
         [SerializeField] float sanRegenSpeed; // 精神值恢复速度
-        [SerializeField] int movePieceTime; // 移动棋子次数
+        [SerializeField] int turnPieceCount; // 移动棋子次数
 
 
         // 玩家属性，力量，精神，技巧，体力，魅力
@@ -98,12 +98,12 @@ namespace Game
 
         public int GetMovePieceTime()
         {
-            return movePieceTime;
+            return turnPieceCount;
         }
 
         public void SetMovePieceTime(int amount)
         {
-            movePieceTime = amount;
+            turnPieceCount = amount;
         }
 
         /// <summary>

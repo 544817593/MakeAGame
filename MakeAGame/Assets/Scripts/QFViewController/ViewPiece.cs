@@ -83,6 +83,14 @@ namespace Game
         private void OnCurrLifeChanged(float e)
         {
             lifeBar.SetBarFillAmount((float)e/maxLife);
+            if (currLife.Value <= 0)
+            {
+                this.GetSystem<IPieceBattleSystem>().EndBattle(this); // 不确定是不是需要
+                // 再从棋子系统中注销
+                this.GetSystem<IPieceSystem>().RemovePiece(this);
+                // 最后处理自身的死亡
+                Die();
+            }
         }
 
         void InitView()

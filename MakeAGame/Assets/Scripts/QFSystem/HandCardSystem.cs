@@ -19,9 +19,14 @@ namespace Game
         /// </summary>
         /// <returns></returns>
         List<ViewCard> GetHandCardList();
+
+        /// <summary>
+        /// 把手牌返回背包
+        /// </summary>
+        void ReturnHandCardToBag();
     }
     
-    public class HandCardSystem: AbstractSystem, IHandCardSystem
+    public class HandCardSystem: AbstractSystem, IHandCardSystem, ICanSendCommand
     {
         public BindableProperty<List<ViewCard>> handCardList { get; } = new BindableProperty<List<ViewCard>>(); // 手牌列表
 
@@ -46,7 +51,24 @@ namespace Game
 
             handCardList.SetValueWithoutEvent(new List<ViewCard>());
             inventorySystem = this.GetSystem<IInventorySystem>();
+            this.RegisterEvent<UnloadSceneEvent>(e => 
+            { 
+                if (e.sceneName == "Combat")
+                {
+                    ReturnHandCardToBag();
+                }
+            });
 
+        }
+
+        public void ReturnHandCardToBag()
+        {
+            for (int i = handCardList.Value.Count - 1; i >= 0; i--)
+            {
+                ViewCard viewCard = handCardList.Value[i];
+                this.GetSystem<IInventorySystem>().SpawnBagCardInBag(viewCard.card);
+                this.SendCommand(new SubHandCardCommand(viewCard));
+            }
         }
 
         public bool AddCard(Card cardData)
@@ -109,5 +131,6 @@ namespace Game
         {
             return GameEntry.Interface;
         }
+
     }
 }
