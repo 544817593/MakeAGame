@@ -245,5 +245,6 @@ namespace Game
             (int, int) temp2 = (data.row + somb.height - 1, data.col + somb.width - 1);
             monster.botRightGridPos = new BindableProperty<(int, int)>(temp2);
         }
+       
     }
 }

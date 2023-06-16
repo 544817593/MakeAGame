@@ -82,9 +82,8 @@ namespace RewardUI
 		}
 		private void LoadScene()
 		{
-			StartCoroutine(GameManager.Instance.gameSceneMan.LoadScene("NormalRoom", false));
-			StartCoroutine(GameManager.Instance.gameSceneMan.UnloadScene("Combat"));
-			
+			GameObject.Find("GameSceneManager")?.transform.GetComponent<Game.SceneFlow>().LoadRoom();
+
 
 		}
 	}

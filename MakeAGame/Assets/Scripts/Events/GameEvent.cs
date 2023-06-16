@@ -6,7 +6,7 @@ namespace Game
 {
     public struct CombatVictoryEvent
     {
-
+       
     }
 
     public struct CombatDefeatEvent

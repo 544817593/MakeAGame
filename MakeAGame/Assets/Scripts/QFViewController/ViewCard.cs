@@ -230,8 +230,11 @@ namespace Game
                     OnUpdate = null;
                     this.SendCommand<SelectMapEndCommand>(new SelectMapEndCommand(this, false));
                     deathFunc = null;
+                    Dialogue dialogue = GameObject.Find("Dialogue")?.GetComponent<Dialogue>();
+                    if (dialogue != null) dialogue.getControl = true;
                     return;
                 }
+                
             }
         }
         

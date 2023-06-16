@@ -11,6 +11,7 @@ using PackOpen;
 using DialogueUI;
 using BagUI;
 using Game;
+using System;
 
 public class Dialogue : ViewController
 {
@@ -26,7 +27,7 @@ public class Dialogue : ViewController
     TextMeshProUGUI story_text;
     public CheckControl m_checkControl;
     public ShowGift m_showGift;
-    public string ssssss;
+   
 
     private const string SPEAKER_TAG = "speaker";
     private const string PAUSE_TAG = "pause";
@@ -48,7 +49,7 @@ public class Dialogue : ViewController
 
     private Coroutine displayCoroutine;
 
-
+   
     //GameObject m_packUI;
 
 
@@ -61,11 +62,12 @@ public class Dialogue : ViewController
     public bool waitForControl = false;
     public bool waitForInGamecontrol = false;
     public bool getControl = false;
-    private bool nextLine = false;
+    public bool nextLine = false;
     bool reward = false;
-    bool waitForPass = false;
+    public bool waitForPass = false;
     public bool showGift = false;
     public double controlTime = 5f;
+    public bool victory = false;
    
     public GameObject npc;
     public GameObject backGround;
@@ -112,7 +114,7 @@ public class Dialogue : ViewController
 
         SubmitPressed();
         CheckPause();
-        if (GetSubmitPressed() && canContinue && !pauseD && !waitForChoice && !waitForControl && !showGift && !waitForInGamecontrol)
+        if (GetSubmitPressed() && canContinue && !pauseD && !waitForChoice && !waitForControl && !showGift && !waitForInGamecontrol && !waitForPass)
         {
             StoryUI();
         }
@@ -154,12 +156,13 @@ public class Dialogue : ViewController
             showGift = false;
         }
 
-        if (nextLine == true)
+        if (nextLine == true )
         {
             UIKit.HidePanel<UIHandCard>();
             UIKit.ShowPanel<DialoguePanel>();
             spacePressed = true;
             nextLine = false;
+           
         }
         //if(UIKit.GetPanel<DiceUI.AllDiceUIPanel>()?.finish == true)
         //{
@@ -362,8 +365,6 @@ public class Dialogue : ViewController
 
 
         }
-
-
         else if (!story.canContinue)
         {
             d_finish = true;
@@ -412,12 +413,11 @@ public class Dialogue : ViewController
         
     }
 
-    void WaitForPass()
+    public void WaitForPass()
     {
-        //检测该房间游戏是否通关
-        //如果通关
-        UIKit.ShowPanel<DialoguePanel>();
         waitForPass = false;
+        nextLine = true;
+        
     }
     IEnumerator WaitTime()
     {
@@ -495,11 +495,7 @@ public class Dialogue : ViewController
                     npc.SetActive(true);
                     UIKit.HidePanel<DialoguePanel>();
                     break;
-                case Pass_TAG:
-                    waitForPass = true;
-                    UIKit.HidePanel<DialoguePanel>();
-                    WaitForPass();
-                    break;
+                
                 case Reward_TAG:
                     reward = true;
                     UIKit.OpenPanel<RewardUI.RewardUIPanel>();
@@ -534,7 +530,15 @@ public class Dialogue : ViewController
                     UIKit.HidePanel<DialoguePanel>();
                     InGameControl();
                     break;
+                case Pass_TAG:
+                    waitForPass = true;
+                    UIKit.ShowPanel<UIHandCard>();
+                    UIKit.HidePanel<DialoguePanel>();
+                    
+                    
+                    break;
             }
+
 
         }
     }

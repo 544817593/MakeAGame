@@ -300,7 +300,7 @@ namespace Game
             }
 
             Debug.Log("ViewPiece receive MoveFinishEvent");
-            // testAction += () => Debug.Log("test");   // 但这里是有效的！如果有什么需要叠加的函数，可以加在这里
+            //testAction += () => Debug.Log("test");   // 但这里是有效的！如果有什么需要叠加的函数，可以加在这里
             // testAction.Invoke();
         }
 
