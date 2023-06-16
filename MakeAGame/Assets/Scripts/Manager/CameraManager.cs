@@ -44,6 +44,10 @@ public class CameraManager : MonoBehaviour
 
     public bool cameraLock = false; // 相机锁定，不可移动
 
+    public float GetMinScrollLimit()
+    {
+        return minScrollLimit;
+    }
     // 相机控制
     void Update()
     {

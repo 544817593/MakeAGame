@@ -43,12 +43,19 @@ namespace Game
         protected Coroutine movementCoroutine; // 移动协程
         public bool isFacingRight = true; // 棋子目前预设体是否朝向右侧
 
+        public bool timeStop; // 如果在异化技能中时间暂停
+
         public List<BoxGrid> pieceGrids { get; protected set; } = new List<BoxGrid>();
         // 经过所有占地格子计算出来的时间流速
         public float crtTimeMultiplier
         {
             get
             {
+                // 如果在异化技能中时间暂停
+                if(timeStop) 
+                {
+                    return 0.00000001f;
+                }
                 float val = 0f;
                 foreach (var grid in pieceGrids)
                 {
@@ -102,6 +109,8 @@ namespace Game
             TerrianPoisonDamageNumber = Resources.Load("Prefabs/Damage Number Prefab/Terrian Poison Damage").GetComponent<DamageNumberMesh>();
             TerrianWaterDamageNumber = Resources.Load("Prefabs/Damage Number Prefab/Terrian Water Damage").GetComponent<DamageNumberMesh>();
             MagicDamageNumber = Resources.Load("Prefabs/Damage Number Prefab/Magic Damage").GetComponent<DamageNumberMesh>();
+
+            timeStop = false;
         }
 
         /// <summary>

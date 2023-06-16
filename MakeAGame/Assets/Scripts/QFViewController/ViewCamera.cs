@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using QFramework;
 using UnityEngine;
 using UnityEngine.Rendering;
@@ -24,6 +25,7 @@ namespace Game
 
         private Vector3[] borderCorners = new Vector3[4];
 
+        public bool lockCameraDist = false;
         // 通过主动调用进行初始化
         public void Init()
         {
@@ -37,15 +39,18 @@ namespace Game
 
             this.RegisterEvent<ChangeCameraTargetEvent>(e => OnTargetChange(e)).UnRegisterWhenGameObjectDestroyed(gameObject);
             this.RegisterEvent<SetCameraBorderEvent>(e => OnSetBorder(e)).UnRegisterWhenGameObjectDestroyed(gameObject);
-            
-            if(lookAtTarget != null)
+            this.RegisterEvent<SkillLockCameraEvent>(e => SkillLockCamera(e)).UnRegisterWhenGameObjectDestroyed(gameObject);
+            if (lookAtTarget != null)
                 CameraLookatPos(cameraAngle, cameraDist);
         }
 
         private void Update()
         {
-            float scroll = Input.GetAxis("Mouse ScrollWheel");
-            UpdateCameraDist(-scroll * scrollSpeed * Time.deltaTime);
+            if (!lockCameraDist)
+            {
+                float scroll = Input.GetAxis("Mouse ScrollWheel");
+                UpdateCameraDist(-scroll * scrollSpeed * Time.deltaTime);
+            }
 
             var mousePos = Input.mousePosition;
             var screenH = Screen.height;
@@ -196,6 +201,16 @@ namespace Game
 
             crtCameraDist = cameraDist;
             CameraLookatPos(cameraAngle, crtCameraDist);
+        }
+
+        private IEnumerator SkillLockCamera(SkillLockCameraEvent e)
+        {
+            float preCameraDist = crtCameraDist;
+            crtCameraDist = e.cameraDist;
+            lockCameraDist = true;
+            yield return new WaitForSeconds(e.duration);
+            crtCameraDist = preCameraDist;
+            lockCameraDist = false;
         }
 
         bool IsBorderHit(Vector3[] viewCorners)

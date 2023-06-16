@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using QFramework;
 using UnityEngine.SceneManagement;
+using Game;
 
 namespace PauseUI
 {
@@ -10,14 +11,27 @@ namespace PauseUI
 	}
 	public partial class Pause : UIPanel
 	{
-		protected override void OnInit(IUIData uiData = null)
+		public static int alienationLevel = 0;
+        protected override void OnInit(IUIData uiData = null)
 		{
 			mData = uiData as PauseData ?? new PauseData();
 			// please add init code here
 			PauseButton.onClick.AddListener(() =>
 			{
-				PauseMenu.gameObject.SetActive(true);
-				Time.timeScale = 0;
+				if(alienationLevel == 0)
+				{
+                    PauseMenu.gameObject.SetActive(true);
+                    Time.timeScale = 0;
+                }else if(alienationLevel == 1)
+				{
+                    Alienation1 alienation1 = new Alienation1();
+					alienation1.ClickAfterStart(PauseButton.gameObject);
+                }else if(alienationLevel == 2)
+				{
+                    Alienation2 alienation2 = new Alienation2();
+                    alienation2.ClickAfterStart(PauseButton.gameObject);
+                }
+				
 			});
 
 			BackButton.onClick.AddListener(() => 
@@ -28,13 +42,11 @@ namespace PauseUI
 
 			ExitButton.onClick.AddListener(() =>
 			{
-				PauseMenu.gameObject.SetActive(false);
-				Time.timeScale = 1;
-				string sceneName = GameSceneManager.Instance.GetCurrentSceneName();
+                PauseMenu.gameObject.SetActive(false);
+                Time.timeScale = 1;
+                string sceneName = GameSceneManager.Instance.GetCurrentSceneName();
                 StartCoroutine(GameManager.Instance.gameSceneMan.LoadScene("Main", false));
                 StartCoroutine(GameManager.Instance.gameSceneMan.UnloadScene(sceneName));
-                //UIKit.ClosePanel<DialogueUI.DialoguePanel?>();
-                //UIKit.OpenPanel<Pause>();
             });
 		}
 		

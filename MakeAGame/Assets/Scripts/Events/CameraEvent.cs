@@ -9,9 +9,15 @@ namespace Game
         public Vector3 cameraAngle;
         public float cameraDist;
     }
-    
+
     public struct SetCameraBorderEvent  // 四个边界点，相机视野不能超出：左上、右上、左下、右下
     {
         public Vector3[] viewCorners;
+    }
+
+    public struct SkillLockCameraEvent
+    {
+        public float cameraDist;
+        public float duration;
     }
 }
