@@ -18,6 +18,7 @@ namespace Game
 
         public BindableProperty<float> currLife; // 寿命
         public BindableProperty<float> maxLife; // 最大寿命
+        public bool lockLife;
 
         private ItemController itemController = ItemController.Instance;
 
@@ -46,6 +47,7 @@ namespace Game
             isDying = new BindableProperty<bool>(false);
             currLife = new BindableProperty<float>(pieceData.maxLife);
             maxLife = new BindableProperty<float>(pieceData.maxLife);
+            lockLife = false;
         }
 
         private void Start()
@@ -77,13 +79,16 @@ namespace Game
         private new void Update()
         {
             base.Update();
-            currLife.Value -= Time.deltaTime;
+            if(!lockLife && currLife.Value > 0.001f)
+            {
+                currLife.Value -= Time.deltaTime;
+            }
         }
 
         private void OnCurrLifeChanged(float e)
         {
             lifeBar.SetBarFillAmount((float)e/maxLife);
-            if (currLife.Value <= 0)
+            if (currLife.Value <= 0 && !lockLife)
             {
                 this.GetSystem<IPieceBattleSystem>().EndBattle(this); // 不确定是不是需要
                 // 再从棋子系统中注销

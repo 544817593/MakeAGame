@@ -96,12 +96,12 @@ namespace Game
             san += amount;
         }
 
-        public int GetMovePieceTime()
+        public int GetTurnPieceCount()
         {
             return turnPieceCount;
         }
 
-        public void SetMovePieceTime(int amount)
+        public void SetTurnPieceCount(int amount)
         {
             turnPieceCount = amount;
         }

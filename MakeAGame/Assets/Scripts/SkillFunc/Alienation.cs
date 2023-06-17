@@ -11,15 +11,15 @@ namespace Game
     {
         protected float colorChangeTime;
         protected float timeStopTime;
-
-        public IEnumerator SkillStart(GameObject pauseButton)
+        public static int alienationLevel = 0;
+        public IEnumerator SkillStart(GameObject pauseButton, int skillLevel)
         {
             if (pauseButton != null && pauseButton.GetComponent<Image>() != null)
             {
                 Color preColor = pauseButton.GetComponent<Image>().color;
                 Color newColor = new Color(255, 0, 0, 255);
                 pauseButton.GetComponent<Image>().color = newColor;
-                Pause.alienationLevel = 1;
+                alienationLevel = skillLevel;
                 yield return new WaitForSeconds(colorChangeTime);
                 // 如果等待时间过后图标没有变化说明没有点，把图片颜色换回原来的
                 if (pauseButton != null && pauseButton.GetComponent<Image>() != null && pauseButton.GetComponent<Image>().color.Equals(newColor))
@@ -42,11 +42,17 @@ namespace Game
             {
                 Color preColor = pauseButton.GetComponent<Image>().color;
                 pauseButton.GetComponent<Image>().color = new Color(255, 255, 255, 255); // 暂停图片改回白色
-                foreach (Monster monster in this.GetSystem<IPieceSystem>().pieceEnemyList) 
+                foreach (Monster monster in this.GetSystem<IPieceSystem>().pieceEnemyList) // 暂停怪物时间
                 {
                     monster.timeStop = true;
                 }
-                yield return new WaitForSeconds(timeStopTime); // 等待7秒后恢复速度和图片颜色
+                foreach(ViewPiece piece in this.GetSystem<IPieceSystem>().pieceFriendList) // 友军不会因寿命死亡
+                {
+                    piece.lockLife = true;
+                }
+
+                yield return new WaitForSeconds(timeStopTime); // 等待7秒后全部恢复
+
                 if (pauseButton != null && pauseButton.GetComponent<Image>() != null)
                 {
                     pauseButton.GetComponent<Image>().color = preColor;
@@ -55,6 +61,11 @@ namespace Game
                 {
                     monster.timeStop = false;
                 }
+                foreach (ViewPiece piece in this.GetSystem<IPieceSystem>().pieceFriendList)
+                {
+                    piece.lockLife = false;
+                }
+                alienationLevel = 0;
             }
         }
 

@@ -27,13 +27,13 @@ namespace Game
                     break;
                 case SkillNameEnum.Alienation1:
                     Alienation1 alienation1 = new Alienation1();
-                    Pause.alienationLevel = 1;
-                    alienation1.SkillStart(GameObject.FindGameObjectWithTag("PauseButton"));
+                    Alienation.alienationLevel = 1;
+                    alienation1.SkillStart(GameObject.FindGameObjectWithTag("PauseButton"), 1);
                     break;
                 case SkillNameEnum.Alienation2:
                     Alienation2 alienation2 = new Alienation2();
-                    Pause.alienationLevel = 2;
-                    alienation2.SkillStart(GameObject.FindGameObjectWithTag("PauseButton"));
+                    Alienation.alienationLevel = 2;
+                    alienation2.SkillStart(GameObject.FindGameObjectWithTag("PauseButton"), 2);
                     break;
                 case SkillNameEnum.Focus1:
                     this.SendEvent(new SkillLockCameraEvent()
@@ -41,7 +41,7 @@ namespace Game
                         cameraDist = GameManager.Instance.camMan.GetMinScrollLimit(),
                         duration = 10f
                     });
-                    GameManager.Instance.playerMan.player.SetMovePieceTime(10); // 棋子移动次数10
+                    GameManager.Instance.playerMan.player.SetTurnPieceCount(10); // 棋子移动次数10
                     break;
                 case SkillNameEnum.Focus2:
                     this.SendEvent(new SkillLockCameraEvent()
@@ -49,7 +49,7 @@ namespace Game
                         cameraDist = GameManager.Instance.camMan.GetMinScrollLimit(),
                         duration = 10f
                     });
-                    GameManager.Instance.playerMan.player.SetMovePieceTime(20); // 棋子移动次数20
+                    GameManager.Instance.playerMan.player.SetTurnPieceCount(20); // 棋子移动次数20
                     break;
             }
         }

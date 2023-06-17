@@ -11,22 +11,24 @@ namespace PauseUI
 	}
 	public partial class Pause : UIPanel
 	{
-		public static int alienationLevel = 0;
+		
         protected override void OnInit(IUIData uiData = null)
 		{
 			mData = uiData as PauseData ?? new PauseData();
 			// please add init code here
 			PauseButton.onClick.AddListener(() =>
 			{
-				if(alienationLevel == 0)
+				if(Alienation.alienationLevel == 0)
 				{
                     PauseMenu.gameObject.SetActive(true);
                     Time.timeScale = 0;
-                }else if(alienationLevel == 1)
+                }
+				else if(Alienation.alienationLevel == 1)
 				{
                     Alienation1 alienation1 = new Alienation1();
 					alienation1.ClickAfterStart(PauseButton.gameObject);
-                }else if(alienationLevel == 2)
+                }
+				else if(Alienation.alienationLevel == 2)
 				{
                     Alienation2 alienation2 = new Alienation2();
                     alienation2.ClickAfterStart(PauseButton.gameObject);
