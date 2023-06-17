@@ -8,6 +8,8 @@ namespace Game
 {
     public interface IRelicSystem : ISystem
     {
+        UIRelic ui { set; }
+        
         void ActivateRelics();
 
         void AddRelic();
@@ -30,6 +32,8 @@ namespace Game
 
     public class RelicSystem: AbstractSystem, IRelicSystem  // todo 一些结束时统一inactivate的处理
     {
+        public UIRelic ui { get; set; }
+
         protected override void OnInit()
         {
             Debug.Log("RelicSystem: OnInit");
@@ -40,7 +44,8 @@ namespace Game
             relics.Add(new RelicRecycleExample(so));
             relics.Add(new RelicChargeExample(so));
             relics.Add(new RelicConsumableExample(so));
-            
+            // AddRelic(so);
+
             ActivateRelics();
         }
 
@@ -98,10 +103,14 @@ namespace Game
 
             return ret;
         }
-
+        
         public void AddRelic()
         {
-            throw new System.NotImplementedException();
+            // var item = relics.Find(item => item.so.relicID == so.relicID);
+            // if (item != null) return;   // 不能重复添加
+            
+            // relics.Add();
+            ui.AddRelic();
         }
 
         public void RefreshRelics()

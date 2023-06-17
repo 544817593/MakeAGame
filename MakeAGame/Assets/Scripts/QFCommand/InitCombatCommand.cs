@@ -25,6 +25,7 @@ namespace Game
             UIKit.OpenPanel<UIHandCard>();
             UIKit.OpenPanel<UIInventoryQuickSlot>();
             UIKit.OpenPanel<UIAbilityPanel>();
+            UIKit.OpenPanel<UIRelic>();
 
             // 亡灵
             this.SendEvent(new SpawnUndeadEvent { undeadSpawnPositionX = info.undeadSpawnPositionX, 
