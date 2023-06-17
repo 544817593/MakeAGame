@@ -45,6 +45,7 @@ public class CombatDialogueControl : MonoBehaviour, IController, ICanSendEvent
     {
       
         m_gameObject.GetComponent<Dialogue>().WaitForPass();
+        GameManager.Instance.PauseCombat();
        
     }
     private void OnNormalCombatVictoryEvent()

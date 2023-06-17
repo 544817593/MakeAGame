@@ -48,6 +48,7 @@ public class NPC : MonoBehaviour
     {
         Cursor.SetCursor(defaultCursor, Vector2.zero, CursorMode.ForceSoftware);
         LoadDialogue();
+     
         _alreadytalk = true;
         
     }
@@ -69,11 +70,14 @@ public class NPC : MonoBehaviour
         UIKit.ShowPanel<DialoguePanel>();
         m_Dialogue.ink_file = ink_file; 
         m_Dialogue.story = new Story(ink_file.text);
+        
         if(_alreadytalk == true)
         {
             m_Dialogue.story.ChoosePathString("New");
         }
-       
+        else if (_alreadytalk == false)
+        { dialogueP.GetComponent<IntroControl>().m_count++; }
 
     }
+   
 }

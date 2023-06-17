@@ -72,6 +72,12 @@ namespace RewardUI
 			});
 			Confirm.onClick.AddListener(() =>
 			{
+				if (Choice == 2)
+				{
+					int amount = 0 ;
+					int.TryParse(CoinAmount.text, out amount);
+					PlayerManager.Instance.player.AddGold(amount);
+				}
 				if(Choice ==3)
                 {
 					mData.BagSystem.AddItem(RewardItem);					
@@ -82,6 +88,11 @@ namespace RewardUI
 		}
 		private void LoadScene()
 		{
+			if (SceneFlow.combatSceneCount == 1)
+            {
+				GameManager.Instance.ResumeCombat();
+            }
+				
 			GameObject.Find("GameSceneManager")?.transform.GetComponent<Game.SceneFlow>().LoadRoom();
 
 

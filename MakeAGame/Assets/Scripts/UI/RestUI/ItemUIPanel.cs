@@ -27,8 +27,14 @@ namespace ItemUI
             BagUIChange.ChangeBagPanel(this, Item);
             RefreshLayout();
             PageChange();
-			// please add init code here		
-		}
+            // please add init code here		
+            Close.onClick.AddListener(() =>
+            {
+                CheckBag m_bag = GameObject.Find("Bag")?.GetComponent<CheckBag>();
+                m_bag?.SetIsOpenFalse();
+                Hide();
+            });
+        }
 		
 		protected override void OnOpen(IUIData uiData = null)
 		{

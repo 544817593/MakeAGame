@@ -263,6 +263,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8393795}
   - component: {fileID: 8393796}
+  - component: {fileID: 8393797}
   m_Layer: 0
   m_Name: IntroDialogue
   m_TagString: Untagged
@@ -314,9 +315,32 @@ MonoBehaviour:
   pauseD: 0
   d_finish: 0
   waitForControl: 0
+  waitForInGamecontrol: 0
+  getControl: 0
+  nextLine: 0
+  waitForPass: 0
   showGift: 0
+  controlTime: 5
+  victory: 0
   npc: {fileID: 165551005}
   backGround: {fileID: 843423549}
+--- !u!114 &8393797
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8393793}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd28cd55b9c267945902f30a7070472d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_count: 0
+  door: {fileID: 637516860}
+  ink_file: {fileID: 4900000, guid: 7e50c62eecdbcf040bd682c782e697bd, type: 3}
+  dialogueP: {fileID: 8393793}
+  _bag: {fileID: 393170824}
 --- !u!1 &144187068
 GameObject:
   m_ObjectHideFlags: 0
