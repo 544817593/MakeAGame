@@ -24,6 +24,7 @@ public class NPCSceneControl : MonoBehaviour
         {
             m_gameObject.GetComponent<Dialogue>().m_checkControl = null;
             m_gameObject.GetComponent<Dialogue>().m_showGift = null;
+            m_gameObject.GetComponent<Dialogue>().npc = null;
             int x = Random.Range(0, 3);
             switch (x)
             {

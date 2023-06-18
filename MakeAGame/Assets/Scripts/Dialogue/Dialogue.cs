@@ -58,7 +58,7 @@ public class Dialogue : ViewController
     public bool pauseD = false;
     bool waitForChoice = false;
     public bool d_finish = false;
-    bool waitForScene = false;
+    public bool waitForScene = false;
     public bool waitForControl = false;
     public bool waitForInGamecontrol = false;
     public bool getControl = false;
@@ -68,6 +68,7 @@ public class Dialogue : ViewController
     public bool showGift = false;
     public double controlTime = 5f;
     public bool victory = false;
+    public bool wait_event = false;
    
     public GameObject npc;
     public GameObject backGround;
@@ -114,7 +115,7 @@ public class Dialogue : ViewController
 
         SubmitPressed();
         CheckPause();
-        if (GetSubmitPressed() && canContinue && !pauseD && !waitForChoice && !waitForControl && !showGift && !waitForInGamecontrol && !waitForPass)
+        if (GetSubmitPressed() && canContinue && !pauseD && !waitForChoice && !waitForControl && !showGift && !waitForInGamecontrol && !waitForPass && !waitForScene)
         {
             StoryUI();
         }
@@ -162,6 +163,7 @@ public class Dialogue : ViewController
             UIKit.ShowPanel<DialoguePanel>();
             spacePressed = true;
             nextLine = false;
+            GameManager.Instance.PauseCombat();
            
         }
         //if(UIKit.GetPanel<DiceUI.AllDiceUIPanel>()?.finish == true)
@@ -413,6 +415,11 @@ public class Dialogue : ViewController
         
     }
 
+    public void WaitforScene()
+    {
+        waitForScene = false;
+        nextLine = true;
+    }
     public void WaitForPass()
     {
         waitForPass = false;
@@ -486,9 +493,7 @@ public class Dialogue : ViewController
                 case Camera_TAG:
 
                     break;
-                case Wait_TAG:
-                    waitForScene = true;
-                    break;
+               
                 case Control_TAG:
                     waitForControl = true;
                     ShowBG(2);
@@ -528,14 +533,20 @@ public class Dialogue : ViewController
                     UIKit.ShowPanel<UIHandCard>();
                     GameManager.Instance.ResumeCombat();
                     UIKit.HidePanel<DialoguePanel>();
+                    GameManager.Instance.ResumeCombat();
                     InGameControl();
                     break;
                 case Pass_TAG:
                     waitForPass = true;
                     UIKit.ShowPanel<UIHandCard>();
                     UIKit.HidePanel<DialoguePanel>();
-                    
-                    
+                    GameManager.Instance.ResumeCombat();
+                    break;
+                case Wait_TAG:
+                    waitForScene = true;
+                    UIKit.ShowPanel<UIHandCard>();
+                    UIKit.HidePanel<DialoguePanel>();
+                    GameManager.Instance.ResumeCombat();
                     break;
             }
 

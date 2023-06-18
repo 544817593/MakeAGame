@@ -231,7 +231,8 @@ namespace Game
                     this.SendCommand<SelectMapEndCommand>(new SelectMapEndCommand(this, false));
                     deathFunc = null;
                     Dialogue dialogue = GameObject.Find("Dialogue")?.GetComponent<Dialogue>();
-                    if (dialogue != null) dialogue.getControl = true;
+                    if (dialogue != null && dialogue.waitForInGamecontrol == true)
+                    { dialogue.getControl = true; }
                     return;
                 }
                 
