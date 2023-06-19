@@ -5,7 +5,7 @@ using QFramework;
 
 namespace Game
 {
-	// Generate Id:d76802a5-73c4-48aa-a11e-c609912f7f76
+	// Generate Id:86bb52e5-bfbb-402d-b567-2e5a6ddc7856
 	public partial class UIHandCard
 	{
 		public const string Name = "UIHandCard";
@@ -25,6 +25,11 @@ namespace Game
 		/// </summary>
 		[SerializeField]
 		public RectTransform CardRoot;
+		/// <summary>
+		/// 混沌值条
+		/// </summary>
+		[SerializeField]
+		public UnityEngine.UI.Image ImgMP;
 		/// <summary>
 		/// 添加手牌测试
 		/// </summary>
@@ -53,6 +58,7 @@ namespace Game
 			PieceIcon = null;
 			ImgPieceIcon = null;
 			CardRoot = null;
+			ImgMP = null;
 			ButtonAddCardTest = null;
 			ButtonOpenAnim = null;
 			ButtonCloseAnim = null;
