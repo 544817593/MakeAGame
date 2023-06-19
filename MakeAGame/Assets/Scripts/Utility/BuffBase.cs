@@ -382,9 +382,11 @@ public class BuffQuackFrog : BuffToPiece
         // 只对处于战斗中的单位附加buff
         if (!target.inCombat)
         {
+            Debug.Log($"BuffFrog: 不在战斗, {target.transform.position}");
+            //Debug.Log("BuffFrog: 不在战斗");
             return false;
         }
-
+        Debug.Log("BuffFrog: 在战斗");
         return true;
     }
 
@@ -490,16 +492,20 @@ public class BuffConfusion : BuffToPiece
 
     public override bool OnBuffCreate()
     {
+        Debug.Log("BuffConfusion: OnBuffCreate");
         // 心理医生
         if (target.features.Value.Contains(FeatureEnum.Psychologist)) return false;
 
         // 先查找该棋子是否已有该类型buff，若有，不再挂新的，而是叠加时间
         if (target.listBuffs.Contains(BuffType.Confusion))
         {
+            //Debug.Log("BuffConfusion: Contains(BuffType.Confusion)");
             foreach (BuffBase buff in GameManager.Instance.buffMan.listBuffs)
             {
+                //Debug.Log($"BuffConfusion: buff is {buff.GetType()}");
                 if (buff is BuffConfusion)
                 {
+                    //Debug.Log($"BuffConfusion: 进入buff is BuffConfusion");
                     BuffConfusion pieceBuff = (BuffConfusion) buff;
                     if (pieceBuff.target == target)
                     {
@@ -519,6 +525,7 @@ public class BuffConfusion : BuffToPiece
     {
         Debug.Log("BuffConfusion: start");
         target.listBuffs.Add(BuffType.Confusion);
+        // TODO 随机方向移动实现
     }
 
     public override void OnBuffRefresh()
@@ -561,7 +568,9 @@ public class BuffVine : BuffToPiece
     {
         Debug.Log("BuffVein1: start");
         moveSpeedDiff = target.moveSpeed.Value;
+        Debug.Log($"BuffVein1降速前：{target.moveSpeed.Value}");
         target.moveSpeed.Value += moveSpeedDiff;
+        Debug.Log($"BuffVein1降速后：{target.moveSpeed.Value}");
     }
 
     public override void OnBuffRefresh()
@@ -578,7 +587,9 @@ public class BuffVine : BuffToPiece
         Debug.Log("BuffVein1 remove");
         if(target != null)
         {
+            Debug.Log($"BuffVein1回复前：{target.moveSpeed.Value}");
             target.atkSpeed.Value -= moveSpeedDiff;
+            Debug.Log($"BuffVein1回复后：{target.moveSpeed.Value}");
         }
     }
 }

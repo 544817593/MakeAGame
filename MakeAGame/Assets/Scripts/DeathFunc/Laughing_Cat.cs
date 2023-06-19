@@ -37,6 +37,7 @@ namespace Game
                     {
                         duration += viewCard.card.deathEnhancement.statusTimeIncrease;
                     }
+                    Debug.Log("爱笑猫添加buff");
                     GameManager.Instance.buffMan.AddBuff(new BuffConfusion(monster, duration));
                 }
             }

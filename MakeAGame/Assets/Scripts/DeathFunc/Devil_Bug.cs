@@ -29,9 +29,8 @@ namespace Game
             foreach (BoxGrid grid in grids)
             {
                 if (grid.occupation != 0) {
-                    // TODO 生成魔虫 暂无实现函数
-                    //Game.Console.Input($"GenEnemy 魔虫 {grid.row} {grid.col}");
-                    Debug.LogError("TODO 生成魔虫");
+                    Debug.Log("生成魔虫");
+                    this.GetSystem<IPieceSystem>().AddPieceFriend(viewCard.card, grids);
                 }
             }
 
