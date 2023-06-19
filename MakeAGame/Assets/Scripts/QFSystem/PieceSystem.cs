@@ -139,6 +139,13 @@ namespace Game
             {
                 pieceEnemyList.Remove(m);
             }
+
+            if (crtSelectedPiece == vpb)
+            {
+                viewDirectionWheel.gameObject.SetActive(false);
+                viewDirectionWheel.crtDirection = DirEnum.None;
+                crtSelectedPiece = null;
+            }
         }
 
         private ViewPieceBase crtSelectedPiece;
