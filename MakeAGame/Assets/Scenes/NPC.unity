@@ -379,7 +379,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 547436833}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.52, y: 0.0041, z: -0.71}
+  m_LocalPosition: {x: 4.15, y: -0.04, z: -0.71}
   m_LocalScale: {x: 0.19665167, y: 0.23421772, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -442,7 +442,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 976d1c850238ae847b8836360f92717d, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -613,7 +613,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 4af7ae4d835c2604881ebab14e537fff, type: 3}
+  m_Sprite: {fileID: 21300000, guid: fe15fed451c146b468bc40c3f9181ece, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -689,7 +689,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 272905992d6fe604c8db278521e1293b, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 19537093e704afb4c88334943c1b49f4, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -708,8 +708,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 611399395}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.0852, y: 0.6901, z: 0}
-  m_LocalScale: {x: 1.0646988, y: 1.1278, z: 1}
+  m_LocalPosition: {x: 0, y: 0.6901, z: 0}
+  m_LocalScale: {x: 1.13, y: 1.1278, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1841819784}
@@ -1237,15 +1237,19 @@ MonoBehaviour:
   m_Pack: {fileID: 0}
   m_checkControl: {fileID: 547436837}
   m_showGift: {fileID: 554469476}
-  ssssss: 
   canContinue: 0
   pauseD: 0
   d_finish: 0
+  waitForScene: 0
   waitForControl: 0
   waitForInGamecontrol: 0
   getControl: 0
+  nextLine: 0
+  waitForPass: 0
   showGift: 0
   controlTime: 5
+  victory: 0
+  wait_event: 0
   npc: {fileID: 611653228}
   backGround: {fileID: 611399395}
 --- !u!4 &1582592635

@@ -10,7 +10,7 @@ namespace Game
     {
       public static  SceneFlow instance = null;
         public List<RoomEnum> roomList;
-        public string Pre_Room = "Intro";
+        public static string Pre_Room = "Intro";
         public static int combatSceneCount =0 ;
         public static int NpcSceneCount = 0;
         // Start is called before the first frame update

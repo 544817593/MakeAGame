@@ -7,6 +7,7 @@ using System.Threading;
 using System.Collections;
 using DamageNumbersPro;
 using Unity.VisualScripting;
+using UnityEditor.Search;
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
@@ -134,6 +135,28 @@ namespace Game
             // 若目标不存在或就是当前位置
             if (currentTarget == null)
                 return (-1, -1);
+
+            // 如果自己处于混乱状态
+            if (listBuffs != null && listBuffs.Contains(BuffType.Confusion)) 
+            {
+                List<DirEnum> dirList = new List<DirEnum>();
+                foreach (DirEnum dir in dirs.Value)
+                {
+                    if (CheckIfMovable(dir, original.Item1, original.Item2))
+                    {
+                        dirList.Add(dir);
+                    }
+                }
+                int rand = UnityEngine.Random.Range(0, dirList.Count);
+                if (dirList.Count != 0)
+                {
+                    return this.GetSystem<IMovementSystem>().CalculateNextPosition(original, dirList[rand]);
+                }
+                else
+                {
+                    return (-1, -1);
+                }               
+            }
 
 
             // A* 寻路

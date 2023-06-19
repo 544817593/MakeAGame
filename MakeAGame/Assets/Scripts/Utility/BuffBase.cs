@@ -526,6 +526,7 @@ public class BuffConfusion : BuffToPiece
         Debug.Log("BuffConfusion: start");
         target.listBuffs.Add(BuffType.Confusion);
         // TODO 随机方向移动实现
+        // 写在了怪物寻路和友军移动里
     }
 
     public override void OnBuffRefresh()

@@ -6,6 +6,7 @@ using DG.Tweening;
 using QFramework;
 using Unity.VisualScripting;
 using UnityEngine;
+using static UnityEngine.UI.Image;
 using Random = System.Random;
 
 namespace Game
@@ -146,6 +147,26 @@ namespace Game
         {
             // 发送准备移动事件
             this.SendEvent<PieceMoveReadyEvent>(new PieceMoveReadyEvent() {viewPieceBase = this});
+
+            // 如果自己处于混乱状态
+            if (listBuffs != null && listBuffs.Contains(BuffType.Confusion))
+            {
+                List<DirEnum> dirList = new List<DirEnum>();
+                foreach(DirEnum dir in dirs.Value)
+                {
+                    var tempNextGrids = movementSystem.GetNextGrids(direction, pieceGrids);
+                    if (CheckIfCanMove(tempNextGrids)) dirList.Add(dir);
+                }
+                
+                if (dirList.Count > 0)
+                {
+                    int rand = UnityEngine.Random.Range(0, dirList.Count);
+                    direction = dirList[rand];
+                    // 替换当前方向的资源图片
+                    Sprite curDirection = Resources.Load<Sprite>(ViewDirectionWheel.CurDirectionDict[direction]);
+                    gameObject.transform.Find("CurMoveDirection").GetComponent<SpriteRenderer>().sprite = curDirection;
+                }                         
+            }
 
             var nextGrids = movementSystem.GetNextGrids(direction, pieceGrids);
             bool canMove = CheckIfCanMove(nextGrids);
