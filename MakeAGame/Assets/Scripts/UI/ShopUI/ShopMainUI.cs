@@ -19,6 +19,10 @@ namespace ShopMainUI
 			ShopPanelChange.ChangeShopPanel(this, Sell);
             ShopPanelChange.ChangeShopPanel(this, Enhance);
             ShopPanelChange.ChangeShopPanel(this, ShopNPC);
+			Close.onClick.AddListener(() =>
+			{
+				GameObject.Find("GameSceneManager")?.transform.GetComponent<Game.SceneFlow>().LoadRoom();
+			});
         }
 		
 		protected override void OnOpen(IUIData uiData = null)
