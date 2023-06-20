@@ -1,7 +1,9 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using QFramework;
+using TMPro;
 using UnityEditor;
 
 namespace Game
@@ -18,34 +20,49 @@ namespace Game
 			
 			var relicSystem = GameEntry.Interface.GetSystem<IRelicSystem>();
 			relicSystem.ui = this;
-			
+			RefreshData(relicSystem.GetRelics());
+
 			Tooltip.gameObject.SetActive(false);
-			
-			// todo test
-			AddRelic();
-			AddRelic();
+			tmpTooltip = Tooltip.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
 		}
 
+		private TextMeshProUGUI tmpTooltip;
+		
 		private List<ViewRelic> viewRelics = new List<ViewRelic>();
 
-		public void AddRelic()
+		public void RefreshData(List<RelicBase> relicData)
+		{
+			foreach (var data in relicData)
+			{
+				AddRelic(data);
+			}
+		}
+		
+		public void AddRelic(RelicBase relic)
 		{
 			var newRelic = new ViewRelic(ContentPanel.transform);
 			newRelic.transform.SetParent(ContentPanel.transform);
 			newRelic.OnFocus = ShowTooltip;
 			newRelic.OnUnfocus = HideTooltip;
-			// LayoutRebuilder.ForceRebuildLayoutImmediate(ContentPanel.rectTransform);
+			newRelic.InitWithData(relic);
+			
 			viewRelics.Add(newRelic);
 		}
 
 		void ShowTooltip(ViewRelic viewRelic)
 		{
-			// Vector3 tooltipPos = viewRelic.transform.position;
-			// tooltipPos.y += 50f;
+			string text = String.Empty;
+			text += viewRelic.relicData.so.relicName + "\n";
+			text += viewRelic.relicData.so.desc + "\n";
+			string effectDesc = viewRelic.relicData.so.effectDesc;
+			for (int i = 0; i < viewRelic.relicData.crtParams.Count; i++)
+			{
+				float param = viewRelic.relicData.crtParams[i];
+				effectDesc = effectDesc.Replace("{" + i.ToString() + "}", param.ToString());
+			}
+			text += effectDesc;
 
-			// Tooltip.transform.position = tooltipPos;
-			// var pos = Tooltip.rectTransform.position;
-			// Tooltip.rectTransform.position = pos + new Vector3(0, 10, 0);
+			tmpTooltip.text = text;
 			Tooltip.gameObject.SetActive(true);
 		}
 

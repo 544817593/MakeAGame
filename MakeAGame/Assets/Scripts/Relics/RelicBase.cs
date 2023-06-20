@@ -12,12 +12,18 @@ namespace Game
     public abstract class RelicBase
     {
         public SORelic so { get; private set; }
+        public List<float> crtParams = new List<float>();
+        
         public bool isActive = false;   // 当前是否激活（是否在监听）
         public bool isRunOut = false;   // 是否已经用完了，永久不再生效
 
         protected RelicBase(SORelic so)
         {
             this.so = so;
+            foreach (var param in so.effectParams)
+            {
+                crtParams.Add(param);
+            }
         }
 
         public abstract void Activate(IRelicSystem sys);    // 注册监听事件

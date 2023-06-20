@@ -10,6 +10,9 @@ namespace Game
         
         public Transform transform;
         public GameObject touchArea;    // UI响应区域
+
+        public RelicBase relicData { get; private set; }
+        
         public Action<ViewRelic> OnFocus;
         public Action OnUnfocus;
 
@@ -22,6 +25,11 @@ namespace Game
             var uiHelper = touchArea.AddComponent<UIEventHelper>();
             uiHelper.OnUIPointEnter = MouseEnter;
             uiHelper.OnUIPointExit = MouseExit;
+        }
+
+        public void InitWithData(RelicBase relic)
+        {
+            relicData = relic;
         }
 
         void MouseEnter()

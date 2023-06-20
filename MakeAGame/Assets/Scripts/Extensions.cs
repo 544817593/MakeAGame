@@ -147,16 +147,18 @@ namespace Game
             return iconFileName;
         }
 
-        public static SORelic GetTestSORelic()
-        {
-            var so = Resources.Load<SORelic>($"ScriptableObjects/Relics/SORelic_test");
-            return so;
-        }
-
         public static string GetDeathFuncTypeName(int charaID)
         {
             return IdToSO.FindCardSOByID(charaID).deathFuncName;
         }
 
+        public static RelicBase GetRelicBySO(SORelic so)
+        {
+            switch (so.relicID)
+            {
+                case 1: return new Relic1(so);
+                default: return null;
+            }
+        }
     }
 }

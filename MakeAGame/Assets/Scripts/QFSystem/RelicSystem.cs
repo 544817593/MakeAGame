@@ -10,9 +10,9 @@ namespace Game
     {
         UIRelic ui { set; }
         
-        void ActivateRelics();
+        void ActivateAllRelics();
 
-        void AddRelic();
+        void AddRelic(SORelic so);
 
         void RefreshRelics();
 
@@ -21,6 +21,8 @@ namespace Game
         void EndCountTime();
 
         void RegisterRelicEvent<T>(RelicBase relic, Action<object> act);
+
+        List<RelicBase> GetRelics();
     }
 
     public class RelicEventData
@@ -39,14 +41,10 @@ namespace Game
             Debug.Log("RelicSystem: OnInit");
             
             Debug.Log("RelicSystem: add test relic");
-            var so = Extensions.GetTestSORelic();
-            relics.Add(new RelicInstantExample1(so));
-            relics.Add(new RelicRecycleExample(so));
-            relics.Add(new RelicChargeExample(so));
-            relics.Add(new RelicConsumableExample(so));
-            // AddRelic(so);
+            // var so = IdToSO.FindRelicSOByID(1);
+            // this.GetSystem<IRelicSystem>().AddRelic(so);
 
-            ActivateRelics();
+            ActivateAllRelics();
         }
 
         private List<RelicBase> relics = new List<RelicBase>(); // 遗物列表
@@ -55,7 +53,12 @@ namespace Game
         private Dictionary<Type, List<RelicEventData>> dictRelicEvents = new Dictionary<Type, List<RelicEventData>>();
         private List<IUnRegister> unregisters = new List<IUnRegister>();
 
-        public void ActivateRelics()
+        public List<RelicBase> GetRelics()
+        {
+            return relics;
+        }
+
+        public void ActivateAllRelics()
         {
             Debug.Log($"RelicSystem: ActivateRelics count {relics.Count}");
             foreach (var relic in relics)
@@ -76,6 +79,26 @@ namespace Game
                     }
                     Debug.Log($"relic actvate failed, {relic.so.name} is canceled by {s}");
                 }
+            }
+        }
+
+        public void ActivateOneRelic(RelicBase relic)
+        {
+            // 玩家当前的所有遗物中，没有遗物会取消其效果
+            var conflictRelics = IsCanceledByPlayerRelics(relic);
+            if (conflictRelics.Count == 0)
+            {
+                relic.Activate(this);
+                relic.isActive = true;
+            }
+            else
+            {
+                string s = String.Empty;
+                foreach (var conflict in conflictRelics)
+                {
+                    s += conflict.so.name + " ";
+                }
+                Debug.Log($"relic actvate failed, {relic.so.name} is canceled by {s}");
             }
         }
 
@@ -104,13 +127,20 @@ namespace Game
             return ret;
         }
         
-        public void AddRelic()
+        public void AddRelic(SORelic so)
         {
-            // var item = relics.Find(item => item.so.relicID == so.relicID);
-            // if (item != null) return;   // 不能重复添加
-            
-            // relics.Add();
-            ui.AddRelic();
+            var item = relics.Find(item => item.so.relicID == so.relicID);
+            if (item != null) 
+            {
+                Debug.LogError($"repeat relic {so.relicName}");
+                return;   // 不能重复添加
+            }
+
+            var relic = Extensions.GetRelicBySO(so);
+
+            relics.Add(relic);
+            ActivateOneRelic(relic);
+            ui?.AddRelic(relic);
         }
 
         public void RefreshRelics()
