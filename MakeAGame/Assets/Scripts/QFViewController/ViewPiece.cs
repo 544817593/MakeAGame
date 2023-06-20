@@ -336,6 +336,7 @@ namespace Game
             if (e.viewPieceBase.generalId == 0 &&
                 e.viewPieceBase.pieceGrids[0].terrain.Value == (int)TerrainEnum.Door)
             {
+                Debug.LogError("获胜");
                 this.SendEvent<CombatVictoryEvent>(new CombatVictoryEvent());
             }
 

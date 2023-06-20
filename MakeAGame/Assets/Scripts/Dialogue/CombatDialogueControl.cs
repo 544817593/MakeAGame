@@ -4,6 +4,8 @@ using UnityEngine;
 using Game;
 using QFramework;
 using System;
+using UnityEngine.UI;
+using DialogueUI;
 public class CombatDialogueControl : MonoBehaviour, IController, ICanSendEvent
 {
     [SerializeField]
@@ -21,14 +23,17 @@ public class CombatDialogueControl : MonoBehaviour, IController, ICanSendEvent
    
         if (SceneFlow.combatSceneCount == 1)
         {
+          
             m_gameObject.SetActive(true);
             GameManager.Instance.PauseGame();
             UIKit.HidePanel<UIHandCard>();
+           
             this.RegisterEvent<CombatVictoryEvent>(e => OnCombatVictoryEvent());
 
         }
         else
         {
+            ResKit.Init();
             m_gameObject.SetActive(false);
             this.RegisterEvent<CombatVictoryEvent>(e => OnNormalCombatVictoryEvent());
         }
@@ -45,12 +50,15 @@ public class CombatDialogueControl : MonoBehaviour, IController, ICanSendEvent
     {
       
         m_gameObject.GetComponent<Dialogue>().WaitForPass();
+        UIKit.GetPanel<DialoguePanel>().NPC.GetComponent<Image>().sprite = Resources.Load<Sprite>("UI/NPC/弗朗西斯");
         GameManager.Instance.PauseGame();
        
     }
     private void OnNormalCombatVictoryEvent()
     {
-        GameObject.Find("GameSceneManager")?.transform.GetComponent<SceneFlow>().LoadRoom();
+        GameManager.Instance.PauseGame();
+        UIKit.HideAllPanel();
+        UIKit.ShowPanel<RewardUI.RewardUIPanel>();
     }
 
 }

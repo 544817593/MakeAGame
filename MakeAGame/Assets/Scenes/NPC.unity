@@ -928,6 +928,7 @@ MonoBehaviour:
   m_gameObject: {fileID: 1582592633}
   m_checkControl: {fileID: 547436837}
   m_showGift: {fileID: 554469476}
+  NoIntroNPC: 0
 --- !u!4 &1374718232
 Transform:
   m_ObjectHideFlags: 0
@@ -1250,7 +1251,7 @@ MonoBehaviour:
   controlTime: 5
   victory: 0
   wait_event: 0
-  npc: {fileID: 611653228}
+  npc: {fileID: 547436833}
   backGround: {fileID: 611399395}
 --- !u!4 &1582592635
 Transform:

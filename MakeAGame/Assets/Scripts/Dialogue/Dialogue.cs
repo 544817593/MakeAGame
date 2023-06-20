@@ -46,7 +46,7 @@ public class Dialogue : ViewController
     private const string Gift_TAG = "gift";//NPC赠送
     //private const string SPRITE_DECISION_TAG = "Decision_Sprite";//精神判定机制
     //private const string STRENGTH_DECISION_TAG = "Decision_Strength";//力量判定机制
-
+    public string bgPath = "UI/IntroUI/初始界面-背景图";
     private Coroutine displayCoroutine;
 
    
@@ -77,6 +77,7 @@ public class Dialogue : ViewController
     void Start()
     {
         ResKit.Init();
+        
         story = new Story(ink_file.text);
 
         if (npc)
@@ -129,7 +130,7 @@ public class Dialogue : ViewController
         }
         else if (choice == 2)
         {
-            backGround.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("UI/IntroUI/初始界面-背景图");
+            backGround.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>(bgPath);
         }
         else if (choice == 3)
         {
