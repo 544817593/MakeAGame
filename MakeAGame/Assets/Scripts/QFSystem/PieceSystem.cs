@@ -190,7 +190,10 @@ namespace Game
             else
             {
                 var newDirection = viewDirectionWheel.crtDirection;
-                crtSelectedPiece.PieceFlip(newDirection);
+                if (crtSelectedPiece.animator != null)
+                {
+                    crtSelectedPiece.PieceFlip(newDirection);
+                }
                 crtSelectedPiece.direction = newDirection;
                 // 替换当前方向的资源图片
                 Sprite curDirection = Resources.Load<Sprite>(ViewDirectionWheel.CurDirectionDict[crtSelectedPiece.direction]);

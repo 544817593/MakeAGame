@@ -163,7 +163,7 @@ public class Dialogue : ViewController
             UIKit.ShowPanel<DialoguePanel>();
             spacePressed = true;
             nextLine = false;
-            GameManager.Instance.PauseCombat();
+            GameManager.Instance.PauseGame();
            
         }
         //if(UIKit.GetPanel<DiceUI.AllDiceUIPanel>()?.finish == true)
@@ -531,22 +531,22 @@ public class Dialogue : ViewController
                     //waitForControl = true;
                     waitForInGamecontrol = true;
                     UIKit.ShowPanel<UIHandCard>();
-                    GameManager.Instance.ResumeCombat();
+                    GameManager.Instance.ResumeGame();
                     UIKit.HidePanel<DialoguePanel>();
-                    GameManager.Instance.ResumeCombat();
+                    GameManager.Instance.ResumeGame();
                     InGameControl();
                     break;
                 case Pass_TAG:
                     waitForPass = true;
                     UIKit.ShowPanel<UIHandCard>();
                     UIKit.HidePanel<DialoguePanel>();
-                    GameManager.Instance.ResumeCombat();
+                    GameManager.Instance.ResumeGame();
                     break;
                 case Wait_TAG:
                     waitForScene = true;
                     UIKit.ShowPanel<UIHandCard>();
                     UIKit.HidePanel<DialoguePanel>();
-                    GameManager.Instance.ResumeCombat();
+                    GameManager.Instance.ResumeGame();
                     break;
             }
 

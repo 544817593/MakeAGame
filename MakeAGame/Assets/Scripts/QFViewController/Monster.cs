@@ -253,7 +253,7 @@ namespace Game
 
         public override void Attack()
         {
-            Debug.Log($"monster {this.ToString()} is about to attack");
+            Debug.Log($"monster {this.pieceId.ToString()} is about to attack");
             this.SendEvent<PieceAttackReadyEvent>();
             this.SendCommand<PieceAttackCommand>(new PieceAttackCommand(this));
         }

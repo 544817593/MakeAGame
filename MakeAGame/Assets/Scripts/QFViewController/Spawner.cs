@@ -15,7 +15,7 @@ namespace Game
         // 战斗场景中持续抽卡的协程
         private Coroutine drawCardCoroutine;
         // 战斗场景中怪物持续生成的协程
-        private Coroutine constantSpawnMonsterCoroutine;
+        private List<Coroutine> constantSpawnMonsterCoroutine = new List<Coroutine>();
 
         /// <summary>
         /// 获取Architecture 每个IController都要写
@@ -36,7 +36,8 @@ namespace Game
             // 监听怪物持续生成事件
             this.RegisterEvent<ConstantSpawnMonsterEvent>(data => 
             {
-                constantSpawnMonsterCoroutine = StartCoroutine(OnConstantSpawnMonsterEvent(data)); 
+                Coroutine co = StartCoroutine(OnConstantSpawnMonsterEvent(data));
+                constantSpawnMonsterCoroutine.Add(co);  
             }).UnRegisterWhenGameObjectDestroyed(gameObject);
 
             // 监听创建卡牌事件
@@ -61,14 +62,22 @@ namespace Game
             this.RegisterEvent<CombatDefeatEvent>((data) => 
             {
                 StopCoroutine(drawCardCoroutine);
-                StopCoroutine(constantSpawnMonsterCoroutine);
+                foreach (Coroutine co in constantSpawnMonsterCoroutine)
+                {
+                    StopCoroutine(co);
+                }
+                constantSpawnMonsterCoroutine.Clear();
             }
             ).UnRegisterWhenGameObjectDestroyed(gameObject);
 
             this.RegisterEvent<CombatVictoryEvent>((data) =>
             {
                 StopCoroutine(drawCardCoroutine);
-                StopCoroutine(constantSpawnMonsterCoroutine);
+                foreach (Coroutine co in constantSpawnMonsterCoroutine)
+                {
+                    StopCoroutine(co);
+                }
+                constantSpawnMonsterCoroutine.Clear();
             }
             ).UnRegisterWhenGameObjectDestroyed(gameObject);
 
@@ -78,7 +87,14 @@ namespace Game
                 if(data.sceneName == "Combat")
                 {
                     if (drawCardCoroutine != null) StopCoroutine(drawCardCoroutine);
-                    if (constantSpawnMonsterCoroutine != null) StopCoroutine(constantSpawnMonsterCoroutine);
+                    if (constantSpawnMonsterCoroutine != null)
+                    {
+                        foreach (Coroutine co in constantSpawnMonsterCoroutine)
+                        {
+                            StopCoroutine(co);
+                        }
+                        constantSpawnMonsterCoroutine.Clear();
+                    }
                 }
             }
             ).UnRegisterWhenGameObjectDestroyed(gameObject);
@@ -247,6 +263,7 @@ namespace Game
             // 也许可以删除，用viewpiecebase的pieceGrids
             (int, int) temp = (data.row, data.col);
             monster.leftTopGridPos = new BindableProperty<(int, int)>(temp);
+            Debug.LogError(temp);
             (int, int) temp2 = (data.row + somb.height - 1, data.col + somb.width - 1);
             monster.botRightGridPos = new BindableProperty<(int, int)>(temp2);
         }

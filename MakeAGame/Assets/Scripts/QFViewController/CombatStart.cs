@@ -20,10 +20,30 @@ namespace Game
         private void Start()
         {
             combatCamera.Init();
+            FindCombatSettings();
             
             // IController通过Command与其他模块通信
             this.SendCommand(new InitCombatCommand(this));
             
+        }
+
+        private void FindCombatSettings()
+        {
+            switch (SceneFlow.combatSceneCount)
+            {
+                case 1:
+                    mapDataResPath = "ScriptableObjects/Maps/SOMapData1-1a";
+                    monsterSpawnSettings = Resources.Load<SOMonsterSpawnSettings>("ScriptableObjects/MonsterSpawnSettings/MonsterSpawnMap1-1a");
+                    undeadSpawnPositionX = 10;
+                    undeadSpawnPositionY = 6;
+                    return;
+                case 2:
+                    mapDataResPath = "ScriptableObjects/Maps/SOMapData1-2a";
+                    monsterSpawnSettings = Resources.Load<SOMonsterSpawnSettings>("ScriptableObjects/MonsterSpawnSettings/MonsterSpawnMap1-2a");
+                    undeadSpawnPositionX = 10;
+                    undeadSpawnPositionY = 13;
+                    return;
+            }
         }
 
         /// <summary>

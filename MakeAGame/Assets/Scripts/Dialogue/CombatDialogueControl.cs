@@ -22,7 +22,7 @@ public class CombatDialogueControl : MonoBehaviour, IController, ICanSendEvent
         if (SceneFlow.combatSceneCount == 1)
         {
             m_gameObject.SetActive(true);
-            GameManager.Instance.PauseCombat();
+            GameManager.Instance.PauseGame();
             UIKit.HidePanel<UIHandCard>();
             this.RegisterEvent<CombatVictoryEvent>(e => OnCombatVictoryEvent());
 
@@ -45,7 +45,7 @@ public class CombatDialogueControl : MonoBehaviour, IController, ICanSendEvent
     {
       
         m_gameObject.GetComponent<Dialogue>().WaitForPass();
-        GameManager.Instance.PauseCombat();
+        GameManager.Instance.PauseGame();
        
     }
     private void OnNormalCombatVictoryEvent()

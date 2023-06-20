@@ -82,7 +82,13 @@ namespace Game
             base.Update();
             if(!lockLife && currLife.Value > 0.001f)
             {
-                currLife.Value -= Time.deltaTime;
+                float timeMultiplier = 0;
+                foreach(BoxGrid grid in pieceGrids)
+                {
+                    timeMultiplier += Extensions.ToTimeMultiplierFloat(grid.timeMultiplier.Value);
+                }
+                timeMultiplier /= pieceGrids.Count;
+                currLife.Value -= Time.deltaTime * timeMultiplier;
             }
         }
 

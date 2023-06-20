@@ -70,7 +70,6 @@ public class GameSceneManager : MonoBehaviour, ICanSendEvent, ICanGetSystem, ICa
         }
         else
         {
-            //yield return new WaitForSeconds(0.5f);           
             AsyncOperation operation = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
             operation.allowSceneActivation = false;
             while (!operation.isDone)

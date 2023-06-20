@@ -90,7 +90,7 @@ namespace RewardUI
 		{
 			if (SceneFlow.combatSceneCount == 1)
             {
-				GameManager.Instance.ResumeCombat();
+				GameManager.Instance.ResumeGame();
             }
 				
 			GameObject.Find("GameSceneManager")?.transform.GetComponent<Game.SceneFlow>().LoadRoom();

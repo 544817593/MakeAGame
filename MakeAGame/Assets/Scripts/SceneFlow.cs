@@ -54,8 +54,8 @@ namespace Game
             {
                 NpcSceneCount++;
             }
-           
-           
+
+            GameManager.Instance.ResumeGame();
             StartCoroutine(GameManager.Instance.gameSceneMan.LoadScene(m_room.ToString(), false));
             StartCoroutine(GameManager.Instance.gameSceneMan.UnloadScene(Pre_Room));
             
