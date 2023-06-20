@@ -2529,3 +2529,5 @@ MonoBehaviour:
   lowerRowEdges: 3
   leftColEdges: 3
   rightColEdges: 3
+  undeadX: 6
+  undeadY: 3

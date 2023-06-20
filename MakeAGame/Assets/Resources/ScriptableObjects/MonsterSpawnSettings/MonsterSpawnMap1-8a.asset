@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: MonsterSpawnMap1-8a
   m_EditorClassIdentifier: 
   spawnPoints:
-  - {x: 7, y: 17}
+  - {x: 6, y: 13}
   spawnProbability: 64000000
   spawnDuration: 14000000
   spawnCooldown: 05000000
   monsterName:
-  - StarVampire
+  - MoonBeast
