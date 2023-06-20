@@ -12,6 +12,8 @@ namespace Game
         public int lowerRowEdges; // 底部的地图边界需要行数
         public int leftColEdges; // 左边的地图边界需要列数
         public int rightColEdges; // 右边的地图边界需要列数
+        public int undeadX; // 亡灵X坐标
+        public int undeadY; // 亡灵Y坐标
         [TableMatrix(Transpose = true)] [BoxGroup("terrain")]
         public int[,] mapTerrain;   // 地形类型
         [TableMatrix(Transpose = true)] [BoxGroup("timeMultiplier")]

@@ -263,7 +263,6 @@ namespace Game
             // 也许可以删除，用viewpiecebase的pieceGrids
             (int, int) temp = (data.row, data.col);
             monster.leftTopGridPos = new BindableProperty<(int, int)>(temp);
-            Debug.LogError(temp);
             (int, int) temp2 = (data.row + somb.height - 1, data.col + somb.width - 1);
             monster.botRightGridPos = new BindableProperty<(int, int)>(temp2);
         }

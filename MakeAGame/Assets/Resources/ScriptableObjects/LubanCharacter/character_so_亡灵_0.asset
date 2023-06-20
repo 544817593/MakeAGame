@@ -26,7 +26,7 @@ MonoBehaviour:
   deathFuncName: 
   features: 00000000
   specialFeatures: 00000000
-  pieceSprite: {fileID: 21300000, guid: 01b273b4cbafa6442bdd4576264162f2, type: 3}
+  pieceSprite: {fileID: 21300000, guid: 0da2e20d4df483f4297b5db13a5d0e30, type: 3}
   width: 1
   height: 1
   moveDirections: 01000000020000000300000004000000

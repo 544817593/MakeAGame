@@ -100,13 +100,6 @@ public class GameSceneManager : MonoBehaviour, ICanSendEvent, ICanGetSystem, ICa
         // 退出局内场景时的处理
         if (sceneName == "Combat")
         {
-            // 返还手牌到背包 移动到handcardsystem的event监听下
-            //for (int i = this.GetSystem<IHandCardSystem>().handCardList.Value.Count - 1; i >= 0; i--)
-            //{
-            //    ViewCard viewCard = this.GetSystem<IHandCardSystem>().handCardList.Value[i];
-            //    this.GetSystem<IInventorySystem>().SpawnBagCardInBag(viewCard.card);
-            //    this.SendCommand(new SubHandCardCommand(viewCard));
-            //}
             yield return SceneManager.UnloadSceneAsync(sceneName);
             UIKit.HideAllPanel();
         }

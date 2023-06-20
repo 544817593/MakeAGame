@@ -13,13 +13,33 @@ MonoBehaviour:
   m_Name: MonsterSpawnMap1-2a
   m_EditorClassIdentifier: 
   spawnPoints:
-  - {x: 5, y: 20}
-  - {x: 6, y: 20}
-  - {x: 6, y: 17}
-  spawnProbability: 5a0000005a00000032000000
-  spawnDuration: d2000000d2000000b4000000
-  spawnCooldown: 050000000500000007000000
+  - {x: 4, y: 6}
+  - {x: 4, y: 7}
+  - {x: 4, y: 9}
+  - {x: 5, y: 9}
+  - {x: 4, y: 15}
+  - {x: 6, y: 16}
+  - {x: 7, y: 16}
+  - {x: 7, y: 17}
+  - {x: 3, y: 19}
+  - {x: 4, y: 19}
+  - {x: 3, y: 20}
+  - {x: 4, y: 20}
+  - {x: 10, y: 20}
+  spawnProbability: 64000000640000006400000064000000640000006400000064000000640000006400000064000000640000006400000064000000
+  spawnDuration: d2000000d2000000b4000000b4000000b4000000b4000000b4000000b4000000b4000000b4000000b4000000b400000005000000
+  spawnCooldown: 0500000005000000070000000700000007000000070000000700000007000000070000000700000007000000070000000a000000
   monsterName:
+  - LengSpider
+  - LengSpider
+  - HoundsOfTindalos
+  - HoundsOfTindalos
   - HoundsOfTindalos
   - HoundsOfTindalos
   - Ghast
+  - Ghast
+  - HoundsOfTindalos
+  - HoundsOfTindalos
+  - HoundsOfTindalos
+  - HoundsOfTindalos
+  - UprightRat

@@ -19,7 +19,6 @@ namespace Game
         
         protected override void OnExecute()
         {
-            Debug.LogError("Init combat command execute");
             InitMap();
             
             // 界面
