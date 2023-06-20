@@ -21,6 +21,8 @@ namespace Game
         void EndCountTime();
 
         void RegisterRelicEvent<T>(RelicBase relic, Action<object> act);
+
+        List<RelicBase> GetRelics();
     }
 
     public class RelicEventData
@@ -39,12 +41,8 @@ namespace Game
             Debug.Log("RelicSystem: OnInit");
             
             Debug.Log("RelicSystem: add test relic");
-            var so = IdToSO.FindRelicSOByID(1);
-            // relics.Add(new RelicInstantExample1(so));
-            // relics.Add(new RelicRecycleExample(so));
-            // relics.Add(new RelicChargeExample(so));
-            // relics.Add(new RelicConsumableExample(so));
-            // AddRelic(so);
+            // var so = IdToSO.FindRelicSOByID(1);
+            // this.GetSystem<IRelicSystem>().AddRelic(so);
 
             ActivateRelics();
         }
@@ -54,6 +52,11 @@ namespace Game
 
         private Dictionary<Type, List<RelicEventData>> dictRelicEvents = new Dictionary<Type, List<RelicEventData>>();
         private List<IUnRegister> unregisters = new List<IUnRegister>();
+
+        public List<RelicBase> GetRelics()
+        {
+            return relics;
+        }
 
         public void ActivateRelics()
         {
@@ -116,7 +119,7 @@ namespace Game
             var relic = Extensions.GetRelicBySO(so);
 
             relics.Add(relic);
-            ui.AddRelic(relic);
+            ui?.AddRelic(relic);
         }
 
         public void RefreshRelics()

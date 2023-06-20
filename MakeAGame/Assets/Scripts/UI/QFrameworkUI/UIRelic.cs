@@ -20,19 +20,24 @@ namespace Game
 			
 			var relicSystem = GameEntry.Interface.GetSystem<IRelicSystem>();
 			relicSystem.ui = this;
-			
+			RefreshData(relicSystem.GetRelics());
+
 			Tooltip.gameObject.SetActive(false);
 			tmpTooltip = Tooltip.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
-			
-			// todo test
-			// AddRelic();
-			// AddRelic();
 		}
 
 		private TextMeshProUGUI tmpTooltip;
 		
 		private List<ViewRelic> viewRelics = new List<ViewRelic>();
 
+		public void RefreshData(List<RelicBase> relicData)
+		{
+			foreach (var data in relicData)
+			{
+				AddRelic(data);
+			}
+		}
+		
 		public void AddRelic(RelicBase relic)
 		{
 			var newRelic = new ViewRelic(ContentPanel.transform);

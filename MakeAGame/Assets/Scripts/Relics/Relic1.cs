@@ -5,10 +5,9 @@ namespace Game
     {
         public Relic1(SORelic so): base(so)
         {
-            sanAmount = (int)so.effectParams[0];
         }
 
-        private int sanAmount;
+        private float sanAmount => crtParams[0];
         
         public override void Activate(IRelicSystem sys)
         {
@@ -17,7 +16,7 @@ namespace Game
 
         protected override void TakeEffect(object obj)
         {
-            PlayerManager.Instance.player.AddMaxSan(sanAmount);
+            PlayerManager.Instance.player.AddMaxSan((int)sanAmount);
         }
     }
 }
