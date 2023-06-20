@@ -5,7 +5,7 @@ using QFramework;
 
 namespace ShopMainUI
 {
-	// Generate Id:745c2075-5452-4925-9fbb-3b705bc6821a
+	// Generate Id:19511dfd-5dba-4553-9a87-f3cd9928600b
 	public partial class ShopMainUI
 	{
 		public const string Name = "ShopMainUI";
@@ -17,7 +17,9 @@ namespace ShopMainUI
 		[SerializeField]
 		public UnityEngine.UI.Button Sell;
 		[SerializeField]
-		public UnityEngine.UI.Button LevelUp;
+		public UnityEngine.UI.Button Enhance;
+		[SerializeField]
+		public UnityEngine.UI.Button Close;
 		
 		private ShopMainUIData mPrivateData = null;
 		
@@ -26,7 +28,8 @@ namespace ShopMainUI
 			ShopNPC = null;
 			Buy = null;
 			Sell = null;
-			LevelUp = null;
+			Enhance = null;
+			Close = null;
 			
 			mData = null;
 		}

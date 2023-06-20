@@ -15,6 +15,8 @@ namespace PauseUI
         protected override void OnInit(IUIData uiData = null)
 		{
 			mData = uiData as PauseData ?? new PauseData();
+			transform.SetAsLastSibling();
+			PauseMenu.gameObject.SetActive(false);
 			// please add init code here
 			PauseButton.onClick.AddListener(() =>
 			{
@@ -54,7 +56,8 @@ namespace PauseUI
 		
 		protected override void OnOpen(IUIData uiData = null)
 		{
-		}
+            transform.SetAsLastSibling();
+        }
 		
 		protected override void OnShow()
 		{

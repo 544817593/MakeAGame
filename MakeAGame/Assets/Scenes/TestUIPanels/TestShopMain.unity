@@ -200,7 +200,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2911962992903930049, guid: 44965ec73c1295048b188c158eef8f8f, type: 3}
       propertyPath: m_RootOrder
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2911962992903930049, guid: 44965ec73c1295048b188c158eef8f8f, type: 3}
       propertyPath: m_AnchorMax.x
@@ -386,10 +386,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: ShopMainUI
       objectReference: {fileID: 0}
-    - target: {fileID: 4162783769214881551, guid: c547f81eeabb623419f3bfc2df12afcf, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 6253227765994580896, guid: c547f81eeabb623419f3bfc2df12afcf, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -400,7 +396,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6253227765994580896, guid: c547f81eeabb623419f3bfc2df12afcf, type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6253227765994580896, guid: c547f81eeabb623419f3bfc2df12afcf, type: 3}
       propertyPath: m_AnchorMax.x
