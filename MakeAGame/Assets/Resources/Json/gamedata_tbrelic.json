@@ -5,6 +5,7 @@
     "desc": "这个小盒子里藏着可怖的虫子。它们会吞噬人类的鲜血，但在此过程中，也会让你的心灵变得更加强大。",
     "effectDesc": "每场战斗结束后，获得{0}点最大混沌值",
     "rarity": 1,
+    "typeName": "Relic1",
     "ToCancelRelics": [],
     "BeCanceledRelics": [
       3
@@ -21,6 +22,7 @@
     "desc": "看起来只是一张网，但实际上它可以让你在你的背包中找到任何你需要的物品。只需一点点的心灵控制。",
     "effectDesc": "每场战斗开始前，可以获得一次重抽手牌的机会",
     "rarity": 1,
+    "typeName": "Relic2",
     "ToCancelRelics": [],
     "BeCanceledRelics": [],
     "effectPriority": 0,
@@ -33,6 +35,7 @@
     "desc": "这个药剂是由不知名的深海怪鱼制成的。它可以让你在可怕的环境下保持冷静，并减轻神经紧张。",
     "effectDesc": "战斗开始时，你的混沌值为{0}点",
     "rarity": 1,
+    "typeName": "Relic3",
     "ToCancelRelics": [
       1
     ],
@@ -49,6 +52,7 @@
     "desc": "它可以过滤出一些你不愿看到的事情，让你看到真正的现实，但要小心，它展示的内容可能会造成你的巨大痛苦。",
     "effectDesc": "战斗结束后，如果地图上只有一个卡包类型的生面牌，获得{0}金币",
     "rarity": 1,
+    "typeName": "Relic4",
     "ToCancelRelics": [],
     "BeCanceledRelics": [],
     "effectPriority": 0,
@@ -63,6 +67,7 @@
     "desc": "这个小背包十分便携，但却能装下任何你需要的东西。",
     "effectDesc": "随机获得{0}张牌",
     "rarity": 1,
+    "typeName": "Relic5",
     "ToCancelRelics": [],
     "BeCanceledRelics": [],
     "effectPriority": 0,
@@ -77,6 +82,7 @@
     "desc": "亡灵喜爱它，它是无价的。",
     "effectDesc": "每场战斗开始时，亡灵随机获得一点属性，战斗结束后消失",
     "rarity": 2,
+    "typeName": "Relic6",
     "ToCancelRelics": [],
     "BeCanceledRelics": [],
     "effectPriority": 0,

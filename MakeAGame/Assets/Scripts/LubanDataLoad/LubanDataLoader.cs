@@ -33,6 +33,11 @@ namespace Game.LubanDataLoad
         public bool forceOverrideChara = true;   // 是否强行覆盖已有的so；若否，只生成新加的so
         public bool loadCharacter;
         
+        // SORelic文件夹完整路径
+        public string fullSOFolderRelic = "Assets/Resources/ScriptableObjects/LubanRelic";
+        public bool forceOverrideRelic = true;
+        public bool loadRelic;
+        
         // Feature图片资源路径
         public string FeatureIconResFolder = "Sprites/Cards/Feature";
         // 卡面图片资源路径
@@ -56,18 +61,23 @@ namespace Game.LubanDataLoad
             if (loadFeature)
             {
                 var features = table.TbFeature.DataList;
-                LoadFeature(features);   
+                LoadFeature(features);
+                AssetDatabase.Refresh();
             }
-            
-            AssetDatabase.Refresh();
 
             if (loadCharacter)
             {
                 var characters = table.TbCharacter.DataList;
-                LoadCharacter(characters);   
+                LoadCharacter(characters);
+                AssetDatabase.Refresh();
             }
-            
-            AssetDatabase.Refresh();
+
+            if (loadRelic)
+            {
+                var relics = table.TbRelic.DataList;
+                LoadRelic(relics);
+                AssetDatabase.Refresh();
+            }
         }
 
         void LoadFeature(List<Feature> datas)
@@ -265,6 +275,62 @@ namespace Game.LubanDataLoad
                 return null;
             }
             return Resources.Load<GameObject>($@"{PieceAnimResFolder}/{pieceAnimGO}");
+        }
+
+        void LoadRelic(List<Relic> datas)
+        {
+            Debug.Log(string.Format("<color=green>{0}</color>", $"start load relic, data count: {datas.Count}"));
+            string resFolderFeature = fullSOFolderRelic.Substring("Assets/Resources/".Length);
+            int createCount = 0;
+            
+            foreach (var data in datas)
+            {
+                if (!forceOverrideRelic)
+                {
+                    var tmpSO = Resources.Load<SOFeature>(
+                        $@"{resFolderFeature}/relic_so_{data.RelicName}_{data.RelicID}");
+                    if (tmpSO != null)
+                    {
+                        Debug.Log(string.Format("<color=yellow>{0}</color>",
+                            $"SOFeature already existed, continue - relic_so_{data.RelicName}_{data.RelicID}"));
+                        continue;
+                    }
+                }
+                
+                SORelic so = ScriptableObject.CreateInstance<SORelic>();
+                ConvertRelicJsonToSO(so, data);
+
+                AssetDatabase.CreateAsset(so, $@"{fullSOFolderRelic}/relic_so_{data.RelicName}_{data.RelicID}.asset");
+                AssetDatabase.SaveAssets();
+                AssetDatabase.Refresh();
+                Debug.Log($"create relic_so_{data.RelicName}_{data.RelicID}.asset");
+                createCount++;
+            }
+            
+            Debug.Log(string.Format("<color=green>{0}</color>", $"finish load relic, create count: {createCount}"));
+        }
+        
+        void ConvertRelicJsonToSO(SORelic so, Relic json)
+        {
+            so.relicID = json.RelicID;
+            so.relicName = json.RelicName;
+            so.desc = json.Desc;
+            so.effectDesc = json.EffectDesc;
+            so.rarity = (RarityEnum)json.Rarity;
+            so.typeName = json.TypeName;
+            foreach (var id in json.ToCancelRelics)
+            {
+                so.toCancelRelics.Add(id);
+            }
+            foreach (var id in json.BeCanceledRelics)
+            {
+                so.beCanceledRelics.Add(id);
+            }
+            so.effectPriority = json.EffectPriority;
+            foreach (var param in json.Params)
+            {
+                so.effectParams.Add(param);
+            }
         }
 
 

@@ -12,7 +12,7 @@ namespace Game
         
         void ActivateRelics();
 
-        void AddRelic();
+        void AddRelic(SORelic so);
 
         void RefreshRelics();
 
@@ -39,11 +39,11 @@ namespace Game
             Debug.Log("RelicSystem: OnInit");
             
             Debug.Log("RelicSystem: add test relic");
-            var so = Extensions.GetTestSORelic();
-            relics.Add(new RelicInstantExample1(so));
-            relics.Add(new RelicRecycleExample(so));
-            relics.Add(new RelicChargeExample(so));
-            relics.Add(new RelicConsumableExample(so));
+            var so = IdToSO.FindRelicSOByID(1);
+            // relics.Add(new RelicInstantExample1(so));
+            // relics.Add(new RelicRecycleExample(so));
+            // relics.Add(new RelicChargeExample(so));
+            // relics.Add(new RelicConsumableExample(so));
             // AddRelic(so);
 
             ActivateRelics();
@@ -104,13 +104,19 @@ namespace Game
             return ret;
         }
         
-        public void AddRelic()
+        public void AddRelic(SORelic so)
         {
-            // var item = relics.Find(item => item.so.relicID == so.relicID);
-            // if (item != null) return;   // 不能重复添加
-            
-            // relics.Add();
-            ui.AddRelic();
+            var item = relics.Find(item => item.so.relicID == so.relicID);
+            if (item != null) 
+            {
+                Debug.LogError($"repeat relic {so.relicName}");
+                return;   // 不能重复添加
+            }
+
+            var relic = Extensions.GetRelicBySO(so);
+
+            relics.Add(relic);
+            ui.AddRelic(relic);
         }
 
         public void RefreshRelics()
