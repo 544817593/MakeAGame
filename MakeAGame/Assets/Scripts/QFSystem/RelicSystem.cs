@@ -10,7 +10,7 @@ namespace Game
     {
         UIRelic ui { set; }
         
-        void ActivateRelics();
+        void ActivateAllRelics();
 
         void AddRelic(SORelic so);
 
@@ -44,7 +44,7 @@ namespace Game
             // var so = IdToSO.FindRelicSOByID(1);
             // this.GetSystem<IRelicSystem>().AddRelic(so);
 
-            ActivateRelics();
+            ActivateAllRelics();
         }
 
         private List<RelicBase> relics = new List<RelicBase>(); // 遗物列表
@@ -58,7 +58,7 @@ namespace Game
             return relics;
         }
 
-        public void ActivateRelics()
+        public void ActivateAllRelics()
         {
             Debug.Log($"RelicSystem: ActivateRelics count {relics.Count}");
             foreach (var relic in relics)
@@ -79,6 +79,26 @@ namespace Game
                     }
                     Debug.Log($"relic actvate failed, {relic.so.name} is canceled by {s}");
                 }
+            }
+        }
+
+        public void ActivateOneRelic(RelicBase relic)
+        {
+            // 玩家当前的所有遗物中，没有遗物会取消其效果
+            var conflictRelics = IsCanceledByPlayerRelics(relic);
+            if (conflictRelics.Count == 0)
+            {
+                relic.Activate(this);
+                relic.isActive = true;
+            }
+            else
+            {
+                string s = String.Empty;
+                foreach (var conflict in conflictRelics)
+                {
+                    s += conflict.so.name + " ";
+                }
+                Debug.Log($"relic actvate failed, {relic.so.name} is canceled by {s}");
             }
         }
 
@@ -119,6 +139,7 @@ namespace Game
             var relic = Extensions.GetRelicBySO(so);
 
             relics.Add(relic);
+            ActivateOneRelic(relic);
             ui?.AddRelic(relic);
         }
 
