@@ -30,7 +30,14 @@ namespace Game
             {
                 grid.timeMultiplier.Value = TimeMultiplierEnum.Superslow; // 最慢流速
             }
-            
+
+            // 死面保护判定
+            if (ItemController.Instance.deathDestroyProtection > 0)
+            {
+                this.GetSystem<IInventorySystem>().SpawnBagCardInBag(viewCard.card);
+                ItemController.Instance.deathDestroyProtection -= 1;
+            }
+
             this.GetSystem<IInventorySystem>().SpawnBagCardInBag(viewCard.card); // 加入背包
             this.GetSystem<IHandCardSystem>().SubCard(viewCard); // 摧毁卡牌
         }

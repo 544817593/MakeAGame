@@ -40,9 +40,16 @@ namespace Game
                 {
                     GameManager.Instance.buffMan.AddBuff(new BuffVine(monster, duration)); // 移速减半
                 }
-                GameManager.Instance.buffMan.AddBuff(new BuffVine2(grid, 99999999)); // 格子降速，持续时间无限
+                GameManager.Instance.buffMan.AddBuff(new BuffVine2(grid, duration)); // 等待duration秒后格子降速
             }
-            
+
+            // 死面保护判定
+            if (ItemController.Instance.deathDestroyProtection > 0)
+            {
+                this.GetSystem<IInventorySystem>().SpawnBagCardInBag(viewCard.card);
+                ItemController.Instance.deathDestroyProtection -= 1;
+            }
+
             this.GetSystem<IHandCardSystem>().SubCard(viewCard); // 摧毁卡牌
         }
     }

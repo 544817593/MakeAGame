@@ -248,13 +248,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fullSOFolderFeature: Assets/Resources/ScriptableObjects/LubanFeature
   forceOverrideFeature: 1
-  loadFeature: 1
+  loadFeature: 0
   fullSOFolderChara: Assets/Resources/ScriptableObjects/LubanCharacter
   forceOverrideChara: 1
-  loadCharacter: 1
+  loadCharacter: 0
+  fullSOFolderRelic: Assets/Resources/ScriptableObjects/LubanRelic
+  forceOverrideRelic: 1
+  loadRelic: 1
   FeatureIconResFolder: Sprites/Cards/Feature
   CardIconResFolder: Sprites/Cards/Character
   PieceIconResFolder: Sprites/Piece
+  PieceAnimResFolder: Prefabs/CardAnimPrefabs
 --- !u!4 &1595611388
 Transform:
   m_ObjectHideFlags: 0

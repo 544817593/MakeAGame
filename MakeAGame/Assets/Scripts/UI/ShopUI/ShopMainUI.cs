@@ -17,8 +17,12 @@ namespace ShopMainUI
 			// 监听按钮点击，跳转panel
             ShopPanelChange.ChangeShopPanel(this, Buy);
 			ShopPanelChange.ChangeShopPanel(this, Sell);
-            ShopPanelChange.ChangeShopPanel(this, LevelUp);
+            ShopPanelChange.ChangeShopPanel(this, Enhance);
             ShopPanelChange.ChangeShopPanel(this, ShopNPC);
+			Close.onClick.AddListener(() =>
+			{
+				GameObject.Find("GameSceneManager")?.transform.GetComponent<Game.SceneFlow>().LoadRoom();
+			});
         }
 		
 		protected override void OnOpen(IUIData uiData = null)

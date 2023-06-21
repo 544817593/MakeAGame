@@ -140,6 +140,7 @@ GameObject:
   - component: {fileID: 187022998146400816}
   - component: {fileID: 3167370189654315563}
   - component: {fileID: 9123636173764539095}
+  - component: {fileID: 6400544444848616503}
   m_Layer: 0
   m_Name: CardPosition1
   m_TagString: Untagged
@@ -275,7 +276,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_ui: {fileID: 6559653778248214350}
-  m_BagUI: {fileID: -8545740999949244148, guid: 1ef17e3a36c55d243bb301b6d54414fd, type: 3}
+--- !u!114 &6400544444848616503
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1715130040735531979}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d8cac0a88f2d87c428511e43079e8ab3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hoverSound: {fileID: 8300000, guid: 19057c8424312ff4487cf39496c239d8, type: 3}
+  clickSound: {fileID: 8300000, guid: 0e3e6b7b1bd9ffe418b5b55a812a8fad, type: 3}
 --- !u!1 &1821567909707159484
 GameObject:
   m_ObjectHideFlags: 0
@@ -355,7 +369,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Button
+  m_Text: 
 --- !u!1 &2788899457743389250
 GameObject:
   m_ObjectHideFlags: 0
@@ -370,6 +384,7 @@ GameObject:
   - component: {fileID: 6209277951681845329}
   - component: {fileID: 1235769559785581974}
   - component: {fileID: 288105582984569122}
+  - component: {fileID: 4945411333776525640}
   m_Layer: 0
   m_Name: CardPosition3
   m_TagString: Untagged
@@ -505,7 +520,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_ui: {fileID: 6559653778248214350}
-  m_BagUI: {fileID: -8545740999949244148, guid: 1ef17e3a36c55d243bb301b6d54414fd, type: 3}
+--- !u!114 &4945411333776525640
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2788899457743389250}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d8cac0a88f2d87c428511e43079e8ab3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hoverSound: {fileID: 0}
+  clickSound: {fileID: 8300000, guid: 0e3e6b7b1bd9ffe418b5b55a812a8fad, type: 3}
 --- !u!1 &3237672703279676070
 GameObject:
   m_ObjectHideFlags: 0
@@ -520,6 +548,7 @@ GameObject:
   - component: {fileID: 2648761852284036551}
   - component: {fileID: 4759765396158299810}
   - component: {fileID: 878191544492774680}
+  - component: {fileID: 6406723574885542393}
   m_Layer: 0
   m_Name: CardPosition5
   m_TagString: Untagged
@@ -655,7 +684,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_ui: {fileID: 6559653778248214350}
-  m_BagUI: {fileID: -8545740999949244148, guid: 1ef17e3a36c55d243bb301b6d54414fd, type: 3}
+--- !u!114 &6406723574885542393
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3237672703279676070}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d8cac0a88f2d87c428511e43079e8ab3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hoverSound: {fileID: 8300000, guid: 19057c8424312ff4487cf39496c239d8, type: 3}
+  clickSound: {fileID: 8300000, guid: 0e3e6b7b1bd9ffe418b5b55a812a8fad, type: 3}
 --- !u!1 &3725299349737224186
 GameObject:
   m_ObjectHideFlags: 0
@@ -872,6 +914,7 @@ GameObject:
   - component: {fileID: 3820695331216742084}
   - component: {fileID: 1948091491580978215}
   - component: {fileID: 6646366978021522939}
+  - component: {fileID: 4983587793072185594}
   m_Layer: 0
   m_Name: CardPosition4
   m_TagString: Untagged
@@ -1007,7 +1050,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_ui: {fileID: 6559653778248214350}
-  m_BagUI: {fileID: -8545740999949244148, guid: 1ef17e3a36c55d243bb301b6d54414fd, type: 3}
+--- !u!114 &4983587793072185594
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5816214695114561716}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d8cac0a88f2d87c428511e43079e8ab3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hoverSound: {fileID: 8300000, guid: 19057c8424312ff4487cf39496c239d8, type: 3}
+  clickSound: {fileID: 8300000, guid: 0e3e6b7b1bd9ffe418b5b55a812a8fad, type: 3}
 --- !u!1 &7436061467843180094
 GameObject:
   m_ObjectHideFlags: 0
@@ -1127,6 +1183,7 @@ GameObject:
   - component: {fileID: 594288135114513667}
   - component: {fileID: 8966747653952450616}
   - component: {fileID: 3604469324716323910}
+  - component: {fileID: 3719987654727490667}
   m_Layer: 0
   m_Name: BtnOpen
   m_TagString: Untagged
@@ -1253,6 +1310,20 @@ MonoBehaviour:
   CustomComponentName: Button (Legacy)
   CustomComment: 
   mComponentName: UnityEngine.UI.Button
+--- !u!114 &3719987654727490667
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7885292662077148098}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d8cac0a88f2d87c428511e43079e8ab3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hoverSound: {fileID: 0}
+  clickSound: {fileID: 8300000, guid: 322e79517d3cdbb429f69a179ecfb8be, type: 3}
 --- !u!1 &7918786884007097244
 GameObject:
   m_ObjectHideFlags: 0
@@ -1325,6 +1396,7 @@ GameObject:
   - component: {fileID: 6723497403635321069}
   - component: {fileID: 8739336237200236013}
   - component: {fileID: 2117335578455830012}
+  - component: {fileID: 8856541656914744739}
   m_Layer: 0
   m_Name: CardPosition2
   m_TagString: Untagged
@@ -1460,7 +1532,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_ui: {fileID: 6559653778248214350}
-  m_BagUI: {fileID: -8545740999949244148, guid: 1ef17e3a36c55d243bb301b6d54414fd, type: 3}
+--- !u!114 &8856541656914744739
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8465007758732980716}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d8cac0a88f2d87c428511e43079e8ab3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hoverSound: {fileID: 8300000, guid: 19057c8424312ff4487cf39496c239d8, type: 3}
+  clickSound: {fileID: 8300000, guid: 0e3e6b7b1bd9ffe418b5b55a812a8fad, type: 3}
 --- !u!1 &9036450089974061547
 GameObject:
   m_ObjectHideFlags: 0

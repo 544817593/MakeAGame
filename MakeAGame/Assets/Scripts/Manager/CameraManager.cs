@@ -44,50 +44,54 @@ public class CameraManager : MonoBehaviour
 
     public bool cameraLock = false; // 相机锁定，不可移动
 
+    public float GetMinScrollLimit()
+    {
+        return minScrollLimit;
+    }
     // 相机控制
     void Update()
     {
 
-        Vector3 pos = transform.position;
-
-        if (Input.GetKey("w") || Input.mousePosition.y >= Screen.height - borderOffset)
-        {
-            pos.z += camMoveSpeed * Time.deltaTime;
-        }
-
-        if (Input.GetKey("s") || Input.mousePosition.y <= borderOffset)
-        {
-            pos.z -= camMoveSpeed * Time.deltaTime;
-        }
-
-        if (Input.GetKey("d") || Input.mousePosition.x >= Screen.width - borderOffset)
-        {
-            pos.x += camMoveSpeed * Time.deltaTime;
-        }
-
-        if (Input.GetKey("a") || Input.mousePosition.x <= borderOffset)
-        {
-            pos.x -= camMoveSpeed * Time.deltaTime;
-        }
-
-        // 如果相机锁激活，相机不可缩放
-        if (!cameraLock)
-        {
-            float scroll = Input.GetAxis("Mouse ScrollWheel");
-            pos.y -= scroll * scrollSpeed * Time.deltaTime;
-        }
-        else
-        {
-            pos.y = 30f;
-        }
-
-
-        // 最远最近缩放和移动区间
-        pos.x = Mathf.Clamp(pos.x, minBorderLimitX, maxBorderLimitX);
-        pos.y = Mathf.Clamp(pos.y, minScrollLimit, maxScrollLimit);
-        pos.z = Mathf.Clamp(pos.z, minBorderLimitZ, maxBorderLimitZ);
-
-        transform.position = pos;
+        // Vector3 pos = transform.position;
+        //
+        // if (Input.GetKey("w") || Input.mousePosition.y >= Screen.height - borderOffset)
+        // {
+        //     pos.z += camMoveSpeed * Time.deltaTime;
+        // }
+        //
+        // if (Input.GetKey("s") || Input.mousePosition.y <= borderOffset)
+        // {
+        //     pos.z -= camMoveSpeed * Time.deltaTime;
+        // }
+        //
+        // if (Input.GetKey("d") || Input.mousePosition.x >= Screen.width - borderOffset)
+        // {
+        //     pos.x += camMoveSpeed * Time.deltaTime;
+        // }
+        //
+        // if (Input.GetKey("a") || Input.mousePosition.x <= borderOffset)
+        // {
+        //     pos.x -= camMoveSpeed * Time.deltaTime;
+        // }
+        //
+        // // 如果相机锁激活，相机不可缩放
+        // if (!cameraLock)
+        // {
+        //     float scroll = Input.GetAxis("Mouse ScrollWheel");
+        //     pos.y -= scroll * scrollSpeed * Time.deltaTime;
+        // }
+        // else
+        // {
+        //     pos.y = 30f;
+        // }
+        //
+        //
+        // // 最远最近缩放和移动区间
+        // pos.x = Mathf.Clamp(pos.x, minBorderLimitX, maxBorderLimitX);
+        // pos.y = Mathf.Clamp(pos.y, minScrollLimit, maxScrollLimit);
+        // pos.z = Mathf.Clamp(pos.z, minBorderLimitZ, maxBorderLimitZ);
+        //
+        // transform.position = pos;
     }
 
 }

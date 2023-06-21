@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using QFramework;
+using UnityEditor;
 using UnityEngine;
 using static UnityEngine.GraphicsBuffer;
 
@@ -114,7 +115,21 @@ namespace Game
         private void OnTimeMultiplierChanged(TimeMultiplierEnum tm)
         {
             // 速度变化触发的效果
-            
+            SpriteRenderer sp = transform.Find("Root/TimeArea").GetComponent<SpriteRenderer>();
+            if (tm == TimeMultiplierEnum.Superslow || tm == TimeMultiplierEnum.Slow)
+            {
+                sp.sprite = Resources.Load<Sprite>("Sprites/Grids/slowArea");
+                sp.transform.localPosition = new Vector3(0.05f, -0.15f, -0.1f);
+            }
+            else if (tm == TimeMultiplierEnum.Superfast || tm == TimeMultiplierEnum.Fast)
+            {
+                sp.sprite = Resources.Load<Sprite>("Sprites/Grids/fastArea");
+                sp.transform.localPosition = new Vector3(0.05f, -0.15f, -0.1f);
+            }
+            else
+            {
+                sp.sprite = null;
+            }
         }
         private void OnEdgeResChanged(EdgeSprite res)
         {
@@ -272,4 +287,5 @@ namespace Game
             }
         }
     }
+
 }

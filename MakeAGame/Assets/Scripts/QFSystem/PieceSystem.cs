@@ -55,6 +55,9 @@ namespace Game
 
             this.RegisterEvent<SelectMapStartEvent>(e => SetPieceCollidersEnable(false));
             this.RegisterEvent<SelectMapEndEvent>(e => SetPieceCollidersEnable(true));
+            this.RegisterEvent<CombatVictoryEvent>(e => ClearPieceLists());
+            this.RegisterEvent<CombatDefeatEvent>(e => ClearPieceLists());
+            this.RegisterEvent<UnloadSceneEvent>(e => ClearPieceLists());
         }
 
         void SetPieceCollidersEnable(bool isEnable)
@@ -139,6 +142,13 @@ namespace Game
             {
                 pieceEnemyList.Remove(m);
             }
+
+            if (crtSelectedPiece == vpb)
+            {
+                viewDirectionWheel.gameObject.SetActive(false);
+                viewDirectionWheel.crtDirection = DirEnum.None;
+                crtSelectedPiece = null;
+            }
         }
 
         private ViewPieceBase crtSelectedPiece;
@@ -183,8 +193,14 @@ namespace Game
             else
             {
                 var newDirection = viewDirectionWheel.crtDirection;
-                crtSelectedPiece.PieceFlip(newDirection);
+                if (crtSelectedPiece.animator != null)
+                {
+                    crtSelectedPiece.PieceFlip(newDirection);
+                }
                 crtSelectedPiece.direction = newDirection;
+                // 替换当前方向的资源图片
+                Sprite curDirection = Resources.Load<Sprite>(ViewDirectionWheel.CurDirectionDict[crtSelectedPiece.direction]);
+                crtSelectedPiece.gameObject.transform.Find("CurMoveDirection").GetComponent<SpriteRenderer>().sprite = curDirection;
                 Debug.Log($"change piece direction to {newDirection}");
               
             }
@@ -247,6 +263,20 @@ namespace Game
             }
             Debug.Log($"id: {pieceId}，此id不在怪物棋子列表内");
             return null;
+        }
+
+        private void ClearPieceLists()
+        {
+            foreach(ViewPiece piece in pieceFriendList)
+            {
+                GameObject.Destroy(piece);
+            }
+            foreach (Monster monster in pieceEnemyList)
+            {
+                GameObject.Destroy(monster);
+            }
+            pieceFriendList.Clear();
+            pieceEnemyList.Clear();
         }
     }
 }

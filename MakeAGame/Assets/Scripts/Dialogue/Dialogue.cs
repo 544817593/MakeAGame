@@ -11,6 +11,7 @@ using PackOpen;
 using DialogueUI;
 using BagUI;
 using Game;
+using System;
 
 public class Dialogue : ViewController
 {
@@ -26,7 +27,7 @@ public class Dialogue : ViewController
     TextMeshProUGUI story_text;
     public CheckControl m_checkControl;
     public ShowGift m_showGift;
-    public string ssssss;
+   
 
     private const string SPEAKER_TAG = "speaker";
     private const string PAUSE_TAG = "pause";
@@ -45,10 +46,10 @@ public class Dialogue : ViewController
     private const string Gift_TAG = "gift";//NPC赠送
     //private const string SPRITE_DECISION_TAG = "Decision_Sprite";//精神判定机制
     //private const string STRENGTH_DECISION_TAG = "Decision_Strength";//力量判定机制
-
+    public string bgPath = "UI/IntroUI/初始界面-背景图";
     private Coroutine displayCoroutine;
 
-
+   
     //GameObject m_packUI;
 
 
@@ -57,15 +58,17 @@ public class Dialogue : ViewController
     public bool pauseD = false;
     bool waitForChoice = false;
     public bool d_finish = false;
-    bool waitForScene = false;
+    public bool waitForScene = false;
     public bool waitForControl = false;
     public bool waitForInGamecontrol = false;
     public bool getControl = false;
-    private bool nextLine = false;
+    public bool nextLine = false;
     bool reward = false;
-    bool waitForPass = false;
+    public bool waitForPass = false;
     public bool showGift = false;
     public double controlTime = 5f;
+    public bool victory = false;
+    public bool wait_event = false;
    
     public GameObject npc;
     public GameObject backGround;
@@ -74,6 +77,7 @@ public class Dialogue : ViewController
     void Start()
     {
         ResKit.Init();
+        
         story = new Story(ink_file.text);
 
         if (npc)
@@ -112,7 +116,7 @@ public class Dialogue : ViewController
 
         SubmitPressed();
         CheckPause();
-        if (GetSubmitPressed() && canContinue && !pauseD && !waitForChoice && !waitForControl && !showGift && !waitForInGamecontrol)
+        if (GetSubmitPressed() && canContinue && !pauseD && !waitForChoice && !waitForControl && !showGift && !waitForInGamecontrol && !waitForPass && !waitForScene)
         {
             StoryUI();
         }
@@ -126,7 +130,7 @@ public class Dialogue : ViewController
         }
         else if (choice == 2)
         {
-            backGround.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("UI/IntroUI/初始界面-背景图");
+            backGround.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>(bgPath);
         }
         else if (choice == 3)
         {
@@ -154,12 +158,14 @@ public class Dialogue : ViewController
             showGift = false;
         }
 
-        if (nextLine == true)
+        if (nextLine == true )
         {
             UIKit.HidePanel<UIHandCard>();
             UIKit.ShowPanel<DialoguePanel>();
             spacePressed = true;
             nextLine = false;
+            GameManager.Instance.PauseGame();
+           
         }
         //if(UIKit.GetPanel<DiceUI.AllDiceUIPanel>()?.finish == true)
         //{
@@ -362,8 +368,6 @@ public class Dialogue : ViewController
 
 
         }
-
-
         else if (!story.canContinue)
         {
             d_finish = true;
@@ -412,12 +416,16 @@ public class Dialogue : ViewController
         
     }
 
-    void WaitForPass()
+    public void WaitforScene()
     {
-        //检测该房间游戏是否通关
-        //如果通关
-        UIKit.ShowPanel<DialoguePanel>();
+        waitForScene = false;
+        nextLine = true;
+    }
+    public void WaitForPass()
+    {
         waitForPass = false;
+        nextLine = true;
+        
     }
     IEnumerator WaitTime()
     {
@@ -486,20 +494,14 @@ public class Dialogue : ViewController
                 case Camera_TAG:
 
                     break;
-                case Wait_TAG:
-                    waitForScene = true;
-                    break;
+               
                 case Control_TAG:
                     waitForControl = true;
                     ShowBG(2);
                     npc.SetActive(true);
                     UIKit.HidePanel<DialoguePanel>();
                     break;
-                case Pass_TAG:
-                    waitForPass = true;
-                    UIKit.HidePanel<DialoguePanel>();
-                    WaitForPass();
-                    break;
+                
                 case Reward_TAG:
                     reward = true;
                     UIKit.OpenPanel<RewardUI.RewardUIPanel>();
@@ -530,11 +532,25 @@ public class Dialogue : ViewController
                     //waitForControl = true;
                     waitForInGamecontrol = true;
                     UIKit.ShowPanel<UIHandCard>();
-                    GameManager.Instance.ResumeCombat();
+                    GameManager.Instance.ResumeGame();
                     UIKit.HidePanel<DialoguePanel>();
+                    GameManager.Instance.ResumeGame();
                     InGameControl();
                     break;
+                case Pass_TAG:
+                    waitForPass = true;
+                    UIKit.ShowPanel<UIHandCard>();
+                    UIKit.HidePanel<DialoguePanel>();
+                    GameManager.Instance.ResumeGame();
+                    break;
+                case Wait_TAG:
+                    waitForScene = true;
+                    UIKit.ShowPanel<UIHandCard>();
+                    UIKit.HidePanel<DialoguePanel>();
+                    GameManager.Instance.ResumeGame();
+                    break;
             }
+
 
         }
     }

@@ -14,6 +14,7 @@ namespace Game
         private PlayerManager playerManager;
         private IInventorySystem inventorySystem;
         private IShopSystem shopSystem;
+        private IHandCardSystem handCardSystem;
 
         // 部分战斗中物品需要使用后选择目标
         public Texture2D markingCursor; // 标记状态鼠标指针
@@ -22,6 +23,10 @@ namespace Game
         public delegate void MarkerFunction(ViewPieceBase piece); // 标记模式下成功标记后所执行的委托类
         public MarkerFunction markerFunction; // 实际委托变量
         public Item markerItem; // 标记模式下所使用的物品
+
+        public int sanCostIncreaseProtection = 0; // 不会为卡牌永久增加混沌值损耗次数
+        public int deathDestroyProtection = 0; // 死面牌不会被摧毁次数
+        public int sanCostProtection = 0; // 生面牌不消耗混沌值次数
 
         public IArchitecture GetArchitecture()
         {
@@ -48,6 +53,7 @@ namespace Game
             playerManager = GameManager.Instance.playerMan;
             inventorySystem = this.GetSystem<IInventorySystem>();
             shopSystem = this.GetSystem<IShopSystem>();
+            handCardSystem = this.GetSystem<IHandCardSystem>();
         }
 
         void Update()
@@ -343,15 +349,66 @@ namespace Game
         {
             Item item = e.item;
             ViewCard viewCard = e.viewCard;
+
             switch (item.data.itemName)
             {
                 case "破碎的古镜":
+                    {
+                        List<ViewCard> handCardList = handCardSystem.GetHandCardList();
+                        List<ViewCard> copyableList = new List<ViewCard>();
+                        foreach (ViewCard card in handCardList)
+                        {
+                            if (card.card.rarity <= RarityEnum.White) copyableList.Add(card);
+                        }
+                        int rand = UnityEngine.Random.Range(0, copyableList.Count);
+                        inventorySystem.SpawnBagCardInBag(copyableList[rand].card);
+                        break;
+                    }
                 case "损坏的古镜":
+                    {
+                        List<ViewCard> handCardList = handCardSystem.GetHandCardList();
+                        List<ViewCard> copyableList = new List<ViewCard>();
+                        foreach(ViewCard card in handCardList)
+                        {
+                            if (card.card.rarity <= RarityEnum.Green) copyableList.Add(card);
+                        }
+                        int rand = UnityEngine.Random.Range(0, copyableList.Count);
+                        inventorySystem.SpawnBagCardInBag(copyableList[rand].card);
+                        break;
+                    }
                 case "破旧的古镜":
+                    {
+                        List<ViewCard> handCardList = handCardSystem.GetHandCardList();
+                        List<ViewCard> copyableList = new List<ViewCard>();
+                        foreach (ViewCard card in handCardList)
+                        {
+                            if (card.card.rarity <= RarityEnum.Blue) copyableList.Add(card);
+                        }
+                        int rand = UnityEngine.Random.Range(0, copyableList.Count);
+                        inventorySystem.SpawnBagCardInBag(copyableList[rand].card);
+                        break;
+                    }
                 case "完整的古镜":
+                    {
+                        List<ViewCard> handCardList = handCardSystem.GetHandCardList();
+                        List<ViewCard> copyableList = new List<ViewCard>();
+                        foreach (ViewCard card in handCardList)
+                        {
+                            if (card.card.rarity <= RarityEnum.Purple) copyableList.Add(card);
+                        }
+                        int rand = UnityEngine.Random.Range(0, copyableList.Count);
+                        inventorySystem.SpawnBagCardInBag(copyableList[rand].card);
+                        break;
+                    }
                 case "华丽的古镜":
-                    inventorySystem.SpawnBagCardInBag(viewCard.card);
-                    break;
+                    {
+                        List<ViewCard> handCardList = handCardSystem.GetHandCardList();
+                        List<ViewCard> copyableList = new List<ViewCard>();
+                        copyableList = handCardList;
+                        int rand = UnityEngine.Random.Range(0, copyableList.Count);
+                        inventorySystem.SpawnBagCardInBag(copyableList[rand].card);
+                        break;
+                    }
                 case "巫术法杖":
                     List<int> canSpawnCard = new List<int>(); // 可以被生成的卡牌列表
                     // 寻找所有的调查员（橙色）牌
@@ -409,12 +466,19 @@ namespace Game
                     StartCoroutine(Emerald_Potion(item.data.volume));
                     break;
                 case "浅紫色药水":
+                    sanCostIncreaseProtection += 1;
+                    break;
                 case "深紫色药水":
+                    sanCostIncreaseProtection += 3;
                     break;
                 case "橙色药水":
+                    deathDestroyProtection += 1;
                     break;
                 case "浅黄色药水":
+                    sanCostProtection += 1;
+                    break;
                 case "深黄色药水":
+                    sanCostProtection += 3;
                     break;
                 case "祈福法杖":
                     if (GameManager.Instance.gameSceneMan.GetCurrentSceneName() == "Combat")

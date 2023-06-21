@@ -89,7 +89,7 @@ namespace Game
         }
 
         // 根据单位的可移动方向寻找所有能到达的格子
-        private static List<BoxGrid> GetNeighbourList(BoxGrid currentBoxGrid, Monster monster, BoxGrid[,] grid2DList, (int, int) targetPos)
+        public static List<BoxGrid> GetNeighbourList(BoxGrid currentBoxGrid, Monster monster, BoxGrid[,] grid2DList, (int, int) targetPos)
         {
             List<BoxGrid> neighbourList = new List<BoxGrid>();
             IMovementSystem movementSystem = GameEntry.Interface.GetSystem<IMovementSystem>();
@@ -103,6 +103,7 @@ namespace Game
                 }
                 
                 // 上面CheckIfMovable会把有棋子的友方格子给否认掉，但格子上的友方棋子可能是调查员（怪物移动的目标），所以我们不想被否掉这个选项
+                // TODO：按照现在的规则应该有这段吗？
                 else if (movementSystem.CalculateNextPosition((currentBoxGrid.row, currentBoxGrid.col), dir).Item1 == targetPos.Item1 &&
                     movementSystem.CalculateNextPosition((currentBoxGrid.row, currentBoxGrid.col), dir).Item2 == targetPos.Item2)
                 {

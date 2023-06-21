@@ -3,22 +3,39 @@ using System.Collections.Generic;
 using UnityEngine;
 using Game;
 using QFramework;
-public class CombatDialogueControl : MonoBehaviour
+using System;
+using UnityEngine.UI;
+using DialogueUI;
+public class CombatDialogueControl : MonoBehaviour, IController, ICanSendEvent
 {
     [SerializeField]
     GameObject m_gameObject;
+    
+   
+    public IArchitecture GetArchitecture()
+    {
+        return GameEntry.Interface;
+    }
+
     // Start is called before the first frame update
     void Start()
     {
-        if(SceneFlow.combatSceneCount == 1)
+   
+        if (SceneFlow.combatSceneCount == 1)
         {
+          
             m_gameObject.SetActive(true);
-            GameManager.Instance.PauseCombat();
+            GameManager.Instance.PauseGame();
             UIKit.HidePanel<UIHandCard>();
-            
-        }else
+           
+            this.RegisterEvent<CombatVictoryEvent>(e => OnCombatVictoryEvent());
+
+        }
+        else
         {
+            ResKit.Init();
             m_gameObject.SetActive(false);
+            this.RegisterEvent<CombatVictoryEvent>(e => OnNormalCombatVictoryEvent());
         }
     }
 
@@ -27,4 +44,21 @@ public class CombatDialogueControl : MonoBehaviour
     {
         
     }
+
+   
+    private void OnCombatVictoryEvent()
+    {
+      
+        m_gameObject.GetComponent<Dialogue>().WaitForPass();
+        UIKit.GetPanel<DialoguePanel>().NPC.GetComponent<Image>().sprite = Resources.Load<Sprite>("UI/NPC/弗朗西斯");
+        GameManager.Instance.PauseGame();
+       
+    }
+    private void OnNormalCombatVictoryEvent()
+    {
+        GameManager.Instance.PauseGame();
+        UIKit.HideAllPanel();
+        UIKit.ShowPanel<RewardUI.RewardUIPanel>();
+    }
+
 }

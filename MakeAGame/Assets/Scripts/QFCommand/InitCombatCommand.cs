@@ -25,6 +25,7 @@ namespace Game
             UIKit.OpenPanel<UIHandCard>();
             UIKit.OpenPanel<UIInventoryQuickSlot>();
             UIKit.OpenPanel<UIAbilityPanel>();
+            UIKit.OpenPanel<UIRelic>();
 
             // 亡灵
             this.SendEvent(new SpawnUndeadEvent { undeadSpawnPositionX = info.undeadSpawnPositionX, 
@@ -59,6 +60,10 @@ namespace Game
             };
             this.SendEvent(refillHandCardEvent);
             
+            // 遗物测试
+            var so = IdToSO.FindRelicSOByID(1);
+            this.GetSystem<IRelicSystem>().AddRelic(so);
+
             // 计时测试
             var updateSystem = this.GetSystem<IUpdateSystem>();
             updateSystem.Reset();

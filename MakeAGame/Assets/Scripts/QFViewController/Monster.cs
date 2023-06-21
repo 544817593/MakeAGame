@@ -7,6 +7,7 @@ using System.Threading;
 using System.Collections;
 using DamageNumbersPro;
 using Unity.VisualScripting;
+using UnityEditor.Search;
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
@@ -135,6 +136,28 @@ namespace Game
             if (currentTarget == null)
                 return (-1, -1);
 
+            // 如果自己处于混乱状态
+            if (listBuffs != null && listBuffs.Contains(BuffType.Confusion)) 
+            {
+                List<DirEnum> dirList = new List<DirEnum>();
+                foreach (DirEnum dir in dirs.Value)
+                {
+                    if (CheckIfMovable(dir, original.Item1, original.Item2))
+                    {
+                        dirList.Add(dir);
+                    }
+                }
+                int rand = UnityEngine.Random.Range(0, dirList.Count);
+                if (dirList.Count != 0)
+                {
+                    return this.GetSystem<IMovementSystem>().CalculateNextPosition(original, dirList[rand]);
+                }
+                else
+                {
+                    return (-1, -1);
+                }               
+            }
+
 
             // A* 寻路
             List<BoxGrid> aStarPath = PathFinding.FindPath(original.Item1, original.Item2,
@@ -230,7 +253,7 @@ namespace Game
 
         public override void Attack()
         {
-            Debug.Log($"monster {this.ToString()} is about to attack");
+            Debug.Log($"monster {this.pieceId.ToString()} is about to attack");
             this.SendEvent<PieceAttackReadyEvent>();
             this.SendCommand<PieceAttackCommand>(new PieceAttackCommand(this));
         }
@@ -241,7 +264,7 @@ namespace Game
 
             hp.Value -= damage;
             Debug.Log($"Monster Hit, damage: {damage} hp: {hp.Value}");
-            MonsterDamageNumer.Spawn(this.Position(), damage);
+            MonsterDamageNumber.Spawn(this.Position(), damage);
             this.SendEvent<PieceHitFinishEvent>(new PieceHitFinishEvent { piece = this });
 
             return hp.Value <= 0;

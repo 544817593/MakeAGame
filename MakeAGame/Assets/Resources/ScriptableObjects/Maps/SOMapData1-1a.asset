@@ -536,7 +536,7 @@ MonoBehaviour:
       Data: 6
     - Name: 
       Entry: 3
-      Data: 1
+      Data: 8
     - Name: 
       Entry: 3
       Data: 1
@@ -710,7 +710,7 @@ MonoBehaviour:
       Data: 6
     - Name: 
       Entry: 3
-      Data: 1
+      Data: 8
     - Name: 
       Entry: 3
       Data: 1
@@ -779,13 +779,10 @@ MonoBehaviour:
       Data: 6
     - Name: 
       Entry: 3
-      Data: 1
+      Data: 8
     - Name: 
       Entry: 3
-      Data: 1
-    - Name: 
-      Entry: 3
-      Data: 6
+      Data: 8
     - Name: 
       Entry: 3
       Data: 6
@@ -860,10 +857,13 @@ MonoBehaviour:
       Data: 6
     - Name: 
       Entry: 3
-      Data: 1
+      Data: 6
     - Name: 
       Entry: 3
-      Data: 1
+      Data: 8
+    - Name: 
+      Entry: 3
+      Data: 8
     - Name: 
       Entry: 3
       Data: 6
@@ -2891,7 +2891,7 @@ MonoBehaviour:
       Data: 2
     - Name: 
       Entry: 3
-      Data: 3
+      Data: 2
     - Name: 
       Entry: 3
       Data: 3
@@ -3122,13 +3122,13 @@ MonoBehaviour:
       Data: 2
     - Name: 
       Entry: 3
-      Data: 3
-    - Name: 
-      Entry: 3
-      Data: 3
-    - Name: 
-      Entry: 3
       Data: 2
+    - Name: 
+      Entry: 3
+      Data: 3
+    - Name: 
+      Entry: 3
+      Data: 3
     - Name: 
       Entry: 3
       Data: 3
@@ -3197,10 +3197,10 @@ MonoBehaviour:
       Data: 3
     - Name: 
       Entry: 3
-      Data: 2
+      Data: 3
     - Name: 
       Entry: 3
-      Data: 2
+      Data: 3
     - Name: 
       Entry: 3
       Data: 3
@@ -3474,3 +3474,5 @@ MonoBehaviour:
   lowerRowEdges: 3
   leftColEdges: 6
   rightColEdges: 6
+  undeadX: 10
+  undeadY: 6

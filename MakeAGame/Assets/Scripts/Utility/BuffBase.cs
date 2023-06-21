@@ -90,7 +90,7 @@ public class BuffTerrianFire : BuffToPiece
     {
         Debug.Log("BuffTerrianFire: start");
         target.listBuffs.Add(BuffType.Terrian_Fire);
-        target.takeDamage((int)(damagePerLevel * curLevel * target.maxHp), TerrainEnum.Fire);
+        target.TakeDamage((int)(damagePerLevel * curLevel * target.maxHp), TerrainEnum.Fire);
     }
 
     public override void OnBuffRefresh()
@@ -136,7 +136,7 @@ public class BuffTerrianFire : BuffToPiece
             Debug.Log($"BuffTerrianFire伤害：{damagePerLevel * curLevel * target.maxHp}, {(int)(damagePerLevel * curLevel * target.maxHp)}");
             // 伤害为0-1之间的时候取1
             int dmg = ((int)(damagePerLevel * curLevel * target.maxHp)) == 0 ? 1 : (int)(damagePerLevel * curLevel * target.maxHp);
-            target.takeDamage(dmg, TerrainEnum.Fire);
+            target.TakeDamage(dmg, TerrainEnum.Fire);
             damageTriggerTime = 0;
         }
     }
@@ -187,7 +187,7 @@ public class BuffTerrianPoison : BuffToPiece
     {
         Debug.Log("BuffTerrianPoison: start");
         target.listBuffs.Add(BuffType.Terrian_Poison);
-        target.takeDamage(damagePerLevel * curLevel, TerrainEnum.Poison);
+        target.TakeDamage(damagePerLevel * curLevel, TerrainEnum.Poison);
     }
 
     public override void OnBuffRefresh()
@@ -231,7 +231,7 @@ public class BuffTerrianPoison : BuffToPiece
         if (damageTriggerTime >= 1)
         {
             Debug.Log($"BuffTerrianPoison伤害：{damagePerLevel * curLevel}");
-            target.takeDamage(damagePerLevel * curLevel, TerrainEnum.Poison);
+            target.TakeDamage(damagePerLevel * curLevel, TerrainEnum.Poison);
             damageTriggerTime = 0;
         }
     }
@@ -335,7 +335,7 @@ public class BuffDrowning : BuffToPiece
     }
     public override void OnBuffStart()
     {
-        target.takeDamage((int) (damagePercent * target.maxHp), TerrainEnum.Water);
+        target.TakeDamage((int) (damagePercent * target.maxHp), TerrainEnum.Water);
     }
 
     public override void OnBuffRefresh()
@@ -349,7 +349,7 @@ public class BuffDrowning : BuffToPiece
         // 每3秒造成1次伤害
         if(timer >= 3) 
         {
-            target.takeDamage((int)(damagePercent * target.maxHp), TerrainEnum.Water);
+            target.TakeDamage((int)(damagePercent * target.maxHp), TerrainEnum.Water);
             timer = 0;
         }
     }
@@ -363,19 +363,18 @@ public class BuffDrowning : BuffToPiece
 
 
 /// <summary>
-/// 若buff目标处于战斗中，atkSpeed减0.3，持续至战斗结束（包括目标死亡的情况）
+/// 使一个战斗中的敌方单位攻速永久-0.3（最低0.1），如果该单位对声音敏感，则在该场战斗中额外-0.3（包括目标死亡的情况）
 /// </summary>
 public class BuffQuackFrog : BuffToPiece
 {
-    private float atkSpdDiff;
-    Monster monster;
-    bool soundSensitive;
+    private float atkSpeedDiff;
+    private bool soundSensitive;
     public BuffQuackFrog(Monster _piece, float _dur, bool _soundSensitive)
     {
         target = _piece;
         duration = _dur;
-        monster = _piece;
         soundSensitive = _soundSensitive;
+        atkSpeedDiff = 0.3f;
     }
 
     public override bool OnBuffCreate()
@@ -383,9 +382,11 @@ public class BuffQuackFrog : BuffToPiece
         // 只对处于战斗中的单位附加buff
         if (!target.inCombat)
         {
+            Debug.Log($"BuffFrog: 不在战斗, {target.transform.position}");
+            //Debug.Log("BuffFrog: 不在战斗");
             return false;
         }
-
+        Debug.Log("BuffFrog: 在战斗");
         return true;
     }
 
@@ -394,15 +395,16 @@ public class BuffQuackFrog : BuffToPiece
         Debug.Log("BuffFrog: start");
         if (soundSensitive)
         {
-            atkSpdDiff = monster.atkSpeed > 0.6f ? 0.6f : monster.atkSpeed;
-            monster.atkSpeed.Value -= atkSpdDiff;
+            Debug.Log($"呱呱蛙攻速减少前：{target.atkSpeed.Value}");
+            target.atkSpeed.Value += atkSpeedDiff + 0.3f;
+            Debug.Log($"呱呱蛙攻速减少后：{target.atkSpeed.Value}");
         }
         else
         {
-            atkSpdDiff = monster.atkSpeed > 0.3f ? 0.3f : monster.atkSpeed;
-            monster.atkSpeed.Value -= atkSpdDiff;
+            Debug.Log($"呱呱蛙攻速减少前：{target.atkSpeed.Value}");
+            target.atkSpeed.Value += atkSpeedDiff;
+            Debug.Log($"呱呱蛙攻速减少后：{target.atkSpeed.Value}");
         }
-        
     }
 
     public override void OnBuffRefresh()
@@ -410,7 +412,6 @@ public class BuffQuackFrog : BuffToPiece
         if (target == null || !target.inCombat)
         {
             Debug.Log("target died or left fight, to remove buff");
-
             // 移除buff
             GameManager.Instance.buffMan.RemoveBuff(this);
         }
@@ -420,9 +421,10 @@ public class BuffQuackFrog : BuffToPiece
     {
         Debug.Log("BuffFrog: remove");
 
-        if (target != null)
+        if (target != null && soundSensitive)
         {
-            monster.atkSpeed.Value += atkSpdDiff;
+            Debug.Log($"呱呱蛙返还移除的0.3攻速");
+            target.atkSpeed.Value -= 0.3f;
         }
     }
 }
@@ -490,17 +492,21 @@ public class BuffConfusion : BuffToPiece
 
     public override bool OnBuffCreate()
     {
+        Debug.Log("BuffConfusion: OnBuffCreate");
         // 心理医生
         if (target.features.Value.Contains(FeatureEnum.Psychologist)) return false;
 
         // 先查找该棋子是否已有该类型buff，若有，不再挂新的，而是叠加时间
         if (target.listBuffs.Contains(BuffType.Confusion))
         {
-            foreach (var buff in GameManager.Instance.buffMan.listBuffs)
+            //Debug.Log("BuffConfusion: Contains(BuffType.Confusion)");
+            foreach (BuffBase buff in GameManager.Instance.buffMan.listBuffs)
             {
+                //Debug.Log($"BuffConfusion: buff is {buff.GetType()}");
                 if (buff is BuffConfusion)
                 {
-                    var pieceBuff = buff as BuffConfusion;
+                    //Debug.Log($"BuffConfusion: 进入buff is BuffConfusion");
+                    BuffConfusion pieceBuff = (BuffConfusion) buff;
                     if (pieceBuff.target == target)
                     {
                         Debug.Log($"BuffConfusion: already exist, add leftTime {pieceBuff.leftTime} + {leftTime}");
@@ -519,12 +525,14 @@ public class BuffConfusion : BuffToPiece
     {
         Debug.Log("BuffConfusion: start");
         target.listBuffs.Add(BuffType.Confusion);
+        // TODO 随机方向移动实现
+        // 写在了怪物寻路和友军移动里
     }
 
     public override void OnBuffRefresh()
     {
         leftTime -= Time.deltaTime;
-        if (leftTime <= 0)
+        if (target == null || leftTime <= 0)
         {
             GameManager.Instance.buffMan.RemoveBuff(this);
         }
@@ -547,14 +555,12 @@ public class BuffConfusion : BuffToPiece
 public class BuffVine : BuffToPiece
 {
     private float moveSpeedDiff;
-    private Monster monster;
 
     public BuffVine(ViewPieceBase _piece, float _dur)
     {
         target = _piece;
         duration = _dur;
         leftTime = duration;
-        monster = _piece as Monster;
     }
 
     public override bool OnBuffCreate() { return true; }
@@ -562,14 +568,16 @@ public class BuffVine : BuffToPiece
     public override void OnBuffStart()
     {
         Debug.Log("BuffVein1: start");
-        moveSpeedDiff = monster.moveSpeed / 2;
-        monster.moveSpeed.Value -= moveSpeedDiff;
+        moveSpeedDiff = target.moveSpeed.Value;
+        Debug.Log($"BuffVein1降速前：{target.moveSpeed.Value}");
+        target.moveSpeed.Value += moveSpeedDiff;
+        Debug.Log($"BuffVein1降速后：{target.moveSpeed.Value}");
     }
 
     public override void OnBuffRefresh()
     {
         leftTime -= Time.deltaTime;
-        if (leftTime <= 0)
+        if (target == null || leftTime <= 0)
         {
             GameManager.Instance.buffMan.RemoveBuff(this);
         }
@@ -579,12 +587,16 @@ public class BuffVine : BuffToPiece
     {
         Debug.Log("BuffVein1 remove");
         if(target != null)
-            monster.atkSpeed.Value += moveSpeedDiff;
+        {
+            Debug.Log($"BuffVein1回复前：{target.moveSpeed.Value}");
+            target.atkSpeed.Value -= moveSpeedDiff;
+            Debug.Log($"BuffVein1回复后：{target.moveSpeed.Value}");
+        }
     }
 }
 
 /// <summary>
-/// 等待三秒BuffVine结束后对格子时间流速降级
+/// 等待duration秒后对格子时间流速降级
 /// </summary>
 public class BuffVine2 : BuffToGrid
 {

@@ -6,6 +6,7 @@ using DG.Tweening;
 using QFramework;
 using Unity.VisualScripting;
 using UnityEngine;
+using static UnityEngine.UI.Image;
 using Random = System.Random;
 
 namespace Game
@@ -18,6 +19,7 @@ namespace Game
 
         public BindableProperty<float> currLife; // 寿命
         public BindableProperty<float> maxLife; // 最大寿命
+        public bool lockLife;
 
         private ItemController itemController = ItemController.Instance;
 
@@ -46,6 +48,7 @@ namespace Game
             isDying = new BindableProperty<bool>(false);
             currLife = new BindableProperty<float>(pieceData.maxLife);
             maxLife = new BindableProperty<float>(pieceData.maxLife);
+            lockLife = false;
         }
 
         private void Start()
@@ -70,18 +73,36 @@ namespace Game
             // 从可选方向中随机一个方向
             int dirIndex = UnityEngine.Random.Range(0, dirs.Value.Count);
             direction = dirs.Value[dirIndex];
-
+            // 替换当前方向的资源图片
+            gameObject.transform.Find("CurMoveDirection").GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>(ViewDirectionWheel.CurDirectionDict[direction]);
         }
 
         private new void Update()
         {
             base.Update();
-            currLife.Value -= Time.deltaTime;
+            if(!lockLife && currLife.Value > 0.001f)
+            {
+                float timeMultiplier = 0;
+                foreach(BoxGrid grid in pieceGrids)
+                {
+                    timeMultiplier += Extensions.ToTimeMultiplierFloat(grid.timeMultiplier.Value);
+                }
+                timeMultiplier /= pieceGrids.Count;
+                currLife.Value -= Time.deltaTime * timeMultiplier;
+            }
         }
 
         private void OnCurrLifeChanged(float e)
         {
             lifeBar.SetBarFillAmount((float)e/maxLife);
+            if (currLife.Value <= 0 && !lockLife)
+            {
+                this.GetSystem<IPieceBattleSystem>().EndBattle(this); // 不确定是不是需要
+                // 再从棋子系统中注销
+                this.GetSystem<IPieceSystem>().RemovePiece(this);
+                // 最后处理自身的死亡
+                Die();
+            }
         }
 
         void InitView()
@@ -132,6 +153,26 @@ namespace Game
         {
             // 发送准备移动事件
             this.SendEvent<PieceMoveReadyEvent>(new PieceMoveReadyEvent() {viewPieceBase = this});
+
+            // 如果自己处于混乱状态
+            if (listBuffs != null && listBuffs.Contains(BuffType.Confusion))
+            {
+                List<DirEnum> dirList = new List<DirEnum>();
+                foreach(DirEnum dir in dirs.Value)
+                {
+                    var tempNextGrids = movementSystem.GetNextGrids(direction, pieceGrids);
+                    if (CheckIfCanMove(tempNextGrids)) dirList.Add(dir);
+                }
+                
+                if (dirList.Count > 0)
+                {
+                    int rand = UnityEngine.Random.Range(0, dirList.Count);
+                    direction = dirList[rand];
+                    // 替换当前方向的资源图片
+                    Sprite curDirection = Resources.Load<Sprite>(ViewDirectionWheel.CurDirectionDict[direction]);
+                    gameObject.transform.Find("CurMoveDirection").GetComponent<SpriteRenderer>().sprite = curDirection;
+                }                         
+            }
 
             var nextGrids = movementSystem.GetNextGrids(direction, pieceGrids);
             bool canMove = CheckIfCanMove(nextGrids);
@@ -261,7 +302,7 @@ namespace Game
 
             hp.Value -= damage;
             Debug.Log($"Piece Hit, damage: {damage} hp: {hp}");
-            MonsterDamageNumer.Spawn(this.Position(), damage);
+            MonsterDamageNumber.Spawn(this.Position(), damage);
             this.SendEvent<PieceHitFinishEvent>(new PieceHitFinishEvent { piece = this });
 
             return hp <= 0;
@@ -295,11 +336,12 @@ namespace Game
             if (e.viewPieceBase.generalId == 0 &&
                 e.viewPieceBase.pieceGrids[0].terrain.Value == (int)TerrainEnum.Door)
             {
+                Debug.LogError("获胜");
                 this.SendEvent<CombatVictoryEvent>(new CombatVictoryEvent());
             }
 
             Debug.Log("ViewPiece receive MoveFinishEvent");
-            // testAction += () => Debug.Log("test");   // 但这里是有效的！如果有什么需要叠加的函数，可以加在这里
+            //testAction += () => Debug.Log("test");   // 但这里是有效的！如果有什么需要叠加的函数，可以加在这里
             // testAction.Invoke();
         }
 

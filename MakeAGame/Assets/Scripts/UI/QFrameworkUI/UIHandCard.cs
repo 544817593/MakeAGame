@@ -59,9 +59,7 @@ namespace Game
 			handCardSystem.ui = this;
 			viewCardsList = handCardSystem.handCardList;
 			focusIndex = -1;
-
-			imgSan = transform.Find("Root/ScrollBaseMask/ScrollBase/BaseBottom/ImgMP").GetComponent<Image>();
-			imgSan.fillAmount = 1f;
+			ImgMP.fillAmount = 1f;
 			SetMaxSanity(0);
 			SetCrtSanityToMaxSan();
 
@@ -97,7 +95,6 @@ namespace Game
 		}
 
 		// todo 混沌值初始化 要取到一个初始数据	// 现在没个地方存玩家数据，暂时由手牌ui直接处理事件
-		private Image imgSan;	// todo 一时半会忘了怎么自动bind，先手动
 		private int maxSan;
 		public int crtSan;
 		public void SetMaxSanity(int san)
@@ -119,7 +116,7 @@ namespace Game
 		public void OnSanChange(int amount)
 		{
 			crtSan = Mathf.Clamp(crtSan + amount, 0, maxSan);
-			imgSan.fillAmount = (float)crtSan / maxSan;
+			ImgMP.fillAmount = (float) crtSan / maxSan;
 		}
 
 

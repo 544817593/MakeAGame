@@ -10,6 +10,7 @@ public static class IdToSO
     // 角色SO列表
     public static SOCharacterInfo[] soCharacterList = Resources.LoadAll<SOCharacterInfo>("ScriptableObjects/LubanCharacter");
     public static SOFeature[] soFeatureList = Resources.LoadAll<SOFeature>("ScriptableObjects/LubanFeature");
+    public static SORelic[] soRelicList = Resources.LoadAll<SORelic>("ScriptableObjects/LubanRelic");
 
     /// <summary>
     /// 通过卡牌id来返还卡牌的SO
@@ -53,6 +54,17 @@ public static class IdToSO
     {
         int index = Random.Range(0, soCharacterList.Length);
         return soCharacterList[index];
+    }
+
+    public static SORelic FindRelicSOByID(int id)
+    {
+        var so = soRelicList.ToList().Find(i => i.relicID == id);
+        if (so == null)
+        {
+            Debug.LogError("unvalid relic id");
+        }
+
+        return so;
     }
 }
 

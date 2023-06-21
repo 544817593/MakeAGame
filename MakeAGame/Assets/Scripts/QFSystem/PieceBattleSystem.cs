@@ -129,9 +129,19 @@ namespace Game
             }
             
             this.SendEvent<PieceAttackStartEvent>(new PieceAttackStartEvent() {viewPieceBase = attacker});
+           
             foreach (var defender in defenders)
             {
                 Debug.DrawLine(attacker.transform.position, defender.transform.position, Color.red, 10f);
+                if (attacker.generalId == 1 && defender.generalId == 9992 || attacker.generalId == 9992 && defender.generalId == 1)
+                {
+                    Dialogue dialogue = GameObject.Find("Dialogue")?.GetComponent<Dialogue>();
+                    if (dialogue != null && dialogue.waitForScene == true)
+                    {
+                        dialogue.WaitforScene();
+                    }
+                }
+                   
             }
 
             // TODO 计算伤害和命中等基础属性

@@ -230,8 +230,12 @@ namespace Game
                     OnUpdate = null;
                     this.SendCommand<SelectMapEndCommand>(new SelectMapEndCommand(this, false));
                     deathFunc = null;
+                    Dialogue dialogue = GameObject.Find("Dialogue")?.GetComponent<Dialogue>();
+                    if (dialogue != null && dialogue.waitForInGamecontrol == true)
+                    { dialogue.getControl = true; }
                     return;
                 }
+                
             }
         }
         
@@ -259,7 +263,11 @@ namespace Game
             }
             // todo 手牌使用后的后续处理（此时已经移出手牌系统并隐藏），如返回背包、销毁...
             Debug.Log("after card use as life card");
+            this.GetSystem<IInventorySystem>().SpawnBagCardInBag(e.viewCard.card);
             
+
+
+
         }
 
         public IArchitecture GetArchitecture()

@@ -29,12 +29,18 @@ namespace Game
             foreach (BoxGrid grid in grids)
             {
                 if (grid.occupation != 0) {
-                    // TODO 生成魔虫 暂无实现函数
-                    //Game.Console.Input($"GenEnemy 魔虫 {grid.row} {grid.col}");
-                    Debug.LogError("TODO 生成魔虫");
+                    Debug.Log("生成魔虫");
+                    this.GetSystem<IPieceSystem>().AddPieceFriend(viewCard.card, grids);
                 }
             }
-            
+
+            // 死面保护判定
+            if (ItemController.Instance.deathDestroyProtection > 0)
+            {
+                this.GetSystem<IInventorySystem>().SpawnBagCardInBag(viewCard.card);
+                ItemController.Instance.deathDestroyProtection -= 1;
+            }
+
             this.GetSystem<IHandCardSystem>().SubCard(viewCard); // 摧毁卡牌
         }
     }

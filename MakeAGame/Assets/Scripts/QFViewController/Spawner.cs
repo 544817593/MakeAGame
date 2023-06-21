@@ -12,6 +12,10 @@ namespace Game
     /// </summary>
     public class Spawner : MonoBehaviour, IController, ICanSendEvent
     {
+        // 战斗场景中持续抽卡的协程
+        private Coroutine drawCardCoroutine;
+        // 战斗场景中怪物持续生成的协程
+        private List<Coroutine> constantSpawnMonsterCoroutine = new List<Coroutine>();
 
         /// <summary>
         /// 获取Architecture 每个IController都要写
@@ -31,8 +35,9 @@ namespace Game
 
             // 监听怪物持续生成事件
             this.RegisterEvent<ConstantSpawnMonsterEvent>(data => 
-            { 
-                StartCoroutine(OnConstantSpawnMonsterEvent(data)); 
+            {
+                Coroutine co = StartCoroutine(OnConstantSpawnMonsterEvent(data));
+                constantSpawnMonsterCoroutine.Add(co);  
             }).UnRegisterWhenGameObjectDestroyed(gameObject);
 
             // 监听创建卡牌事件
@@ -44,7 +49,7 @@ namespace Game
             // 监听持续抽取卡牌事件
             this.RegisterEvent<RefillHandCardEvent>(data =>
             {
-                OnHandCardRefillEvent(data);
+                drawCardCoroutine = StartCoroutine(OnHandCardRefillEvent(data));
             }).UnRegisterWhenGameObjectDestroyed(gameObject);
 
             // 监听亡灵生成事件
@@ -52,6 +57,47 @@ namespace Game
             {
                 SpawnUndead(data.undeadSpawnPositionX, data.undeadSpawnPositionY);
             }).UnRegisterWhenGameObjectDestroyed(gameObject);
+
+            // 监听战斗胜利/失败事件
+            this.RegisterEvent<CombatDefeatEvent>((data) => 
+            {
+                StopCoroutine(drawCardCoroutine);
+                foreach (Coroutine co in constantSpawnMonsterCoroutine)
+                {
+                    StopCoroutine(co);
+                }
+                constantSpawnMonsterCoroutine.Clear();
+            }
+            ).UnRegisterWhenGameObjectDestroyed(gameObject);
+
+            this.RegisterEvent<CombatVictoryEvent>((data) =>
+            {
+                StopCoroutine(drawCardCoroutine);
+                foreach (Coroutine co in constantSpawnMonsterCoroutine)
+                {
+                    StopCoroutine(co);
+                }
+                constantSpawnMonsterCoroutine.Clear();
+            }
+            ).UnRegisterWhenGameObjectDestroyed(gameObject);
+
+            // 监听切换场景事件
+            this.RegisterEvent<UnloadSceneEvent>((data) =>
+            {
+                if(data.sceneName == "Combat")
+                {
+                    if (drawCardCoroutine != null) StopCoroutine(drawCardCoroutine);
+                    if (constantSpawnMonsterCoroutine != null)
+                    {
+                        foreach (Coroutine co in constantSpawnMonsterCoroutine)
+                        {
+                            StopCoroutine(co);
+                        }
+                        constantSpawnMonsterCoroutine.Clear();
+                    }
+                }
+            }
+            ).UnRegisterWhenGameObjectDestroyed(gameObject);
 
         }
 
@@ -220,5 +266,6 @@ namespace Game
             (int, int) temp2 = (data.row + somb.height - 1, data.col + somb.width - 1);
             monster.botRightGridPos = new BindableProperty<(int, int)>(temp2);
         }
+       
     }
 }

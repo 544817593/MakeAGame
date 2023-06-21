@@ -5,12 +5,12 @@ using UnityEngine;
 namespace Game
 {
     /// <summary>
-    /// 阿比盖尔  对当前位置以及其上下左右范围为1的格子造成1点伤害，获得一张阿比盖尔。
+    /// 阿比盖尔  对当前位置以及其上下左右范围为1的格子造成10点伤害，获得一张阿比盖尔。
     /// 传入选择的格子(传入最多5个格子，要在传入前选择好，如果上下左右包含了战斗区域外格子就不要传这些格子)，造成伤害，摧毁卡牌，背包加入卡牌。
     /// </summary>
     public class Abigal_Miller: DeathFuncBase
     {
-        private int damage = 1;
+        private int damage = 10;
         
         public Abigal_Miller()
         {
@@ -43,13 +43,22 @@ namespace Game
                 if (pieceSystem.IsPieceMonster(grid.occupation))
                 {
                     Monster monster = pieceSystem.getMonsterById(grid.occupation);
-                    monster.takeDamage(damage);
+                    monster.TakeDamage(damage);
                 }
+            }
+
+            // 死面保护判定
+            if (ItemController.Instance.deathDestroyProtection > 0)
+            {
+                this.GetSystem<IInventorySystem>().SpawnBagCardInBag(viewCard.card);
+                ItemController.Instance.deathDestroyProtection -= 1;
             }
 
             this.GetSystem<IInventorySystem>().SpawnBagCardInBag(viewCard.card); // 加入背包
             this.GetSystem<IHandCardSystem>().SubCard(viewCard); // 摧毁卡牌
-            
+
+
+
         }
     }
 }

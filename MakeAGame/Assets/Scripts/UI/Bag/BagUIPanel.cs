@@ -44,7 +44,8 @@ namespace BagUI
 			{
 				mListSlotPosition.Add(cardPos);
 			}
-			
+			BagUIChange.ChangeBagPanel(this, Card);
+			BagUIChange.ChangeBagPanel(this, Item);
 			RefreshLayout();
 			pageChange();
 

@@ -2,8 +2,10 @@ using System.Collections;
 using UnityEngine.UI;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using QFramework;
+using Game;
 
-public class GameSceneManager : MonoBehaviour
+public class GameSceneManager : MonoBehaviour, ICanSendEvent, ICanGetSystem, ICanSendCommand
 {
     private static GameSceneManager instance; // 场景管理器实例
     public Slider slider; // 进度条
@@ -68,7 +70,6 @@ public class GameSceneManager : MonoBehaviour
         }
         else
         {
-            //yield return new WaitForSeconds(0.5f);           
             AsyncOperation operation = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
             operation.allowSceneActivation = false;
             while (!operation.isDone)
@@ -94,13 +95,18 @@ public class GameSceneManager : MonoBehaviour
     /// <returns></returns>
     public IEnumerator UnloadScene(string sceneName)
     {
+        // 发送卸载场景事件，需要监听的系统可以接收并处理（比如说Spawner收到后会关掉抽牌）
+        this.SendEvent(new UnloadSceneEvent { sceneName = sceneName });
         // 退出局内场景时的处理
-        //if (sceneName == "Combat")
-        //{
-        //    // 停止抽卡协程
-        //}
-
-        SceneManager.UnloadSceneAsync(sceneName);
+        if (sceneName == "Combat")
+        {
+            yield return SceneManager.UnloadSceneAsync(sceneName);
+            UIKit.HideAllPanel();
+        }
+        else
+        {
+            yield return SceneManager.UnloadSceneAsync(sceneName);
+        }
         yield return null;
     }
 
@@ -129,5 +135,10 @@ public class GameSceneManager : MonoBehaviour
     public string GetCurrentSceneName()
     {
         return currentSceneName;
+    }
+
+    public IArchitecture GetArchitecture()
+    {
+        return GameEntry.Interface;
     }
 }

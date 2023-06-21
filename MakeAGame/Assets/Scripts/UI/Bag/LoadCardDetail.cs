@@ -12,28 +12,41 @@ public class LoadCardDetail : MonoBehaviour
     // Start is called before the first frame update
     RarityEnum rarity;
     private BagUIPanel m_BagUI;
+    string result;
+    string feature;
     void Start()
     {
         m_BagUI = UIKit.GetPanel<BagUIPanel>();
         rarity = 0;
     }
-    public void ShowDetail(Card card)
+    public void ShowDetail(Card Vcard)
     {
-        rarity = card.rarity;
+        result = null;
+        feature = null;
+        rarity = Vcard.rarity;
         m_BagUI.Image.sprite = Game.Extensions.GetRaritySprite(rarity) ;
           
-        m_BagUI.CharName.text = card.charaName;
+        m_BagUI.CharName.text = Vcard.charaName.ToString();
         //m_BagUI.SizeData.text = card..pieceSize.ToString();
-        m_BagUI.MoveDirData.text = card.moveDirections.ToString();
-        m_BagUI.MoveSpeedData.text = card.moveSpd.ToString();
-        m_BagUI.HPData.text = card.hp.ToString();
-        m_BagUI.AtkDmgData.text = card.so.attack.ToString();
-        m_BagUI.AtkSpeedData.text = card.so.attackSpd.ToString();
+        foreach(DirEnum m_d in Vcard.moveDirections)
+        {
+            result += m_d.ToString() + " ";
+        }
+        m_BagUI.MoveDirData.text = result;
+       
+        
+        m_BagUI.MoveSpeedData.text = Vcard.moveSpd.ToString();
+        m_BagUI.HPData.text = Vcard.hp.ToString();
+        m_BagUI.AtkDmgData.text = Vcard.damage.ToString();
+        m_BagUI.AtkSpeedData.text = Vcard.atkSpd.ToString();
         //_cdTimeT.text = card.characterInfo.cdTime.ToString();
-        m_BagUI.AtkRangeData.text = card.damage.ToString();
-        m_BagUI.DeathDescTextData.text = card.deathFuncDesc;
-
-        m_BagUI.AddtionalPropertyData.text = card.specialFeature.ToString();
+        m_BagUI.AtkRangeData.text = Vcard.atkRange.ToString();
+        m_BagUI.DeathDescTextData.text = Vcard.deathFuncDesc.ToString();
+        foreach (FeatureEnum m_f in Vcard.features)
+        {
+            feature += m_f.ToString() + " ";
+        }
+        m_BagUI.AddtionalPropertyData.text = feature;
 
 
 

@@ -25,8 +25,8 @@ public class SkipIntro : MonoBehaviour
             }
         }
 
-        StartCoroutine(GameManager.Instance.gameSceneMan.LoadScene("Combat", false));
-        StartCoroutine(GameManager.Instance.gameSceneMan.UnloadScene("Main"));
+        SceneFlow.Pre_Room = "Main";
+        GameObject.Find("GameSceneManager")?.transform.GetComponent<Game.SceneFlow>().LoadRoom();
 
     }
 
