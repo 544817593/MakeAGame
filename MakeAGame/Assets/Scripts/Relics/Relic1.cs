@@ -13,7 +13,7 @@ namespace Game
         
         public override void Activate(IRelicSystem sys)
         {
-            sys.RegisterRelicEvent<RoomCombatEndEvent>(this, TakeEffect);
+            sys.RegisterRelicEvent<CombatVictoryEvent>(this, TakeEffect);
         }
 
         protected override void TakeEffect(object obj)
