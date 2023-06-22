@@ -147,6 +147,17 @@ namespace Game
             return iconFileName;
         }
 
+        private const string RelicIconResFolder = "Sprites/Relics";
+        public static Sprite GetRelicSpriteByID(int id)
+        {
+            string spriteName = Extensions.GetFileWithTail(RelicIconResFolder, $"{id}", "png");
+            if (string.IsNullOrEmpty(spriteName))
+            {
+                return null;
+            }
+            return Resources.Load<Sprite>($@"{RelicIconResFolder}/{spriteName}");
+        }
+
         public static string GetDeathFuncTypeName(int charaID)
         {
             return IdToSO.FindCardSOByID(charaID).deathFuncName;
