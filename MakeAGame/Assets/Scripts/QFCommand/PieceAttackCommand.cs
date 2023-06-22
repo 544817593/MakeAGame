@@ -36,7 +36,8 @@ namespace Game
                     boxgrids = defender.pieceGrids
                 };
                 this.SendEvent<SpecialitiesDefendCheckEvent>(defEvent);
-
+                // 攻击棋子可能需要转向
+                attacker.PieceFlip(defender);
                 bool isDead = defender.Hit(damage, attacker);
 
                 if (isDead)

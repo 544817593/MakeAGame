@@ -332,6 +332,26 @@ namespace Game
 
         }
 
+        /// <summary>
+        /// 攻击时可能需要旋转棋子预设体的朝向
+        /// </summary>
+        /// <param name="defender">挨打棋子</param>
+        public void PieceFlip(ViewPieceBase defender)
+        {
+            if ((isFacingRight && defender.pieceGrids[0].col < pieceGrids[0].col) ||
+                (!isFacingRight && defender.pieceGrids[0].col > pieceGrids[0].col))
+            {
+                Vector3 currentEulerAngles = pieceAnimator.transform.eulerAngles;
+                Vector3 newEulerAngles = new Vector3(
+                    currentEulerAngles.x,
+                    (currentEulerAngles.y + 180) % 360,
+                    currentEulerAngles.z
+                );
+                pieceAnimator.transform.rotation = Quaternion.Euler(newEulerAngles);
+                isFacingRight = !isFacingRight;
+            }
+        }
+
         protected virtual void OnMoveReadyEvent(PieceMoveReadyEvent e)
         {
 
