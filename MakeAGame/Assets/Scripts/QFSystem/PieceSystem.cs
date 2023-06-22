@@ -49,6 +49,7 @@ namespace Game
         private ViewPiece lastSpawnedFriend;
         private ViewPiece lastSpawnedInvestigator;
         private Monster lastSpawnedMonster;
+        private bool CheckControl = false;
 
         protected override void OnInit()
         {
@@ -165,12 +166,11 @@ namespace Game
             var pieceScreenPos = Camera.main.WorldToScreenPoint(viewPB.transform.position);
             viewDirectionWheel.gameObject.transform.localPosition = Extensions.ScreenToUIPos(pieceScreenPos);
             viewDirectionWheel.gameObject.SetActive(true);
-
             if (viewPiece.card.charaName == "弗朗西斯·维兰德·瑟斯顿")
             {
-                Dialogue dialogue = GameObject.Find("Dialogue")?.GetComponent<Dialogue>();
-                if (dialogue != null) dialogue.getControl = true;
+                CheckControl = true;
             }
+            else { CheckControl = false; }
         }
         
         void CheckDirectionWheelExist()
@@ -208,6 +208,20 @@ namespace Game
             viewDirectionWheel.gameObject.SetActive(false);
             viewDirectionWheel.crtDirection = DirEnum.None;
             crtSelectedPiece = null;
+           
+            Dialogue dialogue = GameObject.Find("Dialogue")?.GetComponent<Dialogue>();
+            if (dialogue != null)
+            {
+                if (CheckControl == true)
+                {
+                    dialogue.getControl = true;
+                }
+                else
+                {
+                    dialogue.getControl = false;
+                }
+                dialogue.InGameControl();
+            }
         }
 
         public int GetPieceDist(ViewPieceBase vpb1, ViewPieceBase vpb2)

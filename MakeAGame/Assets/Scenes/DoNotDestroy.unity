@@ -196,6 +196,7 @@ GameObject:
   - component: {fileID: 409175261}
   - component: {fileID: 409175260}
   - component: {fileID: 409175262}
+  - component: {fileID: 409175263}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -219,6 +220,7 @@ MonoBehaviour:
   playerMan: {fileID: 409175261}
   gameSceneMan: {fileID: 131577600}
   buffMan: {fileID: 409175260}
+  soundMan: {fileID: 409175263}
 --- !u!4 &409175259
 Transform:
   m_ObjectHideFlags: 0
@@ -267,6 +269,29 @@ AudioListener:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 409175257}
   m_Enabled: 1
+--- !u!114 &409175263
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 409175257}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 44dca8450ef9a034ebc694829cb7179e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hoverSound: {fileID: 8300000, guid: 4f9dc589a3b522c45855287f1eb93efb, type: 3}
+  clickSound: {fileID: 8300000, guid: ef22665e53f3978448535fcdb996ed75, type: 3}
+  click_Dialogue: {fileID: 8300000, guid: 9b46ceec1c93b814591451c43262245e, type: 3}
+  add_sound: {fileID: 8300000, guid: f05f0152f8e3a4e4ca9ced03cda1a08a, type: 3}
+  minus_sound: {fileID: 8300000, guid: ab773e44b046f9b449f66da6ef01b489, type: 3}
+  pack_open_sound: {fileID: 8300000, guid: 322e79517d3cdbb429f69a179ecfb8be, type: 3}
+  hover_Zoom: {fileID: 8300000, guid: 19057c8424312ff4487cf39496c239d8, type: 3}
+  flip_card:
+  - {fileID: 8300000, guid: 0e3e6b7b1bd9ffe418b5b55a812a8fad, type: 3}
+  - {fileID: 8300000, guid: 77a0fbbf88a5e5744abdd57c52f64496, type: 3}
+  random_audio: {fileID: 0}
 --- !u!1 &932614664
 GameObject:
   m_ObjectHideFlags: 0
@@ -285,7 +310,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!81 &932614665
 AudioListener:
   m_ObjectHideFlags: 0

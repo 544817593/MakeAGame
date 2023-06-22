@@ -35,6 +35,7 @@ namespace PackOpen
 		/// </summary>
 		public void ShowNewCard()
 		{
+			GameManager.Instance.soundMan.Play_Flip();
 			int newCardId ;
 			
 			if (m_ui.blueSecure ==true)

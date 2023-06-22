@@ -66,7 +66,7 @@ public class Dialogue : ViewController
     bool reward = false;
     public bool waitForPass = false;
     public bool showGift = false;
-    public double controlTime = 5f;
+  
     public bool victory = false;
     public bool wait_event = false;
    
@@ -118,6 +118,7 @@ public class Dialogue : ViewController
         CheckPause();
         if (GetSubmitPressed() && canContinue && !pauseD && !waitForChoice && !waitForControl && !showGift && !waitForInGamecontrol && !waitForPass && !waitForScene)
         {
+            GameManager.Instance.soundMan.Play_Click_Dialogue();
             StoryUI();
         }
        
@@ -405,12 +406,23 @@ public class Dialogue : ViewController
 
     }
 
-    void InGameControl()
+   public void InGameControl()
     {
         if (waitForInGamecontrol)
-        {    
-                StartCoroutine(WaitTime());
-                getControl = false;           
+        {
+            if (getControl)
+            {
+                waitForInGamecontrol = false;
+                nextLine = true;
+                story.variablesState["CheckControl"] = true;
+            }
+            else if (!getControl)
+            {
+                waitForInGamecontrol = false;
+                nextLine = true;
+                story.variablesState["CheckControl"] = false;
+            }
+            getControl = false;           
         }
 
         
@@ -427,24 +439,7 @@ public class Dialogue : ViewController
         nextLine = true;
         
     }
-    IEnumerator WaitTime()
-    {
-        
-        yield return new WaitForSeconds(5f);
-        if (getControl)
-        {
-            waitForInGamecontrol = false;
-            nextLine = true;
-            story.variablesState["CheckControl"] = true;
-        }
-        else if (!getControl)
-        {
-            waitForInGamecontrol = false;
-            nextLine = true;
-            story.variablesState["CheckControl"] = false;
-        }
-        
-    }
+   
     void HandleTags(List<string> current_Tag)
     {
         foreach (string tag in current_Tag)
@@ -531,23 +526,25 @@ public class Dialogue : ViewController
                 case ControlInGame_TAG:
                     //waitForControl = true;
                     waitForInGamecontrol = true;
-                    UIKit.ShowPanel<UIHandCard>();
                     GameManager.Instance.ResumeGame();
+                    UIKit.ShowPanel<UIHandCard>();                
                     UIKit.HidePanel<DialoguePanel>();
-                    GameManager.Instance.ResumeGame();
-                    InGameControl();
+                   
+                   // InGameControl();
                     break;
                 case Pass_TAG:
                     waitForPass = true;
+                    GameManager.Instance.ResumeGame();
                     UIKit.ShowPanel<UIHandCard>();
                     UIKit.HidePanel<DialoguePanel>();
-                    GameManager.Instance.ResumeGame();
+                   
                     break;
                 case Wait_TAG:
                     waitForScene = true;
+                    GameManager.Instance.ResumeGame();
                     UIKit.ShowPanel<UIHandCard>();
                     UIKit.HidePanel<DialoguePanel>();
-                    GameManager.Instance.ResumeGame();
+                   
                     break;
             }
 
