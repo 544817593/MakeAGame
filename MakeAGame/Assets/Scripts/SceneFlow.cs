@@ -59,8 +59,13 @@ namespace Game
             StartCoroutine(GameManager.Instance.gameSceneMan.LoadScene(m_room.ToString(), false));
             StartCoroutine(GameManager.Instance.gameSceneMan.UnloadScene(Pre_Room));
             
-            Pre_Room = m_room.ToString();
+            // unload战斗房，视为结束战斗
+            if (Pre_Room == "Combat")
+            {
+                GameEntry.Interface.SendEvent<RoomCombatEndEvent>();   
+            }
             
+            Pre_Room = m_room.ToString();
         }    
     }
 }

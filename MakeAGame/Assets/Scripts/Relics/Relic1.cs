@@ -1,3 +1,5 @@
+using UnityEngine;
+
 namespace Game
 {
     // 蛊器
@@ -16,6 +18,8 @@ namespace Game
 
         protected override void TakeEffect(object obj)
         {
+            int crtMaxSan = PlayerManager.Instance.player.GetMaxSan();
+            Debug.Log($"Relic1 take effect: maxSan {crtMaxSan} + {sanAmount}");
             PlayerManager.Instance.player.AddMaxSan((int)sanAmount);
         }
     }
