@@ -27,3 +27,4 @@ MonoBehaviour:
   properties: 
   dirs: 04000000020000000300000001000000
   anim: {fileID: 685128172593742579, guid: 7925d004f510bf54dbb243f958dfa226, type: 3}
+  attackAnim: {fileID: 2631897306848492984, guid: 2c66ea8023323374f8de8305880d92bc, type: 3}

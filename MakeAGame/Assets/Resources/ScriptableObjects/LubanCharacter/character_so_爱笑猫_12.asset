@@ -35,6 +35,7 @@ MonoBehaviour:
   attackRange: 1
   life: 999
   anim: {fileID: 957386048066178094, guid: 9c0751bb44fdc5644963dc980d0b507f, type: 3}
+  attackAnim: {fileID: 1145642090740680389, guid: 26fc95fcb8eb33c4f9007855cee425b8, type: 3}
   sanCostBonus:
     stat: 6
     multiple: -0.1
