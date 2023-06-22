@@ -50,6 +50,7 @@ namespace PackOpen
 
 			Pack.BtnOpen.onClick.AddListener(() => 
 			{
+				GameManager.Instance.soundMan.Play_Open_pack();
 				OpenPack();
 			});
 

@@ -174,7 +174,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hoverSound: {fileID: 8300000, guid: 567ea9f35e7c5ab47b0e91057bbd8b7a, type: 3}
-  clickSound: {fileID: 8300000, guid: 9b46ceec1c93b814591451c43262245e, type: 3}
+  clickSound: {fileID: 8300000, guid: ef22665e53f3978448535fcdb996ed75, type: 3}
 --- !u!1 &1080642687
 GameObject:
   m_ObjectHideFlags: 0
@@ -408,7 +408,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hoverSound: {fileID: 8300000, guid: 567ea9f35e7c5ab47b0e91057bbd8b7a, type: 3}
-  clickSound: {fileID: 8300000, guid: 9b46ceec1c93b814591451c43262245e, type: 3}
+  clickSound: {fileID: 8300000, guid: ef22665e53f3978448535fcdb996ed75, type: 3}
 --- !u!1 &1753047592
 GameObject:
   m_ObjectHideFlags: 0
@@ -583,7 +583,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hoverSound: {fileID: 8300000, guid: 567ea9f35e7c5ab47b0e91057bbd8b7a, type: 3}
-  clickSound: {fileID: 8300000, guid: 9b46ceec1c93b814591451c43262245e, type: 3}
+  clickSound: {fileID: 8300000, guid: ef22665e53f3978448535fcdb996ed75, type: 3}
 --- !u!1 &1843415272
 GameObject:
   m_ObjectHideFlags: 0
@@ -758,7 +758,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hoverSound: {fileID: 8300000, guid: 567ea9f35e7c5ab47b0e91057bbd8b7a, type: 3}
-  clickSound: {fileID: 8300000, guid: 9b46ceec1c93b814591451c43262245e, type: 3}
+  clickSound: {fileID: 8300000, guid: ef22665e53f3978448535fcdb996ed75, type: 3}
 --- !u!1 &1844979099
 GameObject:
   m_ObjectHideFlags: 0
@@ -995,7 +995,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hoverSound: {fileID: 8300000, guid: 567ea9f35e7c5ab47b0e91057bbd8b7a, type: 3}
-  clickSound: {fileID: 8300000, guid: 9b46ceec1c93b814591451c43262245e, type: 3}
+  clickSound: {fileID: 8300000, guid: ef22665e53f3978448535fcdb996ed75, type: 3}
 --- !u!1 &157531474400603669
 GameObject:
   m_ObjectHideFlags: 0
@@ -1337,7 +1337,6 @@ GameObject:
   - component: {fileID: 3497092348648990454}
   - component: {fileID: 7034065971882785383}
   - component: {fileID: 6481479482472946586}
-  - component: {fileID: 6481479482472946585}
   m_Layer: 0
   m_Name: DialogueBg
   m_TagString: Untagged
@@ -1445,20 +1444,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1908.543, y: 352.33417}
   m_EdgeRadius: 0
---- !u!114 &6481479482472946585
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2097820243694457565}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d8cac0a88f2d87c428511e43079e8ab3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hoverSound: {fileID: 0}
-  clickSound: {fileID: 8300000, guid: 9b46ceec1c93b814591451c43262245e, type: 3}
 --- !u!1 &3521875404260234517
 GameObject:
   m_ObjectHideFlags: 0

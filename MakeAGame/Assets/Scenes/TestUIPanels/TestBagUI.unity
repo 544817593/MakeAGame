@@ -899,7 +899,17 @@ PrefabInstance:
       propertyPath: m_Name
       value: BagUIPanel
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 8322985710730916213, guid: 1ef17e3a36c55d243bb301b6d54414fd, type: 3}
+    - {fileID: 1535455737606632882, guid: 1ef17e3a36c55d243bb301b6d54414fd, type: 3}
+    - {fileID: 5359414094739548569, guid: 1ef17e3a36c55d243bb301b6d54414fd, type: 3}
+    - {fileID: 6498180276888708789, guid: 1ef17e3a36c55d243bb301b6d54414fd, type: 3}
+    - {fileID: 2650642945412318713, guid: 1ef17e3a36c55d243bb301b6d54414fd, type: 3}
+    - {fileID: 1261267445111123531, guid: 1ef17e3a36c55d243bb301b6d54414fd, type: 3}
+    - {fileID: 4322834128243888248, guid: 1ef17e3a36c55d243bb301b6d54414fd, type: 3}
+    - {fileID: 7683118416211128016, guid: 1ef17e3a36c55d243bb301b6d54414fd, type: 3}
+    - {fileID: 7886028007128174560, guid: 1ef17e3a36c55d243bb301b6d54414fd, type: 3}
+    - {fileID: 5258849727664950465, guid: 1ef17e3a36c55d243bb301b6d54414fd, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 1ef17e3a36c55d243bb301b6d54414fd, type: 3}
 --- !u!224 &6826149167309031565 stripped
 RectTransform:
