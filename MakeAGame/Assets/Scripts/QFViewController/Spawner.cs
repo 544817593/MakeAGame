@@ -179,11 +179,11 @@ namespace Game
             monster.collider2d = monster.transform.Find("Root/SpritePiece").GetComponent<BoxCollider2D>();
             
             //动画部分
-            GameObject animGO = monster.data.GetChildAnim();
+            GameObject animGO = monster.data.GetAnim();
             if (animGO != null)
             {
                 GameObject monsterAnim = Instantiate(animGO);
-                piece.GetComponent<Monster>().animator = monsterAnim.GetComponent<Animator>();
+                piece.GetComponent<Monster>().pieceAnimator = monsterAnim.GetComponent<Animator>();
                 monsterAnim.transform.SetParent(piece.transform);
                 monsterAnim.transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
                 monsterAnim.transform.localPosition = new Vector3(0, 0.25f, -0.25f); // 确保不会被棋盘遮住

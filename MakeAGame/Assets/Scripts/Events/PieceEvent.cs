@@ -49,7 +49,7 @@ namespace Game
     
     public class PieceHitReadyEvent // 即将受到攻击
     {
-        
+        public ViewPieceBase piece;
     }
     
     public class PieceHitFinishEvent    // 受击处理完毕

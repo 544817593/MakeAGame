@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using QFramework;
 using UnityEngine;
@@ -35,8 +36,9 @@ namespace Game
                     boxgrids = defender.pieceGrids
                 };
                 this.SendEvent<SpecialitiesDefendCheckEvent>(defEvent);
-                
-                bool isDead = defender.Hit(damage);
+
+                bool isDead = defender.Hit(damage, attacker);
+
                 if (isDead)
                 {
                     toDiePieces.Add(defender);

@@ -193,7 +193,7 @@ namespace Game
             else
             {
                 var newDirection = viewDirectionWheel.crtDirection;
-                if (crtSelectedPiece.animator != null)
+                if (crtSelectedPiece.pieceAnimator != null)
                 {
                     crtSelectedPiece.PieceFlip(newDirection);
                 }

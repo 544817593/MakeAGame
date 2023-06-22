@@ -39,7 +39,7 @@ namespace Game
         public Action<PieceAttackEndEvent> OnPieceAttackEnd;
         public Action<PieceUnderAttackEvent> OnPieceUnderAttack;
 
-        public Animator animator; // 动画组件
+        public Animator pieceAnimator; // 动画组件
         protected Coroutine movementCoroutine; // 移动协程
         public bool isFacingRight = true; // 棋子目前预设体是否朝向右侧
 
@@ -229,9 +229,9 @@ namespace Game
                 yield return null;
             }
 
-            if (animator != null)
+            if (pieceAnimator != null)
             {
-                animator.SetBool("isMove", false);
+                pieceAnimator.SetBool("isMove", false);
             }
 
             movementCoroutine = null;
@@ -251,7 +251,7 @@ namespace Game
         }
 
         // 受到攻击，返回是否死亡
-        public virtual bool Hit(int damage)
+        public virtual bool Hit(int damage, ViewPieceBase attacker)
         {
             // 收到攻击数据...
             // 进行各种效果计算...
@@ -320,13 +320,13 @@ namespace Game
             if (isFacingRight && Extensions.leftDirs.Contains(newDir) ||
                 !isFacingRight && Extensions.rightDirs.Contains(newDir))
             {
-                Vector3 currentEulerAngles = animator.transform.eulerAngles;
+                Vector3 currentEulerAngles = pieceAnimator.transform.eulerAngles;
                 Vector3 newEulerAngles = new Vector3(
                     currentEulerAngles.x,
                     (currentEulerAngles.y + 180) % 360,
                     currentEulerAngles.z
                 );
-                animator.transform.rotation = Quaternion.Euler(newEulerAngles);
+                pieceAnimator.transform.rotation = Quaternion.Euler(newEulerAngles);
                 isFacingRight = !isFacingRight;
             }
 
@@ -371,6 +371,38 @@ namespace Game
         public void SetTouchAreaEnable(bool isEnable)
         {
             
+        }
+
+        /// <summary>
+        /// 以在挨打方头上播放标记动画的形式展示攻击
+        /// </summary>
+        /// <param name="animationInstance"></param>
+        /// <returns></returns>
+        protected IEnumerator PlayAttackAnimByMarking(GameObject animationInstance)
+        {
+            yield return new WaitForSeconds(0.2f);
+            animationInstance.transform.localScale = new Vector3(0.2f, 0.2f, 0.2f);
+            animationInstance.transform.localPosition = new Vector3(-0.5f, 2, 0);
+
+            // 等待动画播放完毕
+            yield return new WaitForSeconds(animationInstance.GetComponentInChildren<Animator>()
+                .runtimeAnimatorController.animationClips[0].length);
+
+            // 销毁实例化的预制体
+            GameObject.Destroy(animationInstance);
+        }
+
+        /// <summary>
+        /// 以播放攻击方自身攻击动画的形式展示攻击
+        /// </summary>
+        /// <param name="animationInstance"></param>
+        /// <returns></returns>
+        protected IEnumerator PlayAttackAnimByAction(ViewPieceBase attacker)
+        {
+            attacker.pieceAnimator?.SetBool("isAttack", true);
+            yield return new WaitForSeconds(attacker.pieceAnimator.GetCurrentAnimatorStateInfo(0).length);
+            attacker.pieceAnimator?.SetBool("isAttack", false);
+            yield return null;
         }
 
         public IArchitecture GetArchitecture()

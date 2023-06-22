@@ -237,9 +237,9 @@ namespace Game
             var nextPos = GetGridsCenterPos();
 
             // 如果有动画，则播放动画并启动移动协程，否则直接更改怪物位置
-            if (animator != null)
+            if (pieceAnimator != null)
             {
-                animator.SetBool("isMove", true);
+                pieceAnimator.SetBool("isMove", true);
                 movementCoroutine = StartCoroutine(MoveToTarget(nextPos));
             }
             else
@@ -258,13 +258,34 @@ namespace Game
             this.SendCommand<PieceAttackCommand>(new PieceAttackCommand(this));
         }
 
-        public override bool Hit(int damage)
+        public override bool Hit(int damage, ViewPieceBase attacker)
         {
-            this.SendEvent<PieceHitReadyEvent>();
+            this.SendEvent<PieceHitReadyEvent>(new PieceHitReadyEvent { piece = this });
 
             hp.Value -= damage;
             Debug.Log($"Monster Hit, damage: {damage} hp: {hp.Value}");
             MonsterDamageNumber.Spawn(this.Position(), damage);
+            // 播放受击动画
+            bool foundAttackAnim = false;
+            GameObject anim = IdToSO.FindCardSOByID(attacker.generalId)?.GetAttackAnim();
+            if (anim != null)
+            {               
+                StartCoroutine(PlayAttackAnimByMarking(GameObject.Instantiate(anim, this.transform)));
+                foundAttackAnim = true;
+            }           
+            foreach(AnimatorControllerParameter parameter in attacker.pieceAnimator.parameters)
+            {
+                if (parameter.name == "isAttack")
+                {
+                    StartCoroutine(PlayAttackAnimByAction(attacker));
+                    foundAttackAnim = true;
+                    break;
+                }
+            }
+            if (!foundAttackAnim)
+            Debug.LogError("Attack animation for piece " + attacker.generalId + " was not found"); 
+            
+            
             this.SendEvent<PieceHitFinishEvent>(new PieceHitFinishEvent { piece = this });
 
             return hp.Value <= 0;

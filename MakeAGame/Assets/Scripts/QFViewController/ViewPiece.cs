@@ -117,7 +117,7 @@ namespace Game
             if (animGO != null)
             {                
                 GameObject pieceAnim = GameObject.Instantiate(animGO);                
-                animator = pieceAnim.GetComponent<Animator>();
+                pieceAnimator = pieceAnim.GetComponent<Animator>();
                 pieceAnim.transform.SetParent(gameObject.transform);
                 pieceAnim.transform.localScale = animGO.transform.localScale * 0.1f;
                 pieceAnim.transform.localPosition = new Vector3(0, 0.25f, -0.25f); // 确保不会被棋盘遮住
@@ -268,9 +268,9 @@ namespace Game
             var nextPos = GetGridsCenterPos();
 
             // 如果有动画，则播放动画并启动移动协程，否则直接更改怪物位置
-            if (animator != null)
+            if (pieceAnimator != null)
             {
-                animator.SetBool("isMove", true);
+                pieceAnimator.SetBool("isMove", true);
                 movementCoroutine = StartCoroutine(MoveToTarget(nextPos));
             }
             else
@@ -296,13 +296,34 @@ namespace Game
             this.SendCommand<PieceAttackCommand>(new PieceAttackCommand(this));
         }
         
-        public override bool Hit(int damage)
+        public override bool Hit(int damage, ViewPieceBase attacker)
         {
-            this.SendEvent<PieceHitReadyEvent>();
+            this.SendEvent<PieceHitReadyEvent>(new PieceHitReadyEvent { piece = this });
 
             hp.Value -= damage;
             Debug.Log($"Piece Hit, damage: {damage} hp: {hp}");
             MonsterDamageNumber.Spawn(this.Position(), damage);
+            // 播放受击动画
+            bool foundAttackAnim = false;
+            GameObject anim = ((Monster)attacker).data.GetAttackAnim();
+            if (anim != null)
+            {               
+                StartCoroutine(PlayAttackAnimByMarking(GameObject.Instantiate(anim, this.transform)));
+                foundAttackAnim = true;
+            }          
+            foreach (AnimatorControllerParameter parameter in attacker.pieceAnimator.parameters)
+            {
+                if (parameter.name == "isAttack")
+                {
+                    StartCoroutine(PlayAttackAnimByAction(attacker));
+                    foundAttackAnim = true;
+                    break;
+                }
+            }
+            if (!foundAttackAnim)
+                Debug.LogError("Attack animation for piece " + attacker.generalId + " was not found");
+            
+
             this.SendEvent<PieceHitFinishEvent>(new PieceHitFinishEvent { piece = this });
 
             return hp <= 0;
