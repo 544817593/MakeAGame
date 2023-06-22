@@ -22,6 +22,8 @@ namespace Game
 
         void RegisterRelicEvent<T>(RelicBase relic, Action<object> act);
 
+        void UnregisterOneRelic(RelicBase relic);
+
         List<RelicBase> GetRelics();
     }
 
@@ -49,8 +51,8 @@ namespace Game
             this.GetSystem<IRelicSystem>().AddRelic(so);
             so = IdToSO.FindRelicSOByID(3);
             this.GetSystem<IRelicSystem>().AddRelic(so);
-            so = IdToSO.FindRelicSOByID(4);
-            this.GetSystem<IRelicSystem>().AddRelic(so);
+            // so = IdToSO.FindRelicSOByID(5);
+            // this.GetSystem<IRelicSystem>().AddRelic(so);
             
             // ActivateAllRelics();
         }
@@ -77,7 +79,7 @@ namespace Game
                 var conflictRelics = IsCanceledByPlayerRelics(relic);
                 if (conflictRelics.Count == 0)
                 {
-                    if (!relic.isRunOut)
+                    if (!relic.IsRunOut)
                     {
                         relic.Activate(this);
                         relic.isActive = true;   
@@ -91,6 +93,19 @@ namespace Game
                         s += conflict.so.name + " ";
                     }
                     Debug.Log($"relic actvate failed, {relic.so.name} is canceled by {s}");
+                }
+            }
+        }
+
+        public void UnregisterOneRelic(RelicBase relic)
+        {
+            foreach (var kvp in dictRelicEvents)
+            {
+                var datas = kvp.Value.FindAll(data => data.relic == relic);
+                foreach (var d in datas)
+                {
+                    kvp.Value.Remove(d);
+                    Debug.Log($"relic {relic.so.relicName} run out, unregister {d.act.Method.Name}");
                 }
             }
         }
