@@ -49,6 +49,8 @@ namespace Game
             this.GetSystem<IRelicSystem>().AddRelic(so);
             so = IdToSO.FindRelicSOByID(3);
             this.GetSystem<IRelicSystem>().AddRelic(so);
+            so = IdToSO.FindRelicSOByID(4);
+            this.GetSystem<IRelicSystem>().AddRelic(so);
             
             // ActivateAllRelics();
         }
@@ -66,7 +68,7 @@ namespace Game
 
         public void ActivateAllRelics()
         {
-            ClearAllRegister();
+            DeactivateAllRelic();
             
             Debug.Log($"RelicSystem: ActivateRelics count {relics.Count}");
             foreach (var relic in relics)
@@ -75,8 +77,11 @@ namespace Game
                 var conflictRelics = IsCanceledByPlayerRelics(relic);
                 if (conflictRelics.Count == 0)
                 {
-                    relic.Activate(this);
-                    relic.isActive = true;
+                    if (!relic.isRunOut)
+                    {
+                        relic.Activate(this);
+                        relic.isActive = true;   
+                    }
                 }
                 else
                 {
@@ -87,26 +92,6 @@ namespace Game
                     }
                     Debug.Log($"relic actvate failed, {relic.so.name} is canceled by {s}");
                 }
-            }
-        }
-
-        public void ActivateOneRelic(RelicBase relic)
-        {
-            // 玩家当前的所有遗物中，没有遗物会取消其效果
-            var conflictRelics = IsCanceledByPlayerRelics(relic);
-            if (conflictRelics.Count == 0)
-            {
-                relic.Activate(this);
-                relic.isActive = true;
-            }
-            else
-            {
-                string s = String.Empty;
-                foreach (var conflict in conflictRelics)
-                {
-                    s += conflict.so.name + " ";
-                }
-                Debug.Log($"relic actvate failed, {relic.so.name} is canceled by {s}");
             }
         }
 
@@ -238,6 +223,15 @@ namespace Game
             foreach (var data in datas)
             {
                 data.act.Invoke(t);
+            }
+        }
+
+        void DeactivateAllRelic()
+        {
+            ClearAllRegister();
+            foreach (var relic in relics)
+            {
+                relic.isActive = false;
             }
         }
 

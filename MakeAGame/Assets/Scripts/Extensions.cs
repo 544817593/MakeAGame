@@ -169,6 +169,7 @@ namespace Game
             {
                 case 1: return new Relic1(so);
                 case 3: return new Relic3(so);
+                case 4: return new Relic4(so);
                 default: return null;
             }
         }
