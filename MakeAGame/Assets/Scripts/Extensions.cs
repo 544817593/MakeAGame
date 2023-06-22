@@ -157,6 +157,7 @@ namespace Game
             switch (so.relicID)
             {
                 case 1: return new Relic1(so);
+                case 3: return new Relic3(so);
                 default: return null;
             }
         }

@@ -44,7 +44,13 @@ namespace Game
             // var so = IdToSO.FindRelicSOByID(1);
             // this.GetSystem<IRelicSystem>().AddRelic(so);
 
-            ActivateAllRelics();
+            // 遗物测试
+            var so = IdToSO.FindRelicSOByID(1);
+            this.GetSystem<IRelicSystem>().AddRelic(so);
+            so = IdToSO.FindRelicSOByID(3);
+            this.GetSystem<IRelicSystem>().AddRelic(so);
+            
+            // ActivateAllRelics();
         }
 
         private List<RelicBase> relics = new List<RelicBase>(); // 遗物列表
@@ -60,6 +66,8 @@ namespace Game
 
         public void ActivateAllRelics()
         {
+            ClearAllRegister();
+            
             Debug.Log($"RelicSystem: ActivateRelics count {relics.Count}");
             foreach (var relic in relics)
             {
@@ -139,7 +147,8 @@ namespace Game
             var relic = Extensions.GetRelicBySO(so);
 
             relics.Add(relic);
-            ActivateOneRelic(relic);
+            // ActivateOneRelic(relic);
+            ActivateAllRelics();
             ui?.AddRelic(relic);
         }
 
@@ -230,6 +239,16 @@ namespace Game
             {
                 data.act.Invoke(t);
             }
+        }
+
+        void ClearAllRegister()
+        {
+            Debug.Log("relic system ClearAllRegister");
+            foreach (var unregister in unregisters)
+            {
+                unregister.UnRegister();
+            }
+            unregisters.Clear();
         }
 
         void CountTime(CountTimeEvent e)

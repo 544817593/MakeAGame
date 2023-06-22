@@ -59,10 +59,6 @@ namespace Game
                 drawCardCooldown = 5f
             };
             this.SendEvent(refillHandCardEvent);
-            
-            // 遗物测试
-            var so = IdToSO.FindRelicSOByID(1);
-            this.GetSystem<IRelicSystem>().AddRelic(so);
 
             // 计时测试
             var updateSystem = this.GetSystem<IUpdateSystem>();
