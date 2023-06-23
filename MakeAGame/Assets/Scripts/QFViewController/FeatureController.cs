@@ -15,7 +15,7 @@ public class FeatureController : MonoBehaviour, IController
     IPieceSystem pieceSystem;
 
     private static FeatureController _instance;
-    public static FeatureController instance { get { return _instance; }}
+    public static FeatureController instance { get { return _instance; } }
 
 
     /// <summary>
@@ -34,6 +34,14 @@ public class FeatureController : MonoBehaviour, IController
     /// 棋子生成/放置后进行的特性效果
     /// </summary>
     public Action<SpecialitiesSpawnCheckEvent> OnPieceSpawnFeatureCheck { get; private set; }
+    /// <summary>
+    /// 死面牌释放时检测
+    /// </summary>
+    public Action<SpecialitiesDeathExecuteEvent> OnDeathExecuteFeatureCheck { get; private set; }
+    /// <summary>
+    /// 棋子死亡时的检测
+    /// </summary>
+    public Action<SpecialitiesPieceDieEvent> OnPieceDieFeatureCheck { get; private set; }
 
     void Awake()
     {
@@ -74,23 +82,41 @@ public class FeatureController : MonoBehaviour, IController
         OnPieceDefendFeatureCheck += Anthropologist;
         OnPieceDefendFeatureCheck += Camouflaged;       
         OnPieceDefendFeatureCheck += Feline_Def;
+        OnPieceDefendFeatureCheck += Vine_Extra;
 
         // 移动时触发的特性检查
         OnPieceMoveFeatureCheck += Writer;
         OnPieceMoveFeatureCheck += TinyCreature;
         OnPieceMoveFeatureCheck += Lazy_;
         OnPieceMoveFeatureCheck += Laborer;
+        // 移动时触发的额外属性检查
+        OnPieceMoveFeatureCheck += Francis_Extra;
+        OnPieceMoveFeatureCheck += Raven_Extra;
 
         // 棋子生成后的特性效果
         OnPieceSpawnFeatureCheck += SolitaryHero;
         OnPieceSpawnFeatureCheck += Determined;
         OnPieceSpawnFeatureCheck += Rodent;
-        
+        // 棋子生成后触发的额外属性检查
+        OnPieceSpawnFeatureCheck += Francis_Extra;
+        OnPieceSpawnFeatureCheck += WaterWizard_Extra;
+        OnPieceSpawnFeatureCheck += RandolphCarter_Extra;
+        OnPieceSpawnFeatureCheck += AbigalMiller_Extra;
+
+        // 死面牌释放时触发的额外属性检查
+        OnDeathExecuteFeatureCheck += RandolphCarter_Extra;
+
+        // 棋子死亡时触发的额外属性检查
+        OnPieceDieFeatureCheck += HaloReset;
+
+
 
         this.RegisterEvent<SpecialitiesAttackCheckEvent>(OnPieceAttackFeatureCheck);
         this.RegisterEvent<SpecialitiesDefendCheckEvent>(OnPieceDefendFeatureCheck);
         this.RegisterEvent<SpecialitiesMoveCheckEvent>(OnPieceMoveFeatureCheck);
         this.RegisterEvent<SpecialitiesSpawnCheckEvent>(OnPieceSpawnFeatureCheck);
+        this.RegisterEvent<SpecialitiesDeathExecuteEvent>(OnDeathExecuteFeatureCheck);
+        this.RegisterEvent<SpecialitiesPieceDieEvent>(OnPieceDieFeatureCheck);
 
         // 测试用代码
         // this.GetSystem<IPieceBattleSystem>().StartBattle(new ViewPieceBase(), new List<ViewPieceBase>());
@@ -577,8 +603,289 @@ public class FeatureController : MonoBehaviour, IController
         }        
     }
 
+    // 下面为额外属性 // **********************************************************************
+
+    #region 弗朗西斯
+    // 被弗朗西斯Buff过的棋子列表
+    private List<ViewPieceBase> francisExtraAtkList = new List<ViewPieceBase>();
+    // 弗朗西斯在场与否
+    private ViewPieceBase francis = null;
+    IEnumerator FrancisExtra_Attack(ViewPieceBase piece)
+    {
+        if (piece.generalId == 1) yield break;
+        bool shouldHaveBuff = false;
+
+        // 符合距离要求
+        if (francis != null && pieceSystem.GetPieceDist(francis, piece) <= 4)
+        {
+            shouldHaveBuff = true;
+        }
+
+        if (shouldHaveBuff)
+        {
+            // 没有过同名Buff
+            if (!francisExtraAtkList.Contains(piece))
+            {
+                piece.atkDmg.Value += GameManager.Instance.playerMan.player.GetStats(PlayerStatsEnum.Strength);
+                francisExtraAtkList.Add(piece);
+                Debug.Log("给棋子" + piece.pieceId + "添加弗朗西斯Buff26");
+            }
+        }
+        else
+        {
+            // 如果曾经有过Buff则移除
+            if (francisExtraAtkList.Contains(piece))
+            {
+                piece.atkDmg.Value -= GameManager.Instance.playerMan.player.GetStats(PlayerStatsEnum.Strength);
+                francisExtraAtkList.Remove(piece);
+                Debug.Log("给棋子" + piece.pieceId + "移除弗朗西斯Buff26");
+            }
+        }
+
+        yield break;
+    }
+
+    // 棋子移动触发
+    public void Francis_Extra(SpecialitiesMoveCheckEvent obj)
+    {
+        if (obj.piece is Monster) return; // 怪物不触发
+        if (francis == null) return; // 弗朗西斯不在场
+        if (obj.piece == francis) return; // 自己不给自己上Buff
+        StartCoroutine(FrancisExtra_Attack(obj.piece));
+    }
+
+    // 棋子放置触发
+    public void Francis_Extra(SpecialitiesSpawnCheckEvent obj)
+    {
+        if (obj.piece is Monster) return; // 怪物不触发
+        if (francis == null && obj.piece.generalId != 1) return; // 弗朗西斯不在场并且放置的不是弗朗西斯
+
+        // 如果场上有弗朗西斯（且放置了一张非弗朗西斯的棋子）
+        if (francis != null)
+        {
+            obj.piece.maxHp.Value += 2 * GameManager.Instance.playerMan.player.GetStats(PlayerStatsEnum.Stamina);
+            obj.piece.hp.Value += 2 * GameManager.Instance.playerMan.player.GetStats(PlayerStatsEnum.Stamina);
+            Debug.Log("给棋子" + obj.piece.pieceId + "添加弗朗西斯Buff27");
+        }
+        // francis为null但能跑到这里证明放置的是弗朗西斯
+        else
+        {
+            francis = obj.piece;
+            // 需要检查所有的在场棋子
+            foreach (ViewPieceBase viewPiece in pieceSystem.pieceFriendList)
+            {
+                StartCoroutine(FrancisExtra_Attack(viewPiece));
+            }
+            return;
+        }
+        
+        StartCoroutine(FrancisExtra_Attack(obj.piece));
+    }
+    #endregion
+
+    #region 渡鸦
+    IEnumerator Raven_Grid(BoxGrid grid)
+    {
+        TimeMultiplierEnum previousTime = grid.timeMultiplier;
+        grid.timeMultiplier.Value = TimeMultiplierEnum.Normal;
+        yield return new WaitForSeconds(20);
+        grid.timeMultiplier.Value = previousTime;
+
+    }
+    public void Raven_Extra(SpecialitiesMoveCheckEvent obj)
+    {
+        if (obj.piece.generalId != 13) return;
+        StartCoroutine(Raven_Grid(obj.boxgrid));
+    }
+
+
+    #endregion
+
+    #region 藤蔓
+    IEnumerator Vine_Extra_MoveSpeed(ViewPieceBase piece)
+    {
+        if (piece != null)
+        {
+            float pre_value = piece.moveSpeed;
+            float diff = pre_value / 2.0f;
+            piece.moveSpeed.Value += diff;
+            yield return new WaitForSeconds(3f);
+            piece.moveSpeed.Value -= diff;
+            yield break;
+        }
+    }
+    public void Vine_Extra(SpecialitiesDefendCheckEvent obj)
+    {
+        if (obj.attacker.generalId != 14) return;
+        StartCoroutine(Vine_Extra_MoveSpeed(obj.target));
+    }
+    #endregion
+
+    #region 水精
+    public void WaterWizard_Extra(SpecialitiesSpawnCheckEvent obj)
+    {
+        if (obj.piece.generalId != 15) return;
+        StartCoroutine(Water_Extra_Heal(obj.piece));
+    }
+
+    IEnumerator Water_Extra_Heal(ViewPieceBase piece)
+    {
+        while (piece.gameObject.activeInHierarchy)
+        {
+            BoxGrid grid = piece.pieceGrids[0];
+            foreach(ViewPiece allyPiece in pieceSystem.pieceFriendList)
+            {
+                if (pieceSystem.GetPieceDist(piece, allyPiece) <= 3)
+                {
+                    if (Extensions.HasGridTypeInRange(grid, 3, TerrainEnum.Water))
+                    {
+                        allyPiece.hp.Value += 10;
+                        if (allyPiece.hp.Value > allyPiece.maxHp) allyPiece.hp.Value = allyPiece.maxHp;
+                    }
+                    else
+                    {
+                        allyPiece.hp.Value += 20;
+                        if (allyPiece.hp.Value > allyPiece.maxHp) allyPiece.hp.Value = allyPiece.maxHp;
+                    }
+                }
+
+            }
+            yield return new WaitForSeconds(3);
+        }
+
+    }
+    #endregion
+
+    #region 伦道夫
+
+    // 伦道夫
+    private ViewPieceBase randolph;
+    public void RandolphCarter_Extra(SpecialitiesSpawnCheckEvent obj)
+    {
+        if (obj.piece.generalId != 2)
+        {
+            if (randolph == null) return;
+            StartCoroutine(RandolphExtra_Immune(obj.piece));
+            return;
+        }
+        randolph = obj.piece;
+        StartCoroutine(RandolphExtra_SilverKey(obj.piece));
+    }
+
+    public void RandolphCarter_Extra(SpecialitiesDeathExecuteEvent obj)
+    {
+        if (randolph == null) return;
+        List<(int, int)> coordinatesList = Extensions.GetCoordinatesInRange(randolph.pieceGrids[0].row, randolph.pieceGrids[0].col, 4);
+        foreach (BoxGrid grid in obj.grids)
+        {
+            if (coordinatesList.Contains((grid.row, grid.col)))
+            {
+                obj.viewCard.card.deathEnhancement.damageIncrease += 2 * PlayerManager.Instance.player.GetStats(PlayerStatsEnum.Skill);
+                return;
+            }
+        }              
+    }
+
+
+    /// <summary>
+    /// 穿越银匙之门：每10秒获得1点改变行动方向的机会。
+    /// </summary>
+    /// <param name="piece"></param>
+    /// <returns></returns>
+    IEnumerator RandolphExtra_SilverKey(ViewPieceBase piece)
+    {
+        while (piece.hp > 0)
+        {
+            PlayerManager.Instance.player.SetTurnPieceCount(PlayerManager.Instance.player.GetTurnPieceCount() + 1);
+            yield return new WaitForSeconds(10f);
+        }
+    }
+
+    /// <summary>
+    /// 无可动摇：伦道夫在场时，玩家放入的棋子获得1*技巧秒物理伤害免疫。
+    /// </summary>
+    /// <param name="piece"></param>
+    /// <returns></returns>
+    IEnumerator RandolphExtra_Immune(ViewPieceBase piece)
+    {
+        float def = piece.defense.Value;
+        piece.defense.Value = float.MaxValue;
+        yield return new WaitForSeconds(PlayerManager.Instance.player.GetStats(PlayerStatsEnum.Skill));
+        piece.defense.Value = def;
+    }
+
+
+    #endregion
+
+    #region 阿比盖尔
+    // 阿比盖尔
+    private ViewPieceBase abigal = null;
+
+    // 放置时触发
+    public void AbigalMiller_Extra(SpecialitiesSpawnCheckEvent obj)
+    {
+        if (abigal == null)
+        {
+            if (obj.piece.generalId != 3) return;
+            abigal = obj.piece;
+            StartCoroutine(AbigalExtra_Heal(obj.piece));
+        }
+        else
+        {
+            obj.piece.moveSpeed.Value -= PlayerManager.Instance.player.GetStats(PlayerStatsEnum.Spirit) * 0.1f;
+        }     
+    }
+
+    /// <summary>
+    /// 亲和力：每3秒，距离不大于6的友军回复1*精神点寿命。
+    /// </summary>
+    /// <param name="piece"></param>
+    /// <returns></returns>
+    IEnumerator AbigalExtra_Heal(ViewPieceBase piece)
+    {
+        while (piece.hp > 0)
+        {
+            foreach (ViewPieceBase allyPiece in pieceSystem.pieceFriendList)
+            {
+                if (pieceSystem.GetPieceDist(allyPiece, piece) <= 6)
+                {
+                    ((ViewPiece)allyPiece).currLife.Value += PlayerManager.Instance.player.GetStats(PlayerStatsEnum.Spirit);
+                    if (((ViewPiece)allyPiece).currLife.Value > ((ViewPiece)allyPiece).maxLife.Value) ((ViewPiece)allyPiece).currLife.Value = ((ViewPiece)allyPiece).maxLife.Value;
+                }
+            }
+            yield return new WaitForSeconds(3);
+        }
+
+    }
+    #endregion
+
+    /// <summary>
+    /// 光环类效果在棋子死亡后处理
+    /// </summary>
+    /// <param name="obj"></param>
+    public void HaloReset(SpecialitiesPieceDieEvent obj)
+    {
+        Debug.Log("弗朗西斯HaloReset");
+        if (obj.viewPiece is Monster) return;
+        if (obj.viewPiece.rarity != RarityEnum.Orange) return;
+        Debug.Log("弗朗西斯List" + francisExtraAtkList.Count);
+        switch (obj.viewPiece.generalId)
+        {
+            case 1:
+                foreach (ViewPieceBase piece in francisExtraAtkList)
+                {
+                    piece.atkDmg.Value -= GameManager.Instance.playerMan.player.GetStats(PlayerStatsEnum.Strength);
+                    francisExtraAtkList.Remove(piece);
+                    Debug.Log("给棋子" + piece.pieceId + "移除弗朗西斯Buff26");
+                }
+                break;
+        }
+    }
+
     public IArchitecture GetArchitecture()
     {
         return GameEntry.Interface;
     }
+
+    
 }

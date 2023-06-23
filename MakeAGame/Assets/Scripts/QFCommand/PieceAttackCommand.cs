@@ -42,6 +42,7 @@ namespace Game
 
                 if (isDead)
                 {
+                    this.SendEvent<SpecialitiesPieceDieEvent>(new SpecialitiesPieceDieEvent { viewPiece = defender });
                     toDiePieces.Add(defender);
                 }
             }

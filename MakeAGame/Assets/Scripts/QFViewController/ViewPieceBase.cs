@@ -266,9 +266,10 @@ namespace Game
             MagicDamageNumber.Spawn(this.Position(), damage);
             if (hp <= 0)
             {
+                this.SendEvent<SpecialitiesPieceDieEvent>(new SpecialitiesPieceDieEvent { viewPiece = this });
                 this.GetSystem<IPieceBattleSystem>().EndBattle(this); // 不确定是不是需要
                 // 再从棋子系统中注销
-                this.GetSystem<IPieceSystem>().RemovePiece(this);
+                this.GetSystem<IPieceSystem>().RemovePiece(this);         
                 // 最后处理自身的死亡
                 Die();
             }
@@ -290,6 +291,7 @@ namespace Game
             
             if (hp <= 0)
             {
+                this.SendEvent<SpecialitiesPieceDieEvent>(new SpecialitiesPieceDieEvent { viewPiece = this });
                 this.GetSystem<IPieceBattleSystem>().EndBattle(this); // 不确定是不是需要
                 // 再从棋子系统中注销
                 this.GetSystem<IPieceSystem>().RemovePiece(this);
@@ -419,9 +421,15 @@ namespace Game
         /// <returns></returns>
         protected IEnumerator PlayAttackAnimByAction(ViewPieceBase attacker)
         {
-            attacker.pieceAnimator?.SetBool("isAttack", true);
+            if (attacker != null)
+            {
+                attacker.pieceAnimator?.SetBool("isAttack", true);
+            }
             yield return new WaitForSeconds(attacker.pieceAnimator.GetCurrentAnimatorStateInfo(0).length);
-            attacker.pieceAnimator?.SetBool("isAttack", false);
+            if (attacker != null)
+            {
+                attacker.pieceAnimator?.SetBool("isAttack", false);
+            }
             yield return null;
         }
 

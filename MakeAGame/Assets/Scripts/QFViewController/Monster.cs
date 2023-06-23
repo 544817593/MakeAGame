@@ -97,6 +97,8 @@ namespace Game
                 return;
             }
 
+            this.SendEvent<SpecialitiesMoveCheckEvent>(new SpecialitiesMoveCheckEvent() { piece = this, boxgrid = mapSystem.Grids()[nextLTCorr.Item1, nextLTCorr.Item2] });
+
             // 更新数据
             int diffR = nextLTCorr.Item1 - leftTopGridPos.Value.Item1;
             int diffC = nextLTCorr.Item2 - leftTopGridPos.Value.Item2;
@@ -349,7 +351,7 @@ namespace Game
 
 #if UNITY_EDITOR
 /// <summary>
-/// 怪物类自定义Inspector，显示ScriptableObject内的信息
+/// 怪物类自定义Inspector，显示部分关键以及ScriptableObject内的信息
 /// </summary>
 [CustomEditor(typeof(Monster))]
 public class MonsterEditor : Editor

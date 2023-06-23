@@ -5,7 +5,9 @@ using DamageNumbersPro;
 using DG.Tweening;
 using QFramework;
 using Unity.VisualScripting;
+using UnityEditor;
 using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 using static UnityEngine.UI.Image;
 using Random = System.Random;
 
@@ -178,6 +180,8 @@ namespace Game
             bool canMove = CheckIfCanMove(nextGrids);
             if (canMove)
             {
+                this.SendEvent<SpecialitiesMoveCheckEvent>(new SpecialitiesMoveCheckEvent() { piece = this, boxgrid = nextGrids[0] });
+
                 // 数据变化
                 foreach (var oldGrid in pieceGrids) oldGrid.occupation = 0;
                 pieceGrids = nextGrids;
@@ -418,4 +422,75 @@ namespace Game
                 collider2d.enabled = isEnable;
         }
     }
+
+#if UNITY_EDITOR
+    /// <summary>
+    /// 棋子类自定义Inspector，显示部分关键信息
+    /// </summary>
+    [CustomEditor(typeof(ViewPiece))]
+    public class ViewPieceEditor : Editor
+    {
+        public List<FeatureEnum> _properties;
+        public List<DirEnum> _dirs;
+        private (int, int) _position;
+
+        private void OnEnable()
+        {
+            // 获取特殊类型的 BindableProperty
+            _properties = ((ViewPiece)target).features?.Value;
+            _dirs = ((ViewPiece)target).dirs.Value;
+            _position = (((ViewPiece)target).pieceGrids[0].row, ((ViewPiece)target).pieceGrids[0].col);
+
+        }
+
+        public override void OnInspectorGUI()
+        {
+            base.OnInspectorGUI();
+            EditorGUILayout.LabelField("", GUILayout.Height(10));
+            EditorGUILayout.LabelField("Bindable Properties:");
+            var viewPiece = (ViewPiece)target;
+            viewPiece.moveSpeed.Value = EditorGUILayout.FloatField("Move Speed", viewPiece.moveSpeed.Value);
+            viewPiece.hp.Value = EditorGUILayout.IntField("HP", viewPiece.hp.Value);
+            viewPiece.maxHp.Value = EditorGUILayout.IntField("Max HP", viewPiece.maxHp.Value);
+            viewPiece.atkSpeed.Value = EditorGUILayout.FloatField("Attack Speed", viewPiece.atkSpeed.Value);
+            viewPiece.atkDmg.Value = EditorGUILayout.FloatField("Attack Damage", viewPiece.atkDmg.Value);
+            viewPiece.defense.Value = EditorGUILayout.FloatField("Defense", viewPiece.defense.Value);
+            viewPiece.accuracy.Value = EditorGUILayout.FloatField("Accuracy", viewPiece.accuracy.Value);
+            viewPiece.atkRange.Value = EditorGUILayout.IntField("Attack Range", viewPiece.atkRange.Value);
+            viewPiece.inCombat = EditorGUILayout.Toggle("In Combat", viewPiece.inCombat);
+            viewPiece.isAttacking.Value = EditorGUILayout.Toggle("Is Attacking", viewPiece.isAttacking.Value);
+            viewPiece.isDying.Value = EditorGUILayout.Toggle("Is Dying", viewPiece.isDying.Value);
+
+            // 特性
+            for (int i = 0; i < _properties.Count; i++)
+            {
+                _properties[i] = (FeatureEnum)EditorGUILayout.EnumPopup("Property " + i, _properties[i]);
+            }
+
+            // 可移动方向
+            for (int i = 0; i < _dirs.Count; i++)
+            {
+                _dirs[i] = (DirEnum)EditorGUILayout.EnumPopup("Direction " + i, _dirs[i]);
+            }
+
+            // 怪物坐标
+            int x = _position.Item1;
+            int y = _position.Item2;
+            EditorGUILayout.BeginHorizontal();
+            EditorGUILayout.PrefixLabel("Piece position");
+            x = EditorGUILayout.IntField(x);
+            y = EditorGUILayout.IntField(y);
+            EditorGUILayout.EndHorizontal();
+            _position = (x, y);
+
+            // 更新 SerializedObject，以便可以显示和编辑脚本中的值
+            serializedObject.Update();
+           
+            // 应用 SerializedObject 的更改
+            serializedObject.ApplyModifiedProperties();
+        }
+
+    }
+
+#endif
 }

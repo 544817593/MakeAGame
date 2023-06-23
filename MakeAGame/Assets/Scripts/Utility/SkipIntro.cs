@@ -25,6 +25,12 @@ public class SkipIntro : MonoBehaviour
             }
         }
 
+        PlayerManager.Instance.player.SetStartStats(PlayerStatsEnum.Strength, 1);
+        PlayerManager.Instance.player.SetStartStats(PlayerStatsEnum.Spirit, 1);
+        PlayerManager.Instance.player.SetStartStats(PlayerStatsEnum.Skill, 1);
+        PlayerManager.Instance.player.SetStartStats(PlayerStatsEnum.Stamina, 1);
+        PlayerManager.Instance.player.SetStartStats(PlayerStatsEnum.Charisma, 1);
+
         SceneFlow.Pre_Room = "Main";
         GameObject.Find("GameSceneManager")?.transform.GetComponent<Game.SceneFlow>().LoadRoom();
 
