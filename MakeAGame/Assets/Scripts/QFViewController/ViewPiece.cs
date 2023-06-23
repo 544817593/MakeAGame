@@ -227,7 +227,7 @@ namespace Game
         //}
 
         // 每个棋子可能不一样的，检查某个格子是否可以移动上去的方法
-        protected override bool CheckIfOneGridCanMove(BoxGrid grid)
+        protected override bool CheckIfOneGridCanMove(BoxGrid grid, bool ignoreUnits = false)
         {
             if (!base.CheckIfOneGridCanMove(grid))
                 return false;

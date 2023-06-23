@@ -34,8 +34,9 @@ namespace Game
         /// 检查格子可否被单位移动到此
         /// </summary>
         /// <param name="boxgrid">需要被检查的格子</param>
+        /// <param name="ignoreUnits">检查格子时是否无视单位</param>
         /// <returns></returns>
-        bool GridCanMoveTo(BoxGrid boxgrid);
+        bool GridCanMoveTo(BoxGrid boxgrid, bool ignoreUnits = false);
 
         int GetGridDist(BoxGrid grid1, BoxGrid grid2);
 
@@ -188,14 +189,19 @@ namespace Game
 
         #endregion
 
-        public bool GridCanMoveTo(BoxGrid boxgrid)
+        public bool GridCanMoveTo(BoxGrid boxgrid, bool ignoreUnits = false)
         {
-            if (!boxgrid.IsEmpty()) return false;
+            
             if (boxgrid.terrain.Value == (int)TerrainEnum.Invalid) return false;
             if (boxgrid.terrain.Value == (int)TerrainEnum.Wall) return false;
             if (boxgrid.terrain.Value == (int)TerrainEnum.Edge) return false;
-            if (boxgrid.gridStatus.Value == GridStatusEnum.AllyPiece) return false;
-            if (boxgrid.gridStatus.Value == GridStatusEnum.MonsterPiece) return false;
+            if (!ignoreUnits)
+            {
+                if (!boxgrid.IsEmpty()) return false;
+                if (boxgrid.gridStatus.Value == GridStatusEnum.AllyPiece) return false;
+                if (boxgrid.gridStatus.Value == GridStatusEnum.MonsterPiece) return false;
+            }
+
 
             return true;
         }

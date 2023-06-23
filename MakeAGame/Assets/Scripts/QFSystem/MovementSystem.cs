@@ -176,8 +176,8 @@ namespace Game
             {
                 return DirEnum.Right;
             }
-            Debug.LogError("错误：目标无法直达，返回默认值Top");
-            return DirEnum.Top;
+            Debug.LogError("错误：目标无法直达，返回默认值None");
+            return DirEnum.None;
 
         }
 

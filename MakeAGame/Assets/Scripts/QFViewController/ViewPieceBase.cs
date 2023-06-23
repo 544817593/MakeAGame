@@ -198,11 +198,11 @@ namespace Game
             return centerPos;
         }
         
-        protected virtual bool CheckIfOneGridCanMove(BoxGrid grid)
+        protected virtual bool CheckIfOneGridCanMove(BoxGrid grid, bool ignoreUnits = false)
         {
             // 通用判断
             // 1.是否格子已被占用，且不是自己当前占用的格子
-            if (!pieceGrids.Contains(grid) && !mapSystem.GridCanMoveTo(grid))
+            if (!pieceGrids.Contains(grid) && !mapSystem.GridCanMoveTo(grid, ignoreUnits))
                 return false;
 
             // 某些判断...

@@ -171,6 +171,8 @@ namespace Game
             List<BoxGrid> aStarPath = PathFinding.FindPath(original.Item1, original.Item2,
                 currentTarget.pieceGrids[0].row, currentTarget.pieceGrids[0].col, this);
 
+            DirEnum newDirection = DirEnum.None;
+
             // 路径存在
             if (aStarPath != null && aStarPath.Count != 0)
             {
@@ -182,20 +184,36 @@ namespace Game
                 }
 
                 // 设置移动方向
-                DirEnum newDirection = movementSystem.NeighbourBoxGridsToDir(this.GetSystem<IMapSystem>().Grids()
+                newDirection = movementSystem.NeighbourBoxGridsToDir(this.GetSystem<IMapSystem>().Grids()
                     [leftTopGridPos.Value.Item1, leftTopGridPos.Value.Item2], aStarPath[1]);
-                PieceFlip(newDirection);
-                direction = newDirection;
-
-                // 更新想要去的格子
-                positionAfterMovement = this.GetSystem<IMovementSystem>().CalculateNextPosition(original, direction);
-                // nextIntendPos = positionAfterMovement;
-                return positionAfterMovement;
+                
             }
+            // 路径不存在
             else
             {
+                BoxGrid boxGrid = PathFinding.FindGridClosestToTarget(original.Item1, original.Item2, 
+                    currentTarget.pieceGrids[0].row, currentTarget.pieceGrids[0].col, this);
+
+                // 场景显示路线
+                Color randColor = UnityEngine.Random.ColorHSV();
+                Debug.DrawLine(transform.position - new Vector3(0, 0, 0.3f), boxGrid.transform.position - new Vector3(0, 0, 0.3f), randColor, 3f);
+
+                newDirection = movementSystem.NeighbourBoxGridsToDir(this.GetSystem<IMapSystem>().Grids()
+                    [leftTopGridPos.Value.Item1, leftTopGridPos.Value.Item2], boxGrid);
+            }
+
+            if (newDirection == DirEnum.None)
+            {
+                Debug.Log("寻路算法觉得怪物" + pieceId + "原地不动最合理");
                 return (-1, -1);
             }
+
+            PieceFlip(newDirection);
+            direction = newDirection;
+
+            // 更新想要去的格子
+            positionAfterMovement = this.GetSystem<IMovementSystem>().CalculateNextPosition(original, direction);
+            return positionAfterMovement;
         }
 
         /// <summary>
@@ -205,7 +223,7 @@ namespace Game
         /// <param name="currentX"></param>
         /// <param name="currentY"></param>
         /// <returns></returns>
-        public bool CheckIfMovable(DirEnum curMoveDir, int currentX, int currentY)
+        public bool CheckIfMovable(DirEnum curMoveDir, int currentX, int currentY, bool ignoreUnits = false)
         {
             if (isAttacking)
             {
@@ -218,7 +236,7 @@ namespace Game
             if (!movementSystem.MovementBaseCheck(intendPos)) return false;
             // 对下一步的格子做检查
             BoxGrid grid = mapSystem.Grids()[intendPos.Item1, intendPos.Item2];
-            if (!CheckIfOneGridCanMove(grid)) return false;
+            if (!CheckIfOneGridCanMove(grid, ignoreUnits)) return false;
 
             return true;
         }
