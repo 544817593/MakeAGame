@@ -904,7 +904,7 @@ MonoBehaviour:
   ScriptsFolder: Assets/Scripts/Dialogue/CombatDialogueControl.cs
   GeneratePrefab: 0
   PrefabFolder: Assets/Art/Prefab
-  ink_file: {fileID: 4900000, guid: 434b115f9ab3ecb45945298c22d0be5c, type: 3}
+  ink_file: {fileID: 0}
   text_Pre: {fileID: 3964987597994152445, guid: afef7d82f4af2c64392905a2a69eed09, type: 3}
   ChoiceP: []
   choicesText: []

@@ -168,6 +168,14 @@ public class Dialogue : ViewController
             GameManager.Instance.PauseGame();
            
         }
+        if (waitForInGamecontrol || waitForPass || waitForScene)
+        {
+            if (GetSubmitPressed())
+            {
+                UIKit.ShowPanel<UIHandCard>();
+                UIKit.HidePanel<DialoguePanel>();
+            }
+        }
         //if(UIKit.GetPanel<DiceUI.AllDiceUIPanel>()?.finish == true)
         //{
         //    decision = UIKit.GetPanel<DiceUI.AllDiceUIPanel>().decision;
@@ -365,7 +373,7 @@ public class Dialogue : ViewController
             }
             displayCoroutine = StartCoroutine(DisplayText(story.Continue()));
 
-
+            
 
 
         }
@@ -403,6 +411,9 @@ public class Dialogue : ViewController
         DisplayChoices();
         canContinue = true;
         HandleCombatTags(story.currentTags);
+
+
+
 
     }
 
@@ -525,26 +536,24 @@ public class Dialogue : ViewController
             {
                 case ControlInGame_TAG:
                     //waitForControl = true;
-                    waitForInGamecontrol = true;
-                    GameManager.Instance.ResumeGame();
-                    UIKit.ShowPanel<UIHandCard>();                
-                    UIKit.HidePanel<DialoguePanel>();
+                    
+                        waitForInGamecontrol = true;
+                        GameManager.Instance.ResumeGame();
                    
+                        
+                    
                    // InGameControl();
                     break;
                 case Pass_TAG:
                     waitForPass = true;
                     GameManager.Instance.ResumeGame();
-                    UIKit.ShowPanel<UIHandCard>();
-                    UIKit.HidePanel<DialoguePanel>();
+                   
                    
                     break;
                 case Wait_TAG:
                     waitForScene = true;
                     GameManager.Instance.ResumeGame();
-                    UIKit.ShowPanel<UIHandCard>();
-                    UIKit.HidePanel<DialoguePanel>();
-                   
+                        
                     break;
             }
 

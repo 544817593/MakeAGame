@@ -112,12 +112,18 @@ namespace Game
             {
                 oldGrid.occupation = 0;
                 oldGrid.gridStatus.Value = GridStatusEnum.Unoccupied;
+                if (data.monsterId == 9998 && oldGrid.timeMultiplier == TimeMultiplierEnum.Superfast && SceneFlow.combatSceneCount == 2)
+                {
+                    
+                    GameObject.Find("CombatSceneController").GetComponent<CombatDialogueControl>().start_dialogue = true;
+                }
             }
             pieceGrids = nextGrids;
             foreach (var newGrid in pieceGrids)
             {
                 newGrid.occupation = pieceId;
                 newGrid.gridStatus.Value = GridStatusEnum.MonsterPiece;
+               
             }
 
             leftTopGridPos.Value = nextLTCorr;
@@ -248,6 +254,9 @@ namespace Game
             {
                 transform.DOMove(nextPos, 0.3f).OnComplete(OnMoveFinish);
             }
+
+
+            
 
         }
 

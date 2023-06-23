@@ -148,6 +148,17 @@ namespace Game
             return iconFileName;
         }
 
+        private const string RelicIconResFolder = "Sprites/Relics";
+        public static Sprite GetRelicSpriteByID(int id)
+        {
+            string spriteName = Extensions.GetFileWithTail(RelicIconResFolder, $"{id}", "png");
+            if (string.IsNullOrEmpty(spriteName))
+            {
+                return null;
+            }
+            return Resources.Load<Sprite>($@"{RelicIconResFolder}/{spriteName}");
+        }
+
         public static string GetDeathFuncTypeName(int charaID)
         {
             return IdToSO.FindCardSOByID(charaID).deathFuncName;
@@ -158,6 +169,9 @@ namespace Game
             switch (so.relicID)
             {
                 case 1: return new Relic1(so);
+                case 3: return new Relic3(so);
+                case 4: return new Relic4(so);
+                case 5: return new Relic5(so);
                 default: return null;
             }
         }

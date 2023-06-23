@@ -59,7 +59,7 @@ namespace PackOpen
 				}
 			}
 
-			if (( GameSceneManager.Instance.GetCurrentSceneName() == "Intro") && m_ui.count > 2)
+			if (( GameSceneManager.Instance.GetCurrentSceneName() == "Intro") )
 			{
 				if (m_ui.count == 3)
 				{
@@ -67,7 +67,7 @@ namespace PackOpen
 				}
 				else
 				{
-					newCardId = 5;
+					newCardId = 4;
 				}
 				m_ui.greenDrawn = false;
 				m_ui.blueDrawn = false;
@@ -124,7 +124,26 @@ namespace PackOpen
 		/// <summary>
 		/// 如果有多的卡包，开启新卡包
 		/// </summary>
+		public void AddRewardCard()
+        {
+			int newCardId = 9;
+			Game.ISpawnSystem spawnSystem = Game.GameEntry.Interface.GetSystem<Game.ISpawnSystem>();
 
+			GameObject new_Card;
+
+			spawnSystem.SpawnCard(newCardId);
+			new_Card = spawnSystem.GetLastSpawnedCard();
+			//new_Card = Instantiate(Resources.Load("Prefabs/CardItem"), transform.position, Quaternion.identity) as GameObject;
+
+			Game.Card createCard = new_Card.GetComponent<Game.ViewBagCard>().card;
+			new_Card.transform.SetParent(GameObject.Find("Cardtemp")?.transform, false);
+			new_Card.transform.position = transform.position;
+			new_Card.GetComponent<Game.ViewBagCard>().normalScale = 0.15f;
+			new_Card.GetComponent<Game.ViewBagCard>().largeScale = 0.2f;
+			gameObject.SetActive(false);
+			SaveNewCard(createCard);
+
+		}
 		public void OpenNewPack()
 		{
 

@@ -6,11 +6,12 @@ using QFramework;
 using System;
 using UnityEngine.UI;
 using DialogueUI;
+using UnityEditor;
 public class CombatDialogueControl : MonoBehaviour, IController, ICanSendEvent
 {
     [SerializeField]
     GameObject m_gameObject;
-    
+    public bool start_dialogue;
    
     public IArchitecture GetArchitecture()
     {
@@ -25,12 +26,14 @@ public class CombatDialogueControl : MonoBehaviour, IController, ICanSendEvent
         {
           
             m_gameObject.SetActive(true);
+            m_gameObject.GetComponent<Dialogue>().ink_file = AssetDatabase.LoadAssetAtPath<TextAsset>("Assets/Scripts/Dialogue/Chapter1.1.json");
             GameManager.Instance.PauseGame();
             UIKit.HidePanel<UIHandCard>();
            
             this.RegisterEvent<CombatVictoryEvent>(e => OnCombatVictoryEvent());
 
         }
+      
         else
         {
             ResKit.Init();
@@ -42,7 +45,13 @@ public class CombatDialogueControl : MonoBehaviour, IController, ICanSendEvent
     // Update is called once per frame
     void Update()
     {
-        
+        if(start_dialogue ==true)
+        {
+            m_gameObject.SetActive(true);
+            m_gameObject.GetComponent<Dialogue>().ink_file = AssetDatabase.LoadAssetAtPath<TextAsset>("Assets/Scripts/Dialogue/Chapter1.3.json");
+            GameManager.Instance.PauseGame();
+            UIKit.HidePanel<UIHandCard>();
+        }
     }
 
    
