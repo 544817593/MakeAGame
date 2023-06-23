@@ -4,6 +4,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
+using Unity.VisualScripting;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -13,6 +14,7 @@ public class FeatureController : MonoBehaviour, IController
     // 比如基础伤害100，特性1增加20%，特性2增加10%，那么最终伤害为130，并非132
     int damageAdjust;
     IPieceSystem pieceSystem;
+    ISpawnSystem spawnSystem;
 
     private static FeatureController _instance;
     public static FeatureController instance { get { return _instance; } }
@@ -58,6 +60,7 @@ public class FeatureController : MonoBehaviour, IController
     void Start()
     {
         pieceSystem = this.GetSystem<IPieceSystem>();
+        spawnSystem = this.GetSystem<ISpawnSystem>();
 
         // 按顺序检查进攻类特性
         OnPieceAttackFeatureCheck += Dominant;
@@ -69,6 +72,8 @@ public class FeatureController : MonoBehaviour, IController
         OnPieceAttackFeatureCheck += Bloodthirsty;
         OnPieceAttackFeatureCheck += AnimalKiller;               
         OnPieceAttackFeatureCheck += Greedy;
+        // 伤害计算后的额外属性检查
+        OnPieceAttackFeatureCheck += Tentacle_Extra;
         // 进攻类特性结算完毕
         OnPieceAttackFeatureCheck += AttackFeatureCheckComplete;
 
@@ -83,6 +88,7 @@ public class FeatureController : MonoBehaviour, IController
         OnPieceDefendFeatureCheck += Camouflaged;       
         OnPieceDefendFeatureCheck += Feline_Def;
         OnPieceDefendFeatureCheck += Vine_Extra;
+        OnPieceDefendFeatureCheck += DarkYoung_Extra;
 
         // 移动时触发的特性检查
         OnPieceMoveFeatureCheck += Writer;
@@ -102,6 +108,8 @@ public class FeatureController : MonoBehaviour, IController
         OnPieceSpawnFeatureCheck += WaterWizard_Extra;
         OnPieceSpawnFeatureCheck += RandolphCarter_Extra;
         OnPieceSpawnFeatureCheck += AbigalMiller_Extra;
+        OnPieceSpawnFeatureCheck += DarkYoung_Extra;
+        OnPieceSpawnFeatureCheck += Tentacle_Extra;
 
         // 死面牌释放时触发的额外属性检查
         OnDeathExecuteFeatureCheck += RandolphCarter_Extra;
@@ -856,6 +864,163 @@ public class FeatureController : MonoBehaviour, IController
             yield return new WaitForSeconds(3);
         }
 
+    }
+    #endregion
+
+    #region 黑山羊幼仔
+    private float darkYoungBirthTimer = 5; // 孕育属性倒计时器
+    private Coroutine darkYoungPoisonCO; // 毒源属性协程
+    private bool darkYoungSacrificeTrigger = false; // 牺牲属性
+    private bool overHalfHealth = true; // 生命是否一直超过50%
+    private ViewPieceBase darkYoung; // 黑山羊幼仔引用
+    private bool blessingTrigger = false; // 母神的祝福属性
+
+    public void DarkYoung_Extra(SpecialitiesSpawnCheckEvent obj)
+    {
+        if (obj.piece.generalId != 9997) return;
+        darkYoung = obj.piece;
+        StartCoroutine(DarkYoungExtra_Birth(obj.piece));
+        StartCoroutine(DarkYoungExtra_Resistant(obj.piece));
+    }
+    public void DarkYoung_Extra(SpecialitiesDefendCheckEvent obj)
+    {
+        if (obj.target.generalId != 9997) return;
+
+        // 孕育
+        if (obj.target.hp / obj.target.maxHp <= 0.5)
+        {
+            overHalfHealth = false;
+            darkYoungSacrificeTrigger = true;
+        }
+
+        // 母神的祝福
+        if (obj.target.hp / obj.target.maxHp <= 0.25) blessingTrigger = true;
+
+        // 毒源
+        if (obj.target.hp / obj.target.maxHp <= 0.75 && darkYoungPoisonCO == null) 
+        {
+            darkYoungPoisonCO = StartCoroutine(DarkYoungExtra_Poison(obj.target));
+        }
+
+        if (overHalfHealth) darkYoungBirthTimer += 0.2f;
+
+
+    }
+
+
+    IEnumerator DarkYoungExtra_Birth(ViewPieceBase piece)
+    {
+       while (piece.hp > 0)
+        {
+            if (darkYoungBirthTimer <= 0)
+            {
+                List<BoxGrid> freeGrids = this.GetSystem<IMapSystem>().FreeGrids();
+                BoxGrid horizontal = freeGrids[UnityEngine.Random.Range(0, freeGrids.Count)];
+                var spawnMonsterEvent = new SpawnMonsterEvent
+                { col = horizontal.col, row = horizontal.row, name = "Tentacle-Horizontal", pieceId = spawnSystem.GetPieceIdCounter() };
+                spawnSystem.IncrementPieceIdCounter();
+                GameEntry.Interface.SendEvent<SpawnMonsterEvent>(spawnMonsterEvent);
+
+                freeGrids = this.GetSystem<IMapSystem>().FreeGrids();
+                BoxGrid vertical = freeGrids[UnityEngine.Random.Range(0, freeGrids.Count)];
+                spawnMonsterEvent = new SpawnMonsterEvent
+                { col = vertical.col, row = vertical.row, name = "Tentacle-Vertical", pieceId = spawnSystem.GetPieceIdCounter() };
+                spawnSystem.IncrementPieceIdCounter();
+                GameEntry.Interface.SendEvent<SpawnMonsterEvent>(spawnMonsterEvent);
+
+                if (overHalfHealth)
+                {
+                    darkYoungBirthTimer = 5f;
+                }
+                else
+                {
+                    darkYoungBirthTimer = 3f;
+                }
+            }
+
+
+            yield return new WaitForSeconds(0.2f);
+            darkYoungBirthTimer -= 0.2f;
+        }
+    }
+
+    IEnumerator DarkYoungExtra_Resistant(ViewPieceBase piece)
+    {
+        while (piece != null)
+        {
+            List<ViewPiece> allyList = pieceSystem.pieceFriendList;
+            ViewPiece initialPiece = allyList[UnityEngine.Random.Range(0, allyList.Count)];
+            // TODO 星星图标标记这个棋子
+            yield return new WaitForSeconds(3f);
+            // 标记的棋子还活着
+            if (initialPiece != null)
+            {
+                allyList = pieceSystem.pieceFriendList;
+                foreach (ViewPiece viewPiece in allyList)
+                {
+                    if (viewPiece.pieceGrids[0].row == initialPiece.pieceGrids[0].row ||
+                        viewPiece.pieceGrids[0].col == initialPiece.pieceGrids[0].col)
+                    {
+                        // TODO 动画展示
+                        viewPiece.TakeDamage((int)piece.atkDmg);
+                        darkYoung.hp.Value += (int)(piece.atkDmg * 0.25);
+                    }
+                }
+            }
+
+            yield return new WaitForSeconds(piece.atkSpeed);
+        }
+    }
+
+
+    IEnumerator DarkYoungExtra_Poison(ViewPieceBase piece)
+    {
+        BoxGrid[,] grid2DList = GameEntry.Interface.GetSystem<IMapSystem>().Grids();
+
+        while (piece != null)
+        {
+            List<BoxGrid> nonPoisonGrids = new List<BoxGrid>();
+            foreach (BoxGrid boxGrid in grid2DList)
+            {
+                if (boxGrid.terrain != (int)TerrainEnum.Poison)
+                {
+                    nonPoisonGrids.Add(boxGrid);
+                }
+            }
+            nonPoisonGrids[UnityEngine.Random.Range(0, nonPoisonGrids.Count)].terrain.Value = (int)TerrainEnum.Poison;
+            yield return new WaitForSeconds(5f);
+
+        }
+    }
+
+    #endregion
+
+    #region 触须们
+    private List<ViewPieceBase> tentacleList = new List<ViewPieceBase>();
+    private void Tentacle_Extra(SpecialitiesSpawnCheckEvent obj)
+    {
+        if (obj.piece.generalId != 9999 && obj.piece.generalId != 99910) return;
+        tentacleList.Add(obj.piece);
+        if (tentacleList.Count > 10 && darkYoungSacrificeTrigger)
+        {
+            foreach (ViewPieceBase tentacle in tentacleList)
+            {
+                tentacle.TakeDamage(tentacle.hp / 2);
+            }
+            darkYoung.hp.Value += (int)(0.1 * darkYoung.maxHp);
+            if (darkYoung.hp > darkYoung.maxHp) darkYoung.hp = darkYoung.maxHp;
+            darkYoung.atkDmg.Value += (int)(0.1 * darkYoung.atkDmg);
+        } 
+    }
+
+    private void Tentacle_Extra(SpecialitiesAttackCheckEvent obj)
+    {
+        if (obj.attacker.generalId != 9999 && obj.attacker.generalId != 99910) return;
+        if (blessingTrigger)
+        {
+            darkYoung.hp.Value += (int)(0.25 * obj.damage);
+            if (darkYoung.hp > darkYoung.maxHp) darkYoung.hp = darkYoung.maxHp;
+        }
     }
     #endregion
 

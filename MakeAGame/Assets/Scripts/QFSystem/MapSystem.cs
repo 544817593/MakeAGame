@@ -40,6 +40,12 @@ namespace Game
 
         int GetGridDist(BoxGrid grid1, BoxGrid grid2);
 
+        /// <summary>
+        /// 返还当前地图中空置的格子，需要Status是Unoccupied，Occupation=0并且格子类型是正常类型(道路、可放置的道路、火水毒)
+        /// </summary>
+        /// <returns></returns>
+        List<BoxGrid> FreeGrids();
+
         void Clear();
         void SetNUllMap();
 
@@ -227,6 +233,21 @@ namespace Game
             }
             mGrids = null;
         }
-       
+
+        public List<BoxGrid> FreeGrids()
+        {
+            List<BoxGrid> freeGrids = new List<BoxGrid>();
+            foreach (BoxGrid boxGrid in mGrids)
+            {
+                if (boxGrid.gridStatus == GridStatusEnum.Unoccupied && boxGrid.occupation == 0 &&
+                    (boxGrid.terrain == (int)TerrainEnum.Road || boxGrid.terrain == (int)TerrainEnum.RoadPlaceable ||
+                    boxGrid.terrain == (int)TerrainEnum.Fire || boxGrid.terrain == (int)TerrainEnum.Water ||
+                    boxGrid.terrain == (int)TerrainEnum.Poison))
+                {
+                    freeGrids.Add(boxGrid);
+                }
+            }
+            return freeGrids;
+        }
     }
 }

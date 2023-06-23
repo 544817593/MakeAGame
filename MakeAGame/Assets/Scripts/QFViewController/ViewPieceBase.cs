@@ -260,7 +260,7 @@ namespace Game
             return false;
         }
 
-        // 受到棋子以外的东西的伤害，地块，死面之类的，包含掉血后的死亡检查
+        // 受到棋子以外的东西的伤害，死面之类的，包含掉血后的死亡检查
         public void TakeDamage(int damage)
         { 
             hp.Value -= damage;
