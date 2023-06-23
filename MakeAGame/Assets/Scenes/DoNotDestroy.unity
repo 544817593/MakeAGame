@@ -292,6 +292,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 0e3e6b7b1bd9ffe418b5b55a812a8fad, type: 3}
   - {fileID: 8300000, guid: 77a0fbbf88a5e5744abdd57c52f64496, type: 3}
   random_audio: {fileID: 0}
+  bag_openSound: {fileID: 8300000, guid: f4f6a3539700ba248bfca964b854f34f, type: 3}
 --- !u!1 &932614664
 GameObject:
   m_ObjectHideFlags: 0

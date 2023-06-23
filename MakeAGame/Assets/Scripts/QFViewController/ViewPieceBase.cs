@@ -192,6 +192,7 @@ namespace Game
             foreach (var grid in pieceGrids)
             {
                 centerPos += grid.transform.position;
+                
             }
             centerPos /= pieceGrids.Count;
             return centerPos;
