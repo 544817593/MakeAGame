@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterID: 3
   characterName: "\u963F\u6BD4\u76D6\u5C14\xB7\u7C73\u52D2"
-  rarity: 5
+  rarity: 4
   cardPack: 1
   sanCost: 90
   deathFuncDescription: "\u5BF9\u5F53\u524D\u4F4D\u7F6E\u4EE5\u53CA\u5176\u4E0A\u4E0B\u5DE6\u53F3\u8303\u56F4\u4E3A1\u7684\u683C\u5B50\u9020\u621010\u70B9\u4F24\u5BB3\uFF0C\u83B7\u5F97\u4E00\u5F20\u963F\u6BD4\u76D6\u5C14\u3002"

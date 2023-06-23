@@ -17,8 +17,9 @@ MonoBehaviour:
   san: 0
   maxSan: 100
   sanRegenSpeed: 0
-  strength: 0
-  spirit: 0
-  skill: 0
-  stamina: 0
-  chrisma: 0
+  turnPieceCount: 8
+  strength: 1
+  spirit: 1
+  skill: 1
+  stamina: 1
+  chrisma: 1
