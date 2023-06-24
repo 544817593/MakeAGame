@@ -178,6 +178,26 @@ namespace Game
 				anim.Play("Down", -1, 0);
 			}
 		}
+		public void PopCard(string cardId)
+        {
+			
+			foreach (ViewCard Vcard in viewCardsList)
+            {
+				if(Vcard.card.charaName==cardId)
+                {
+					focusIndex = viewCardsList.IndexOf(Vcard);
+					Vcard.transform.localScale = new Vector3(1f, 1f, 1f);
+					
+					var tmpPos = cardPosList[focusIndex].localPosition;
+					tmpPos.y += detailOffsetY;
+					Vcard.transform.localPosition = tmpPos;
+					nodeTooltip.SetParent(Vcard.tooltipTrans);
+					nodeTooltip.localPosition = Vector3.zero;
+					nodeTooltip.gameObject.SetActive(true);
+					UpdateLayout();
+				}
+            }
+        }
 		
 		private void Update()
 		{

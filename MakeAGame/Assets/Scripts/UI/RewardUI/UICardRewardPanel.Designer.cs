@@ -5,16 +5,22 @@ using QFramework;
 
 namespace CardRewardUI
 {
-	// Generate Id:8b829aeb-c335-440d-aed6-786bfd079fc1
+	// Generate Id:01a1dfea-ffd0-4ffa-83ea-de8931b7da3c
 	public partial class UICardRewardPanel
 	{
 		public const string Name = "UICardRewardPanel";
 		
+		[SerializeField]
+		public RectTransform Card;
+		[SerializeField]
+		public UnityEngine.UI.Button Confirm;
 		
 		private UICardRewardPanelData mPrivateData = null;
 		
 		protected override void ClearUIComponents()
 		{
+			Card = null;
+			Confirm = null;
 			
 			mData = null;
 		}

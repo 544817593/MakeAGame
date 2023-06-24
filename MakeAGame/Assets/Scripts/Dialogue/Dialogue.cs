@@ -27,8 +27,8 @@ public class Dialogue : ViewController
     TextMeshProUGUI story_text;
     public CheckControl m_checkControl;
     public ShowGift m_showGift;
-   
 
+    public string popName = "";
     private const string SPEAKER_TAG = "speaker";
     private const string PAUSE_TAG = "pause";
     private const string CHOICE_TAG = "CHOICE";
@@ -44,6 +44,7 @@ public class Dialogue : ViewController
     private const string Camera_TAG = "camera";
     private const string Reward_TAG = "reward";//奖励机制
     private const string Gift_TAG = "gift";//NPC赠送
+    private const string Pop_TAG = "pop";//NPC赠送
     //private const string SPRITE_DECISION_TAG = "Decision_Sprite";//精神判定机制
     //private const string STRENGTH_DECISION_TAG = "Decision_Strength";//力量判定机制
     public string bgPath = "UI/IntroUI/初始界面-背景图";
@@ -510,7 +511,7 @@ public class Dialogue : ViewController
                 
                 case Reward_TAG:
                     reward = true;
-                    UIKit.OpenPanel<RewardUI.RewardUIPanel>();
+                    UIKit.OpenPanel<CardRewardUI.UICardRewardPanel>();
                     break;
                 case Gift_TAG:
                     m_showGift?.PopGift();
@@ -554,6 +555,10 @@ public class Dialogue : ViewController
                     waitForScene = true;
                     GameManager.Instance.ResumeGame();
                         
+                    break;
+                case Pop_TAG:
+                    
+                    UIKit.GetPanel<UIHandCard>().PopCard(popName);
                     break;
             }
 

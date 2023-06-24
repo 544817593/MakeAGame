@@ -10,6 +10,7 @@ namespace PackOpen
 	public class ShowCard : MonoBehaviour
 	{
 		public UIOpenPackPanel m_ui;
+	
 		// Start is called before the first frame update
 		void Start()
 		{
@@ -121,9 +122,7 @@ namespace PackOpen
 
 				}
 		}
-		/// <summary>
-		/// 如果有多的卡包，开启新卡包
-		/// </summary>
+	
 		public void AddRewardCard()
         {
 			int newCardId = 9;
@@ -136,14 +135,17 @@ namespace PackOpen
 			//new_Card = Instantiate(Resources.Load("Prefabs/CardItem"), transform.position, Quaternion.identity) as GameObject;
 
 			Game.Card createCard = new_Card.GetComponent<Game.ViewBagCard>().card;
-			new_Card.transform.SetParent(GameObject.Find("Cardtemp")?.transform, false);
+			new_Card.transform.SetParent(gameObject.transform, false);
 			new_Card.transform.position = transform.position;
 			new_Card.GetComponent<Game.ViewBagCard>().normalScale = 0.15f;
 			new_Card.GetComponent<Game.ViewBagCard>().largeScale = 0.2f;
-			gameObject.SetActive(false);
+			
 			SaveNewCard(createCard);
 
 		}
+		/// <summary>
+		/// 如果有多的卡包，开启新卡包
+		/// </summary>
 		public void OpenNewPack()
 		{
 

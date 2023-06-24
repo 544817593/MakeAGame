@@ -27,6 +27,7 @@ public class CombatDialogueControl : MonoBehaviour, IController, ICanSendEvent
           
             m_gameObject.SetActive(true);
             m_gameObject.GetComponent<Dialogue>().ink_file = AssetDatabase.LoadAssetAtPath<TextAsset>("Assets/Scripts/Dialogue/Chapter1.1.json");
+            m_gameObject.GetComponent<Dialogue>().popName = "弗朗西斯·维兰德·瑟斯顿";
             GameManager.Instance.PauseGame();
             UIKit.HidePanel<UIHandCard>();
            
@@ -49,6 +50,7 @@ public class CombatDialogueControl : MonoBehaviour, IController, ICanSendEvent
         {
             m_gameObject.SetActive(true);
             m_gameObject.GetComponent<Dialogue>().ink_file = AssetDatabase.LoadAssetAtPath<TextAsset>("Assets/Scripts/Dialogue/Chapter1.3.json");
+            m_gameObject.GetComponent<Dialogue>().popName = "猫头鹰";
             GameManager.Instance.PauseGame();
             UIKit.HidePanel<UIHandCard>();
         }
