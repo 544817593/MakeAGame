@@ -275,6 +275,7 @@ namespace Game
             hp.Value -= damage;
             MagicDamageNumber.SetScale(GetDamageNumScale(damage));
             MagicDamageNumber.Spawn(this.Position(), damage);
+            MagicDamageNumber.SetScale(1f);
             if (hp <= 0)
             {
                 this.SendEvent<SpecialitiesPieceDieEvent>(new SpecialitiesPieceDieEvent { viewPiece = this });
@@ -293,15 +294,19 @@ namespace Game
             {
                 TerrianFireDamageNumber.SetScale(GetDamageNumScale(damage));
                 TerrianFireDamageNumber.Spawn(this.Position(), damage);
+                TerrianFireDamageNumber.SetScale(1f);
             }
             else if(terrian == TerrainEnum.Poison)
             {
                 TerrianPoisonDamageNumber.SetScale(GetDamageNumScale(damage));
                 TerrianPoisonDamageNumber.Spawn(this.Position(), damage);
-            }else if(terrian == TerrainEnum.Water)
+                TerrianPoisonDamageNumber.SetScale(1f);
+            }
+            else if(terrian == TerrainEnum.Water)
             {
                 TerrianWaterDamageNumber.SetScale(GetDamageNumScale(damage));
                 TerrianWaterDamageNumber.Spawn(this.Position(), damage);
+                TerrianWaterDamageNumber.SetScale(1f);
             }
             
             if (hp <= 0)
@@ -325,6 +330,7 @@ namespace Game
             hp.Value += healNum;
             HealNumber.SetScale(GetDamageNumScale(healNum));
             HealNumber.Spawn(this.Position(), healNum);
+            HealNumber.SetScale(1f);
         }
 
         public virtual void Die()
