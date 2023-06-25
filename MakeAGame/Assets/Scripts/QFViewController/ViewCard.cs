@@ -232,7 +232,7 @@ namespace Game
                     deathFunc = null;
                     Dialogue dialogue = GameObject.Find("Dialogue")?.GetComponent<Dialogue>();
                     if (dialogue != null && dialogue.waitForInGamecontrol == true)
-                    {   if(card.charaName == "D级员工" || card.charaName == dialogue.popName)
+                    {   if(card.charaName == "D级员工" && dialogue.popName == "弗朗西斯·维兰德·瑟斯顿" || card.charaName == dialogue.popName && dialogue.popName == "猫头鹰")
                         {
                             dialogue.getControl = true;
                         }

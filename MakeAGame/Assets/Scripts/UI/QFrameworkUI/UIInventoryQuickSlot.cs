@@ -24,6 +24,7 @@ namespace InventoryQuickslotUI
 			mData = uiData as UIInventoryQuickSlotData ?? new UIInventoryQuickSlotData();
 			CombatSceneButton.onClick.AddListener(() => 
 			{
+				GameManager.Instance.PauseGame();
 				UIKit.OpenPanel<BagUIPanel>();
 			});
 

@@ -44,6 +44,7 @@ namespace BagUI
 			}
 			BagUIChange.ChangeBagPanel(this, Card);
 			BagUIChange.ChangeBagPanel(this, Item);
+			updateIndex();
 			UpdateLayout();
 			RefreshLayout();
 			pageChange();
@@ -52,6 +53,7 @@ namespace BagUI
 			{
 				CheckBag m_bag = GameObject.Find("Bag")?.GetComponent<CheckBag>();
 				m_bag?.SetIsOpenFalse();
+				GameManager.Instance.ResumeGame();
 				Hide();
 			});
 		}

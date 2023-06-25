@@ -29,7 +29,7 @@ namespace PackOpen
 			mData = uiData as UIOpenPackPanelData ?? new UIOpenPackPanelData();
 			// please add init code here
 			openFinish = false;
-			Number_Of_Packs = 1;
+			Number_Of_Packs = 3;
 			count = 0;
 			card_t = new List<Transform>();
 			foreach(Transform card in CardPosition.GetComponentsInChildren<Transform>())

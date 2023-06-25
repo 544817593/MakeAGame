@@ -15,6 +15,7 @@ public class AudioManager : MonoBehaviour
     public AudioClip[] flip_card;
     public AudioClip random_audio;
     public AudioClip bag_openSound;
+    public AudioClip door_sound;
     public AudioClip intro_bgm; // 第一次进入战斗场景前的BGM
     public AudioClip combat_bgm; // 战斗场景BGM
     public AudioClip room_bgm; // 其它房间BGM
@@ -62,5 +63,9 @@ public class AudioManager : MonoBehaviour
     public void Play_Open_Bag()
     {
         AudioKit.PlaySound(bag_openSound);
+    }
+    public void Play_Door_sound()
+    {
+        AudioKit.PlaySound(door_sound);
     }
 }
