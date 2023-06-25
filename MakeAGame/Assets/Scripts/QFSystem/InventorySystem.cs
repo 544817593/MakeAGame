@@ -102,6 +102,7 @@ namespace Game
             SOItemBase Type_DMinorEnhancementPotion = Resources.Load<SOItemBase>("ScriptableObjects/Items/Type-D Minor Enhancement Potion");
             SOItemBase LightNavyQuillPen = Resources.Load<SOItemBase>("ScriptableObjects/Items/Light-Navy Quill Pen");
             SOItemBase NavyQuillPen = Resources.Load<SOItemBase>("ScriptableObjects/Items/Navy Quill Pen");
+            SOItemBase EPotion = Resources.Load<SOItemBase>("ScriptableObjects/Items/Type-E Minor Enhancement Potion");
             AddItem(new Item { amount = 2, data = MinorSapphirePotion });
             AddItem(new Item { amount = 1, data = MinorSapphirePotion });
             AddItem(new Item { amount = 1, data = IntermediateSapphirePotion });
@@ -109,6 +110,7 @@ namespace Game
             AddItem(new Item { amount = 1, data = Type_DMinorEnhancementPotion });
             AddItem(new Item { amount = 4, data = LightNavyQuillPen });
             AddItem(new Item { amount = 3, data = NavyQuillPen });
+            AddItem(new Item { amount = 2, data = EPotion });
 
 
 

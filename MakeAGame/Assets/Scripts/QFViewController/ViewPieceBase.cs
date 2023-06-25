@@ -32,7 +32,7 @@ namespace Game
 
         public DirEnum direction = DirEnum.None;
         public bool inCombat; // 是否在战斗中(挨打或者攻击)
-        public List<BuffType> listBuffs;    // 目前身上起效的buff
+        public List<BuffType> listBuffs = new List<BuffType>();    // 目前身上起效的buff
 
         public Action<PieceMoveReadyEvent> OnPieceMoveReady;
         public Action<PieceMoveFinishEvent> OnPieceMoveFinish;
