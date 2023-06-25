@@ -71,6 +71,22 @@ public enum EdgeSprite
     Wall_Mid, //墙中
     Wall_Mid_Candle, //墙中带蜡烛 
     Wall_Low, // 墙下
+    Carpet_Red_Left, // 红地毯左
+    Carpet_Red_Middle, // 红地毯中
+    Carpet_Red_Right, // 红地毯右
+    Grass_Top, // 草皮-上
+    Grass_Mid, // 草皮-中
+    Grass_Low, // 草皮-下
+    Grass_Left, // 草皮-左
+    Grass_Right, // 草皮-右
+    Grass_TopRight, // 草皮-右上
+    Grass_TopLeft, // 草皮-左上
+    Grass_LowRight, // 草皮-右下
+    Grass_LowLeft, // 草皮-左下
+    Grass_Haystack, // 草皮-草垛
+    Tile_Jar, // 砖地-罐子
+    Tile_Candle, // 砖地-蜡烛
+
 }
 
 /// <summary>

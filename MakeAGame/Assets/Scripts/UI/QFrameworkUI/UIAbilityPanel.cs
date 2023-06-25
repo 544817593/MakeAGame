@@ -24,11 +24,23 @@ namespace InventoryQuickslotUI
             skillSystem = GameEntry.Interface.GetSystem<ISkillSystem>();
             //playerSkills = GameManager.Instance.playerMan.GetPlayerSkillTree();
             //playerSkills.OnEquippedSkillsChange += PlayerSkills_OnEquippedSkillsChange;
-            Skill1.image.color = new Color(255, 255, 255, 0);
-            Skill2.image.color = new Color(255, 255, 255, 0);
+            //Skill1.image.color = new Color(0, 0, 0, 0);
+            //Skill2.image.color = new Color(0, 0, 0, 0);
 
-            Skill1.onClick.AddListener(() => skillSystem.CastSkill(true));
-            Skill2.onClick.AddListener(() => skillSystem.CastSkill(false));
+            Skill1.onClick.AddListener(() => 
+            {
+                if (skillSystem.GetEquippedSkillsList().Count == 1)
+                {
+                    skillSystem.CastSkill(true);
+                }
+            });
+            Skill2.onClick.AddListener(() =>
+            { 
+                if (skillSystem.GetEquippedSkillsList().Count == 2)
+                {
+                    skillSystem.CastSkill(false);
+                }
+            });
         }
 
         private void Update()
@@ -36,11 +48,14 @@ namespace InventoryQuickslotUI
             // 技能快捷键
             if (Input.GetKeyDown(KeyCode.Q))
             {
-                skillSystem.CastSkill(true);
+                if (skillSystem.GetEquippedSkillsList().Count == 1)
+                {
+                    skillSystem.CastSkill(true);
+                }
             }
             if (Input.GetKeyDown(KeyCode.E))
             {
-                if (skillSystem.GetEquippedSkillsList().Count > 1)
+                if (skillSystem.GetEquippedSkillsList().Count == 2)
                 {
                     skillSystem.CastSkill(false);
                 }

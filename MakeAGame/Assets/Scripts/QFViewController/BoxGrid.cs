@@ -24,6 +24,21 @@ namespace Game
             {EdgeSprite.Wall_Mid, "Sprites/Grids/墙-中"},
             {EdgeSprite.Wall_Mid_Candle, "Sprites/Grids/墙-中（带蜡烛）"},
             {EdgeSprite.Wall_Low, "Sprites/Grids/墙-下"},
+            {EdgeSprite.Carpet_Red_Left, "Sprites/Grids/地毯-左"},
+            {EdgeSprite.Carpet_Red_Middle, "Sprites/Grids/地毯-中"},
+            {EdgeSprite.Carpet_Red_Right, "Sprites/Grids/地毯-右"},
+            {EdgeSprite.Grass_Top, "Sprites/Grids/草皮-上"},
+            {EdgeSprite.Grass_Mid, "Sprites/Grids/草皮-中"},
+            {EdgeSprite.Grass_Low, "Sprites/Grids/草皮-下"},
+            {EdgeSprite.Grass_Left, "Sprites/Grids/草皮-左"},
+            {EdgeSprite.Grass_Right, "Sprites/Grids/草皮-右"},
+            {EdgeSprite.Grass_TopRight, "Sprites/Grids/草皮-右上角"},
+            {EdgeSprite.Grass_TopLeft, "Sprites/Grids/草皮-左上角"},
+            {EdgeSprite.Grass_LowRight, "Sprites/Grids/草皮-右下角"},
+            {EdgeSprite.Grass_LowLeft, "Sprites/Grids/草皮-左下角"},
+            {EdgeSprite.Grass_Haystack, "Sprites/Grids/草皮-草垛"},
+            {EdgeSprite.Tile_Jar, "Sprites/Grids/砖地-罐子"},
+            {EdgeSprite.Tile_Candle, "Sprites/Grids/砖地-蜡烛"},
         };
     }
     

@@ -23,8 +23,8 @@ namespace Game
             
             // 界面
             UIKit.OpenPanel<UIHandCard>();
-            UIKit.OpenPanel<UIInventoryQuickSlot>();
             UIKit.OpenPanel<UIAbilityPanel>();
+            UIKit.OpenPanel<UIInventoryQuickSlot>();           
             UIKit.OpenPanel<UIRelic>();
 
             // 亡灵

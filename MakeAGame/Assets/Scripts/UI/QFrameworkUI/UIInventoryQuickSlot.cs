@@ -93,8 +93,9 @@ namespace InventoryQuickslotUI
 				itemSlotRectTransform.anchoredPosition = new Vector2(x * itemSlotCellSize, y * itemSlotCellSize);
 				Image image = itemSlotRectTransform.Find("Image").GetComponent<Image>();
 				image.sprite = item.data.sprite;
-				itemSlotRectTransform.Find("ItemAmount").GetComponent<TextMeshProUGUI>().text = item.amount.ToString();
-				y++;
+				itemSlotRectTransform.Find("ItemAmount").GetComponent<TextMeshProUGUI>().text = "x" + item.amount.ToString();
+				itemSlotRectTransform.Find("ShortcutKey").GetComponent<TextMeshProUGUI>().text = (y + 1).ToString();
+                y++;
 				// 快捷栏只显示五个物品，物品每次改动都会重新Sort一下所以前五个一定是优先显示的物品
 				if (y > 4) break;
 			}

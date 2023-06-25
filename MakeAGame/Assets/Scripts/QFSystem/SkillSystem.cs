@@ -89,8 +89,8 @@ namespace Game
         /// <summary>
         /// 使用技能
         /// </summary>
-        /// <param name="leftSkill">是否为左技能</param>
-        public void CastSkill(bool leftSkill);
+        /// <param name="topSkill">是否为上面的（Q）技能</param>
+        public void CastSkill(bool topSkill);
 
         /// <summary>
         /// Whether a skill is unlocked and player have skill usage left

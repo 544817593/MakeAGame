@@ -281,6 +281,7 @@ namespace Game
 
         private void ClearPieceLists()
         {
+            Debug.LogWarning("CLEAR PIECE LIST");
             foreach(ViewPiece piece in pieceFriendList)
             {
                 GameObject.Destroy(piece);
