@@ -16,6 +16,12 @@ public class SkipIntro : MonoBehaviour
         ICardGeneratorSystem cardGeneratorSystem = GameEntry.Interface.GetSystem<ICardGeneratorSystem>();
         IInventorySystem inventorySystem = GameEntry.Interface.GetSystem<IInventorySystem>();
 
+        PlayerManager.Instance.player.SetStartStats(PlayerStatsEnum.Strength, 5);
+        PlayerManager.Instance.player.SetStartStats(PlayerStatsEnum.Spirit, 5);
+        PlayerManager.Instance.player.SetStartStats(PlayerStatsEnum.Skill, 5);
+        PlayerManager.Instance.player.SetStartStats(PlayerStatsEnum.Stamina, 5);
+        PlayerManager.Instance.player.SetStartStats(PlayerStatsEnum.Charisma, 10);
+
         for (int j = 0; j < 2; j++)
         {
             for (int i = 1; i < 6; i++)
@@ -25,11 +31,7 @@ public class SkipIntro : MonoBehaviour
             }
         }
 
-        PlayerManager.Instance.player.SetStartStats(PlayerStatsEnum.Strength, 1);
-        PlayerManager.Instance.player.SetStartStats(PlayerStatsEnum.Spirit, 1);
-        PlayerManager.Instance.player.SetStartStats(PlayerStatsEnum.Skill, 1);
-        PlayerManager.Instance.player.SetStartStats(PlayerStatsEnum.Stamina, 1);
-        PlayerManager.Instance.player.SetStartStats(PlayerStatsEnum.Charisma, 1);
+        PlayerManager.Instance.player.ModifyStats(PlayerStatsEnum.Stamina, 3);
 
         SceneFlow.Pre_Room = "Main";
         GameObject.Find("GameSceneManager")?.transform.GetComponent<Game.SceneFlow>().LoadRoom();

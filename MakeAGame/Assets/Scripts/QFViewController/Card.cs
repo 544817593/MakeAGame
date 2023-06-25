@@ -83,13 +83,18 @@ namespace Game
             height = so.height;
             moveDirections = so.moveDirections;
             atkRange = so.attackRange;
-            atkSpd = so.attackSpd;
+            atkSpd = so.attackSpd + (GameManager.Instance.playerMan.player.GetStats(so.atkSpdBonus.stat) *
+                so.atkSpdBonus.multiple);
             rarity = so.rarity;
-            sanCost = so.sanCost;
-            hp = so.hp;
-            maxHp = so.hp;
+            sanCost = so.sanCost + (int)(GameManager.Instance.playerMan.player.GetSumStats() *
+                so.sanCostBonus.multiple);
+            hp = so.hp + (int)(GameManager.Instance.playerMan.player.GetStats(so.hpBonus.stat) *
+                so.hpBonus.multiple);
+            maxHp = so.hp + (int)(GameManager.Instance.playerMan.player.GetStats(so.hpBonus.stat) *
+                so.hpBonus.multiple);
             moveSpd = so.moveSpd;
-            damage = so.attack;
+            damage = so.attack + (GameManager.Instance.playerMan.player.GetStats(so.atkBonus.stat) *
+                so.atkBonus.multiple);
             defend = so.defend;
             charaName = so.characterName;
             maxLife = so.life;

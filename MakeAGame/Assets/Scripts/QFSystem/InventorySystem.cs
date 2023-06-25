@@ -74,7 +74,10 @@ namespace Game
         /// <returns></returns>
         Card DrawCard();
 
-
+        /// <summary>
+        /// 在玩家属性改变后更新卡牌数据
+        /// </summary>
+        void UpdateCardStats(PlayerStatsEnum stat, int value);
 
     }
 
@@ -232,6 +235,28 @@ namespace Game
             return card;
         }
 
+        public void UpdateCardStats(PlayerStatsEnum stat, int value)
+        {
+
+            foreach (ViewBagCard viewBagCard in cardBagList.Value)
+            {
+                SOCharacterInfo so = IdToSO.FindCardSOByID(viewBagCard.card.charaID);
+                if (stat == so.atkSpdBonus.stat)
+                {
+                    viewBagCard.card.atkSpd += value * so.atkSpdBonus.multiple;
+                }
+                if (stat == so.atkBonus.stat)
+                {
+                    viewBagCard.card.damage += value * so.atkBonus.multiple;
+                }
+                if (stat == so.hpBonus.stat)
+                {
+                    viewBagCard.card.hp += (int)(value * so.hpBonus.multiple);
+                    viewBagCard.card.maxHp += (int)(value * so.hpBonus.multiple);
+                }
+                viewBagCard.card.sanCost += value * so.sanCostBonus.multiple;
+            }
+        }
     }
 }
 
