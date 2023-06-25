@@ -1040,9 +1040,9 @@ public class FeatureController : MonoBehaviour, IController
                 foreach (ViewPieceBase piece in francisExtraAtkList)
                 {
                     piece.atkDmg.Value -= GameManager.Instance.playerMan.player.GetStats(PlayerStatsEnum.Strength);
-                    francisExtraAtkList.Remove(piece);
                     Debug.Log("给棋子" + piece.pieceId + "移除弗朗西斯Buff26");
                 }
+                francisExtraAtkList.Clear();
                 break;
         }
     }

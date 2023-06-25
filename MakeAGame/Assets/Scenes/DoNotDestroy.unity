@@ -293,6 +293,9 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 77a0fbbf88a5e5744abdd57c52f64496, type: 3}
   random_audio: {fileID: 0}
   bag_openSound: {fileID: 8300000, guid: f4f6a3539700ba248bfca964b854f34f, type: 3}
+  intro_bgm: {fileID: 8300000, guid: d5ffa6220e41f1e4ba9b8fbf10f1c74b, type: 3}
+  combat_bgm: {fileID: 8300000, guid: b5bba41f881c45f409d0d7b16f474376, type: 3}
+  room_bgm: {fileID: 8300000, guid: febd5e9d775aae7408288f86466e1c8a, type: 3}
 --- !u!1 &932614664
 GameObject:
   m_ObjectHideFlags: 0
