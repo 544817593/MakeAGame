@@ -21,6 +21,7 @@ namespace Game
         protected DamageNumberMesh TerrianPoisonDamageNumber;
         protected DamageNumberMesh TerrianWaterDamageNumber;
         protected DamageNumberMesh MagicDamageNumber;
+        protected DamageNumberMesh HealNumber;
         // protected Transform healthBar;
 
         protected IMapSystem mapSystem;
@@ -109,6 +110,7 @@ namespace Game
             TerrianPoisonDamageNumber = Resources.Load("Prefabs/Damage Number Prefab/Terrian Poison Damage").GetComponent<DamageNumberMesh>();
             TerrianWaterDamageNumber = Resources.Load("Prefabs/Damage Number Prefab/Terrian Water Damage").GetComponent<DamageNumberMesh>();
             MagicDamageNumber = Resources.Load("Prefabs/Damage Number Prefab/Magic Damage").GetComponent<DamageNumberMesh>();
+            HealNumber = Resources.Load("Prefabs/Damage Number Prefab/Heal").GetComponent<DamageNumberMesh>();
 
             timeStop = false;
         }
@@ -260,10 +262,18 @@ namespace Game
             return false;
         }
 
+        public float GetDamageNumScale(int num)
+        {
+            float scale = 1f;
+            scale += num * 0.01f;
+            return scale;
+        }
+
         // 受到棋子以外的东西的伤害，死面之类的，包含掉血后的死亡检查
         public void TakeDamage(int damage)
         { 
             hp.Value -= damage;
+            MagicDamageNumber.SetScale(GetDamageNumScale(damage));
             MagicDamageNumber.Spawn(this.Position(), damage);
             if (hp <= 0)
             {
@@ -281,12 +291,16 @@ namespace Game
             hp.Value -= damage;
             if (terrian == TerrainEnum.Fire)
             {
+                TerrianFireDamageNumber.SetScale(GetDamageNumScale(damage));
                 TerrianFireDamageNumber.Spawn(this.Position(), damage);
-            }else if(terrian == TerrainEnum.Poison)
+            }
+            else if(terrian == TerrainEnum.Poison)
             {
+                TerrianPoisonDamageNumber.SetScale(GetDamageNumScale(damage));
                 TerrianPoisonDamageNumber.Spawn(this.Position(), damage);
             }else if(terrian == TerrainEnum.Water)
             {
+                TerrianWaterDamageNumber.SetScale(GetDamageNumScale(damage));
                 TerrianWaterDamageNumber.Spawn(this.Position(), damage);
             }
             
@@ -300,6 +314,19 @@ namespace Game
                 Die();
             }
         }
+
+        public void Heal(int healNum)
+        {
+            if(healNum + hp.Value > maxHp.Value)
+            {
+                healNum = maxHp.Value - hp.Value;
+            }
+            Debug.Log($"Heal {healNum}");
+            hp.Value += healNum;
+            HealNumber.SetScale(GetDamageNumScale(healNum));
+            HealNumber.Spawn(this.Position(), healNum);
+        }
+
         public virtual void Die()
         {
             state = new PieceStateIdle(this);

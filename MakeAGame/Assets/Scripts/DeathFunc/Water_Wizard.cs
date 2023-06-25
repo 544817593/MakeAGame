@@ -45,14 +45,9 @@ namespace Game
             var pieceSystem = this.GetSystem<IPieceSystem>();
             foreach (BoxGrid grid in grids)
             {
-                int tmpAddHP = addHP;
                 ViewPiece viewpiece = pieceSystem.getViewPieceById(grid.occupation);
                 if(viewpiece == null) continue;
-                if(viewpiece.maxHp - viewpiece.hp <= addHP)
-                {
-                    tmpAddHP = viewpiece.maxHp - viewpiece.hp;
-                }
-                viewpiece.hp.Value += tmpAddHP;
+                viewpiece.Heal(addHP);
             }
             // 对地图上随机3个怪物造成等于治疗量的伤害
             DamageRandMonster(addHP, 3);

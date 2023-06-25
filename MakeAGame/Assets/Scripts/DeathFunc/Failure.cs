@@ -39,8 +39,7 @@ namespace Game
             {
                 addHP += viewCard.card.deathEnhancement.healthIncrease;
             }
-            addHP = viewpiece.hp + addHP > viewpiece.maxHp ? viewpiece.maxHp - viewpiece.hp : addHP;
-            viewpiece.hp.Value += addHP;
+            viewpiece.Heal(addHP);
 
             // 地图上随机3个怪物造成等于回复量的伤害
             DamageRandMonster(addHP, 3);
