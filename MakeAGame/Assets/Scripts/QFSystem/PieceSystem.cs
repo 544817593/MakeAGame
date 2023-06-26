@@ -184,6 +184,8 @@ namespace Game
 
         public void ChangePieceDirection()
         {
+            if (ItemController.Instance.isMarking) return;
+
             Debug.Log($"ChangePieceDirection ret1: {crtSelectedPiece == null} ret2: {viewDirectionWheel.crtDirection == DirEnum.None}");
 
             // 无效操作
@@ -281,7 +283,6 @@ namespace Game
 
         private void ClearPieceLists()
         {
-            Debug.LogWarning("CLEAR PIECE LIST");
             foreach(ViewPiece piece in pieceFriendList)
             {
                 GameObject.Destroy(piece);

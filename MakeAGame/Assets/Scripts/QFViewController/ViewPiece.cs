@@ -371,7 +371,7 @@ namespace Game
         private void MouseUp()
         {
             Debug.Log("mouse up piece");
-            if (itemController.isMarking)
+            if (itemController.isMarking && itemController.markingType == typeof(ViewPiece))
             {
                 ItemController.Instance.markerFunction(this);
                 itemController.CancelMarking();

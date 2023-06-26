@@ -364,7 +364,7 @@ namespace Game
         private void MouseUp()
         {
             Debug.Log("mouse up monster");
-            if (itemController.isMarking)
+            if (itemController.isMarking && itemController.markingType == typeof(Monster))
             {
                 ItemController.Instance.markerFunction(this);
                 itemController.CancelMarking();

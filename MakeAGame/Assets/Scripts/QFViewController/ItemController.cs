@@ -23,6 +23,7 @@ namespace Game
         public delegate void MarkerFunction(ViewPieceBase piece); // 标记模式下成功标记后所执行的委托类
         public MarkerFunction markerFunction; // 实际委托变量
         public Item markerItem; // 标记模式下所使用的物品
+        public Type markingType; // 标记模式下需要标记的单位类
 
         public int sanCostIncreaseProtection = 0; // 不会为卡牌永久增加混沌值损耗次数
         public int deathDestroyProtection = 0; // 死面牌不会被摧毁次数
@@ -503,11 +504,13 @@ namespace Game
                 case "深蓝色羽毛笔":
                     markerFunction = Navy_Quill_Pen;
                     markerItem = e.item;
+                    markingType = typeof(Monster);
                     ActivateMarkingMode();
                     return;
                 case "浅蓝色羽毛笔":
                     markerFunction = Light_Navy_Quill_Pen;
                     markerItem = e.item;
+                    markingType = typeof(ViewPiece);
                     ActivateMarkingMode();
                     return;
                 case "炼金沙":

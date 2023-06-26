@@ -90,6 +90,7 @@ namespace InventoryQuickslotUI
 				if (item.data.itemUseTime != ItemUseTimeEnum.Combat &&
 					item.data.itemUseTime != ItemUseTimeEnum.AnyTime) break;
 
+				int currentIndex = y;
 				RectTransform itemSlotRectTransform = Instantiate(itemSlotTemplate, itemSlotContainer)
 					.GetComponent<RectTransform>();
 				itemSlotRectTransform.gameObject.SetActive(true);
@@ -100,7 +101,7 @@ namespace InventoryQuickslotUI
 				itemSlotRectTransform.Find("ShortcutKey").GetComponent<TextMeshProUGUI>().text = (y + 1).ToString();
 				itemSlotRectTransform.GetComponent<Button>().onClick.AddListener(() => 
 				{
-                    GameEntry.Interface.GetSystem<IInventorySystem>().UseItem(mData.inventory.GetItemList()[y]);
+                    GameEntry.Interface.GetSystem<IInventorySystem>().UseItem(mData.inventory.GetItemList()[currentIndex]);
                 });
                 y++;
 				// 快捷栏只显示五个物品，物品每次改动都会重新Sort一下所以前五个一定是优先显示的物品
