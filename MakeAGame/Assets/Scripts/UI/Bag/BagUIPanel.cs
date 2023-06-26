@@ -25,7 +25,7 @@ namespace BagUI
 		private int lowerIndex = 0;
         private Transform mCardRoot;
         private List<Transform> mListSlotPosition = new List<Transform>();
-		private List<ViewBagCard> cardList = new List<ViewBagCard>();
+		public List<ViewBagCard> cardList = new List<ViewBagCard>();
 		
 
 
@@ -34,9 +34,8 @@ namespace BagUI
 			mData = uiData as BagUIPanelData ?? new BagUIPanelData();
 			// please add init code here
 			mCardRoot = SlotPosition.GetComponent<Transform>();
-		    cardList = mData.inventorySystem.GetBagCardList();
+			cardList = mData.inventorySystem.GetBagCardList();
 			
-
 			var rootChilds = mCardRoot.GetComponentInChildren<Transform>(includeInactive: true);
 			foreach (Transform cardPos in rootChilds)
 			{
@@ -44,9 +43,10 @@ namespace BagUI
 			}
 			BagUIChange.ChangeBagPanel(this, Card);
 			BagUIChange.ChangeBagPanel(this, Item);
-			updateIndex();
-			UpdateLayout();
 			RefreshLayout();
+			updateIndex();
+			//UpdateLayout();
+
 			pageChange();
 
 			Close.onClick.AddListener(() =>
@@ -60,40 +60,47 @@ namespace BagUI
 		
 		protected override void OnOpen(IUIData uiData = null)
 		{
+			RefreshLayout();
+			//UpdateLayout();
+			updateIndex();
 			
 		}
 		
 		protected override void OnShow()
 		{
-			UpdateLayout();
-			updateIndex();
 			RefreshLayout();
+			//UpdateLayout();
+			updateIndex();
+			
 		}
 		
 		protected override void OnHide()
 		{
-			UpdateLayout();
-			updateIndex();
 			RefreshLayout();
+			//UpdateLayout();
+			updateIndex();
+			
 		}
 		
 		protected override void OnClose()
 		{
 			
 		}
-
-		public void RefreshLayout()
+      
+        public void RefreshLayout()
 		{
 			totalPage = cardList.Count != 0 ? (int)Math.Ceiling((double)cardList.Count / gridNum) : 1;
 			// 页数显示
 			TextPageNum.text = $" {curPage} / {totalPage}";
 			int idx = 0;
-			
 			foreach (ViewBagCard v_card in cardList)
 			{
-				
+				v_card.transform.SetParent(SlotPosition.transform);
+				v_card.transform.position = mListSlotPosition[(idx%10)].transform.position;
+				v_card.transform.GetComponent<Canvas>().sortingLayerName = "UI";
 				if (idx >= lowerIndex && idx <= upperIndex)
 				{
+					
 					v_card.gameObject.SetActive(true);
 				}
 				else
@@ -105,35 +112,36 @@ namespace BagUI
 			}
 
 		}
-		public void UpdateLayout()
-        {
-            int minIndex = Mathf.Min(cardList.Count, mListSlotPosition.Count);
-			int index;
+		//public void UpdateLayout()
+  //      {
 			
-				for (index = 0; index < minIndex; index++)
-				{
-					cardList[index].transform.SetParent(SlotPosition.transform);
-					cardList[index].transform.position = mListSlotPosition[index].transform.position;
-					cardList[index].transform.GetComponent<Canvas>().sortingLayerName = "UI";
+		//	int minIndex = Mathf.Min(cardList.Count, mListSlotPosition.Count);
+		//	int index;
+			
+		//		for (index = 0; index < cardList.Count+1; index++)
+		//		{
+		//			cardList[index].transform.SetParent(SlotPosition.transform);
+		//			cardList[index].transform.position = mListSlotPosition[index].transform.position;
+		//			cardList[index].transform.GetComponent<Canvas>().sortingLayerName = "UI";
 				
-			}
-				// 牌被抽走后在背包的显示里清除(此时bagCardList已经更新完毕)
-				for (index = minIndex; index < mListSlotPosition.Count; index++)
-				{
-					mListSlotPosition[index].transform.DestroyChildren();
-                }
+		//	}
+		//		//// 牌被抽走后在背包的显示里清除(此时bagCardList已经更新完毕)
+		//		//for (index = minIndex; index < mListSlotPosition.Count; index++)
+		//		//{
+		//		//	mListSlotPosition[index].transform.DestroyChildren();
+  //  //            }
+		//	RefreshLayout();
 
-			
+		//	updateIndex();
 
 
+		//	//	for (int i = 0; i< minIndex; i++)
+		//	//{
+		//	//	cardList[i].transform.SetParent(mListSlotPosition[i].transform);
+		//	//	cardList[i].transform.position = mListSlotPosition[i].transform.position;
+		//	//}
 
-			//	for (int i = 0; i< minIndex; i++)
-			//{
-			//	cardList[i].transform.SetParent(mListSlotPosition[i].transform);
-			//	cardList[i].transform.position = mListSlotPosition[i].transform.position;
-			//}
-
-		}
+		//}
 
 		public void AddCard(Card cardData)
         {
@@ -142,6 +150,8 @@ namespace BagUI
 
 		private void updateIndex()
 		{
+			
+
 			int bagCount = cardList.Count;
 			lowerIndex = (curPage - 1) * gridNum;
 			// 索引上限为当前页*格子数量-1，如果超过list大小，则为list的元素数量-1

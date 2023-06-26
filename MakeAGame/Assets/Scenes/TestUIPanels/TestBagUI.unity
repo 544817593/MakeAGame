@@ -491,6 +491,22 @@ PrefabInstance:
       propertyPath: m_Name
       value: ItemPositio10
       objectReference: {fileID: 0}
+    - target: {fileID: 806339577, guid: 0d36f6dd861966b4892c3f948d9e656e, type: 3}
+      propertyPath: m_Type
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 806339577, guid: 0d36f6dd861966b4892c3f948d9e656e, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 637fe139cb978d440b2de1ec89b35f46, type: 3}
+    - target: {fileID: 1403616442, guid: 0d36f6dd861966b4892c3f948d9e656e, type: 3}
+      propertyPath: m_Type
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1403616442, guid: 0d36f6dd861966b4892c3f948d9e656e, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 10d8f0fabb222c04dae85a5b0306a05d, type: 3}
     - target: {fileID: 2915898392405766100, guid: 0d36f6dd861966b4892c3f948d9e656e, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -899,17 +915,7 @@ PrefabInstance:
       propertyPath: m_Name
       value: BagUIPanel
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 8322985710730916213, guid: 1ef17e3a36c55d243bb301b6d54414fd, type: 3}
-    - {fileID: 1535455737606632882, guid: 1ef17e3a36c55d243bb301b6d54414fd, type: 3}
-    - {fileID: 5359414094739548569, guid: 1ef17e3a36c55d243bb301b6d54414fd, type: 3}
-    - {fileID: 6498180276888708789, guid: 1ef17e3a36c55d243bb301b6d54414fd, type: 3}
-    - {fileID: 2650642945412318713, guid: 1ef17e3a36c55d243bb301b6d54414fd, type: 3}
-    - {fileID: 1261267445111123531, guid: 1ef17e3a36c55d243bb301b6d54414fd, type: 3}
-    - {fileID: 4322834128243888248, guid: 1ef17e3a36c55d243bb301b6d54414fd, type: 3}
-    - {fileID: 7683118416211128016, guid: 1ef17e3a36c55d243bb301b6d54414fd, type: 3}
-    - {fileID: 7886028007128174560, guid: 1ef17e3a36c55d243bb301b6d54414fd, type: 3}
-    - {fileID: 5258849727664950465, guid: 1ef17e3a36c55d243bb301b6d54414fd, type: 3}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1ef17e3a36c55d243bb301b6d54414fd, type: 3}
 --- !u!224 &6826149167309031565 stripped
 RectTransform:

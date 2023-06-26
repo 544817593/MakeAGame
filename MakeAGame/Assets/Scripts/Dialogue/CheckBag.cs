@@ -54,7 +54,8 @@ public class CheckBag : MonoBehaviour
     {
        
         UIKit.ShowPanel<BagUIPanel>();
-       // GameManager.Instance.StartBagMan();
+        UIKit.GetPanel<BagUIPanel>().RefreshLayout();
+        // GameManager.Instance.StartBagMan();
         isOpen = true;
        
     }

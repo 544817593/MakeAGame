@@ -25,7 +25,9 @@ namespace InventoryQuickslotUI
 			CombatSceneButton.onClick.AddListener(() => 
 			{
 				GameManager.Instance.PauseGame();
-				UIKit.OpenPanel<BagUIPanel>();
+				UIKit.ShowPanel<BagUIPanel>();
+				UIKit.GetPanel<BagUIPanel>().RefreshLayout();
+	
 			});
 
         }

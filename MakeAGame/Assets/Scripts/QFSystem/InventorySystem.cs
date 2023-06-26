@@ -178,11 +178,11 @@ namespace Game
                 {
                     UIKit.GetPanel<BagUIPanel>().CardDescription.Hide();
                 };
-
-           
+   
             cardBagList.Value.Add(cardItem);
-            ShuffleCard();
-            UIKit.GetPanel<BagUIPanel>().UpdateLayout();
+           // Debug.LogError(cardBagList.Value.Count);
+            //ShuffleCard();
+            UIKit.GetPanel<BagUIPanel>().RefreshLayout();
         }
         public List<ViewBagCard> GetBagCardList()
         {

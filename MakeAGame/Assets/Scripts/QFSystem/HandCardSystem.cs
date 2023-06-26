@@ -71,7 +71,8 @@ namespace Game
             for (int i = handCardList.Value.Count - 1; i >= 0; i--)
             {
                 ViewCard viewCard = handCardList.Value[i];
-                this.GetSystem<IInventorySystem>().SpawnBagCardInBag(viewCard.card);
+               
+                UIKit.GetPanel<BagUI.BagUIPanel>().AddCard(viewCard.card);
                 this.SendCommand(new SubHandCardCommand(viewCard));
             }
         }
