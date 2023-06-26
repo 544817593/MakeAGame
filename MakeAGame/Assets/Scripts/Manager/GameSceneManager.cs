@@ -83,7 +83,7 @@ public class GameSceneManager : MonoBehaviour, ICanSendEvent, ICanGetSystem, ICa
                     {
                         GameManager.Instance.soundMan.Play_Combat_Bgm();
                     }
-                    else
+                    else if (sceneName != "Intro")
                     {
                         GameManager.Instance.soundMan.Play_Room_Bgm();
                     }

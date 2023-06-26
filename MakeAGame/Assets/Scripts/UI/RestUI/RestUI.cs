@@ -141,6 +141,7 @@ namespace RestUI
             BtnLeaveRoom.onClick.AddListener(() =>
             {
                 CloseSelf();
+                GameObject.Find("GameSceneManager")?.transform.GetComponent<Game.SceneFlow>().LoadRoom();
             });
         }
 
