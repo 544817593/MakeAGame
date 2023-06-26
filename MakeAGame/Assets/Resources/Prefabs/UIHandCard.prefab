@@ -148,6 +148,7 @@ GameObject:
   - component: {fileID: 9203678507244449739}
   - component: {fileID: 2294694599490090438}
   - component: {fileID: 4129347292393082414}
+  - component: {fileID: 8216066158606381545}
   m_Layer: 5
   m_Name: btnOpen
   m_TagString: Untagged
@@ -273,6 +274,20 @@ MonoBehaviour:
   CustomComponentName: ButtonAddCardTest
   CustomComment: "\u6253\u5F00\u52A8\u753B\u6D4B\u8BD5"
   mComponentName: UnityEngine.UI.Button
+--- !u!114 &8216066158606381545
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2713151239677812236}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d8cac0a88f2d87c428511e43079e8ab3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hoverSound: {fileID: 0}
+  clickSound: {fileID: 8300000, guid: ba7fda2512587d24fa98f0aadff1eb84, type: 3}
 --- !u!1 &2996992735093926772
 GameObject:
   m_ObjectHideFlags: 0
@@ -1898,6 +1913,7 @@ GameObject:
   - component: {fileID: 3347730129736691049}
   - component: {fileID: 4486634676908784522}
   - component: {fileID: 2907543187660514264}
+  - component: {fileID: 5610905042814805083}
   m_Layer: 5
   m_Name: btnClose
   m_TagString: Untagged
@@ -2023,6 +2039,20 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &5610905042814805083
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5626342222706887757}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d8cac0a88f2d87c428511e43079e8ab3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hoverSound: {fileID: 0}
+  clickSound: {fileID: 8300000, guid: c5eeb86b998dc2645987a7c0057be82d, type: 3}
 --- !u!1 &6941506359512491240
 GameObject:
   m_ObjectHideFlags: 0

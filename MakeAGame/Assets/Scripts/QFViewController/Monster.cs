@@ -370,6 +370,10 @@ namespace Game
                 itemController.CancelMarking();
                 itemController.AfterUseCombatItem(itemController.markerItem);
             }
+            else if(itemController.isMarking && itemController.markingType != typeof(Monster))
+            {
+                GameManager.Instance.soundMan.Play_cursor_click_invalid_sound();
+            }
         }
         
         public void SetColliderEnable(bool isEnable)

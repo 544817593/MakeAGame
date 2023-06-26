@@ -297,6 +297,16 @@ MonoBehaviour:
   intro_bgm: {fileID: 8300000, guid: d5ffa6220e41f1e4ba9b8fbf10f1c74b, type: 3}
   combat_bgm: {fileID: 8300000, guid: b5bba41f881c45f409d0d7b16f474376, type: 3}
   room_bgm: {fileID: 8300000, guid: febd5e9d775aae7408288f86466e1c8a, type: 3}
+  itemUse_sound: {fileID: 8300000, guid: f93f8816668fa3f43bb1227171e336b1, type: 3}
+  cursor_click_invalid_sound: {fileID: 8300000, guid: 74f49296fa5b0ae4dbfe3286caf32ab0, type: 3}
+  cursor_click_success_sound: {fileID: 8300000, guid: 53e5b62b384e389478688b50ba5563e7, type: 3}
+  cursor_click_cancel_sound: {fileID: 8300000, guid: 7d0ab7415ac447847b0322d3b005a006, type: 3}
+  hide_bag_sound: {fileID: 8300000, guid: f4f90b4f0eb809e49aeea4820ceedfe0, type: 3}
+  drag_card_sound: {fileID: 8300000, guid: cb1f79b8a1dcbdd4d8f7f6a65da6d9ce, type: 3}
+  place_piece_sound: {fileID: 8300000, guid: b7b01112f739d7841808e578a1c10492, type: 3}
+  wheel_hover_sound: {fileID: 8300000, guid: f8b6dc210abf1fb429d69ff15460ec35, type: 3}
+  ui_click_success_sound: {fileID: 8300000, guid: b61cabc5e209eca498ffef25d4f70f13, type: 3}
+  ui_click_castSpell: {fileID: 8300000, guid: b3d3b74fede659c449ec263949df476c, type: 3}
 --- !u!1 &1031550308
 GameObject:
   m_ObjectHideFlags: 0

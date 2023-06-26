@@ -377,8 +377,13 @@ namespace Game
                 itemController.CancelMarking();
                 itemController.AfterUseCombatItem(itemController.markerItem);
             }
+            else if (itemController.isMarking && itemController.markingType != typeof(ViewPiece))
+            {
+                GameManager.Instance.soundMan.Play_cursor_click_invalid_sound();
+            }
             else
             {
+                GameManager.Instance.soundMan.Play_click_sound();
                 this.SendCommand<ChangePieceDirectionCommand>(new ChangePieceDirectionCommand());
             }
         }

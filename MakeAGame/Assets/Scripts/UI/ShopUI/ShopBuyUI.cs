@@ -14,14 +14,14 @@ namespace ShopBuyUI
     }
 	public partial class ShopBuyUI : UIPanel
 	{
-        // TODO 读取玩家当前金币数量，暂时使用hardcode
-        public int playerGold = 50;
-        private int buyCount = 1;
-		private int gridNum = 10; // 购买栏位上限
+        
+        private int playerGold = 0;
+        private int buyCount = 1; // 物品购买数量
+        private int gridNum = 10; // 购买栏位上限
 		private Dictionary<Button, Item> activeButtons = new Dictionary<Button, Item>();
 		private Item selectedItem = null;
 		private Button selectedButton = null;
-		public List<Item> buyItemList = new List<Item>(); // 已购买的item
+        private List<Item> buyItemList = new List<Item>(); // 已购买的item
         protected override void OnInit(IUIData uiData = null)
 		{
 			mData = uiData as ShopBuyUIData ?? new ShopBuyUIData();
@@ -29,9 +29,9 @@ namespace ShopBuyUI
             // 监听按钮点击，跳转panel
             ShopPanelChange.ChangeShopPanel(this, Close);
             // TODO: 读取玩家当前金币数量，暂时使用hardcode
-            //playerGold = PlayerManager.Instance.player.GetGold();
+            playerGold = GameManager.Instance.playerMan.player.GetGold();
 
-			UpdateAndShowShopItems();
+            UpdateAndShowShopItems();
 			ShowItemInfo();
 			CounterLogic();
 			buyItem();

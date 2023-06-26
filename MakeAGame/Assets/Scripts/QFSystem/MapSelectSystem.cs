@@ -258,9 +258,11 @@ namespace Game
                     PutPieceByHandCardEvent e = new PutPieceByHandCardEvent()
                         {viewCard = viewCard, pieceGrids = validSelectedGrids};
                     this.SendEvent<PutPieceByHandCardEvent>(e);
+                    GameManager.Instance.soundMan.Play_place_piece_sound();
                 }
                 else
                 {
+                    GameManager.Instance.soundMan.Play_cursor_click_cancel_sound();
                     Debug.Log(
                         $"put piece failed, ret1: {isGridCountCorrect} ret2: {isSanEnough}");
                 }   

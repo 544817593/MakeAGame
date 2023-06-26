@@ -311,6 +311,7 @@ namespace Game
         public void CastSkill(bool leftSkill)
         {
             this.SendCommand(new SkillCastCommand(leftSkill));
+            GameManager.Instance.soundMan.Play_UI_Click_CastSpell();
         }
 
         public bool CanUseSkill(SkillNameEnum skill)

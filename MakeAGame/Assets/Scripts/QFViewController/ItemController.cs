@@ -535,11 +535,13 @@ namespace Game
         private void Navy_Quill_Pen(ViewPieceBase piece)
         {
             GameManager.Instance.buffMan.AddBuff(new BuffNavyQuillPen(piece as Monster));
+            GameManager.Instance.soundMan.Play_cursor_click_success_sound();
         }
 
         private void Light_Navy_Quill_Pen(ViewPieceBase piece)
         {
             GameManager.Instance.buffMan.AddBuff(new BuffLightNavyQuillPen(piece as ViewPiece));
+            GameManager.Instance.soundMan.Play_cursor_click_success_sound();
         }
 
         /// <summary>
@@ -579,6 +581,7 @@ namespace Game
         {
             isMarking = false;
             Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
+            GameManager.Instance.soundMan.Play_cursor_click_cancel_sound();
         }
 
         /// <summary>

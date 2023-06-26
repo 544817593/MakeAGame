@@ -15,8 +15,7 @@ namespace ShopSellUI
     }
 	public partial class ShopSellUI : UIPanel
 	{
-        // TODO 读取玩家当前金币数量，暂时使用hardcode
-        public int playerGold = 50;
+        public int playerGold = 0;
         // 背包每页的格子数量上限
         private const int gridNum = 10;
         private int curPage = 1;
@@ -35,6 +34,7 @@ namespace ShopSellUI
             // please add init code here
             // 监听按钮点击，跳转panel
             ShopPanelChange.ChangeShopPanel(this, Close);
+            playerGold = GameManager.Instance.playerMan.player.GetGold();
             RefreshLayout();
             ButtonListen();
             PageChange();

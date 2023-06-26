@@ -214,6 +214,7 @@ namespace Game
         {
             var useItemEvent = new UseItemEvent { item = item };
             GameEntry.Interface.SendCommand(new UseItemCommand(useItemEvent));
+            GameManager.Instance.soundMan.Play_itemUse_sound();
         }
 
         public void ShuffleCard()

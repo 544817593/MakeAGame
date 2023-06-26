@@ -203,6 +203,7 @@ namespace Game
                 // 替换当前方向的资源图片
                 Sprite curDirection = Resources.Load<Sprite>(ViewDirectionWheel.CurDirectionDict[crtSelectedPiece.direction]);
                 crtSelectedPiece.gameObject.transform.Find("CurMoveDirection").GetComponent<SpriteRenderer>().sprite = curDirection;
+                GameManager.Instance.soundMan.Play_ui_click_success_sound();
                 Debug.Log($"change piece direction to {newDirection}");
               
             }

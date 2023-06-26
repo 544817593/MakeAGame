@@ -176,7 +176,9 @@ namespace Game
 				ImgPieceIcon.SetNativeSize();	// 恢复原大小
 				PieceIcon.gameObject.SetActive(true);
 				anim.Play("Down", -1, 0);
-			}
+				GameManager.Instance.soundMan.Play_hide_bag_sound();
+                GameManager.Instance.soundMan.Play_drag_card_sound();
+            }
 		}
 		public void PopCard(string cardId)
         {

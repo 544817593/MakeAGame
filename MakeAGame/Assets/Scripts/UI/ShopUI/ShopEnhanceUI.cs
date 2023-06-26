@@ -17,8 +17,6 @@ namespace ShopEnhanceUI
     }
 	public partial class ShopEnhanceUI : UIPanel
 	{
-        // TODO 读取玩家当前金币数量，暂时使用hardcode
-        public int playerGold = 50;
         // 背包每页的格子数量上限
         private const int gridNum = 10;
         private int curPage = 1;
@@ -36,11 +34,7 @@ namespace ShopEnhanceUI
         private ViewBagCard curCardBeforeEnhance = null; // 作为展示使用
         private ViewBagCard curCardBeforeEnhanceShallowCopy = null; // 作为实际强化的牌使用
         private ViewBagCard curCardAfterEnhance = null; // 作为强化后的预览使用
-        //private Button curEnhanceItemBtn = null;
         private Item curEnhanceItem = null;
-        //private int sellCount = 1;
-        //private Item selectedItem = null;
-        //private Button selectedButton = null;
         private ItemController itemController = new ItemController(); //不确定是不是这样用
         //private Dictionary<Button, ViewBagCard> cardBtn = new Dictionary<Button, ViewBagCard>();
 

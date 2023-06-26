@@ -385,6 +385,7 @@ GameObject:
   - component: {fileID: 782393755855212919}
   - component: {fileID: 1337636510544920380}
   - component: {fileID: 6445212226809262990}
+  - component: {fileID: 3564347259628430806}
   m_Layer: 0
   m_Name: CombatSceneButton
   m_TagString: Untagged
@@ -510,6 +511,20 @@ MonoBehaviour:
   CustomComponentName: CombatSceneButton
   CustomComment: 
   mComponentName: UnityEngine.UI.Button
+--- !u!114 &3564347259628430806
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1980295263243327410}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d8cac0a88f2d87c428511e43079e8ab3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hoverSound: {fileID: 0}
+  clickSound: {fileID: 8300000, guid: f4f6a3539700ba248bfca964b854f34f, type: 3}
 --- !u!1 &2790191424377503431
 GameObject:
   m_ObjectHideFlags: 0
@@ -558,6 +573,7 @@ GameObject:
   - component: {fileID: 2863395787116324170}
   - component: {fileID: 7595727538298035927}
   - component: {fileID: 256585838743369531}
+  - component: {fileID: 441195849639643478}
   m_Layer: 0
   m_Name: Image
   m_TagString: Untagged
@@ -623,6 +639,20 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &441195849639643478
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6440945615024967889}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d8cac0a88f2d87c428511e43079e8ab3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hoverSound: {fileID: 8300000, guid: a3e1e3871063e124b937ee983dcc61c0, type: 3}
+  clickSound: {fileID: 0}
 --- !u!1 &7917511189314490646
 GameObject:
   m_ObjectHideFlags: 0
