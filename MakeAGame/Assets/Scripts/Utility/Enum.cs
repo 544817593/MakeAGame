@@ -166,3 +166,11 @@ public enum CardPackEnum
 {
     None, Base, Warrior
 }
+
+/// <summary>
+/// 死面的类型，用来检查是否可以被对应道具强化
+/// </summary>
+public enum DeathEnhanceTypeEnum
+{
+    None, Damage, Heal, Duration, RandDamageOnMap
+}

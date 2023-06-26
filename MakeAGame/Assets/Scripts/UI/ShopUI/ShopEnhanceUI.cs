@@ -30,7 +30,7 @@ namespace ShopEnhanceUI
             item
         }
         private int curBagTab = (int) BagTabs.card; // 默认当前页是卡牌
-        private int cardCount = 12; // 测试用，想要创建多少张牌
+        private int cardCount = 12; // TODO: 测试用，想要创建多少张牌, 替换成背包卡牌数量
         private ViewBagCard curCardBeforeEnhance = null; // 作为展示使用
         private ViewBagCard curCardBeforeEnhanceShallowCopy = null; // 作为实际强化的牌使用
         private ViewBagCard curCardAfterEnhance = null; // 作为强化后的预览使用
@@ -305,6 +305,10 @@ namespace ShopEnhanceUI
                         Debug.Log("卡牌等级与强化道具不匹配");
                         
                     }
+                    //else if ()
+                    //{
+
+                    //}
                     // TODO: 根据卡牌特性也需要匹配道具的要求
                     else
                     {
@@ -336,6 +340,11 @@ namespace ShopEnhanceUI
 
                 }
             });
+        }
+        private bool DeathTypeMatchEnhanceItem()
+        {
+
+            return false;
         }
         /// <summary>
         /// 清空按钮监听

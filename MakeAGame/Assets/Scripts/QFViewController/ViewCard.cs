@@ -170,7 +170,6 @@ namespace Game
         #region 右键点击 死面
 
         private bool isInDeathFunc;
-        public DeathFuncBase deathFunc;
         void OnRightClick()
         {
             if (!isInDeathFunc && Input.GetMouseButtonUp(1))  // 右键
@@ -197,12 +196,12 @@ namespace Game
 
                 Type methodType = Type.GetType("Game." + deathFuncName);
                 var obj = methodType.Assembly.CreateInstance("Game." + deathFuncName);
-                deathFunc = obj as DeathFuncBase;
-                deathFunc.viewCard = this;
+                card.deathFunc = obj as DeathFuncBase;
+                card.deathFunc.viewCard = this;
 
                 SelectMapStartCommand comm = new SelectMapStartCommand();
                 // comm.area = new SelectArea() {width = card.width, height = card.height, selectStage = MapSelectStage.IsPutDeathFunc};
-                comm.area = deathFunc.area;
+                comm.area = card.deathFunc.area;
                 this.SendCommand<SelectMapStartCommand>(comm);
             }
         }
@@ -217,7 +216,7 @@ namespace Game
                     isInDeathFunc = false;
                     OnUpdate = null;
                     this.SendCommand<SelectMapEndCommand>(new SelectMapEndCommand(this, true));
-                    deathFunc = null;
+                    card.deathFunc = null;
                     return;
                 }
             }
@@ -229,7 +228,7 @@ namespace Game
                     isInDeathFunc = false;
                     OnUpdate = null;
                     this.SendCommand<SelectMapEndCommand>(new SelectMapEndCommand(this, false));
-                    deathFunc = null;
+                    card.deathFunc = null;
                     Dialogue dialogue = GameObject.Find("Dialogue")?.GetComponent<Dialogue>();
                     if (dialogue != null && dialogue.waitForInGamecontrol == true)
                     {   if(card.charaName == "D级员工" && dialogue.popName == "弗朗西斯·维兰德·瑟斯顿" || card.charaName == dialogue.popName && dialogue.popName == "猫头鹰")

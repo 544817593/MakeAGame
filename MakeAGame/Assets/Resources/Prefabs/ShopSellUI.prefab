@@ -5341,7 +5341,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5770653da83127a43997f616411563f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerGold: 50
+  playerGold: 0
   Close: {fileID: 7018449545828309848}
   TextGold: {fileID: 775640694}
   ShopGridPanel: {fileID: 1475892863}

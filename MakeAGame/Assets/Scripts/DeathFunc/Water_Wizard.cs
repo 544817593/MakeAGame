@@ -17,6 +17,7 @@ namespace Game
         {
             area.width = 3;
             area.height = 3;
+            deathEnhanceTypeList.Add(DeathEnhanceTypeEnum.Heal);
         }
         
         public override void OnExecute(List<BoxGrid> grids)

@@ -15,7 +15,7 @@ namespace ShopSellUI
     }
 	public partial class ShopSellUI : UIPanel
 	{
-        public int playerGold = 0;
+        private int playerGold = 0;
         // 背包每页的格子数量上限
         private const int gridNum = 10;
         private int curPage = 1;
