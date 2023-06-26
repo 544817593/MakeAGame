@@ -42,6 +42,9 @@ namespace Game
             new_rooms.Value.Add(RoomEnum.NPC);
             new_rooms.Value.Add(RoomEnum.Combat);
             new_rooms.Value.Add(RoomEnum.Combat);
+            
+            new_rooms.Value.Add(RoomEnum.Explore); // todo 探索房 test
+            
             ran_rooms.Value = RoomSelector.GenerateRooms();
             for (int i = 0; i < ran_rooms.Value.Count; i++)
             {
