@@ -69,6 +69,7 @@ public class BuffManager : MonoBehaviour
 
     public void SetBuffIcon(ViewPieceBase target, string name)
     {
+        Debug.LogWarning(target);
         GameObject go = new GameObject(name);
         go.transform.SetParent(target.transform);
         SpriteRenderer spr = go.AddComponent<SpriteRenderer>();
