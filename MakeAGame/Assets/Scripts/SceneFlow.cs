@@ -56,17 +56,22 @@ namespace Game
             }
 
             GameManager.Instance.ResumeGame();
-            StartCoroutine(GameManager.Instance.gameSceneMan.LoadScene(m_room.ToString(), false));
-            StartCoroutine(GameManager.Instance.gameSceneMan.UnloadScene(Pre_Room));
             
-            // unload战斗房，视为结束战斗 // 用CombatVictoryEvent
-            // if (Pre_Room == "Combat")
-            // {
-            //     GameEntry.Interface.SendEvent<RoomCombatEndEvent>();   
-            // }
-            
+            EnterRoom(m_room);
+            ExitRoom(Pre_Room);
+
             Pre_Room = m_room.ToString();
-        }    
+        }
+
+        private void EnterRoom(RoomEnum room)
+        {
+            StartCoroutine(GameManager.Instance.gameSceneMan.LoadScene(room.ToString(), false));
+        }
+
+        private void ExitRoom(string roomName)
+        {
+            StartCoroutine(GameManager.Instance.gameSceneMan.UnloadScene(roomName));
+        }
     }
 }
     
