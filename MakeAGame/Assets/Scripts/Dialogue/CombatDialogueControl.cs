@@ -12,6 +12,7 @@ public class CombatDialogueControl : MonoBehaviour, IController, ICanSendEvent
     [SerializeField]
     GameObject m_gameObject;
     public bool start_dialogue;
+    public bool active;
    
     public IArchitecture GetArchitecture()
     {
@@ -21,6 +22,10 @@ public class CombatDialogueControl : MonoBehaviour, IController, ICanSendEvent
     // Start is called before the first frame update
     void Start()
     {
+        if(SceneFlow.combatSceneCount == 2)
+        {
+            active = true;
+        }
    
         if (SceneFlow.combatSceneCount == 1)
         {
@@ -34,7 +39,7 @@ public class CombatDialogueControl : MonoBehaviour, IController, ICanSendEvent
             this.RegisterEvent<CombatVictoryEvent>(e => OnCombatVictoryEvent());
 
         }
-      
+        
         else
         {
             ResKit.Init();
@@ -53,6 +58,8 @@ public class CombatDialogueControl : MonoBehaviour, IController, ICanSendEvent
             m_gameObject.GetComponent<Dialogue>().popName = "猫头鹰";
             GameManager.Instance.PauseGame();
             UIKit.HidePanel<UIHandCard>();
+            start_dialogue = false;
+            active = false;
         }
     }
 

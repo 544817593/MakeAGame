@@ -210,7 +210,7 @@ namespace Game
             crtSelectedPiece = null;
            
             Dialogue dialogue = GameObject.Find("Dialogue")?.GetComponent<Dialogue>();
-            if (dialogue != null)
+            if (dialogue != null&& dialogue.popName == "弗朗西斯·维兰德·瑟斯顿")
             {
                 if (CheckControl == true)
                 {
