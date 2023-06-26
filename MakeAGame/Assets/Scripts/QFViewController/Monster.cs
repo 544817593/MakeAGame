@@ -301,14 +301,17 @@ namespace Game
             {               
                 StartCoroutine(PlayAttackAnimByMarking(GameObject.Instantiate(anim, this.transform)));
                 foundAttackAnim = true;
-            }           
-            foreach(AnimatorControllerParameter parameter in attacker.pieceAnimator.parameters)
+            }       
+            if (attacker.pieceAnimator != null)
             {
-                if (parameter.name == "isAttack")
+                foreach (AnimatorControllerParameter parameter in attacker.pieceAnimator.parameters)
                 {
-                    StartCoroutine(PlayAttackAnimByAction(attacker));
-                    foundAttackAnim = true;
-                    break;
+                    if (parameter.name == "isAttack")
+                    {
+                        StartCoroutine(PlayAttackAnimByAction(attacker));
+                        foundAttackAnim = true;
+                        break;
+                    }
                 }
             }
             if (!foundAttackAnim)

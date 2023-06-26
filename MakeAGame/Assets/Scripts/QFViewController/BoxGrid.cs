@@ -39,6 +39,15 @@ namespace Game
             {EdgeSprite.Grass_Haystack, "Sprites/Grids/草皮-草垛"},
             {EdgeSprite.Tile_Jar, "Sprites/Grids/砖地-罐子"},
             {EdgeSprite.Tile_Candle, "Sprites/Grids/砖地-蜡烛"},
+            {EdgeSprite.Stonesword_TopRight, "Sprites/Grids/石中剑-右上"},
+            {EdgeSprite.Stonesword_LowRight, "Sprites/Grids/石中剑-右下"},
+            {EdgeSprite.Stonesword_LowLeft, "Sprites/Grids/石中剑-左下"},
+            {EdgeSprite.Stoneskeleton_TopRight, "Sprites/Grids/骨架-右上"},
+            {EdgeSprite.Stoneskeleton_TopLeft, "Sprites/Grids/骨架-左上"},
+            {EdgeSprite.Stoneskeleton_LowRight, "Sprites/Grids/骨架-右下"},
+            {EdgeSprite.Stoneskeleton_LowLeft, "Sprites/Grids/骨架-左下"},
+            {EdgeSprite.SkeletonLight_Top, "Sprites/Grids/骨灯-上"},
+            {EdgeSprite.SkeletonLight_Low, "Sprites/Grids/骨灯-下"},
         };
     }
     

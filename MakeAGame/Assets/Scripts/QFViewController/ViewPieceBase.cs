@@ -369,6 +369,7 @@ namespace Game
         /// <param name="defender">挨打棋子</param>
         public void PieceFlip(ViewPieceBase defender)
         {
+            if (pieceAnimator == null) return;
             if ((isFacingRight && defender.pieceGrids[0].col < pieceGrids[0].col) ||
                 (!isFacingRight && defender.pieceGrids[0].col > pieceGrids[0].col))
             {
