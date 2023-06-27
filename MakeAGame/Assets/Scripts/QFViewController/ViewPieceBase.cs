@@ -220,7 +220,7 @@ namespace Game
         /// <param name="newGridTransPos">新位置</param>
         /// <param name="duration">持续时间</param>
         /// <returns></returns>
-        protected IEnumerator MoveToTarget(Vector3 newGridTransPos, float duration = 0.5f)
+        protected IEnumerator MoveToTarget(Vector3 newGridTransPos, float duration = 1f)
         {
             Vector3 startPosition = transform.position;
             float elapsedTime = 0f;

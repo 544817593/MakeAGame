@@ -93,6 +93,7 @@ namespace Game
                 timeMultiplier /= pieceGrids.Count;
                 currLife.Value -= Time.deltaTime * timeMultiplier;
             }
+
         }
 
         private void OnCurrLifeChanged(float e)
@@ -123,10 +124,7 @@ namespace Game
                 GameObject pieceAnim = GameObject.Instantiate(animGO);                
                 pieceAnimator = pieceAnim.GetComponent<Animator>();
                 pieceAnim.transform.SetParent(gameObject.transform);
-                Debug.LogError(animGO.transform.localScale);
                 pieceAnim.transform.localScale = animGO.transform.localScale * 0.1f;
-                Debug.LogError(pieceAnim.transform.localScale);
-                Debug.LogError(pieceAnim.name);
                 pieceAnim.transform.localPosition = new Vector3(0, 0.25f, -0.25f); // 确保不会被棋盘遮住
                 pieceAnim.transform.localRotation = animGO.transform.localRotation;
 
