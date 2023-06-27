@@ -23,8 +23,7 @@ public class CombatDialogueControl : MonoBehaviour, IController, ICanSendEvent
     {
         
         if (SceneFlow.combatSceneCount == 1)
-        {
-          
+        {       
             m_gameObject.SetActive(true);
             UIKit.GetPanel<DialoguePanel>().NPC.GetComponent<Image>().sprite = Resources.Load<Sprite>("UI/NPC/弗朗西斯");
             UIKit.GetPanel<DialoguePanel>().NPC.GetComponent<Image>().LocalScale(0.5f, 1.0f, 1f);
@@ -55,7 +54,7 @@ public class CombatDialogueControl : MonoBehaviour, IController, ICanSendEvent
     // Update is called once per frame
     void Update()
     {
-        
+       
     }
 
    

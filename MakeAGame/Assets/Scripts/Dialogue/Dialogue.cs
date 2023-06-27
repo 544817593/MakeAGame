@@ -45,6 +45,7 @@ public class Dialogue : ViewController
     private const string Reward_TAG = "reward";//奖励机制
     private const string Gift_TAG = "gift";//NPC赠送
     private const string Pop_TAG = "pop";//NPC赠送
+    private const string Finshed_TAG = "Finish";
     //private const string SPRITE_DECISION_TAG = "Decision_Sprite";//精神判定机制
     //private const string STRENGTH_DECISION_TAG = "Decision_Strength";//力量判定机制
     public string bgPath = "UI/IntroUI/初始界面-背景图";
@@ -68,8 +69,8 @@ public class Dialogue : ViewController
     public bool waitForPass = false;
     public bool showGift = false;
   
-    public bool victory = false;
-    public bool wait_event = false;
+    
+    
    
     public GameObject npc;
     public GameObject backGround;
@@ -382,6 +383,12 @@ public class Dialogue : ViewController
         {
             d_finish = true;
             UIKit.HidePanel<DialoguePanel>();
+            if(SceneFlow.combatSceneCount == 2)
+            {
+                GameManager.Instance.ResumeGame();
+                UIKit.ShowPanel<UIHandCard>();
+              
+            }
         }
 
 
@@ -532,29 +539,24 @@ public class Dialogue : ViewController
             switch (tagK)
             {
                 case ControlInGame_TAG:
-                    //waitForControl = true;
-                    
+                    //waitForControl = true;                
                         waitForInGamecontrol = true;
                         GameManager.Instance.ResumeGame();
-                   
-                        
-                    
                    // InGameControl();
                     break;
                 case Pass_TAG:
                     waitForPass = true;
-                    GameManager.Instance.ResumeGame();
-                   
-                   
+                    GameManager.Instance.ResumeGame();                 
                     break;
                 case Wait_TAG:
                     waitForScene = true;
-                    GameManager.Instance.ResumeGame();
-                        
+                    GameManager.Instance.ResumeGame();                     
                     break;
-                case Pop_TAG:
-                    
+                case Pop_TAG:  
                     UIKit.GetPanel<UIHandCard>().PopCard(popName);
+                    break;
+                case Finshed_TAG:
+                   
                     break;
             }
 

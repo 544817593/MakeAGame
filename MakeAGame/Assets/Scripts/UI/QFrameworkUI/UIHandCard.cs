@@ -195,7 +195,7 @@ namespace Game
 					Vcard.transform.localScale = new Vector3(1f, 1f, 1f);
 					
 					var tmpPos = cardPosList[focusIndex].localPosition;
-					tmpPos.y += detailOffsetY;
+					tmpPos.y += 100;
 					Vcard.transform.localPosition = tmpPos;
 					nodeTooltip.SetParent(Vcard.tooltipTrans);
 					nodeTooltip.localPosition = Vector3.zero;
