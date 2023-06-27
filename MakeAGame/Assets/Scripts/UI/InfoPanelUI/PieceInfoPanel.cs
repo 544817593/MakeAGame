@@ -43,35 +43,38 @@ namespace PieceInfo
 			DefenseData.text = $"{piece.defense}";
 			AccuracyData.text = $"{piece.accuracy}";
             AtkRangeData.text = $"{piece.atkRange}";
+
 			string featureText = "";
-			// TODO 需要所有feature的对应中文名
 			foreach (FeatureEnum feature in piece.features.Value)
 			{
 				if(feature != FeatureEnum.None)
 				{
-                    featureText += feature.ToString() + " ";
+                    SOFeature featureSO = IdToSO.FindFeatureSOByEnum(feature);
+                    featureText += featureSO.featureName + "   ";
                 }
 			}
 			if (featureText != "")
 			{
 				FeatureData.text = featureText;
 			}
+
 			string statusText = "";
 			foreach(BuffType status in piece.listBuffs)
 			{
-				statusText += status.ToString() + " ";
+				statusText += Extensions.buffToName[status] + "   ";
 			}
 			if(statusText != "")
 			{
 				StatusData.text = statusText;
 			}
-			// TODO 额外属性的获取位置？
+
 			string additionalPropertyText = "";
 			foreach(FeatureEnum addiProp in piece.card.so.specialFeatures)
 			{
 				if(addiProp != FeatureEnum.None)
 				{
-                    additionalPropertyText += addiProp.ToString() + " ";
+                    SOFeature featureSO = IdToSO.FindFeatureSOByEnum(addiProp);
+                    additionalPropertyText += $"{featureSO.featureName}: {featureSO.featureDesc} \n";
                 }
             }
 			if(additionalPropertyText != "")

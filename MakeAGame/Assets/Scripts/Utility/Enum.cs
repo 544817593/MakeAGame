@@ -39,7 +39,8 @@ public enum FeatureEnum
     None, Anthropologist, Writer, Hydrophobia, Insomnia, Psychologist, Dominant,
     SolitaryHero, Determined, Toxicologist, Camouflaged, Bloodthirsty, MagicResistant,
     Airborne, AnimalKiller, Aquatic, Feline, SoundSensitive, TinyCreature, Avian,
-    Rodent, Human, Lazy, Laborer, Greedy
+    Rodent, Human, Lazy, Laborer, Greedy, Cocooning, Doctor, Study, ThroughKey, Unshakable,
+    Affinity, LoveCrazy, Insight, Vine, WaterHeal
 }
 
 /// <summary>

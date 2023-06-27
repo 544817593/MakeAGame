@@ -3,7 +3,11 @@ using UnityEngine.UI;
 using QFramework;
 using Game;
 using BagUI;
+using System;
 using TMPro;
+using ItemInfo;
+using static UnityEditor.Progress;
+using Unity.VisualScripting;
 
 namespace InventoryQuickslotUI
 {
@@ -97,7 +101,10 @@ namespace InventoryQuickslotUI
 				itemSlotRectTransform.anchoredPosition = new Vector2(x * itemSlotCellSize, y * itemSlotCellSize - 25);
 				Image image = itemSlotRectTransform.Find("Image").GetComponent<Image>();
 				image.sprite = item.data.sprite;
-				itemSlotRectTransform.Find("ItemAmount").GetComponent<TextMeshProUGUI>().text = "x" + item.amount.ToString();
+                UIEventHelper mouseHelper = image.AddComponent<UIEventHelper>();
+                mouseHelper.OnUIPointEnter = () => MouseEnter(item);
+                mouseHelper.OnUIPointExit = () => MouseExit(item);
+                itemSlotRectTransform.Find("ItemAmount").GetComponent<TextMeshProUGUI>().text = "x" + item.amount.ToString();
 				itemSlotRectTransform.Find("ShortcutKey").GetComponent<TextMeshProUGUI>().text = (y + 1).ToString();
 				itemSlotRectTransform.GetComponent<Button>().onClick.AddListener(() => 
 				{
@@ -110,5 +117,17 @@ namespace InventoryQuickslotUI
 			activeQuickSlotCount = y;
 
         }
+
+		private void MouseEnter(Item item)
+		{
+			Debug.Log($" {item.data.itemName} mouseHelper MouseEnter");
+			UIKit.OpenPanel<ItemInfoPanel>();
+			UIKit.GetPanel<ItemInfoPanel>().LoadItemData(item);
+		}
+        private void MouseExit(Item item)
+        {
+            Debug.Log($" {item.data.itemName} mouseHelper MouseExit");
+            UIKit.ClosePanel<ItemInfoPanel>();
+		}
 	}
 }

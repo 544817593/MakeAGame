@@ -27,6 +27,16 @@ namespace Game
         public static List<DirEnum> rightDirs = new List<DirEnum>()
             { DirEnum.Topright, DirEnum.Right, DirEnum.Downright };
 
+        public static Dictionary<BuffType, string> buffToName = new Dictionary<BuffType, string>() 
+        {
+            { BuffType.Confusion, "混乱"},
+            { BuffType.Poison, "中毒"},
+            { BuffType.Drowning, "溺水"},
+            { BuffType.Terrian_Poison, "毒沼"},
+            { BuffType.Terrian_Fire, "炽焰"},
+            { BuffType.Terrian_Water, "水潭"},
+        };
+
         /// <summary>
         /// 获取角色信息so
         /// </summary>

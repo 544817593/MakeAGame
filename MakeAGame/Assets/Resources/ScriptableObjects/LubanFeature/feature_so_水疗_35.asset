@@ -15,5 +15,5 @@ MonoBehaviour:
   featureID: 35
   featureName: "\u6C34\u7597"
   featureDesc: "\u4E3A\u8DDD\u79BB\u4E3A3\u7684\u53CB\u519B\u6BCF3\u79D2\u56DE\u590D10\u70B9\u751F\u547D\u503C\uFF0C\u5982\u679C\u8BE5\u8DDD\u79BB\u5185\u6709\u6C34\uFF0C\u6BCF3\u79D2\u5219\u56DE\u590D20\u70B9\u3002"
-  typeName: 
+  typeName: WaterHeal
   icon: {fileID: 0}
