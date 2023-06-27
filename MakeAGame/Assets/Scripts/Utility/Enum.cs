@@ -173,5 +173,5 @@ public enum CardPackEnum
 /// </summary>
 public enum DeathEnhanceTypeEnum
 {
-    None, Damage, Heal, Duration, RandDamageOnMap
+    None, Damage, Heal, Duration, RandDamageOnMap, FeatureRemove
 }

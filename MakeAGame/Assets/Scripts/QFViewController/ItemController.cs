@@ -257,6 +257,7 @@ namespace Game
                     if (rand > 14)
                     {
                         viewBagCard.card.deathEnhancement.extraDamageEffect = true;
+                        viewBagCard.card.deathFunc.deathEnhanceTypeList.Add(DeathEnhanceTypeEnum.RandDamageOnMap);
                         break;
                     }
                     AfterUseMerchantItem(item, viewBagCard, false);

@@ -63,7 +63,7 @@ namespace ShopSellUI
             List<Item> bagItemList = mData.shopSystem.GetBagItemList();
             totalPage = bagItemList.Count != 0 ? (int)Math.Ceiling((double)bagItemList.Count / gridNum) : 1;
             // 玩家金币显示
-            TextGold.text = $"金币: {playerGold}";
+            TextGold.text = $": {playerGold}";
 			// 页数显示
 			TextPageNum.text = $" {curPage} / {totalPage}";
             
@@ -251,7 +251,7 @@ namespace ShopSellUI
             selectedItem.amount -= sellCount;
             selectedButton.transform.Find("ItemNum").GetComponent<TextMeshProUGUI>().text = selectedItem.amount.ToString();
             playerGold += sellCount * selectedItem.data.sellPrice;
-            TextGold.text = $"金币: {playerGold}";
+            TextGold.text = $": {playerGold}";
 
             // 重置
             sellCount = 1;

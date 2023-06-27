@@ -65,7 +65,7 @@ namespace ShopBuyUI
 			int idx = 0;
             
 			// 玩家金币读取
-            TextGold.text = $"金币: {playerGold}";
+            TextGold.text = $": {playerGold}";
 			// 物品购买数量初始化
 			TextCount.text = $"{buyCount}";
 			// 初始化每个Item图标，数量，花费
@@ -197,7 +197,7 @@ namespace ShopBuyUI
             selectedItem.amount -= buyCount;
             selectedButton.transform.Find("ItemNum").GetComponent<TextMeshProUGUI>().text = selectedItem.amount.ToString();
 			playerGold -= buyCount * selectedItem.data.buyCost;
-            TextGold.text = $"金币: {playerGold}";
+            TextGold.text = $": {playerGold}";
 
 			// 重置
             buyCount = 1;

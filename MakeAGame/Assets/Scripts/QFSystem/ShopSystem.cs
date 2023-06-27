@@ -53,11 +53,13 @@ namespace Game
             AddShopItemWithoutCall(new Item { amount = 1, data = Resources.Load<SOItemBase>("ScriptableObjects/Items/Item31") });
             AddShopItemWithoutCall(new Item { amount = 4, data = Resources.Load<SOItemBase>("ScriptableObjects/Items/Item01") });
 
-            AddBagItem(new Item { amount = 2, data = Resources.Load<SOItemBase>($"ScriptableObjects/Items/Item31") });
-            for (int i = 1; i <= 32; ++i)
-            {
-                AddBagItem(new Item { amount = 1, data = Resources.Load<SOItemBase>($"ScriptableObjects/Items/Item01") });
-            }
+            bagItemList.Value = this.GetSystem<IInventorySystem>().GetItemList();
+            bagCardList.Value = this.GetSystem<IInventorySystem>().GetBagCardList();
+            //AddBagItem(new Item { amount = 2, data = Resources.Load<SOItemBase>($"ScriptableObjects/Items/Item31") });
+            //for (int i = 1; i <= 32; ++i)
+            //{
+            //    AddBagItem(new Item { amount = 1, data = Resources.Load<SOItemBase>($"ScriptableObjects/Items/Item01") });
+            //}
             // bagCardList在ShopEnhanceUI.cs中初始化，因为ShopSystem在点购买和出售的时候也会执行，不符合需要
         }
 
