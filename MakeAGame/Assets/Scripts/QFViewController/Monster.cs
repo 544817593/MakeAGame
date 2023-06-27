@@ -112,14 +112,14 @@ namespace Game
             {
                 oldGrid.occupation = 0;
                 oldGrid.gridStatus.Value = GridStatusEnum.Unoccupied;
-                if (data.monsterId == 9998 && oldGrid.timeMultiplier == TimeMultiplierEnum.Superfast && SceneFlow.combatSceneCount == 2 )
-                {
-                    if(GameObject.Find("CombatSceneController").GetComponent<CombatDialogueControl>().active == true)
-                    {
-                        GameObject.Find("CombatSceneController").GetComponent<CombatDialogueControl>().start_dialogue = true;
-                    }
+                //if (data.monsterId == 9998 && oldGrid.timeMultiplier == TimeMultiplierEnum.Superfast && SceneFlow.combatSceneCount == 2 )
+                //{
+                //    if(GameObject.Find("CombatSceneController").GetComponent<CombatDialogueControl>().active == true)
+                //    {
+                //        GameObject.Find("CombatSceneController").GetComponent<CombatDialogueControl>().start_dialogue = true;
+                //    }
                     
-                }
+                //}
             }
             pieceGrids = nextGrids;
             foreach (var newGrid in pieceGrids)

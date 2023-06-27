@@ -412,10 +412,6 @@ public class Dialogue : ViewController
         DisplayChoices();
         canContinue = true;
         HandleCombatTags(story.currentTags);
-
-
-
-
     }
 
    public void InGameControl()

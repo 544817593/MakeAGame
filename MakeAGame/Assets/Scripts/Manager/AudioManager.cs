@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using QFramework;
+using UnityEngine.UI;
 public class AudioManager : MonoBehaviour
 {
     public static AudioManager Instance { get; private set; }
@@ -29,8 +30,10 @@ public class AudioManager : MonoBehaviour
     public AudioClip wheel_hover_sound;
     public AudioClip ui_click_success_sound;
     public AudioClip ui_click_castSpell;
+   
     public void Play_Room_Bgm()
     {
+       
         AudioKit.PlayMusic(room_bgm);
     }
     public void Play_Combat_Bgm()
