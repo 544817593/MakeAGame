@@ -447,7 +447,7 @@ namespace Game
         /// <summary>
         /// 以播放攻击方自身攻击动画的形式展示攻击
         /// </summary>
-        /// <param name="animationInstance"></param>
+        /// <param name="attacker"></param>
         /// <returns></returns>
         protected IEnumerator PlayAttackAnimByAction(ViewPieceBase attacker)
         {

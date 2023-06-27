@@ -276,8 +276,9 @@ namespace Game
                 transform.DOMove(nextPos, 0.3f).OnComplete(OnMoveFinish);
             }
 
+            // 棋子在移动前可能因为回头攻击被转向
+            PieceFlip(direction);
 
-            
 
         }
 
@@ -287,6 +288,17 @@ namespace Game
         {
             Debug.Log($"monster {this.pieceId.ToString()} is about to attack");
             this.SendEvent<PieceAttackReadyEvent>();
+            if (pieceAnimator != null)
+            {
+                foreach (AnimatorControllerParameter parameter in pieceAnimator.parameters)
+                {
+                    if (parameter.name == "isAttack")
+                    {
+                        StartCoroutine(PlayAttackAnimByAction(this));
+                        break;
+                    }
+                }
+            }
             this.SendCommand<PieceAttackCommand>(new PieceAttackCommand(this));
         }
 
@@ -298,27 +310,11 @@ namespace Game
             Debug.Log($"Monster Hit, damage: {damage} hp: {hp.Value}");
             MonsterDamageNumber.Spawn(this.Position(), damage);
             // 播放受击动画
-            bool foundAttackAnim = false;
             GameObject anim = IdToSO.FindCardSOByID(attacker.generalId)?.GetAttackAnim();
             if (anim != null)
             {               
                 StartCoroutine(PlayAttackAnimByMarking(GameObject.Instantiate(anim, this.transform)));
-                foundAttackAnim = true;
             }       
-            if (attacker.pieceAnimator != null)
-            {
-                foreach (AnimatorControllerParameter parameter in attacker.pieceAnimator.parameters)
-                {
-                    if (parameter.name == "isAttack")
-                    {
-                        StartCoroutine(PlayAttackAnimByAction(attacker));
-                        foundAttackAnim = true;
-                        break;
-                    }
-                }
-            }
-            if (!foundAttackAnim)
-            Debug.LogError("Attack animation for piece " + attacker.generalId + " was not found"); 
             
             
             this.SendEvent<PieceHitFinishEvent>(new PieceHitFinishEvent { piece = this });

@@ -6,6 +6,7 @@ using DG.Tweening;
 using QFramework;
 using Unity.VisualScripting;
 using UnityEditor;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using static UnityEngine.GraphicsBuffer;
 using static UnityEngine.UI.Image;
@@ -82,7 +83,7 @@ namespace Game
         private new void Update()
         {
             base.Update();
-            if(!lockLife && currLife.Value > 0.001f)
+            if(!lockLife && currLife.Value > 0)
             {
                 float timeMultiplier = 0;
                 foreach(BoxGrid grid in pieceGrids)
@@ -117,11 +118,15 @@ namespace Game
             //动画部分
             GameObject animGO = IdToSO.FindCardSOByID(card.charaID).GetAnim();
             if (animGO != null)
-            {                
+            {
+                
                 GameObject pieceAnim = GameObject.Instantiate(animGO);                
                 pieceAnimator = pieceAnim.GetComponent<Animator>();
                 pieceAnim.transform.SetParent(gameObject.transform);
+                Debug.LogError(animGO.transform.localScale);
                 pieceAnim.transform.localScale = animGO.transform.localScale * 0.1f;
+                Debug.LogError(pieceAnim.transform.localScale);
+                Debug.LogError(pieceAnim.name);
                 pieceAnim.transform.localPosition = new Vector3(0, 0.25f, -0.25f); // 确保不会被棋盘遮住
                 pieceAnim.transform.localRotation = animGO.transform.localRotation;
 
@@ -253,6 +258,9 @@ namespace Game
             {
                 transform.DOMove(nextPos, 0.3f).OnComplete(OnMoveFinish);
             }
+
+            // 棋子在移动前可能因为回头攻击被转向
+            PieceFlip(direction);
         }
 
 
@@ -269,6 +277,17 @@ namespace Game
         {
             Debug.Log($"piece {this.ToString()} is about to attack");
             // this.SendEvent<PieceAttackReadyEvent>();
+            if (pieceAnimator != null)
+            {
+                foreach (AnimatorControllerParameter parameter in pieceAnimator.parameters)
+                {
+                    if (parameter.name == "isAttack")
+                    {
+                        StartCoroutine(PlayAttackAnimByAction(this));
+                        break;
+                    }
+                }
+            }
             this.SendCommand<PieceAttackCommand>(new PieceAttackCommand(this));
         }
         
@@ -280,29 +299,11 @@ namespace Game
             Debug.Log($"Piece Hit, damage: {damage} hp: {hp}");
             MonsterDamageNumber.Spawn(this.Position(), damage);
             // 播放受击动画
-            bool foundAttackAnim = false;
             GameObject anim = ((Monster)attacker).data.GetAttackAnim();
             if (anim != null)
             {               
                 StartCoroutine(PlayAttackAnimByMarking(GameObject.Instantiate(anim, this.transform)));
-                foundAttackAnim = true;
             }          
-            if (attacker.pieceAnimator != null)
-            {
-                foreach (AnimatorControllerParameter parameter in attacker.pieceAnimator.parameters)
-                {
-                    if (parameter.name == "isAttack")
-                    {
-                        StartCoroutine(PlayAttackAnimByAction(attacker));
-                        foundAttackAnim = true;
-                        break;
-                    }
-                }
-            }
-
-            if (!foundAttackAnim)
-                Debug.LogError("Attack animation for piece " + attacker.generalId + " was not found");
-            
 
             this.SendEvent<PieceHitFinishEvent>(new PieceHitFinishEvent { piece = this });
 

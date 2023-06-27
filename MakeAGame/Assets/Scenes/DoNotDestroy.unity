@@ -304,7 +304,7 @@ MonoBehaviour:
   hide_bag_sound: {fileID: 8300000, guid: f4f90b4f0eb809e49aeea4820ceedfe0, type: 3}
   drag_card_sound: {fileID: 8300000, guid: cb1f79b8a1dcbdd4d8f7f6a65da6d9ce, type: 3}
   place_piece_sound: {fileID: 8300000, guid: b7b01112f739d7841808e578a1c10492, type: 3}
-  wheel_hover_sound: {fileID: 8300000, guid: f8b6dc210abf1fb429d69ff15460ec35, type: 3}
+  wheel_hover_sound: {fileID: 8300000, guid: 4f9dc589a3b522c45855287f1eb93efb, type: 3}
   ui_click_success_sound: {fileID: 8300000, guid: b61cabc5e209eca498ffef25d4f70f13, type: 3}
   ui_click_castSpell: {fileID: 8300000, guid: b3d3b74fede659c449ec263949df476c, type: 3}
 --- !u!1 &1031550308

@@ -13,19 +13,13 @@ MonoBehaviour:
   m_Name: MonsterSpawnMap1-1a
   m_EditorClassIdentifier: 
   spawnPoints:
-  - {x: 5, y: 20}
-  - {x: 5, y: 19}
-  - {x: 6, y: 17}
-  - {x: 7, y: 17}
+  - {x: 6, y: 16}
+  - {x: 6, y: 19}
   - {x: 3, y: 19}
-  - {x: 7, y: 20}
-  spawnProbability: 640000006400000064000000640000006400000064000000
-  spawnDuration: 050000000500000005000000050000000500000005000000
-  spawnCooldown: 0a0000000a0000000a0000000a0000000a0000000a000000
+  spawnProbability: 640000004b0000004b000000
+  spawnDuration: 960000009600000096000000
+  spawnCooldown: 140000001e00000028000000
   monsterName:
   - HoundsOfTindalos
-  - Ghast
-  - LengSpider
-  - MoonBeast
-  - StarVampire
-  - UprightRat
+  - HoundsOfTindalos
+  - HoundsOfTindalos

@@ -12,14 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 71c5afa0ccd586245a0cebb285f04dab, type: 3}
   m_Name: Player
   m_EditorClassIdentifier: 
-  gold: 0
+  gold: 6
   goldAcquisitionMultiplier: 0
-  san: 0
+  san: 20
   maxSan: 100
-  sanRegenSpeed: 0
+  sanRegenSpeed: 1
   turnPieceCount: 8
-  strength: 1
-  spirit: 1
-  skill: 1
-  stamina: 1
-  chrisma: 1
+  strength: 0
+  spirit: 0
+  skill: 0
+  stamina: 0
+  chrisma: 0
