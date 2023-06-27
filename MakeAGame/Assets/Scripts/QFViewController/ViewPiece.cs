@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading;
 using DamageNumbersPro;
 using DG.Tweening;
+using PieceInfo;
 using QFramework;
 using Unity.VisualScripting;
 using UnityEditor;
@@ -385,6 +386,19 @@ namespace Game
                 GameManager.Instance.soundMan.Play_click_sound();
                 this.SendCommand<ChangePieceDirectionCommand>(new ChangePieceDirectionCommand());
             }
+        }
+
+        private void MouseEnter()
+        {
+            Debug.Log("mouse enter piece");
+            UIKit.OpenPanel<PieceInfoPanel>();
+            UIKit.GetPanel<PieceInfoPanel>().LoadPieceData(this);
+        }
+
+        private void MouseExit()
+        {
+            Debug.Log("mouse exit piece");
+            UIKit.ClosePanel<PieceInfoPanel>();
         }
 
         /// <summary>
