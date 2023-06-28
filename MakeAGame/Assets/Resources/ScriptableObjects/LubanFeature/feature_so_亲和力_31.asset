@@ -15,5 +15,5 @@ MonoBehaviour:
   featureID: 31
   featureName: "\u4EB2\u548C\u529B"
   featureDesc: "\u8DDD\u79BB\u4E0D\u5927\u4E8E6\u7684\u53CB\u519B\u6BCF3\u79D2\u56DE\u590D1*\u7CBE\u795E\u70B9\u751F\u547D\u503C\u3002"
-  typeName: 
+  typeName: Affinity
   icon: {fileID: 0}

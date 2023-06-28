@@ -834,7 +834,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1178307253}
-  - component: {fileID: 1178307252}
   - component: {fileID: 1178307254}
   m_Layer: 0
   m_Name: CombatSceneController
@@ -843,18 +842,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1178307252
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1178307251}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 03c21d57ddfab014b822eaadef453e7c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &1178307253
 Transform:
   m_ObjectHideFlags: 0
@@ -917,7 +904,7 @@ MonoBehaviour:
   ScriptsFolder: Assets/Scripts/Dialogue/CombatDialogueControl.cs
   GeneratePrefab: 0
   PrefabFolder: Assets/Art/Prefab
-  ink_file: {fileID: 4900000, guid: 434b115f9ab3ecb45945298c22d0be5c, type: 3}
+  ink_file: {fileID: 0}
   text_Pre: {fileID: 3964987597994152445, guid: afef7d82f4af2c64392905a2a69eed09, type: 3}
   ChoiceP: []
   choicesText: []
@@ -925,15 +912,19 @@ MonoBehaviour:
   m_Pack: {fileID: 0}
   m_checkControl: {fileID: 0}
   m_showGift: {fileID: 0}
+  bgPath: "UI/IntroUI/\u521D\u59CB\u754C\u9762-\u80CC\u666F\u56FE"
   canContinue: 0
   pauseD: 0
   d_finish: 0
+  waitForScene: 0
   waitForControl: 0
   waitForInGamecontrol: 0
   getControl: 0
+  nextLine: 0
+  waitForPass: 0
   showGift: 0
-  controlTime: 5
   victory: 0
+  wait_event: 0
   npc: {fileID: 0}
   backGround: {fileID: 0}
 --- !u!4 &1330122363
@@ -988,6 +979,7 @@ MonoBehaviour:
   cameraAngle: {x: 0, y: 0, z: 0}
   cameraDist: 12
   ForceSetValue: 1
+  lockCameraDist: 0
 --- !u!81 &1865885161
 AudioListener:
   m_ObjectHideFlags: 0

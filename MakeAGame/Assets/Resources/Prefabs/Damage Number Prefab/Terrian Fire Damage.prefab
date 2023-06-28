@@ -470,8 +470,8 @@ SortingGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5173316780207885638}
   m_Enabled: 1
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -1633955581
+  m_SortingLayer: 5
   m_SortingOrder: 1000
 --- !u!1 &7048295843887084589
 GameObject:
@@ -697,7 +697,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -8637183786855169142, guid: a4909145e187a91409be13f7396bdd23, type: 2}
+  - {fileID: 2796157871205810586, guid: 6c128d3be1b8ef24189281db25a8429b, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -741,8 +741,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 1
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: a4909145e187a91409be13f7396bdd23, type: 2}
-  m_sharedMaterial: {fileID: -8637183786855169142, guid: a4909145e187a91409be13f7396bdd23, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 6c128d3be1b8ef24189281db25a8429b, type: 2}
+  m_sharedMaterial: {fileID: 2796157871205810586, guid: 6c128d3be1b8ef24189281db25a8429b, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
