@@ -27,7 +27,7 @@ MonoBehaviour:
         mscorlib
     - Name: 
       Entry: 12
-      Data: 1
+      Data: 2
     - Name: 
       Entry: 7
       Data: Game.ExploreReward, Assembly-CSharp
@@ -43,9 +43,30 @@ MonoBehaviour:
     - Name: addNum
       Entry: 4
       Data: 1
-    - Name: hasChest
-      Entry: 5
-      Data: false
+    - Name: relicID
+      Entry: 3
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: Game.ExploreReward, Assembly-CSharp
+    - Name: row
+      Entry: 3
+      Data: 2
+    - Name: col
+      Entry: 3
+      Data: 2
+    - Name: addStats
+      Entry: 3
+      Data: 0
+    - Name: addNum
+      Entry: 4
+      Data: 0
+    - Name: relicID
+      Entry: 3
+      Data: 3
     - Name: 
       Entry: 8
       Data: 
@@ -99,5 +120,5 @@ MonoBehaviour:
       Data: 
   row: 3
   col: 3
-  undeadX: 0
-  undeadY: 0
+  undeadRow: 0
+  undeadCol: 0

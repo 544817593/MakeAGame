@@ -29,7 +29,7 @@ namespace Game
             RegisterSystem<IShopSystem>(new ShopSystem());
             RegisterSystem<IRoomSystem>(new RoomSystem());
             RegisterSystem<IRelicSystem>(new RelicSystem());
-            RegisterSystem<IExploreMapSystem>(new ExploreMapSystem());
+            RegisterSystem<IExploreSystem>(new ExploreSystem());
             RegisterUtility<ICSVImportUtility>(new CSVImportUtility());
             
 
