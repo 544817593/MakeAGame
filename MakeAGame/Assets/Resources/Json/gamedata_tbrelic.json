@@ -88,5 +88,67 @@
     "effectPriority": 0,
     "Params": [],
     "ParamsDesc": ""
+  },
+  {
+    "relicID": 7,
+    "relicName": "鱼鳞",
+    "desc": "这些鳞片是剥自可怕的巨型海怪。它们可以让你在水中呼吸，并进行长时间的潜水。但取得它们的代价是任何人都无法想象的。",
+    "effectDesc": "每当你造成小于等于{0}点且非Miss伤害时，将伤害提升为{0}",
+    "rarity": 2,
+    "typeName": "Relic7",
+    "ToCancelRelics": [],
+    "BeCanceledRelics": [],
+    "effectPriority": 0,
+    "Params": [
+      3
+    ],
+    "ParamsDesc": "伤害值"
+  },
+  {
+    "relicID": 8,
+    "relicName": "废品回收机",
+    "desc": "这个破烂回收机可以将无用的垃圾和装置重新变成有用的东西。但使用它需要小心谨慎，因为有时候回收的东西可能远比你想象的更加危险。",
+    "effectDesc": "每使用{0}张死面牌，随机获得一张普通品质的学者牌",
+    "rarity": 2,
+    "typeName": "Relic8",
+    "ToCancelRelics": [],
+    "BeCanceledRelics": [],
+    "effectPriority": 0,
+    "Params": [
+      3
+    ],
+    "ParamsDesc": "使用死面数"
+  },
+  {
+    "relicID": 9,
+    "relicName": "水晶球",
+    "desc": "这些法珠和水晶球是由神秘巫师制成的。它们能够让你看到未来和未知，但数据可能会来得非常模糊和不可靠。",
+    "effectDesc": "在每场战斗的前{0}秒混沌值损耗减少{1}%",
+    "rarity": 2,
+    "typeName": "Relic9",
+    "ToCancelRelics": [],
+    "BeCanceledRelics": [],
+    "effectPriority": 0,
+    "Params": [
+      10,
+      10
+    ],
+    "ParamsDesc": "秒数，减少比例"
+  },
+  {
+    "relicID": 10,
+    "relicName": "符纸",
+    "desc": "些护身符能够保护你不受死气的侵害。当你使用它们时，你会感到一股强烈的保护力量。",
+    "effectDesc": "抵消下{0}次生面牌受到的超过{1}点伤害的攻击",
+    "rarity": 2,
+    "typeName": "Relic10",
+    "ToCancelRelics": [],
+    "BeCanceledRelics": [],
+    "effectPriority": 0,
+    "Params": [
+      5,
+      10
+    ],
+    "ParamsDesc": "抵消次数，伤害值"
   }
 ]
