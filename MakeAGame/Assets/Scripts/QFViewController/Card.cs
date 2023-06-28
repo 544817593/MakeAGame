@@ -102,6 +102,7 @@ namespace Game
             maxLife = so.life;
             features = so.features;
             accuracy = so.accuracy;
+            deathFunc = new DeathFuncBase();
             PrintData();
         }
 
