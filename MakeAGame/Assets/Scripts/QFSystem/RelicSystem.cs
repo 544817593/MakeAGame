@@ -9,6 +9,7 @@ namespace Game
     public interface IRelicSystem : ISystem
     {
         UIRelic ui { set; }
+        public int totalSecs { get; set; }
         
         void ActivateAllRelics();
 
@@ -49,7 +50,7 @@ namespace Game
             // 遗物测试
             var so = IdToSO.FindRelicSOByID(1);
             this.GetSystem<IRelicSystem>().AddRelic(so);
-            so = IdToSO.FindRelicSOByID(7);
+            so = IdToSO.FindRelicSOByID(10);
             this.GetSystem<IRelicSystem>().AddRelic(so);
             // so = IdToSO.FindRelicSOByID(5);
             // this.GetSystem<IRelicSystem>().AddRelic(so);
@@ -58,7 +59,7 @@ namespace Game
         }
 
         private List<RelicBase> relics = new List<RelicBase>(); // 遗物列表
-        private int totalSecs;  // 已经计过的时间
+        public int totalSecs { get; set; }  // 已经计过的时间
 
         private Dictionary<Type, List<RelicEventData>> dictRelicEvents = new Dictionary<Type, List<RelicEventData>>();
         private List<IUnRegister> unregisters = new List<IUnRegister>();

@@ -28,7 +28,9 @@ namespace Game
             // 扣除混沌值
             if (ItemController.Instance.sanCostProtection == 0)
             {
-                UIKit.GetPanel<UIHandCard>().OnSanChange(-(int)viewCard.card.sanCost);
+                CostSanEvent e = new CostSanEvent() {sanCost = (int) viewCard.card.sanCost};
+                this.SendEvent<CostSanEvent>(e);
+                UIKit.GetPanel<UIHandCard>().OnSanChange(-e.sanCost);
             }
             else
             {

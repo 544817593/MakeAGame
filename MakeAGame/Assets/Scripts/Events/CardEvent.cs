@@ -10,5 +10,9 @@ namespace Game
         public float drawCardCooldown;
     }
 
+    public class CostSanEvent
+    {
+        public int sanCost;
+    }
 
 }
