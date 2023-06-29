@@ -34,7 +34,6 @@ public class CheckBag : MonoBehaviour
     }
     private void OnMouseDown()
     {
-        GameManager.Instance.soundMan.Play_Open_Bag();
         Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
         OpenBag();
 
@@ -52,10 +51,8 @@ public class CheckBag : MonoBehaviour
     }
     public void OpenBag()
     {
-       
         UIKit.ShowPanel<BagUIPanel>();
-        UIKit.GetPanel<BagUIPanel>().RefreshLayout();
-        // GameManager.Instance.StartBagMan();
+       // GameManager.Instance.StartBagMan();
         isOpen = true;
        
     }

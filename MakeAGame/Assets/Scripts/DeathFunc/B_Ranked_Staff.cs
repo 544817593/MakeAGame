@@ -15,7 +15,6 @@ namespace Game
         {
             area.width = 4;
             area.height = 4;
-            deathEnhanceTypeList.Add(DeathEnhanceTypeEnum.Damage);
         }
         
         public override void OnExecute(List<BoxGrid> grids)
@@ -35,7 +34,7 @@ namespace Game
                 if (pieceSystem.IsPieceMonster(grid.occupation))
                 {
                     Monster monster = pieceSystem.getMonsterById(grid.occupation);
-                    monster.TakeDamage(EnhanceDeathDamage(damage));
+                    monster.TakeDamage(damage);
                 }
             }
 

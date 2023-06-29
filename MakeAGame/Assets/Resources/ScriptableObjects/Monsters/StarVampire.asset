@@ -22,9 +22,8 @@ MonoBehaviour:
   rarity: 2
   atkRange: 1
   monsterId: 9995
-  width: 1
-  height: 1
+  width: 0
+  height: 0
   properties: 
   dirs: 04000000020000000300000001000000
   anim: {fileID: 685128172593742579, guid: 7925d004f510bf54dbb243f958dfa226, type: 3}
-  attackAnim: {fileID: 2631897306848492984, guid: 2c66ea8023323374f8de8305880d92bc, type: 3}

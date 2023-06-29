@@ -1,7 +1,6 @@
 using QFramework;
 using System.Collections.Generic;
 using UnityEngine;
-using static UnityEngine.UI.Image;
 
 namespace Game
 {
@@ -11,17 +10,8 @@ namespace Game
         private static List<BoxGrid> toSearchList; // 即将被检查的格子
         private static List<BoxGrid> searchedList; // 检查过的格子
 
-        /// <summary>
-        /// 修改版的A*寻路
-        /// </summary>
-        /// <param name="startX"></param>
-        /// <param name="startY"></param>
-        /// <param name="endX"></param>
-        /// <param name="endY"></param>
-        /// <param name="monster"></param>
-        /// <param name="ignoreUnits">寻找路线时是否无视单位挡路</param>
-        /// <returns></returns>
-        public static List<BoxGrid> FindPath(int startX, int startY, int endX, int endY, Monster monster, bool ignoreUnits = false)
+        // 修改版的A*寻路
+        public static List<BoxGrid> FindPath(int startX, int startY, int endX, int endY, Monster monster)
         {
             IMapSystem mapSystem = GameEntry.Interface.GetSystem<IMapSystem>();
             BoxGrid[,] grid2DList = mapSystem.Grids();
@@ -44,12 +34,6 @@ namespace Game
             grid2DList[startX, startY].hCost = EstimateDistCost(grid2DList[startX, startY], grid2DList[endX, endY], monster);
             CalculateFCost(grid2DList[startX, startY]);
 
-            if (monster.generalId == 99910)
-            {
-                Debug.LogError("start position: " + toSearchList[0].row + toSearchList[0].col);
-                Debug.LogError("target position: " + endX + endY);
-            }
-
             // 如果还有可以检查的格子就继续
             while (toSearchList.Count > 0)
             {
@@ -67,17 +51,17 @@ namespace Game
 
 
                 // 根据单位的可移动方向寻找所有能到达的格子
-                List<BoxGrid> neighbourList = GetNeighbourList(currentBoxGrid, monster, grid2DList, (endX, endY), ignoreUnits);
+                List<BoxGrid> neighbourList = GetNeighbourList(currentBoxGrid, monster, grid2DList, (endX, endY));
                 foreach (BoxGrid neighbourBoxGrid in neighbourList)
                 {
                     if (searchedList.Contains(neighbourBoxGrid)) continue;
                     // 当前禁止到达的格子（比如格子上有单位）排除在外
-                    if (!mapSystem.GridCanMoveTo(neighbourBoxGrid, ignoreUnits) && (neighbourBoxGrid.row, neighbourBoxGrid.col) != (endX, endY))
+                    if (!mapSystem.GridCanMoveTo(neighbourBoxGrid) && (neighbourBoxGrid.row, neighbourBoxGrid.col) != (endX, endY))
+                    if (!mapSystem.GridCanMoveTo(neighbourBoxGrid) && (neighbourBoxGrid.row, neighbourBoxGrid.col) != (endX, endY))
                     {
                         searchedList.Add(neighbourBoxGrid);
                         continue;
                     }
-
 
                     // 跳过超出边界的格子
                     if ((neighbourBoxGrid.row, neighbourBoxGrid.col).Item1 > mapSystem.Grids().GetLength(0) 
@@ -104,54 +88,15 @@ namespace Game
             return null;
         }
 
-        /// <summary>
-        /// 怪物没有无遮挡可直达的路线，寻找一个最合适的格子进行移动
-        /// </summary>
-        /// <param name="startX"></param>
-        /// <param name="startY"></param>
-        /// <param name="endX"></param>
-        /// <param name="endY"></param>
-        /// <param name="monster"></param>
-        /// <returns></returns>
-        public static BoxGrid FindGridClosestToTarget(int startX, int startY, int endX, int endY, Monster monster)
-        {
-            // 如果有格子能让怪物离目标更近，那么前进
-            BoxGrid[,] grid2DList = GameEntry.Interface.GetSystem<IMapSystem>().Grids();
-            List<BoxGrid> boxGrids = GetNeighbourList(grid2DList[startX, startY], monster, grid2DList, (endX, endY));
-            int distance = EstimateDistCost(grid2DList[endX, endY], grid2DList[startX, startY], monster);
-            BoxGrid bestBoxGrid = grid2DList[startX, startY];
-            foreach(BoxGrid boxGrid in boxGrids)
-            {
-                int tempDistance = EstimateDistCost(grid2DList[endX, endY], boxGrid, monster);
-                if (tempDistance < distance)
-                {
-                    bestBoxGrid = boxGrid;
-                    distance = tempDistance;
-                }
-            }
-
-            // 如果没有，那么寻找没有棋子挡路情况下的最佳路线，如果可以，向该路线的下一个格子点前进
-            if (bestBoxGrid == grid2DList[startX, startY])
-            {
-                List<BoxGrid> theoreticalPath = FindPath(startX, startY, endX, endY, monster, true);
-                // 如果怪物可行动方向不支持到达目标，那么theoreticalPath会返回null
-                if (theoreticalPath != null && GameEntry.Interface.GetSystem<IMapSystem>().GridCanMoveTo(theoreticalPath[1]))
-                {
-                    bestBoxGrid = theoreticalPath[1];
-                }
-            }
-            return bestBoxGrid;
-        }
-
         // 根据单位的可移动方向寻找所有能到达的格子
-        public static List<BoxGrid> GetNeighbourList(BoxGrid currentBoxGrid, Monster monster, BoxGrid[,] grid2DList, (int, int) targetPos, bool ignoreUnits = false)
+        public static List<BoxGrid> GetNeighbourList(BoxGrid currentBoxGrid, Monster monster, BoxGrid[,] grid2DList, (int, int) targetPos)
         {
             List<BoxGrid> neighbourList = new List<BoxGrid>();
             IMovementSystem movementSystem = GameEntry.Interface.GetSystem<IMovementSystem>();
 
             foreach (DirEnum dir in monster.dirs.Value)
             {
-                if (monster.CheckIfMovable(dir, currentBoxGrid.row, currentBoxGrid.col, ignoreUnits))
+                if (monster.CheckIfMovable(dir, currentBoxGrid.row, currentBoxGrid.col))
                 {
                     (int, int) newPos = movementSystem.CalculateNextPosition((currentBoxGrid.row, currentBoxGrid.col), dir);
                     neighbourList.Add(grid2DList[newPos.Item1, newPos.Item2]);

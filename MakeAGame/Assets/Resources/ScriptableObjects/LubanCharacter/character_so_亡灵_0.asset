@@ -19,9 +19,9 @@ MonoBehaviour:
   sanCost: 0
   deathFuncDescription: "\u65E0\u3002"
   cardSprite: {fileID: 21300000, guid: 0da2e20d4df483f4297b5db13a5d0e30, type: 3}
-  hp: 100
-  attack: 2
-  moveSpd: 5
+  hp: 1000
+  attack: 200
+  moveSpd: 1
   defend: 0
   deathFuncName: 
   features: 00000000
@@ -30,12 +30,11 @@ MonoBehaviour:
   width: 1
   height: 1
   moveDirections: 01000000020000000300000004000000
-  attackSpd: 5
+  attackSpd: 0.5
   accuracy: 1
   attackRange: 1
-  life: 500
+  life: 999999
   anim: {fileID: 0}
-  attackAnim: {fileID: 0}
   sanCostBonus:
     stat: 0
     multiple: 0

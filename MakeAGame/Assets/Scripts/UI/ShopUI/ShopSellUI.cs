@@ -15,7 +15,8 @@ namespace ShopSellUI
     }
 	public partial class ShopSellUI : UIPanel
 	{
-        private int playerGold = 0;
+        // TODO 读取玩家当前金币数量，暂时使用hardcode
+        public int playerGold = 50;
         // 背包每页的格子数量上限
         private const int gridNum = 10;
         private int curPage = 1;
@@ -34,7 +35,6 @@ namespace ShopSellUI
             // please add init code here
             // 监听按钮点击，跳转panel
             ShopPanelChange.ChangeShopPanel(this, Close);
-            playerGold = GameManager.Instance.playerMan.player.GetGold();
             RefreshLayout();
             ButtonListen();
             PageChange();
@@ -63,7 +63,7 @@ namespace ShopSellUI
             List<Item> bagItemList = mData.shopSystem.GetBagItemList();
             totalPage = bagItemList.Count != 0 ? (int)Math.Ceiling((double)bagItemList.Count / gridNum) : 1;
             // 玩家金币显示
-            TextGold.text = $": {playerGold}";
+            TextGold.text = $"金币: {playerGold}";
 			// 页数显示
 			TextPageNum.text = $" {curPage} / {totalPage}";
             
@@ -251,7 +251,7 @@ namespace ShopSellUI
             selectedItem.amount -= sellCount;
             selectedButton.transform.Find("ItemNum").GetComponent<TextMeshProUGUI>().text = selectedItem.amount.ToString();
             playerGold += sellCount * selectedItem.data.sellPrice;
-            TextGold.text = $": {playerGold}";
+            TextGold.text = $"金币: {playerGold}";
 
             // 重置
             sellCount = 1;

@@ -42,8 +42,6 @@ namespace Game
         public List<FeatureEnum> features { get;  set; }
         public float accuracy { get; set; }
 
-        public DeathFuncBase deathFunc;
-
         public DeathEnhancement deathEnhancement;
 
         public struct DeathEnhancement
@@ -85,24 +83,18 @@ namespace Game
             height = so.height;
             moveDirections = so.moveDirections;
             atkRange = so.attackRange;
-            atkSpd = so.attackSpd + (GameManager.Instance.playerMan.player.GetStats(so.atkSpdBonus.stat) *
-                so.atkSpdBonus.multiple);
+            atkSpd = so.attackSpd;
             rarity = so.rarity;
-            sanCost = so.sanCost + (int)(GameManager.Instance.playerMan.player.GetSumStats() *
-                so.sanCostBonus.multiple);
-            hp = so.hp + (int)(GameManager.Instance.playerMan.player.GetStats(so.hpBonus.stat) *
-                so.hpBonus.multiple);
-            maxHp = so.hp + (int)(GameManager.Instance.playerMan.player.GetStats(so.hpBonus.stat) *
-                so.hpBonus.multiple);
+            sanCost = so.sanCost;
+            hp = so.hp;
+            maxHp = so.hp;
             moveSpd = so.moveSpd;
-            damage = so.attack + (GameManager.Instance.playerMan.player.GetStats(so.atkBonus.stat) *
-                so.atkBonus.multiple);
+            damage = so.attack;
             defend = so.defend;
             charaName = so.characterName;
             maxLife = so.life;
             features = so.features;
             accuracy = so.accuracy;
-            deathFunc = new DeathFuncBase();
             PrintData();
         }
 

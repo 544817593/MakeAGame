@@ -23,8 +23,8 @@ namespace Game
             
             // 界面
             UIKit.OpenPanel<UIHandCard>();
+            UIKit.OpenPanel<UIInventoryQuickSlot>();
             UIKit.OpenPanel<UIAbilityPanel>();
-            UIKit.OpenPanel<UIInventoryQuickSlot>();           
             UIKit.OpenPanel<UIRelic>();
 
             // 亡灵
@@ -59,6 +59,10 @@ namespace Game
                 drawCardCooldown = 5f
             };
             this.SendEvent(refillHandCardEvent);
+            
+            // 遗物测试
+            var so = IdToSO.FindRelicSOByID(1);
+            this.GetSystem<IRelicSystem>().AddRelic(so);
 
             // 计时测试
             var updateSystem = this.GetSystem<IUpdateSystem>();
@@ -67,10 +71,6 @@ namespace Game
             
             // 遗物系统开始接受计时
             this.GetSystem<IRelicSystem>().StartCountTime();
-            
-            // 遗物test
-            var so = IdToSO.FindRelicSOByID(5);
-            this.GetSystem<IRelicSystem>().AddRelic(so);
             
             this.SendEvent<RoomCombatStartEvent>();
         }

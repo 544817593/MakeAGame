@@ -6,10 +6,8 @@ using QFramework;
 
 public class UISound : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
 {
-   
     public AudioClip hoverSound;
     public AudioClip clickSound;
-   
 
     public void OnPointerEnter(PointerEventData eventData)
     {
@@ -27,6 +25,4 @@ public class UISound : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler,
         if (clickSound != null)
             AudioKit.PlaySound(clickSound);
     }
-
-    
 }

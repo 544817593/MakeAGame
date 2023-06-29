@@ -10,12 +10,10 @@ namespace Game
     /// </summary>
     public class Owl: DeathFuncBase
     {
-        float duration = 30f;
         public Owl()
         {
             area.width = 3;
             area.height = 3;
-            deathEnhanceTypeList.Add(DeathEnhanceTypeEnum.Duration);
         }
         
         public override void OnExecute(List<BoxGrid> grids)
@@ -27,7 +25,11 @@ namespace Game
             {
                 return;
             }
-            duration = EnhanceDeathDuration(duration);
+            float duration = 30f;
+            if(viewCard.card.deathEnhancement.statusTimeIncrease != 0)
+            {
+                duration += viewCard.card.deathEnhancement.statusTimeIncrease;
+            }
             foreach (BoxGrid grid in grids)
             {
                 GameManager.Instance.buffMan.AddBuff(new BuffChangeGridSpeed(grid, duration, TimeMultiplierEnum.Slow));

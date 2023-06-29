@@ -10,7 +10,6 @@ namespace PackOpen
 	public class ShowCard : MonoBehaviour
 	{
 		public UIOpenPackPanel m_ui;
-	
 		// Start is called before the first frame update
 		void Start()
 		{
@@ -36,7 +35,6 @@ namespace PackOpen
 		/// </summary>
 		public void ShowNewCard()
 		{
-			GameManager.Instance.soundMan.Play_Flip();
 			int newCardId ;
 			
 			if (m_ui.blueSecure ==true)
@@ -60,7 +58,7 @@ namespace PackOpen
 				}
 			}
 
-			if (( GameSceneManager.Instance.GetCurrentSceneName() == "Intro") )
+			if (( GameSceneManager.Instance.GetCurrentSceneName() == "Intro") && m_ui.count > 2)
 			{
 				if (m_ui.count == 3)
 				{
@@ -68,7 +66,7 @@ namespace PackOpen
 				}
 				else
 				{
-					newCardId = 4;
+					newCardId = 5;
 				}
 				m_ui.greenDrawn = false;
 				m_ui.blueDrawn = false;
@@ -122,30 +120,10 @@ namespace PackOpen
 
 				}
 		}
-	
-		public void AddRewardCard()
-        {
-			int newCardId = 9;
-			Game.ISpawnSystem spawnSystem = Game.GameEntry.Interface.GetSystem<Game.ISpawnSystem>();
-
-			GameObject new_Card;
-
-			spawnSystem.SpawnCard(newCardId);
-			new_Card = spawnSystem.GetLastSpawnedCard();
-			//new_Card = Instantiate(Resources.Load("Prefabs/CardItem"), transform.position, Quaternion.identity) as GameObject;
-
-			Game.Card createCard = new_Card.GetComponent<Game.ViewBagCard>().card;
-			new_Card.transform.SetParent(gameObject.transform, false);
-			new_Card.transform.position = transform.position;
-			new_Card.GetComponent<Game.ViewBagCard>().normalScale = 0.15f;
-			new_Card.GetComponent<Game.ViewBagCard>().largeScale = 0.2f;
-			
-			SaveNewCard(createCard);
-
-		}
 		/// <summary>
 		/// 如果有多的卡包，开启新卡包
 		/// </summary>
+
 		public void OpenNewPack()
 		{
 
