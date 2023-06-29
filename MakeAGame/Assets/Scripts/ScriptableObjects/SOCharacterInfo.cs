@@ -33,8 +33,8 @@ namespace Game
         public string deathFuncName;    // 死面功能类名
         [FoldoutGroup("Card Information")]
         public List<DeathEnhanceTypeEnum> deathEnhanceTypeEnums;    // 死面功能类名
-        //[FoldoutGroup("Card Information")]
-        //public List<AudioTypeEnum> ;    // 死面功能类名
+        [FoldoutGroup("Card Information")]
+        public AudioTypeEnum moveAudioType;    // 死面功能类名
 
         [FoldoutGroup("Features", true)]
         public List<FeatureEnum> features;// 特性

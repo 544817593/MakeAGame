@@ -185,6 +185,9 @@ public enum ItemUsePlace
     None, Shop, Combat
 }
 
+/// <summary>
+/// viewpiecebase的种类，用来匹配移动的音效
+/// </summary>
 public enum AudioTypeEnum
 {
     None, Human, Bird, FlyBug, Mollusk //软体动物

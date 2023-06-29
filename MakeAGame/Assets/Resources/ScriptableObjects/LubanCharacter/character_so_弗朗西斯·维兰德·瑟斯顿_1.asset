@@ -24,6 +24,8 @@ MonoBehaviour:
   moveSpd: 4
   defend: 2
   deathFuncName: Francis_Wayland_Thurston
+  deathEnhanceTypeEnums: 
+  moveAudioType: 1
   features: 030000000400000015000000
   specialFeatures: 1a0000001b000000
   pieceSprite: {fileID: 21300000, guid: 56faece66524b4eb891e72950ee7869e, type: 3}

@@ -251,7 +251,7 @@ namespace Game
             if (pieceAnimator != null)
             {
                 pieceAnimator.SetBool("isMove", true);
-                movementCoroutine = StartCoroutine(MoveToTarget(nextPos));
+                movementCoroutine = StartCoroutine(MoveToTarget(nextPos, card.so.moveAudioType));
             }
             else
             {

@@ -30,7 +30,13 @@ public class AudioManager : MonoBehaviour
     public AudioClip wheel_hover_sound;
     public AudioClip ui_click_success_sound;
     public AudioClip ui_click_castSpell;
-   
+
+    public AudioClip human_move_sound;
+    public AudioClip bird_move_sound;
+    public AudioClip flyBug_move_sound;
+    public AudioClip mollusk_move_sound;
+    public AudioClip twoLegs_move_sound;
+    public AudioClip fourLegs_move_sound;
     public void Play_Room_Bgm()
     {
        
@@ -125,5 +131,33 @@ public class AudioManager : MonoBehaviour
     public void Play_UI_Click_CastSpell()
     {
         AudioKit.PlaySound(ui_click_castSpell); 
+    }
+    public AudioPlayer Play_move_sound(AudioTypeEnum audioTypeEnum)
+    {
+        if(audioTypeEnum == AudioTypeEnum.Human)
+        {
+            return AudioKit.PlaySound(human_move_sound);
+        }
+        else if(audioTypeEnum == AudioTypeEnum.Bird)
+        {
+            return AudioKit.PlaySound(bird_move_sound);
+        }
+        else if (audioTypeEnum == AudioTypeEnum.FlyBug)
+        {
+            return AudioKit.PlaySound(flyBug_move_sound);
+        }
+        else if (audioTypeEnum == AudioTypeEnum.Mollusk)
+        {
+            return AudioKit.PlaySound(mollusk_move_sound);
+        }
+        else if (audioTypeEnum == AudioTypeEnum.TwoLegs)
+        {
+            return AudioKit.PlaySound(twoLegs_move_sound);
+        }
+        else if (audioTypeEnum == AudioTypeEnum.FourLegs)
+        {
+            return AudioKit.PlaySound(fourLegs_move_sound);
+        }
+        return null;
     }
 }

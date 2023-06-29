@@ -25,6 +25,7 @@ MonoBehaviour:
   defend: 0
   deathFuncName: Laughing_Cat
   deathEnhanceTypeEnums: 03000000
+  moveAudioType: 6
   features: 100000001100000012000000
   specialFeatures: 
   pieceSprite: {fileID: 21300000, guid: 384751c9763dcf941adf1fef59c62cda, type: 3}

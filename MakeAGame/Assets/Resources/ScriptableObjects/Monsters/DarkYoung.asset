@@ -25,6 +25,7 @@ MonoBehaviour:
   monsterId: 9997
   width: 2
   height: 2
+  moveAudioType: 6
   properties: 
   dirs: 
   specialFeatures: 2300000024000000250000002600000027000000

@@ -307,6 +307,12 @@ MonoBehaviour:
   wheel_hover_sound: {fileID: 8300000, guid: 4f9dc589a3b522c45855287f1eb93efb, type: 3}
   ui_click_success_sound: {fileID: 8300000, guid: b61cabc5e209eca498ffef25d4f70f13, type: 3}
   ui_click_castSpell: {fileID: 8300000, guid: b3d3b74fede659c449ec263949df476c, type: 3}
+  human_move_sound: {fileID: 8300000, guid: 0ff3bf156ab1b1647a93c65a3c0134db, type: 3}
+  bird_move_sound: {fileID: 8300000, guid: 6e624896a22f01f41a52b95fe37ddec7, type: 3}
+  flyBug_move_sound: {fileID: 8300000, guid: a73d3bec5b1fc5a4c9c3a5fadfacde5a, type: 3}
+  mollusk_move_sound: {fileID: 8300000, guid: 25f30785d4df71c439289f5d70023c5c, type: 3}
+  twoLegs_move_sound: {fileID: 8300000, guid: 8253b80209a32fe4d9bd2eae6cab3b1c, type: 3}
+  fourLegs_move_sound: {fileID: 8300000, guid: b279c1a3d14fc7b48937f0aa9d1af661, type: 3}
 --- !u!1 &1031550308
 GameObject:
   m_ObjectHideFlags: 0
