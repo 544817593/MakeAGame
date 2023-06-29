@@ -25,7 +25,9 @@ MonoBehaviour:
   monsterId: 9998
   width: 1
   height: 1
+  moveAudioType: 5
   properties: 1400000012000000
   dirs: 04000000020000000300000001000000
+  specialFeatures: 
   anim: {fileID: 253148829480533371, guid: 531d2c6fb69620a4d95b3041e216db8e, type: 3}
   attackAnim: {fileID: 2476954924193497292, guid: 009d13a098e51bf41b97f9eabe4c9c60, type: 3}

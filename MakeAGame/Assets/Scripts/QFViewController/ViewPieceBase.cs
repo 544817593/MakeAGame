@@ -220,10 +220,11 @@ namespace Game
         /// <param name="newGridTransPos">新位置</param>
         /// <param name="duration">持续时间</param>
         /// <returns></returns>
-        protected IEnumerator MoveToTarget(Vector3 newGridTransPos, float duration = 1f)
+        protected IEnumerator MoveToTarget(Vector3 newGridTransPos, AudioTypeEnum audioType, float duration = 1f)
         {
             Vector3 startPosition = transform.position;
             float elapsedTime = 0f;
+            AudioPlayer audioPlayer = GameManager.Instance.soundMan.Play_move_sound(audioType);
             while (elapsedTime < duration)
             {
                 elapsedTime += Time.deltaTime;
@@ -231,13 +232,16 @@ namespace Game
                 transform.position = Vector3.Lerp(startPosition, newGridTransPos, t);
                 yield return null;
             }
-
             if (pieceAnimator != null)
             {
                 pieceAnimator.SetBool("isMove", false);
             }
 
             movementCoroutine = null;
+            if(audioPlayer != null)
+            {
+                audioPlayer.Stop();
+            }
             OnMoveFinish();
         }
 

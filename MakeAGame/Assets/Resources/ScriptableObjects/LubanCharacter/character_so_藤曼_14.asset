@@ -25,6 +25,7 @@ MonoBehaviour:
   defend: 2
   deathFuncName: Vine
   deathEnhanceTypeEnums: 03000000
+  moveAudioType: 4
   features: 
   specialFeatures: 22000000
   pieceSprite: {fileID: 21300000, guid: aa134295d463a604e94f5a292a629f74, type: 3}

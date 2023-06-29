@@ -24,6 +24,8 @@ MonoBehaviour:
   moveSpd: 2.5
   defend: 0
   deathFuncName: Devil_Bug
+  deathEnhanceTypeEnums: 
+  moveAudioType: 6
   features: 
   specialFeatures: 
   pieceSprite: {fileID: 21300000, guid: 9a8a6d7ff3503614295a42b81764f528, type: 3}

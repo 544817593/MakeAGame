@@ -24,6 +24,8 @@ MonoBehaviour:
   moveSpd: 2
   defend: 0
   deathFuncName: Quack_Frog
+  deathEnhanceTypeEnums: 
+  moveAudioType: 5
   features: 0f00000012000000
   specialFeatures: 
   pieceSprite: {fileID: 21300000, guid: 790d67962ca5459479a36b93df83f6ac, type: 3}
