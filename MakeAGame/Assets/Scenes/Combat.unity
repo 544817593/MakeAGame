@@ -912,6 +912,7 @@ MonoBehaviour:
   m_Pack: {fileID: 0}
   m_checkControl: {fileID: 0}
   m_showGift: {fileID: 0}
+  popName: 
   bgPath: "UI/IntroUI/\u521D\u59CB\u754C\u9762-\u80CC\u666F\u56FE"
   canContinue: 0
   pauseD: 0
@@ -923,8 +924,6 @@ MonoBehaviour:
   nextLine: 0
   waitForPass: 0
   showGift: 0
-  victory: 0
-  wait_event: 0
   npc: {fileID: 0}
   backGround: {fileID: 0}
 --- !u!4 &1330122363
@@ -952,7 +951,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1865885163}
   - component: {fileID: 1865885162}
-  - component: {fileID: 1865885161}
   - component: {fileID: 1865885160}
   - component: {fileID: 1865885164}
   - component: {fileID: 1865885165}
@@ -980,14 +978,6 @@ MonoBehaviour:
   cameraDist: 12
   ForceSetValue: 1
   lockCameraDist: 0
---- !u!81 &1865885161
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1865885159}
-  m_Enabled: 1
 --- !u!20 &1865885162
 Camera:
   m_ObjectHideFlags: 0

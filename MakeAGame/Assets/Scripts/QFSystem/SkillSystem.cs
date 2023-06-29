@@ -164,7 +164,7 @@ namespace Game
         protected override void OnInit()
         {
             unlockedSkillsList = new List<SkillNameEnum>();
-            equippedSkillsList = new List<SkillNameEnum>(2); // 只可以携带两个技能
+            equippedSkillsList = new List<SkillNameEnum>(2) {SkillNameEnum.None, SkillNameEnum.None }; // 只可以携带两个技能
             availableSkillsList = new List<SkillNameEnum>();
             skillIDNameDic = new Dictionary<SkillNameEnum, string>()
             {

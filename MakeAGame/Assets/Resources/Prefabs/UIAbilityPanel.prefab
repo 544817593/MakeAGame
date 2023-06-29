@@ -224,6 +224,7 @@ GameObject:
   - component: {fileID: 5126519296108829425}
   - component: {fileID: 2172920424803086076}
   - component: {fileID: 8263946415803622605}
+  - component: {fileID: 447068808217977221}
   m_Layer: 0
   m_Name: Skill1
   m_TagString: Untagged
@@ -312,6 +313,18 @@ MonoBehaviour:
   CustomComponentName: Skill1
   CustomComment: 
   mComponentName: UnityEngine.UI.Button
+--- !u!114 &447068808217977221
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3668427584183703147}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f788e6ef3224b4389c89ee8e395ceb0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3716005624456201140
 GameObject:
   m_ObjectHideFlags: 0
@@ -362,6 +375,7 @@ GameObject:
   - component: {fileID: 8111711733668867485}
   - component: {fileID: 2568870694591200614}
   - component: {fileID: 3297909021290645864}
+  - component: {fileID: 2908802900198165969}
   m_Layer: 0
   m_Name: Skill2
   m_TagString: Untagged
@@ -450,6 +464,18 @@ MonoBehaviour:
   CustomComponentName: Skill2
   CustomComment: 
   mComponentName: UnityEngine.UI.Button
+--- !u!114 &2908802900198165969
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4175393589438752540}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f788e6ef3224b4389c89ee8e395ceb0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4345261023734943066
 GameObject:
   m_ObjectHideFlags: 0

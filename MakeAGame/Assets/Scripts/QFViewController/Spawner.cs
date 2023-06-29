@@ -2,6 +2,7 @@ using QFramework;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 
@@ -203,7 +204,15 @@ namespace Game
             
             // 在棋子系统中登记 // todo 目前假设怪物都占据一个格子
             List<BoxGrid> crtGrids = new List<BoxGrid>();
-            crtGrids.Add(grid[data.row, data.col]);
+            //crtGrids.Add(grid[data.row, data.col]);
+            for (int row = 0; row < monster.pieceSize.Item1; row++)
+            {
+                for (int col = 0; col < monster.pieceSize.Item2; col++)
+                {
+                    crtGrids.Add(grid[data.row + row, data.col + col]);
+                }
+            }
+            
             this.GetSystem<IPieceSystem>().AddPieceEnemy(monster, crtGrids);
 
             // 发送棋子生成后触发的特性event
@@ -259,6 +268,7 @@ namespace Game
             monster.inCombat = false;
             monster.isAttacking = new BindableProperty<bool>(false);
             monster.isDying = new BindableProperty<bool>(false);
+            monster.pieceSize = (somb.height, somb.width);
 
             // 也许可以删除，用viewpiecebase的pieceGrids
             (int, int) temp = (data.row, data.col);

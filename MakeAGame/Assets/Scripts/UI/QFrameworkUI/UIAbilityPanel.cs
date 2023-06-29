@@ -18,22 +18,15 @@ namespace InventoryQuickslotUI
 	public partial class UIAbilityPanel : UIPanel
 	{
         [SerializeField] private List<Sprite> skillSprites; // 技能栏技能图片
-        private bool isSkill1Active = false;
-        private bool isSkill2Active = false;
-        private int selectedButton = -1; // Keyboard shortcuts, 0 = Q; 1 = E
         ISkillSystem skillSystem;
 
         private void Awake()
         {
             skillSystem = GameEntry.Interface.GetSystem<ISkillSystem>();
-            //playerSkills = GameManager.Instance.playerMan.GetPlayerSkillTree();
-            //playerSkills.OnEquippedSkillsChange += PlayerSkills_OnEquippedSkillsChange;
-            //Skill1.image.color = new Color(0, 0, 0, 0);
-            //Skill2.image.color = new Color(0, 0, 0, 0);
 
             Skill1.onClick.AddListener(() => 
             {
-                if (skillSystem.GetEquippedSkillsList().Count == 1)
+                if (skillSystem.GetEquippedSkillsList()[0] != SkillNameEnum.None)
                 {
                     skillSystem.CastSkill(true);
                 }
@@ -41,7 +34,7 @@ namespace InventoryQuickslotUI
             
             Skill2.onClick.AddListener(() =>
             { 
-                if (skillSystem.GetEquippedSkillsList().Count == 2)
+                if (skillSystem.GetEquippedSkillsList()[1] != SkillNameEnum.None)
                 {
                     skillSystem.CastSkill(false);
                 }
@@ -53,14 +46,14 @@ namespace InventoryQuickslotUI
             // 技能快捷键
             if (Input.GetKeyDown(KeyCode.Q))
             {
-                if (skillSystem.GetEquippedSkillsList().Count == 1)
+                if (skillSystem.GetEquippedSkillsList()[0] != SkillNameEnum.None)
                 {
                     skillSystem.CastSkill(true);
                 }
             }
             if (Input.GetKeyDown(KeyCode.E))
             {
-                if (skillSystem.GetEquippedSkillsList().Count == 2)
+                if (skillSystem.GetEquippedSkillsList()[1] != SkillNameEnum.None)
                 {
                     skillSystem.CastSkill(false);
                 }
@@ -72,13 +65,13 @@ namespace InventoryQuickslotUI
 		{
 			mData = uiData as UIAbilityPanelData ?? new UIAbilityPanelData();
             // please add init code here
-            if (skillSystem.GetEquippedSkillsList().Count == 1)
+            if (skillSystem.GetEquippedSkillsList()[0] != SkillNameEnum.None)
             {
                 UIEventHelper mouseHelper1 = Skill1.AddComponent<UIEventHelper>(); // 初始化的时候add
                 mouseHelper1.OnUIPointEnter = () => MouseEnter(skillSystem.GetEquippedSkillsList()[0]);
                 mouseHelper1.OnUIPointExit = () => MouseExit(skillSystem.GetEquippedSkillsList()[0]);
             }
-            if (skillSystem.GetEquippedSkillsList().Count == 2)
+            if (skillSystem.GetEquippedSkillsList()[1] != SkillNameEnum.None)
             {
                 UIEventHelper mouseHelper2 = Skill2.AddComponent<UIEventHelper>();
                 mouseHelper2.OnUIPointEnter = () => MouseEnter(skillSystem.GetEquippedSkillsList()[1]);
@@ -88,13 +81,13 @@ namespace InventoryQuickslotUI
 		
 		protected override void OnOpen(IUIData uiData = null)
 		{
-            if (skillSystem.GetEquippedSkillsList().Count == 1)
+            if (skillSystem.GetEquippedSkillsList()[0] != SkillNameEnum.None)
             {
                 UIEventHelper mouseHelper1 = Skill1.GetComponent<UIEventHelper>(); // 这里get
                 mouseHelper1.OnUIPointEnter = () => MouseEnter(skillSystem.GetEquippedSkillsList()[0]);
                 mouseHelper1.OnUIPointExit = () => MouseExit(skillSystem.GetEquippedSkillsList()[0]);
             }
-            if (skillSystem.GetEquippedSkillsList().Count == 2)
+            if (skillSystem.GetEquippedSkillsList()[1] != SkillNameEnum.None)
             {
                 UIEventHelper mouseHelper2 = Skill2.GetComponent<UIEventHelper>();
                 mouseHelper2.OnUIPointEnter = () => MouseEnter(skillSystem.GetEquippedSkillsList()[1]);
@@ -104,13 +97,13 @@ namespace InventoryQuickslotUI
 		
 		protected override void OnShow()
 		{
-            if (skillSystem.GetEquippedSkillsList().Count == 1)
+            if (skillSystem.GetEquippedSkillsList()[0] != SkillNameEnum.None)
             {
                 UIEventHelper mouseHelper1 = Skill1.GetComponent<UIEventHelper>(); // 这里get
                 mouseHelper1.OnUIPointEnter = () => MouseEnter(skillSystem.GetEquippedSkillsList()[0]);
                 mouseHelper1.OnUIPointExit = () => MouseExit(skillSystem.GetEquippedSkillsList()[0]);
             }
-            if (skillSystem.GetEquippedSkillsList().Count == 2)
+            if (skillSystem.GetEquippedSkillsList()[1] != SkillNameEnum.None)
             {
                 UIEventHelper mouseHelper2 = Skill2.GetComponent<UIEventHelper>();
                 mouseHelper2.OnUIPointEnter = () => MouseEnter(skillSystem.GetEquippedSkillsList()[1]);

@@ -223,7 +223,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1152440149
-  m_SortingLayer: 2
+  m_SortingLayer: 1
   m_SortingOrder: 2
   m_Sprite: {fileID: 21300000, guid: 40f15df27661d524ab18132e07ae7edd, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -326,6 +326,7 @@ MonoBehaviour:
   m_Pack: {fileID: 0}
   m_checkControl: {fileID: 0}
   m_showGift: {fileID: 0}
+  popName: 
   bgPath: "UI/IntroUI/\u521D\u59CB\u754C\u9762-\u80CC\u666F\u56FE"
   canContinue: 0
   pauseD: 0
@@ -337,8 +338,6 @@ MonoBehaviour:
   nextLine: 0
   waitForPass: 0
   showGift: 0
-  victory: 0
-  wait_event: 0
   npc: {fileID: 165551005}
   backGround: {fileID: 843423549}
 --- !u!114 &8393797
@@ -592,7 +591,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1152440149
-  m_SortingLayer: 2
+  m_SortingLayer: 1
   m_SortingOrder: 2
   m_Sprite: {fileID: 21300000, guid: aafa45f62dac06a4cbec754db23a0cd6, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -858,7 +857,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1152440149
-  m_SortingLayer: 2
+  m_SortingLayer: 1
   m_SortingOrder: 2
   m_Sprite: {fileID: 21300000, guid: 4e3560810f8e93e459e2946c737b5527, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -1014,7 +1013,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1152440149
-  m_SortingLayer: 2
+  m_SortingLayer: 1
   m_SortingOrder: 2
   m_Sprite: {fileID: 21300000, guid: 976d1c850238ae847b8836360f92717d, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -1144,7 +1143,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1152440149
-  m_SortingLayer: 2
+  m_SortingLayer: 1
   m_SortingOrder: 2
   m_Sprite: {fileID: 21300000, guid: e491261005847fc43b0f40d9bbced96d, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -1279,7 +1278,6 @@ GameObject:
   m_Component:
   - component: {fileID: 2048947738}
   - component: {fileID: 2048947737}
-  - component: {fileID: 2048947736}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -1287,14 +1285,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!81 &2048947736
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2048947735}
-  m_Enabled: 1
 --- !u!20 &2048947737
 Camera:
   m_ObjectHideFlags: 0

@@ -44,6 +44,12 @@ namespace Game
             grid2DList[startX, startY].hCost = EstimateDistCost(grid2DList[startX, startY], grid2DList[endX, endY], monster);
             CalculateFCost(grid2DList[startX, startY]);
 
+            if (monster.generalId == 99910)
+            {
+                Debug.LogError("start position: " + toSearchList[0].row + toSearchList[0].col);
+                Debug.LogError("target position: " + endX + endY);
+            }
+
             // 如果还有可以检查的格子就继续
             while (toSearchList.Count > 0)
             {
@@ -128,7 +134,8 @@ namespace Game
             if (bestBoxGrid == grid2DList[startX, startY])
             {
                 List<BoxGrid> theoreticalPath = FindPath(startX, startY, endX, endY, monster, true);
-                if (GameEntry.Interface.GetSystem<IMapSystem>().GridCanMoveTo(theoreticalPath[1]))
+                // 如果怪物可行动方向不支持到达目标，那么theoreticalPath会返回null
+                if (theoreticalPath != null && GameEntry.Interface.GetSystem<IMapSystem>().GridCanMoveTo(theoreticalPath[1]))
                 {
                     bestBoxGrid = theoreticalPath[1];
                 }

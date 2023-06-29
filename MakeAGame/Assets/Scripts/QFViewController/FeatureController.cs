@@ -5,6 +5,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
 using Unity.VisualScripting;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -914,17 +915,18 @@ public class FeatureController : MonoBehaviour, IController
         {
             if (darkYoungBirthTimer <= 0)
             {
+                StartCoroutine(DarkYoungSkillCastAnim(piece, 1));
                 List<BoxGrid> freeGrids = this.GetSystem<IMapSystem>().FreeGrids();
                 BoxGrid horizontal = freeGrids[UnityEngine.Random.Range(0, freeGrids.Count)];
                 var spawnMonsterEvent = new SpawnMonsterEvent
-                { col = horizontal.col, row = horizontal.row, name = "Tentacle-Horizontal", pieceId = spawnSystem.GetPieceIdCounter() };
+                { col = horizontal.col, row = horizontal.row, name = "TentacleHorizontal", pieceId = spawnSystem.GetPieceIdCounter() };
                 spawnSystem.IncrementPieceIdCounter();
                 GameEntry.Interface.SendEvent<SpawnMonsterEvent>(spawnMonsterEvent);
 
                 freeGrids = this.GetSystem<IMapSystem>().FreeGrids();
                 BoxGrid vertical = freeGrids[UnityEngine.Random.Range(0, freeGrids.Count)];
                 spawnMonsterEvent = new SpawnMonsterEvent
-                { col = vertical.col, row = vertical.row, name = "Tentacle-Vertical", pieceId = spawnSystem.GetPieceIdCounter() };
+                { col = vertical.col, row = vertical.row, name = "TentacleVertical", pieceId = spawnSystem.GetPieceIdCounter() };
                 spawnSystem.IncrementPieceIdCounter();
                 GameEntry.Interface.SendEvent<SpawnMonsterEvent>(spawnMonsterEvent);
 
@@ -950,7 +952,17 @@ public class FeatureController : MonoBehaviour, IController
         {
             List<ViewPiece> allyList = pieceSystem.pieceFriendList;
             ViewPiece initialPiece = allyList[UnityEngine.Random.Range(0, allyList.Count)];
-            // TODO 星星图标标记这个棋子
+            StartCoroutine(DarkYoungSkillCastAnim(piece, 2));
+            // 星星图标标记这个棋子
+            GameObject starMarker = new GameObject("StarMarker");
+            starMarker.transform.SetParent(initialPiece.transform);
+            SpriteRenderer spriteRenderer = starMarker.AddComponent<SpriteRenderer>();
+            spriteRenderer.sprite = ((SOMonsterDarkYoung)((Monster)darkYoung).data).starMarker;
+            starMarker.transform.localScale = new Vector3(0.1f, 0.1f, 1);
+            starMarker.transform.localPosition = new Vector3(0, 1.2f, 0);
+
+            
+            spriteRenderer.sortingLayerName = "UI";
             yield return new WaitForSeconds(3f);
             // 标记的棋子还活着
             if (initialPiece != null)
@@ -966,7 +978,9 @@ public class FeatureController : MonoBehaviour, IController
                         darkYoung.hp.Value += (int)(piece.atkDmg * 0.25);
                     }
                 }
+                Destroy(starMarker);
             }
+            
 
             yield return new WaitForSeconds(piece.atkSpeed);
         }
@@ -975,6 +989,7 @@ public class FeatureController : MonoBehaviour, IController
 
     IEnumerator DarkYoungExtra_Poison(ViewPieceBase piece)
     {
+        StartCoroutine(DarkYoungSkillCastAnim(piece, 2));
         BoxGrid[,] grid2DList = GameEntry.Interface.GetSystem<IMapSystem>().Grids();
 
         while (piece != null)
@@ -993,6 +1008,20 @@ public class FeatureController : MonoBehaviour, IController
         }
     }
 
+    IEnumerator DarkYoungSkillCastAnim(ViewPieceBase piece, int skill)
+    {
+        if (piece != null)
+        {
+            piece.pieceAnimator.SetInteger("YangState", skill);
+        }
+        yield return new WaitForSeconds(piece.pieceAnimator.GetCurrentAnimatorStateInfo(0).length);
+        if (piece != null)
+        {
+            piece.pieceAnimator?.SetInteger("YangState", 0);
+        }
+        yield return null;
+    }
+
     #endregion
 
     #region 触须们
@@ -1003,6 +1032,7 @@ public class FeatureController : MonoBehaviour, IController
         tentacleList.Add(obj.piece);
         if (tentacleList.Count > 10 && darkYoungSacrificeTrigger)
         {
+            StartCoroutine(DarkYoungSkillCastAnim(darkYoung, 3));
             foreach (ViewPieceBase tentacle in tentacleList)
             {
                 tentacle.TakeDamage(tentacle.hp / 2);

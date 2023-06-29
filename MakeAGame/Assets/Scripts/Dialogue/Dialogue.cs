@@ -144,7 +144,7 @@ public class Dialogue : ViewController
     }
     public void CheckPause()
     {
-        if (m_Pack.openFinish == true)
+        if (m_Pack?.openFinish == true)
         {
             pauseD = false;
             UIKit.HidePanel<UIOpenPackPanel>();
