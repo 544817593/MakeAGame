@@ -5,7 +5,7 @@ using QFramework;
 
 namespace ItemUI
 {
-	// Generate Id:583e9f6b-f149-4eae-a17b-2fb43ef8caaf
+	// Generate Id:e12de080-f493-445d-b78c-0a2382c19e9b
 	public partial class ItemUIPanel
 	{
 		public const string Name = "ItemUIPanel";
@@ -39,13 +39,17 @@ namespace ItemUI
 		[SerializeField]
 		public UnityEngine.UI.Image ItemPosition8;
 		[SerializeField]
-		public UnityEngine.UI.Image ItemPosition9;
+		public UnityEngine.UI.Image ItemPositio10;
 		[SerializeField]
 		public UnityEngine.UI.Button BtnNextPage;
 		[SerializeField]
 		public UnityEngine.UI.Button BtnPrePage;
 		[SerializeField]
 		public TMPro.TextMeshProUGUI TextPageNum;
+		[SerializeField]
+		public UnityEngine.UI.Image TextPanel;
+		[SerializeField]
+		public TMPro.TextMeshProUGUI DescriptionT;
 		
 		private ItemUIPanelData mPrivateData = null;
 		
@@ -65,10 +69,12 @@ namespace ItemUI
 			ItemPosition6 = null;
 			ItemPosition7 = null;
 			ItemPosition8 = null;
-			ItemPosition9 = null;
+			ItemPositio10 = null;
 			BtnNextPage = null;
 			BtnPrePage = null;
 			TextPageNum = null;
+			TextPanel = null;
+			DescriptionT = null;
 			
 			mData = null;
 		}

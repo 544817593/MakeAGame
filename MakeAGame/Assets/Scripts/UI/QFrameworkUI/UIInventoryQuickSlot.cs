@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using QFramework;
 using Game;
 using BagUI;
+using ItemUI;
 using System;
 using TMPro;
 using ItemInfo;
@@ -35,7 +36,8 @@ namespace InventoryQuickslotUI
 				
 				UIKit.ShowPanel<BagUIPanel>();
 				UIKit.GetPanel<BagUIPanel>().RefreshLayout();
-				
+				UIKit.GetPanel<ItemUIPanel>().RefreshLayout();
+
 
 
 			});

@@ -21,13 +21,15 @@ namespace ItemUI
 		private int upperIndex = gridNum - 1;
 		private int lowerIndex = 0;
 		private Item m_item = null;
-		protected override void OnInit(IUIData uiData = null)
+        private Dictionary<Transform, Item> activeItem = new Dictionary<Transform, Item>();
+        protected override void OnInit(IUIData uiData = null)
 		{
 			mData = uiData as ItemUIPanelData ?? new ItemUIPanelData();
 
             BagUIChange.ChangeBagPanel(this, Card);
             BagUIChange.ChangeBagPanel(this, Item);
             RefreshLayout();
+            ShowInfo();
             PageChange();
             // please add init code here		
             Close.onClick.AddListener(() =>
@@ -63,7 +65,7 @@ namespace ItemUI
 		{
 		}
 
-        private void RefreshLayout()
+        public void RefreshLayout()
         {
                 List<Item> bagItemList = mData.inventorySystem.GetItemList();
                 totalPage = bagItemList.Count != 0 ? (int)Math.Ceiling((double)bagItemList.Count / gridNum) : 1;
@@ -73,14 +75,13 @@ namespace ItemUI
                 foreach (Transform transform in SlotPosition.GetComponentInChildren<Transform>(includeInactive: true))
                 {
                     GameObject curItem = transform.gameObject;
-                 UIEventHelper mouseHelper = curItem.AddComponent<UIEventHelper>();
+                    UIEventHelper mouseHelper = curItem.AddComponent<UIEventHelper>();
                 if (idx < bagItemList.Count)
                     {
                         Item itemInList = bagItemList[idx];
                         curItem.SetActive(true);
                         curItem.GetComponent<Image>().sprite = itemInList.data.sprite;
-                        mouseHelper.OnUIPointEnter = () => MouseEnter(itemInList);
-                        mouseHelper.OnUIPointExit = () => MouseExit(itemInList);
+                    activeItem.Add(transform, itemInList);
                     foreach (Transform texts in curItem.GetComponentInChildren<Transform>())
                         {
                             //Debug.Log(texts.gameObject.name);
@@ -90,9 +91,6 @@ namespace ItemUI
                             }
                        
                     }
-
-                  
-                   
 
                 }
                     else
@@ -111,14 +109,22 @@ namespace ItemUI
                     idx++;
                 }
         }
-        private void MouseEnter(Item item)
+
+        private void ShowInfo()
         {
+            foreach(Transform transform in activeItem.Keys)
+            {
+                transform.gameObject.GetComponent< UIEventHelper>().OnUIPointEnter = () => MouseEnter($"{activeItem[transform].data.itemName}: {activeItem[transform].data.description}");
+                transform.gameObject.GetComponent<UIEventHelper>().OnUIPointExit = () => TextPanel.Hide();
+            }
             
         }
-        private void MouseExit(Item item)
+        private void MouseEnter(string m_text )
         {
-            
+            TextPanel.Show();
+            DescriptionT.text = m_text;
         }
+        
         private void UpdateIndex()
         {
             
