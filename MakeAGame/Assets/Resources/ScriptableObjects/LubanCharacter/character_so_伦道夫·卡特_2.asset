@@ -45,8 +45,8 @@ MonoBehaviour:
     stat: 4
     multiple: 5
   atkBonus:
-    stat: 3
-    multiple: 3
+    stat: 0
+    multiple: 0
   atkSpdBonus:
     stat: 3
     multiple: 0.05

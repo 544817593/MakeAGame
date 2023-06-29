@@ -352,6 +352,7 @@ namespace Game
         /// <returns></returns>
         public void PieceFlip(DirEnum newDir)
         {
+            if (pieceAnimator == null) return;
             if (isFacingRight && Extensions.leftDirs.Contains(newDir) ||
                 !isFacingRight && Extensions.rightDirs.Contains(newDir))
             {
