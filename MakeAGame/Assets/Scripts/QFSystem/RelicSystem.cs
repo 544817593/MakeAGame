@@ -49,7 +49,7 @@ namespace Game
             // 遗物测试
             var so = IdToSO.FindRelicSOByID(1);
             this.GetSystem<IRelicSystem>().AddRelic(so);
-            so = IdToSO.FindRelicSOByID(3);
+            so = IdToSO.FindRelicSOByID(7);
             this.GetSystem<IRelicSystem>().AddRelic(so);
             // so = IdToSO.FindRelicSOByID(5);
             // this.GetSystem<IRelicSystem>().AddRelic(so);
@@ -71,7 +71,7 @@ namespace Game
         public void ActivateAllRelics()
         {
             DeactivateAllRelic();
-            
+
             Debug.Log($"RelicSystem: ActivateRelics count {relics.Count}");
             foreach (var relic in relics)
             {
@@ -248,6 +248,7 @@ namespace Game
             {
                 relic.isActive = false;
             }
+            dictRelicEvents.Clear();
         }
 
         void ClearAllRegister()
