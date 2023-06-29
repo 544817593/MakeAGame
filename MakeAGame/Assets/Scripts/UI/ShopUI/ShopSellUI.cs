@@ -12,6 +12,7 @@ namespace ShopSellUI
 	public class ShopSellUIData : UIPanelData
 	{
         public IShopSystem shopSystem = GameEntry.Interface.GetSystem<IShopSystem>();
+        public IInventorySystem inventorySystem = GameEntry.Interface.GetSystem<IInventorySystem>();
     }
 	public partial class ShopSellUI : UIPanel
 	{
@@ -60,7 +61,7 @@ namespace ShopSellUI
 
         private void RefreshLayout()
         {
-            List<Item> bagItemList = mData.shopSystem.GetBagItemList();
+            List<Item> bagItemList = mData.shopSystem.GetAllBagItemList();
             totalPage = bagItemList.Count != 0 ? (int)Math.Ceiling((double)bagItemList.Count / gridNum) : 1;
             // 玩家金币显示
             TextGold.text = $": {playerGold}";
@@ -122,7 +123,7 @@ namespace ShopSellUI
         }
         private void UpdateIndex()
         {
-            int bagItemCount = mData.shopSystem.GetBagItemList().Count;
+            int bagItemCount = mData.shopSystem.GetAllBagItemList().Count;
             lowerIndex = (curPage - 1) * gridNum;
             // 索引上限为当前页*格子数量-1，如果超过list大小，则为list的元素数量-1
             upperIndex = curPage * gridNum - 1 >= bagItemCount ? bagItemCount - 1 : curPage * gridNum - 1;
@@ -169,7 +170,7 @@ namespace ShopSellUI
                 btn.onClick.AddListener(() =>
                 {
                     //Debug.Log($"{btn.gameObject.name}");
-                    TextItemInfo.text = activeButtons[btn].data.description;
+                    TextItemInfo.text = $"{activeButtons[btn].data.itemName}: {activeButtons[btn].data.description}";
                     selectedItem = activeButtons[btn];
                     selectedButton = btn;
                     if(selectedItem.amount < sellCount)
@@ -258,7 +259,7 @@ namespace ShopSellUI
             TextCount.text = $"{sellCount}";
             if(selectedItem.amount == 0)
             {
-                mData.shopSystem.GetBagItemList().Remove(selectedItem);
+                mData.shopSystem.RemoveItemInAllList(selectedItem);
                 activeButtons.Remove(selectedButton);
                 selectedButton.GetComponent<Image>().sprite = null;
                 foreach (Transform texts in selectedButton.GetComponentInChildren<Transform>())
@@ -278,7 +279,7 @@ namespace ShopSellUI
                 selectedButton = null;
                 TextItemInfo.text = null;
                 // 如果卖掉一个物品后最后一页变为空，并且当前页面在最后一页并且总页数不止一页，则自动将当前页-1
-                if (mData.shopSystem.GetBagItemList().Count % gridNum == 0 && curPage != 1 && curPage == totalPage)
+                if (mData.shopSystem.GetAllBagItemList().Count % gridNum == 0 && curPage != 1 && curPage == totalPage)
                 {
                     curPage--;
                 }

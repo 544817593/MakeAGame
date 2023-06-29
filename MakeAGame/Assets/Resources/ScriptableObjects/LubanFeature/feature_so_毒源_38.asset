@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56ecb282cab14c5d8106ae3ec684c67e, type: 3}
+  m_Name: "feature_so_\u6BD2\u6E90_38"
+  m_EditorClassIdentifier: 
+  featureID: 38
+  featureName: "\u6BD2\u6E90"
+  featureDesc: "\u9996\u6B21\u751F\u547D\u503C\u4F4E\u4E8E75%\u540E\uFF0C\u6BCF5\u79D2\u5C06\u573A\u4E0A\u968F\u673A\u4E00\u4E2A\u4E0D\u662F\u5267\u6BD2\u7684\u5730\u5757\u53D8\u6210\u5267\u6BD2\u5730\u5757\u3002"
+  typeName: PoisonSource
+  icon: {fileID: 0}

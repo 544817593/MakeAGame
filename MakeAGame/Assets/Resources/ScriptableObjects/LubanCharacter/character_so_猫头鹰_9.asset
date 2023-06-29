@@ -24,6 +24,7 @@ MonoBehaviour:
   moveSpd: 5
   defend: 0
   deathFuncName: Owl
+  deathEnhanceTypeEnums: 03000000
   features: 0d0000000e00000013000000
   specialFeatures: 
   pieceSprite: {fileID: 21300000, guid: 0833b6038c3a30340aebb6e915fc74b1, type: 3}

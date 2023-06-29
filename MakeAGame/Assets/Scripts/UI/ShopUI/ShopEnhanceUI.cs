@@ -7,6 +7,9 @@ using System;
 using TMPro;
 using UnityEngine.Assertions;
 using Unity.VisualScripting;
+using static UnityEditor.Progress;
+using ItemInfo;
+using ItemShopInfoPanel;
 
 namespace ShopEnhanceUI
 {
@@ -98,7 +101,7 @@ namespace ShopEnhanceUI
                 tempShopCardList.Add(viewBagCard);
                 // 接收数据，初始化牌面显示
                 viewBagCard.gameObject.transform.SetParent(BagPanel.transform);
-                if(curBagTab == BagTabs.item)
+                if(curBagTab != BagTabs.card)
                 {
                     viewBagCard.gameObject.SetActive(false);
                 }
@@ -150,7 +153,7 @@ namespace ShopEnhanceUI
             }
             else if (curBagTab == BagTabs.item)
             {
-                List<Item> bagItemList = mData.shopSystem.GetBagItemList();
+                List<Item> bagItemList = mData.shopSystem.GetEnhanceBagItemList();
                 totalPage = bagItemList.Count != 0 ? (int)Math.Ceiling((double)bagItemList.Count / gridNum) : 1;
                 // 页数显示
                 TextPageNum.text = $" {curPage} / {totalPage}";
@@ -166,6 +169,9 @@ namespace ShopEnhanceUI
                         Item itemInList = bagItemList[idx];
                         curItem.SetActive(true);
                         curItem.GetComponent<Image>().sprite = itemInList.data.sprite;
+                        UIEventHelper mouseHelper = curItem.GetComponent<Image>().AddComponent<UIEventHelper>();
+                        mouseHelper.OnUIPointEnter = () => MouseEnter(itemInList);
+                        mouseHelper.OnUIPointExit = () => MouseExit(itemInList);
                         foreach (Transform texts in curItem.GetComponentInChildren<Transform>())
                         {
                             //Debug.Log(texts.gameObject.name);
@@ -220,7 +226,7 @@ namespace ShopEnhanceUI
             }
             else if(curBagTab == BagTabs.item)
             {
-                int bagItemCount = mData.shopSystem.GetBagItemList().Count;
+                int bagItemCount = mData.shopSystem.GetEnhanceBagItemList().Count;
                 lowerIndex = (curPage - 1) * gridNum;
                 // 索引上限为当前页*格子数量-1，如果超过list大小，则为list的元素数量-1
                 upperIndex = curPage * gridNum - 1 >= bagItemCount ? bagItemCount - 1 : curPage * gridNum - 1;
@@ -344,8 +350,8 @@ namespace ShopEnhanceUI
                         curEnhanceItem.amount--;
                         if (curEnhanceItem.amount == 0)
                         {
-                            mData.shopSystem.GetBagItemList().Remove(curEnhanceItem);
-                            if (mData.shopSystem.GetBagItemList().Count % gridNum == 0 && curPage != 1 && curPage == totalPage)
+                            mData.shopSystem.RemoveItemInAllList(curEnhanceItem);
+                            if (mData.shopSystem.GetEnhanceBagItemList().Count % gridNum == 0 && curPage != 1 && curPage == totalPage)
                             {
                                 curPage--;
                             }
@@ -366,11 +372,7 @@ namespace ShopEnhanceUI
         private bool DeathTypeMatchEnhanceItem(ViewBagCard card, Item item)
         {
             List<DeathEnhanceTypeEnum> itemType = item.data.deathEnhanceTypeEnums;
-            Debug.Log($"DeathTypeMatchEnhanceItem {card == null} ");
-            Debug.Log($"DeathTypeMatchEnhanceItem {card.card == null}");
-            Debug.Log($"DeathTypeMatchEnhanceItem {card.card.deathFunc == null}");
-            Debug.Log($"DeathTypeMatchEnhanceItem {card.card.deathFunc.deathEnhanceTypeList == null} ");
-            List<DeathEnhanceTypeEnum> cardType = card.card.deathFunc.deathEnhanceTypeList;
+            List<DeathEnhanceTypeEnum> cardType = card.card.deathEnhanceTypeList;
             // itemType列表为空说明是强化生面的，返回true
             if(itemType.Count == 0)
             {
@@ -415,10 +417,31 @@ namespace ShopEnhanceUI
             curCardAfterEnhance = null;
         }
 
+        private void MouseEnter(Item item)
+        {
+            Debug.Log($" {item.data.itemName} mouseHelper MouseEnter");
+            UIKit.OpenPanel<ItemShopInfoPanel.ItemShopInfoPanel>();
+            UIKit.GetPanel<ItemShopInfoPanel.ItemShopInfoPanel>().LoadItemData(item);
+        }
+        private void MouseExit(Item item)
+        {
+            Debug.Log($" {item.data.itemName} mouseHelper MouseExit");
+            UIKit.ClosePanel<ItemShopInfoPanel.ItemShopInfoPanel>();
+        }
         private void GenerateCardAfterEnhance()
         {
             if (curEnhanceItem != null && curCardBeforeEnhanceToDisplay != null && curCardBeforeEnhanceToEnhance != null)
             {
+                if (curCardBeforeEnhanceToDisplay.card.enhancement != curEnhanceItem.data.enhanceLevel)
+                {
+                    Debug.Log("卡牌等级与强化道具不匹配");
+                    return;
+                }
+                else if (!DeathTypeMatchEnhanceItem(curCardBeforeEnhanceToEnhance, curEnhanceItem))
+                {
+                    Debug.Log("卡牌不满足物品的强化需求");
+                    return;
+                }
                 // 如果已经有卡牌在强化后的位置，先删除
                 foreach (Transform transform in CardAfterEnhance.GetComponentInChildren<Transform>(includeInactive: true))
                 {

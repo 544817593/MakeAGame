@@ -11,6 +11,7 @@ public static class IdToSO
     public static SOCharacterInfo[] soCharacterList = Resources.LoadAll<SOCharacterInfo>("ScriptableObjects/LubanCharacter");
     public static SOFeature[] soFeatureList = Resources.LoadAll<SOFeature>("ScriptableObjects/LubanFeature");
     public static SORelic[] soRelicList = Resources.LoadAll<SORelic>("ScriptableObjects/LubanRelic");
+    public static SOItemBase[] soItemList = Resources.LoadAll<SOItemBase>("ScriptableObjects/Items");
 
     /// <summary>
     /// 通过卡牌id来返还卡牌的SO

@@ -22,3 +22,4 @@ MonoBehaviour:
   rarity: 0
   enhanceLevel: 0
   deathEnhanceTypeEnums: 
+  itemUsePlaces: 01000000

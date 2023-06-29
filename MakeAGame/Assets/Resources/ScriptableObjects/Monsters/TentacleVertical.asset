@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea08da01fcd0a834e97e3ee2640901a7, type: 3}
   m_Name: TentacleVertical
   m_EditorClassIdentifier: 
+  monsterName: "\u89E6\u987B-\u7AD6"
   monsterSprite: {fileID: 21300000, guid: a92ad334be5a79f4fb1f187e2e30422f, type: 3}
   moveSpeed: 5
   maxHp: 50

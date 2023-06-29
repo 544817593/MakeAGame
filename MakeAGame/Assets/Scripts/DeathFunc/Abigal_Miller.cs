@@ -18,7 +18,6 @@ namespace Game
             area.height = 3;
             area.pattern = new List<int[]>()
                 {new int[2] {-1, 0}, new int[2] {0, -1}, new int[2] {0, 0}, new int[2] {0, 1}, new int[2] {1, 0}};
-            deathEnhanceTypeList.Add(DeathEnhanceTypeEnum.Damage);
         }
 
         public override void OnExecute(List<BoxGrid> grids)

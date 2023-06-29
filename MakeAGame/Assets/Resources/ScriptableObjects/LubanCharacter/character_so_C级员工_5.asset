@@ -24,6 +24,7 @@ MonoBehaviour:
   moveSpd: 3.5
   defend: 1
   deathFuncName: C_Ranked_Staff
+  deathEnhanceTypeEnums: 01000000
   features: 06000000
   specialFeatures: 
   pieceSprite: {fileID: 21300000, guid: 86e12fd6b3fa3b048a3377dc586ed10b, type: 3}
