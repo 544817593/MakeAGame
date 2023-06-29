@@ -36,7 +36,7 @@ namespace InventoryQuickslotUI
 				
 				UIKit.ShowPanel<BagUIPanel>();
 				UIKit.GetPanel<BagUIPanel>().RefreshLayout();
-				UIKit.GetPanel<ItemUIPanel>().RefreshLayout();
+				
 
 
 
