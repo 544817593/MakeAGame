@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a5aec25cf38243a5acc709cc9073be04, type: 3}
+  m_Name: "relic_so_\u5E9F\u54C1\u56DE\u6536\u673A_8"
+  m_EditorClassIdentifier: 
+  relicID: 8
+  relicName: "\u5E9F\u54C1\u56DE\u6536\u673A"
+  desc: "\u8FD9\u4E2A\u7834\u70C2\u56DE\u6536\u673A\u53EF\u4EE5\u5C06\u65E0\u7528\u7684\u5783\u573E\u548C\u88C5\u7F6E\u91CD\u65B0\u53D8\u6210\u6709\u7528\u7684\u4E1C\u897F\u3002\u4F46\u4F7F\u7528\u5B83\u9700\u8981\u5C0F\u5FC3\u8C28\u614E\uFF0C\u56E0\u4E3A\u6709\u65F6\u5019\u56DE\u6536\u7684\u4E1C\u897F\u53EF\u80FD\u8FDC\u6BD4\u4F60\u60F3\u8C61\u7684\u66F4\u52A0\u5371\u9669\u3002"
+  effectDesc: "\u6BCF\u4F7F\u7528{0}\u5F20\u6B7B\u9762\u724C\uFF0C\u968F\u673A\u83B7\u5F97\u4E00\u5F20\u666E\u901A\u54C1\u8D28\u7684\u5B66\u8005\u724C"
+  rarity: 2
+  typeName: Relic8
+  toCancelRelics: 
+  beCanceledRelics: 
+  effectPriority: 0
+  effectParams:
+  - 3

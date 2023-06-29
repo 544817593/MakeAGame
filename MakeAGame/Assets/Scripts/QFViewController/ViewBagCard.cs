@@ -68,6 +68,7 @@ namespace Game
         
         void OnFocus()
         {
+            GameManager.Instance.soundMan.Play_Hover_Zoom();
             canvas.sortingOrder = 100;
             transform.DOScale(largeScale, 0.5f);
             OnFocusAction?.Invoke();

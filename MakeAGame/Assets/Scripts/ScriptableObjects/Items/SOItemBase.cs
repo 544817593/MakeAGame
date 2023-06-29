@@ -15,7 +15,8 @@ public class SOItemBase : ScriptableObject
     public int rarity; // 物品稀有度
     // 如果物品类型是强化物品，这个存储可强化的卡牌等级
     // 假如enhanceLevel为0，那么卡牌便是从+0到+1
-    public int enhanceLevel; 
+    public int enhanceLevel;
+    public List<DeathEnhanceTypeEnum> deathEnhanceTypeEnums;
     protected PlayerManager playerManager;
 
 }
