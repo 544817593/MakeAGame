@@ -997,7 +997,8 @@ public class FeatureController : MonoBehaviour, IController
             List<BoxGrid> nonPoisonGrids = new List<BoxGrid>();
             foreach (BoxGrid boxGrid in grid2DList)
             {
-                if (boxGrid.terrain != (int)TerrainEnum.Poison)
+                if (boxGrid.terrain != (int)TerrainEnum.Poison && boxGrid.terrain != (int)TerrainEnum.Edge &&
+                    boxGrid.terrain != (int)TerrainEnum.Door)
                 {
                     nonPoisonGrids.Add(boxGrid);
                 }

@@ -14,12 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gold: 6
   goldAcquisitionMultiplier: 0
-  san: 20
+  san: 100
   maxSan: 100
-  sanRegenSpeed: 1
-  turnPieceCount: 8
-  strength: 0
-  spirit: 0
-  skill: 0
-  stamina: 0
-  chrisma: 0
+  sanRegenSpeed: 1.21
+  turnPieceCount: 14
+  strength: 4
+  spirit: 1
+  skill: 1
+  stamina: 4
+  chrisma: 1

@@ -1,3 +1,4 @@
+using InventoryQuickslotUI;
 using QFramework;
 using UnityEngine;
 
@@ -42,6 +43,7 @@ namespace Game
                 UIKit.OpenPanel<UIConsolePanel>(UILevel.PopUI);
             }
             UIKit.OpenPanel<PauseUI.Pause>();
+
 
             Debug.Log($"GameEntry: Init, isDev {isDev}");
         }

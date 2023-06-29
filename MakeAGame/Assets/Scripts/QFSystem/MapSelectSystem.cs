@@ -250,7 +250,7 @@ namespace Game
                 // 1.格子数量
                 bool isGridCountCorrect = validSelectedGrids.Count == areaInfo.width * areaInfo.height;
                 // 2.蓝是否足够
-                int crtSan = UIKit.GetPanel<UIHandCard>().crtSan;
+                int crtSan = GameManager.Instance.playerMan.player.GetSan();
                 bool isSanEnough = viewCard.card.sanCost <= crtSan;
                 if (isGridCountCorrect && isSanEnough)
                 {

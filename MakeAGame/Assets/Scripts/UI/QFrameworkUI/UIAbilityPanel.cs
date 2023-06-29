@@ -14,7 +14,8 @@ namespace InventoryQuickslotUI
 {
 	public class UIAbilityPanelData : UIPanelData
 	{
-	}
+        
+    }
 	public partial class UIAbilityPanel : UIPanel
 	{
         [SerializeField] private List<Sprite> skillSprites; // 技能栏技能图片
@@ -39,6 +40,8 @@ namespace InventoryQuickslotUI
                     skillSystem.CastSkill(false);
                 }
             });
+
+
         }
 
         private void Update()
@@ -48,6 +51,7 @@ namespace InventoryQuickslotUI
             {
                 if (skillSystem.GetEquippedSkillsList()[0] != SkillNameEnum.None)
                 {
+                    Debug.LogError("Cast1");
                     skillSystem.CastSkill(true);
                 }
             }

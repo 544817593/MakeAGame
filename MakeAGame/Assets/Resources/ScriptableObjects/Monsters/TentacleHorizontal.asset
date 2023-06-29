@@ -15,7 +15,7 @@ MonoBehaviour:
   monsterName: "\u89E6\u987B-\u6A2A"
   monsterSprite: {fileID: 21300000, guid: c7b8d397dd51f9c49a9e19240d0fceb3, type: 3}
   moveSpeed: 5
-  maxHp: 50
+  maxHp: 20
   atkSpeed: 5
   atkDmg: 5
   defense: 5

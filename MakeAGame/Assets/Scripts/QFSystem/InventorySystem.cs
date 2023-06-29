@@ -101,19 +101,11 @@ namespace Game
             // 测试用代码
             SOItemBase IntermediateSapphirePotion = Resources.Load<SOItemBase>("ScriptableObjects/Items/Intermediate Sapphire Potion");
             SOItemBase MinorSapphirePotion = Resources.Load<SOItemBase>("ScriptableObjects/Items/Minor Sapphire Potion");
-            SOItemBase IntermediateEmeraldPotion = Resources.Load<SOItemBase>("ScriptableObjects/Items/Intermediate Emerald Potion");
-            SOItemBase Type_DMinorEnhancementPotion = Resources.Load<SOItemBase>("ScriptableObjects/Items/Type-D Minor Enhancement Potion");
-            SOItemBase LightNavyQuillPen = Resources.Load<SOItemBase>("ScriptableObjects/Items/Light-Navy Quill Pen");
-            SOItemBase NavyQuillPen = Resources.Load<SOItemBase>("ScriptableObjects/Items/Navy Quill Pen");
-            SOItemBase EPotion = Resources.Load<SOItemBase>("ScriptableObjects/Items/Type-E Minor Enhancement Potion");
-            AddItem(new Item { amount = 2, data = MinorSapphirePotion });
-            AddItem(new Item { amount = 1, data = MinorSapphirePotion });
+            SOItemBase MinorEmeraldPotion = Resources.Load<SOItemBase>("ScriptableObjects/Items/Minor Emerald Potion");
+            AddItem(new Item { amount = 3, data = MinorSapphirePotion });
             AddItem(new Item { amount = 1, data = IntermediateSapphirePotion });
-            AddItem(new Item { amount = 1, data = IntermediateEmeraldPotion });
-            AddItem(new Item { amount = 1, data = Type_DMinorEnhancementPotion });
-            AddItem(new Item { amount = 4, data = LightNavyQuillPen });
-            AddItem(new Item { amount = 3, data = NavyQuillPen });
-            AddItem(new Item { amount = 2, data = EPotion });
+            AddItem(new Item { amount = 1, data = MinorEmeraldPotion });
+
 
 
 

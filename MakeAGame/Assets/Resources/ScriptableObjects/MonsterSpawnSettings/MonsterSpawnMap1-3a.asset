@@ -13,9 +13,17 @@ MonoBehaviour:
   m_Name: MonsterSpawnMap1-3a
   m_EditorClassIdentifier: 
   spawnPoints:
+  - {x: 3, y: 6}
+  - {x: 3, y: 7}
   - {x: 8, y: 10}
-  spawnProbability: 64000000
-  spawnDuration: 14000000
-  spawnCooldown: 05000000
+  - {x: 4, y: 15}
+  - {x: 6, y: 20}
+  spawnProbability: 4b0000004b000000640000006400000064000000
+  spawnDuration: 6400000064000000d2000000b4000000d2000000
+  spawnCooldown: 1400000014000000460000003c0000001e000000
   monsterName:
-  - MoonBeast
+  - UprightRat
+  - UprightRat
+  - Ghast
+  - Ghast
+  - HoundsOfTindalos

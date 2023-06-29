@@ -1,3 +1,4 @@
+using InventoryQuickslotUI;
 using QFramework;
 using System.Collections;
 using System.Collections.Generic;
@@ -105,12 +106,20 @@ namespace Game
         /// <param name="skill">Skill name enum</param>
         /// <returns></returns>
         public Sprite GetSkillIconSprite(SkillNameEnum skill);
+
+        /// <summary>
+        /// 技能盘UI
+        /// </summary>
+        UIAbilityPanel abilityPanel { get; set; }
+
     }
     public class SkillSystem : AbstractSystem, ISkillSystem, ICanSendCommand
     {
         public List<SkillNameEnum> unlockedSkillsList { get; private set; } // 已解锁的技能
         public List<SkillNameEnum> equippedSkillsList { get; private set; } // 装备中的技能
         public List<SkillNameEnum> availableSkillsList { get; private set; } // 可使用的技能
+      
+        public UIAbilityPanel abilityPanel { get; set; }
 
         public static Dictionary<SkillNameEnum, string> skillIDNameDic = new Dictionary<SkillNameEnum, string>()
         {
@@ -212,6 +221,10 @@ namespace Game
                 {SkillNameEnum.Inferno, "将所有可改变时间流逝速度地块的倍率变为最高级别，并附加场景效果:落火。落火：每个地块每秒有1%的概率降下燃烧的陨石，对砸到的敌方单位造成50点伤害。" },
                 {SkillNameEnum.Oceanic, "将所有可改变地块的属性变为水，并附加场景效果:潮汐。潮汐：每7秒在地图随机一排引发海啸，从左到右行进，对卷入的敌人造成20点伤害并永久降低一半的移动速度。" }
             };
+
+            UIKit.OpenPanel<UIAbilityPanel>();
+            abilityPanel = UIKit.GetPanel<UIAbilityPanel>();
+            UIKit.HidePanel<UIAbilityPanel>();
         }
 
         public List<SkillNameEnum> GetUnlockedSkills()
@@ -224,8 +237,19 @@ namespace Game
             if (!IsSkillUnlocked(skillName))
             {
                 unlockedSkillsList.Add(skillName);
-                // If OnSkillUnlocked != null then Invoke an event
-                // OnSkillUnlocked?.Invoke(this, new MsgSkillUnlocked { skillName = skillName });
+                if (equippedSkillsList[0] == SkillNameEnum.None)
+                {
+                    abilityPanel.Skill1.image.sprite = GetSkillIconSprite(skillName);
+                    abilityPanel.Skill1.image.color = new Color(255, 255,255, 255);
+                    equippedSkillsList[0] = skillName;
+                }
+                else if (equippedSkillsList[1] == SkillNameEnum.None)
+                {
+                    abilityPanel.Skill2.image.sprite = GetSkillIconSprite(skillName);
+                    abilityPanel.Skill2.image.color = new Color(255, 255, 255, 255);
+                    equippedSkillsList[1] = skillName;
+                }
+                
             }
         }
 

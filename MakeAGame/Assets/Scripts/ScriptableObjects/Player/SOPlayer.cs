@@ -1,3 +1,4 @@
+using QFramework;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -58,6 +59,7 @@ namespace Game
         public void AddMaxSan(int amount)
         {
             maxSan += amount;
+            UIKit.GetPanel<UIHandCard>()?.UpdateMaxSanDisplay();
         }
 
         /// <summary>
@@ -94,6 +96,15 @@ namespace Game
         public void AddSan(int amount)
         {
             san += amount;
+        }
+
+        /// <summary>
+        /// 设置玩家精神值
+        /// </summary>
+        /// <param name="value"></param>
+        public void SetSan(int value)
+        {
+            san = value;
         }
 
         public int GetTurnPieceCount()

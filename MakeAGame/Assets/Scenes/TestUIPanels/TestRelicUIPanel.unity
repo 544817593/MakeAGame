@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.37311915, g: 0.3807396, b: 0.35872662, a: 1}
+  m_IndirectSpecularColor: {r: 0.37311953, g: 0.38074014, b: 0.3587274, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -447,64 +447,36 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1253763029809395644, guid: 2c6c91874d812478a965b03d2d766c91, type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1253763029809395644, guid: 2c6c91874d812478a965b03d2d766c91, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1253763029809395644, guid: 2c6c91874d812478a965b03d2d766c91, type: 3}
-      propertyPath: m_AnchorMin.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1253763029809395644, guid: 2c6c91874d812478a965b03d2d766c91, type: 3}
-      propertyPath: m_AnchorMin.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1253763029809395644, guid: 2c6c91874d812478a965b03d2d766c91, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1253763029809395644, guid: 2c6c91874d812478a965b03d2d766c91, type: 3}
+    - target: {fileID: 2010128294843167226, guid: 2c6c91874d812478a965b03d2d766c91, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1253763029809395644, guid: 2c6c91874d812478a965b03d2d766c91, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1253763029809395644, guid: 2c6c91874d812478a965b03d2d766c91, type: 3}
-      propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3230367072599157242, guid: 2c6c91874d812478a965b03d2d766c91, type: 3}
       propertyPath: m_Name
       value: UIRelic
       objectReference: {fileID: 0}
-    - target: {fileID: 4365021470873608728, guid: 2c6c91874d812478a965b03d2d766c91, type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4365021470873608728, guid: 2c6c91874d812478a965b03d2d766c91, type: 3}
+    - target: {fileID: 4964458809447660095, guid: 2c6c91874d812478a965b03d2d766c91, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4365021470873608728, guid: 2c6c91874d812478a965b03d2d766c91, type: 3}
-      propertyPath: m_AnchorMin.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4365021470873608728, guid: 2c6c91874d812478a965b03d2d766c91, type: 3}
+    - target: {fileID: 4964458809447660095, guid: 2c6c91874d812478a965b03d2d766c91, type: 3}
       propertyPath: m_AnchorMin.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4365021470873608728, guid: 2c6c91874d812478a965b03d2d766c91, type: 3}
+    - target: {fileID: 4964458809447660095, guid: 2c6c91874d812478a965b03d2d766c91, type: 3}
       propertyPath: m_SizeDelta.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4365021470873608728, guid: 2c6c91874d812478a965b03d2d766c91, type: 3}
+    - target: {fileID: 4964458809447660095, guid: 2c6c91874d812478a965b03d2d766c91, type: 3}
       propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4964458809447660095, guid: 2c6c91874d812478a965b03d2d766c91, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4964458809447660095, guid: 2c6c91874d812478a965b03d2d766c91, type: 3}
+      propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

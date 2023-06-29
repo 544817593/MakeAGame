@@ -35,6 +35,8 @@ namespace Game
 		public const int normalSortingLayer = 101;
 
 		[SerializeField] private TextMeshProUGUI sanValue; // 混沌值显示
+
+		private SOPlayer player;
 		protected override void OnInit(IUIData uiData = null)
 		{
 			mData = uiData as UIHandCardData ?? new UIHandCardData();
@@ -61,7 +63,8 @@ namespace Game
 			viewCardsList = handCardSystem.handCardList;
 			focusIndex = -1;
 			ImgMP.fillAmount = 1f;
-			SetMaxSanity();
+
+			player = PlayerManager.Instance.player;			
 			SetCrtSanityToMaxSan();
 
 			#region 测试按钮
@@ -95,20 +98,15 @@ namespace Game
 			GameEntry.Interface.RegisterEvent<CountTimeEvent>(OnSecond);
 		}
 
-		// todo 混沌值初始化 要取到一个初始数据	// 现在没个地方存玩家数据，暂时由手牌ui直接处理事件
-		private int maxSan;
-		public int crtSan;
-		public void SetMaxSanity()
+		public void UpdateMaxSanDisplay()
 		{
-			maxSan = PlayerManager.Instance.player.GetMaxSan();
-			Debug.Log($"UIHandCard: SetMaxSanity {maxSan}");
-		}
+            sanValue.text = player.GetSan().ToString() + "/" + player.GetMaxSan().ToString();
+        }
 
 		public void SetCrtSanityToMaxSan()
 		{
-			crtSan = maxSan;
-			sanValue.text = crtSan.ToString() + "/" + maxSan.ToString();
-
+            player.SetSan(player.GetMaxSan());
+            sanValue.text = player.GetSan().ToString() + "/" + player.GetMaxSan().ToString();
         }
 
 		void OnSecond(CountTimeEvent e)
@@ -118,9 +116,9 @@ namespace Game
 
 		public void OnSanChange(int amount)
 		{
-			crtSan = Mathf.Clamp(crtSan + amount, 0, maxSan);
-			ImgMP.fillAmount = (float) crtSan / maxSan;
-            sanValue.text = crtSan.ToString() + "/" + maxSan.ToString();
+			player.SetSan(Mathf.Clamp(player.GetSan() + amount, 0, player.GetMaxSan()));
+			ImgMP.fillAmount = (float)player.GetSan() / player.GetMaxSan();
+            sanValue.text = player.GetSan().ToString() + "/" + player.GetMaxSan().ToString();
         }
 
 

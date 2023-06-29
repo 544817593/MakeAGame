@@ -15,11 +15,11 @@ MonoBehaviour:
   monsterName: "\u5996\u9B3C"
   monsterSprite: {fileID: 21300000, guid: bc81dc96773a1504a8ee6ef980447f56, type: 3}
   moveSpeed: 4
-  maxHp: 120
-  atkSpeed: 2.5
-  atkDmg: 12
+  maxHp: 10
+  atkSpeed: 2
+  atkDmg: 5
   defense: 0
-  accuracy: 75
+  accuracy: 50
   rarity: 1
   atkRange: 3
   monsterId: 9993

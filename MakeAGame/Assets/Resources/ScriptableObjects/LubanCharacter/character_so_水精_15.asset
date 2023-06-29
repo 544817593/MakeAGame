@@ -32,7 +32,7 @@ MonoBehaviour:
   width: 1
   height: 1
   moveDirections: 01000000020000000300000004000000
-  attackSpd: 0
+  attackSpd: 99999
   accuracy: 0
   attackRange: 3
   life: 999
