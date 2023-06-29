@@ -50,6 +50,7 @@ namespace PackOpen
 
 			Pack.BtnOpen.onClick.AddListener(() => 
 			{
+				GameManager.Instance.soundMan.Play_Open_pack();
 				OpenPack();
 			});
 
@@ -100,6 +101,7 @@ namespace PackOpen
 					card_t[i].Show();
 					card_t[i].DOMove(point_t[i].position, 2);
 					card_t[i].DOScale(1f, 2);
+					
 					
 				}
 				Cursor.lockState = CursorLockMode.None;

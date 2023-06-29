@@ -431,8 +431,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\u6254\u9AB0\u5B50"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: d802b0776eae8ad4da9c01611c369738, type: 2}
-  m_sharedMaterial: {fileID: 1944703316496227526, guid: d802b0776eae8ad4da9c01611c369738, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 6c128d3be1b8ef24189281db25a8429b, type: 2}
+  m_sharedMaterial: {fileID: 2796157871205810586, guid: 6c128d3be1b8ef24189281db25a8429b, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -979,6 +979,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ba391e6a3a1c374b8cd035dc6ae8174, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  decision: 0
+  finish: 0
   AllDice: {fileID: 1539526982}
   Dice01: {fileID: 593330725}
   Dice02: {fileID: 1860973070}

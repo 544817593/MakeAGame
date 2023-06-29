@@ -43,7 +43,7 @@ namespace Game
 
         public override void ExitState()
         {
-            
+
         }
     }
 }

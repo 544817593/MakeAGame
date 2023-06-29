@@ -12,19 +12,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a224588cf01081e479127f6d2a870735, type: 3}
   m_Name: DarkYoung
   m_EditorClassIdentifier: 
-  monsterSprite: {fileID: 0}
-  moveSpeed: 0
-  hp: 0
-  maxHp: 0
-  atkSpeed: 0
-  atkDmg: 0
-  defense: 0
-  accuracy: 0
-  rarity: 0
-  atkRange: 0
-  monsterId: 0
-  pieceId: 0
+  monsterSprite: {fileID: 21300000, guid: f688977474506734ea1c9f4833c186d3, type: 3}
+  moveSpeed: 99999
+  maxHp: 50
+  atkSpeed: 1
+  atkDmg: 5
+  defense: 5
+  accuracy: 100
+  rarity: 4
+  atkRange: 1
+  monsterId: 9997
+  width: 2
+  height: 2
   properties: 
-  inCombat: 0
-  isAttacking: 0
-  isDying: 0
+  dirs: 
+  anim: {fileID: 8253708198573104093, guid: 51e8e158b71cd6c4c9ab174064a92fe1, type: 3}
+  attackAnim: {fileID: 0}
+  starMarker: {fileID: 21300000, guid: 440a049c22388044b834b5caf5a50c57, type: 3}

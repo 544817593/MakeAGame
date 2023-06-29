@@ -34,6 +34,7 @@ namespace Game
 		private const float detailOffsetY = 453f;	// 卡牌放大时的位置偏移y
 		public const int normalSortingLayer = 101;
 
+		[SerializeField] private TextMeshProUGUI sanValue; // 混沌值显示
 		protected override void OnInit(IUIData uiData = null)
 		{
 			mData = uiData as UIHandCardData ?? new UIHandCardData();
@@ -60,7 +61,7 @@ namespace Game
 			viewCardsList = handCardSystem.handCardList;
 			focusIndex = -1;
 			ImgMP.fillAmount = 1f;
-			SetMaxSanity(0);
+			SetMaxSanity();
 			SetCrtSanityToMaxSan();
 
 			#region 测试按钮
@@ -97,7 +98,7 @@ namespace Game
 		// todo 混沌值初始化 要取到一个初始数据	// 现在没个地方存玩家数据，暂时由手牌ui直接处理事件
 		private int maxSan;
 		public int crtSan;
-		public void SetMaxSanity(int san)
+		public void SetMaxSanity()
 		{
 			maxSan = PlayerManager.Instance.player.GetMaxSan();
 			Debug.Log($"UIHandCard: SetMaxSanity {maxSan}");
@@ -106,18 +107,21 @@ namespace Game
 		public void SetCrtSanityToMaxSan()
 		{
 			crtSan = maxSan;
-		}
+			sanValue.text = crtSan.ToString() + "/" + maxSan.ToString();
+
+        }
 
 		void OnSecond(CountTimeEvent e)
 		{
-			OnSanChange(1);
+			OnSanChange((int)GameManager.Instance.playerMan.player.GetSanRegenSpeed());
 		}
 
 		public void OnSanChange(int amount)
 		{
 			crtSan = Mathf.Clamp(crtSan + amount, 0, maxSan);
 			ImgMP.fillAmount = (float) crtSan / maxSan;
-		}
+            sanValue.text = crtSan.ToString() + "/" + maxSan.ToString();
+        }
 
 
 		public void AddCard(int index)
@@ -176,8 +180,30 @@ namespace Game
 				ImgPieceIcon.SetNativeSize();	// 恢复原大小
 				PieceIcon.gameObject.SetActive(true);
 				anim.Play("Down", -1, 0);
-			}
+				GameManager.Instance.soundMan.Play_hide_bag_sound();
+                GameManager.Instance.soundMan.Play_drag_card_sound();
+            }
 		}
+		public void PopCard(string cardId)
+        {
+			
+			foreach (ViewCard Vcard in viewCardsList)
+            {
+				if(Vcard.card.charaName==cardId)
+                {
+					focusIndex = viewCardsList.IndexOf(Vcard);
+					Vcard.transform.localScale = new Vector3(1f, 1f, 1f);
+					
+					var tmpPos = cardPosList[focusIndex].localPosition;
+					tmpPos.y += 100;
+					Vcard.transform.localPosition = tmpPos;
+					nodeTooltip.SetParent(Vcard.tooltipTrans);
+					nodeTooltip.localPosition = Vector3.zero;
+					nodeTooltip.gameObject.SetActive(true);
+					UpdateLayout();
+				}
+            }
+        }
 		
 		private void Update()
 		{

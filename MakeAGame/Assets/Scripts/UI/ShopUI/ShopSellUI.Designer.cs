@@ -5,15 +5,15 @@ using QFramework;
 
 namespace ShopSellUI
 {
-	// Generate Id:25d0e7a2-a386-47d8-824e-42ab9742510c
+	// Generate Id:0bc101f2-0209-4ad8-aed9-f16759475d1b
 	public partial class ShopSellUI
 	{
 		public const string Name = "ShopSellUI";
 		
 		[SerializeField]
-		public UnityEngine.UI.Button Close;
-		[SerializeField]
 		public TMPro.TextMeshProUGUI TextGold;
+		[SerializeField]
+		public UnityEngine.UI.Button Close;
 		[SerializeField]
 		public UnityEngine.UI.Image ShopGridPanel;
 		[SerializeField]
@@ -37,16 +37,6 @@ namespace ShopSellUI
 		[SerializeField]
 		public UnityEngine.UI.Button Item10;
 		[SerializeField]
-		public UnityEngine.UI.Button Item11;
-		[SerializeField]
-		public UnityEngine.UI.Button Item12;
-		[SerializeField]
-		public UnityEngine.UI.Button Item13;
-		[SerializeField]
-		public UnityEngine.UI.Button Item14;
-		[SerializeField]
-		public UnityEngine.UI.Button Item15;
-		[SerializeField]
 		public UnityEngine.UI.Button Sell;
 		[SerializeField]
 		public UnityEngine.UI.Image ImageItemInfo;
@@ -69,8 +59,8 @@ namespace ShopSellUI
 		
 		protected override void ClearUIComponents()
 		{
-			Close = null;
 			TextGold = null;
+			Close = null;
 			ShopGridPanel = null;
 			Item01 = null;
 			Item02 = null;
@@ -82,11 +72,6 @@ namespace ShopSellUI
 			Item08 = null;
 			Item09 = null;
 			Item10 = null;
-			Item11 = null;
-			Item12 = null;
-			Item13 = null;
-			Item14 = null;
-			Item15 = null;
 			Sell = null;
 			ImageItemInfo = null;
 			TextItemInfo = null;

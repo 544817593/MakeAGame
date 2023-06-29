@@ -32,7 +32,63 @@ namespace Game
             this.RegisterEvent<PieceMoveFinishEvent>((e) =>
             {
                 CheckAllPieceAtkRange();
+                CheckOutRange(e);
             });
+        }
+
+        // 检查移动后，是否发生走出攻击距离导致的脱战
+        public void CheckOutRange(PieceMoveFinishEvent e)
+        {
+            var movedPB = e.viewPieceBase;
+            
+            List<ViewPieceBase> toRemove = new List<ViewPieceBase>();
+            
+            // 检查移动棋子的攻击对象
+            dictBattle.TryGetValue(movedPB, out var toAttacks);
+            if (toAttacks != null)
+            {
+                foreach (var vpb in toAttacks)
+                {
+                    if (pieceSystem.GetPieceDist(movedPB, vpb) > movedPB.atkRange)
+                    {
+                        Debug.Log("PieceMoveFinishEvent -> moved piece's defender is out of range");
+                        toRemove.Add(vpb);
+                    }
+                }
+
+                foreach (var vpb in toRemove)
+                {
+                    dictBattle[movedPB].Remove(vpb);
+                }
+
+                if (dictBattle[movedPB].Count == 0)
+                {
+                    this.SendEvent<PieceAttackEndEvent>(new PieceAttackEndEvent() {vpb = movedPB});
+                    dictBattle.Remove(movedPB);
+                }
+            }
+            
+            toRemove.Clear();
+            
+            foreach (var kvp in dictBattle)
+            {
+                if (kvp.Value.Contains(movedPB) && pieceSystem.GetPieceDist(kvp.Key, movedPB) > kvp.Key.atkRange)
+                {
+                    Debug.Log("PieceMoveFinishEvent -> moved piece's attacker is out of range");
+                    kvp.Value.Remove(movedPB);
+                    
+                    if (kvp.Value.Count == 0)
+                    {
+                        toRemove.Add(kvp.Key);
+                    }
+                }
+            }
+
+            foreach (var key in toRemove)
+            {
+                this.SendEvent<PieceAttackEndEvent>(new PieceAttackEndEvent() {vpb = key});
+                dictBattle.Remove(key);
+            }
         }
         
         public void CheckAllPieceAtkRange()

@@ -21,3 +21,4 @@ MonoBehaviour:
   description: "\u5C06\u4E00\u5F20\u53EF\u9020\u6210\u4F24\u5BB3\u7684\u6B7B\u9762\u724C\u53D8\u4E3A+3\uFF0C\u540C\u65F6\u5176\u4F24\u5BB3\u589E\u52A015\uFF0C\u670915%\u6982\u7387\u5931\u8D25"
   rarity: 2
   enhanceLevel: 2
+  deathEnhanceTypeEnums: 0100000004000000

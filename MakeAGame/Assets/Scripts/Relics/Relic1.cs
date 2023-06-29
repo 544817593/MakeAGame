@@ -1,3 +1,5 @@
+using UnityEngine;
+
 namespace Game
 {
     // 蛊器
@@ -11,11 +13,13 @@ namespace Game
         
         public override void Activate(IRelicSystem sys)
         {
-            sys.RegisterRelicEvent<RoomCombatEndEvent>(this, TakeEffect);
+            sys.RegisterRelicEvent<CombatVictoryEvent>(this, TakeEffect);
         }
 
         protected override void TakeEffect(object obj)
         {
+            int crtMaxSan = PlayerManager.Instance.player.GetMaxSan();
+            Debug.Log($"Relic1 take effect: maxSan {crtMaxSan} + {sanAmount}");
             PlayerManager.Instance.player.AddMaxSan((int)sanAmount);
         }
     }

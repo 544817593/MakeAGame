@@ -38,6 +38,7 @@ public class GameSceneManager : MonoBehaviour, ICanSendEvent, ICanGetSystem, ICa
     private void Start()
     {
         StartCoroutine(LoadScene("Main", false)); // 加载初始场景
+        GameManager.Instance.soundMan.Play_Intro_Bgm();
     }
 
     /// <summary>
@@ -78,6 +79,14 @@ public class GameSceneManager : MonoBehaviour, ICanSendEvent, ICanGetSystem, ICa
                 {
                     currentSceneName = sceneName;
                     operation.allowSceneActivation = true;
+                    if (sceneName == "Combat")
+                    {
+                        GameManager.Instance.soundMan.Play_Combat_Bgm();
+                    }
+                    else if (sceneName != "Intro")
+                    {
+                        GameManager.Instance.soundMan.Play_Room_Bgm();
+                    }
                 }
                 yield return null;
 

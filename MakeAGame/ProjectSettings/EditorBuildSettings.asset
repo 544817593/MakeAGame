@@ -35,4 +35,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/TestUIPanels/TestShopBuy.unity
     guid: e5fca30c78e10394fb57b38457f51cf6
+  - enabled: 1
+    path: Assets/Scenes/Rest.unity
+    guid: bd1ac3d8a19e60b438f97bef65563bc4
   m_configObjects: {}

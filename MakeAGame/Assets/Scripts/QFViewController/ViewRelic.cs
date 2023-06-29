@@ -1,6 +1,7 @@
 using System;
 using QFramework;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Game
 {
@@ -9,7 +10,8 @@ namespace Game
         private GameObject prefab = Resources.Load<GameObject>("Prefabs/RelicItem");
         
         public Transform transform;
-        public GameObject touchArea;    // UI响应区域
+        private GameObject touchArea;    // UI响应区域
+        private Image imgRelic;
 
         public RelicBase relicData { get; private set; }
         
@@ -30,6 +32,7 @@ namespace Game
         public void InitWithData(RelicBase relic)
         {
             relicData = relic;
+            imgRelic.sprite = Extensions.GetRelicSpriteByID(relicData.so.relicID);
         }
 
         void MouseEnter()
@@ -44,6 +47,7 @@ namespace Game
 
         private void InitBind()
         {
+            imgRelic = transform.Find("Root/ImgRelic").GetComponent<Image>();
             touchArea = transform.Find("Root/ImgRelic/UIEventArea").gameObject;
         }
         

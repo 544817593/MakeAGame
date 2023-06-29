@@ -152,7 +152,9 @@ public static class RoomSelector
                 rooms.Add(room);
             }
         }
-           
+
+        // Demo版本没有战斗场景池，暂时加到5个战斗房
+        if (combatRooms == 4) rooms.Add(RoomEnum.Combat);
         return rooms;
     }
 }

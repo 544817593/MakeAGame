@@ -5,7 +5,7 @@ namespace Game
     {
     }
 
-    public struct RoomCombatEndEvent    // 该房间的战斗结束
-    {
-    }
+    // public struct RoomCombatEndEvent    // 该房间的战斗结束
+    // {
+    // }
 }

@@ -22,6 +22,8 @@ namespace Game
 
         void RegisterRelicEvent<T>(RelicBase relic, Action<object> act);
 
+        void UnregisterOneRelic(RelicBase relic);
+
         List<RelicBase> GetRelics();
     }
 
@@ -44,7 +46,15 @@ namespace Game
             // var so = IdToSO.FindRelicSOByID(1);
             // this.GetSystem<IRelicSystem>().AddRelic(so);
 
-            ActivateAllRelics();
+            // 遗物测试
+            var so = IdToSO.FindRelicSOByID(1);
+            this.GetSystem<IRelicSystem>().AddRelic(so);
+            so = IdToSO.FindRelicSOByID(3);
+            this.GetSystem<IRelicSystem>().AddRelic(so);
+            // so = IdToSO.FindRelicSOByID(5);
+            // this.GetSystem<IRelicSystem>().AddRelic(so);
+            
+            // ActivateAllRelics();
         }
 
         private List<RelicBase> relics = new List<RelicBase>(); // 遗物列表
@@ -60,6 +70,8 @@ namespace Game
 
         public void ActivateAllRelics()
         {
+            DeactivateAllRelic();
+            
             Debug.Log($"RelicSystem: ActivateRelics count {relics.Count}");
             foreach (var relic in relics)
             {
@@ -67,8 +79,11 @@ namespace Game
                 var conflictRelics = IsCanceledByPlayerRelics(relic);
                 if (conflictRelics.Count == 0)
                 {
-                    relic.Activate(this);
-                    relic.isActive = true;
+                    if (!relic.IsRunOut)
+                    {
+                        relic.Activate(this);
+                        relic.isActive = true;   
+                    }
                 }
                 else
                 {
@@ -82,23 +97,16 @@ namespace Game
             }
         }
 
-        public void ActivateOneRelic(RelicBase relic)
+        public void UnregisterOneRelic(RelicBase relic)
         {
-            // 玩家当前的所有遗物中，没有遗物会取消其效果
-            var conflictRelics = IsCanceledByPlayerRelics(relic);
-            if (conflictRelics.Count == 0)
+            foreach (var kvp in dictRelicEvents)
             {
-                relic.Activate(this);
-                relic.isActive = true;
-            }
-            else
-            {
-                string s = String.Empty;
-                foreach (var conflict in conflictRelics)
+                var datas = kvp.Value.FindAll(data => data.relic == relic);
+                foreach (var d in datas)
                 {
-                    s += conflict.so.name + " ";
+                    kvp.Value.Remove(d);
+                    Debug.Log($"relic {relic.so.relicName} run out, unregister {d.act.Method.Name}");
                 }
-                Debug.Log($"relic actvate failed, {relic.so.name} is canceled by {s}");
             }
         }
 
@@ -139,7 +147,8 @@ namespace Game
             var relic = Extensions.GetRelicBySO(so);
 
             relics.Add(relic);
-            ActivateOneRelic(relic);
+            // ActivateOneRelic(relic);
+            ActivateAllRelics();
             ui?.AddRelic(relic);
         }
 
@@ -230,6 +239,25 @@ namespace Game
             {
                 data.act.Invoke(t);
             }
+        }
+
+        void DeactivateAllRelic()
+        {
+            ClearAllRegister();
+            foreach (var relic in relics)
+            {
+                relic.isActive = false;
+            }
+        }
+
+        void ClearAllRegister()
+        {
+            Debug.Log("relic system ClearAllRegister");
+            foreach (var unregister in unregisters)
+            {
+                unregister.UnRegister();
+            }
+            unregisters.Clear();
         }
 
         void CountTime(CountTimeEvent e)

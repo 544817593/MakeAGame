@@ -15,5 +15,5 @@ MonoBehaviour:
   featureID: 28
   featureName: "\u5B66\u4E0D\u53EF\u4EE5\u5DF1"
   featureDesc: "\u8DDD\u79BB\u4E0D\u5927\u4E8E5\u7684\u6B7B\u9762\u724C\u91CA\u653E\u9020\u6210\u7684\u4F24\u5BB3\u589E\u52A02*\u6280\u5DE7\u3002"
-  typeName: 
+  typeName: Study
   icon: {fileID: 0}

@@ -3,7 +3,11 @@ using UnityEngine.UI;
 using QFramework;
 using Game;
 using BagUI;
+using System;
 using TMPro;
+using ItemInfo;
+using static UnityEditor.Progress;
+using Unity.VisualScripting;
 
 namespace InventoryQuickslotUI
 {
@@ -24,7 +28,10 @@ namespace InventoryQuickslotUI
 			mData = uiData as UIInventoryQuickSlotData ?? new UIInventoryQuickSlotData();
 			CombatSceneButton.onClick.AddListener(() => 
 			{
-				UIKit.OpenPanel<BagUIPanel>();
+				GameManager.Instance.PauseGame();
+				UIKit.ShowPanel<BagUIPanel>();
+				UIKit.GetPanel<BagUIPanel>().RefreshLayout();
+	
 			});
 
         }
@@ -87,19 +94,40 @@ namespace InventoryQuickslotUI
 				if (item.data.itemUseTime != ItemUseTimeEnum.Combat &&
 					item.data.itemUseTime != ItemUseTimeEnum.AnyTime) break;
 
+				int currentIndex = y;
 				RectTransform itemSlotRectTransform = Instantiate(itemSlotTemplate, itemSlotContainer)
 					.GetComponent<RectTransform>();
 				itemSlotRectTransform.gameObject.SetActive(true);
-				itemSlotRectTransform.anchoredPosition = new Vector2(x * itemSlotCellSize, y * itemSlotCellSize);
+				itemSlotRectTransform.anchoredPosition = new Vector2(x * itemSlotCellSize, y * itemSlotCellSize - 25);
 				Image image = itemSlotRectTransform.Find("Image").GetComponent<Image>();
 				image.sprite = item.data.sprite;
-				itemSlotRectTransform.Find("ItemAmount").GetComponent<TextMeshProUGUI>().text = item.amount.ToString();
-				y++;
+                UIEventHelper mouseHelper = image.AddComponent<UIEventHelper>();
+                mouseHelper.OnUIPointEnter = () => MouseEnter(item);
+                mouseHelper.OnUIPointExit = () => MouseExit(item);
+                itemSlotRectTransform.Find("ItemAmount").GetComponent<TextMeshProUGUI>().text = "x" + item.amount.ToString();
+				itemSlotRectTransform.Find("ShortcutKey").GetComponent<TextMeshProUGUI>().text = (y + 1).ToString();
+				itemSlotRectTransform.GetComponent<Button>().onClick.AddListener(() => 
+				{
+                    GameEntry.Interface.GetSystem<IInventorySystem>().UseItem(mData.inventory.GetItemList()[currentIndex]);
+                });
+                y++;
 				// 快捷栏只显示五个物品，物品每次改动都会重新Sort一下所以前五个一定是优先显示的物品
 				if (y > 4) break;
 			}
 			activeQuickSlotCount = y;
 
         }
+
+		private void MouseEnter(Item item)
+		{
+			Debug.Log($" {item.data.itemName} mouseHelper MouseEnter");
+			UIKit.OpenPanel<ItemInfoPanel>();
+			UIKit.GetPanel<ItemInfoPanel>().LoadItemData(item);
+		}
+        private void MouseExit(Item item)
+        {
+            Debug.Log($" {item.data.itemName} mouseHelper MouseExit");
+            UIKit.ClosePanel<ItemInfoPanel>();
+		}
 	}
 }

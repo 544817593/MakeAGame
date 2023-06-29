@@ -27,8 +27,8 @@ public class Dialogue : ViewController
     TextMeshProUGUI story_text;
     public CheckControl m_checkControl;
     public ShowGift m_showGift;
-   
 
+    public string popName = "";
     private const string SPEAKER_TAG = "speaker";
     private const string PAUSE_TAG = "pause";
     private const string CHOICE_TAG = "CHOICE";
@@ -44,6 +44,8 @@ public class Dialogue : ViewController
     private const string Camera_TAG = "camera";
     private const string Reward_TAG = "reward";//奖励机制
     private const string Gift_TAG = "gift";//NPC赠送
+    private const string Pop_TAG = "pop";//NPC赠送
+    private const string Finshed_TAG = "Finish";
     //private const string SPRITE_DECISION_TAG = "Decision_Sprite";//精神判定机制
     //private const string STRENGTH_DECISION_TAG = "Decision_Strength";//力量判定机制
     public string bgPath = "UI/IntroUI/初始界面-背景图";
@@ -66,9 +68,9 @@ public class Dialogue : ViewController
     bool reward = false;
     public bool waitForPass = false;
     public bool showGift = false;
-    public double controlTime = 5f;
-    public bool victory = false;
-    public bool wait_event = false;
+  
+    
+    
    
     public GameObject npc;
     public GameObject backGround;
@@ -118,6 +120,7 @@ public class Dialogue : ViewController
         CheckPause();
         if (GetSubmitPressed() && canContinue && !pauseD && !waitForChoice && !waitForControl && !showGift && !waitForInGamecontrol && !waitForPass && !waitForScene)
         {
+            GameManager.Instance.soundMan.Play_Click_Dialogue();
             StoryUI();
         }
        
@@ -141,7 +144,7 @@ public class Dialogue : ViewController
     }
     public void CheckPause()
     {
-        if (m_Pack.openFinish == true)
+        if (m_Pack?.openFinish == true)
         {
             pauseD = false;
             UIKit.HidePanel<UIOpenPackPanel>();
@@ -166,6 +169,14 @@ public class Dialogue : ViewController
             nextLine = false;
             GameManager.Instance.PauseGame();
            
+        }
+        if (waitForInGamecontrol || waitForPass || waitForScene)
+        {
+            if (GetSubmitPressed())
+            {
+                UIKit.ShowPanel<UIHandCard>();
+                UIKit.HidePanel<DialoguePanel>();
+            }
         }
         //if(UIKit.GetPanel<DiceUI.AllDiceUIPanel>()?.finish == true)
         //{
@@ -364,7 +375,7 @@ public class Dialogue : ViewController
             }
             displayCoroutine = StartCoroutine(DisplayText(story.Continue()));
 
-
+            
 
 
         }
@@ -372,6 +383,12 @@ public class Dialogue : ViewController
         {
             d_finish = true;
             UIKit.HidePanel<DialoguePanel>();
+            if(SceneFlow.combatSceneCount == 2)
+            {
+                GameManager.Instance.ResumeGame();
+                UIKit.ShowPanel<UIHandCard>();
+              
+            }
         }
 
 
@@ -402,15 +419,25 @@ public class Dialogue : ViewController
         DisplayChoices();
         canContinue = true;
         HandleCombatTags(story.currentTags);
-
     }
 
-    void InGameControl()
+   public void InGameControl()
     {
         if (waitForInGamecontrol)
-        {    
-                StartCoroutine(WaitTime());
-                getControl = false;           
+        {
+            if (getControl)
+            {
+                waitForInGamecontrol = false;
+                nextLine = true;
+                story.variablesState["CheckControl"] = true;
+            }
+            else if (!getControl)
+            {
+                waitForInGamecontrol = false;
+                nextLine = true;
+                story.variablesState["CheckControl"] = false;
+            }
+            getControl = false;           
         }
 
         
@@ -427,24 +454,7 @@ public class Dialogue : ViewController
         nextLine = true;
         
     }
-    IEnumerator WaitTime()
-    {
-        
-        yield return new WaitForSeconds(5f);
-        if (getControl)
-        {
-            waitForInGamecontrol = false;
-            nextLine = true;
-            story.variablesState["CheckControl"] = true;
-        }
-        else if (!getControl)
-        {
-            waitForInGamecontrol = false;
-            nextLine = true;
-            story.variablesState["CheckControl"] = false;
-        }
-        
-    }
+   
     void HandleTags(List<string> current_Tag)
     {
         foreach (string tag in current_Tag)
@@ -504,7 +514,7 @@ public class Dialogue : ViewController
                 
                 case Reward_TAG:
                     reward = true;
-                    UIKit.OpenPanel<RewardUI.RewardUIPanel>();
+                    UIKit.OpenPanel<CardRewardUI.UICardRewardPanel>();
                     break;
                 case Gift_TAG:
                     m_showGift?.PopGift();
@@ -529,25 +539,24 @@ public class Dialogue : ViewController
             switch (tagK)
             {
                 case ControlInGame_TAG:
-                    //waitForControl = true;
-                    waitForInGamecontrol = true;
-                    UIKit.ShowPanel<UIHandCard>();
-                    GameManager.Instance.ResumeGame();
-                    UIKit.HidePanel<DialoguePanel>();
-                    GameManager.Instance.ResumeGame();
-                    InGameControl();
+                    //waitForControl = true;                
+                        waitForInGamecontrol = true;
+                        GameManager.Instance.ResumeGame();
+                   // InGameControl();
                     break;
                 case Pass_TAG:
                     waitForPass = true;
-                    UIKit.ShowPanel<UIHandCard>();
-                    UIKit.HidePanel<DialoguePanel>();
-                    GameManager.Instance.ResumeGame();
+                    GameManager.Instance.ResumeGame();                 
                     break;
                 case Wait_TAG:
                     waitForScene = true;
-                    UIKit.ShowPanel<UIHandCard>();
-                    UIKit.HidePanel<DialoguePanel>();
-                    GameManager.Instance.ResumeGame();
+                    GameManager.Instance.ResumeGame();                     
+                    break;
+                case Pop_TAG:  
+                    UIKit.GetPanel<UIHandCard>().PopCard(popName);
+                    break;
+                case Finshed_TAG:
+                   
                     break;
             }
 

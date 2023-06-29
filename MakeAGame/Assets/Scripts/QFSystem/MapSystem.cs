@@ -34,10 +34,17 @@ namespace Game
         /// 检查格子可否被单位移动到此
         /// </summary>
         /// <param name="boxgrid">需要被检查的格子</param>
+        /// <param name="ignoreUnits">检查格子时是否无视单位</param>
         /// <returns></returns>
-        bool GridCanMoveTo(BoxGrid boxgrid);
+        bool GridCanMoveTo(BoxGrid boxgrid, bool ignoreUnits = false);
 
         int GetGridDist(BoxGrid grid1, BoxGrid grid2);
+
+        /// <summary>
+        /// 返还当前地图中空置的格子，需要Status是Unoccupied，Occupation=0并且格子类型是正常类型(道路、可放置的道路、火水毒)
+        /// </summary>
+        /// <returns></returns>
+        List<BoxGrid> FreeGrids();
 
         void Clear();
         void SetNUllMap();
@@ -188,14 +195,19 @@ namespace Game
 
         #endregion
 
-        public bool GridCanMoveTo(BoxGrid boxgrid)
+        public bool GridCanMoveTo(BoxGrid boxgrid, bool ignoreUnits = false)
         {
-            if (!boxgrid.IsEmpty()) return false;
+            
             if (boxgrid.terrain.Value == (int)TerrainEnum.Invalid) return false;
             if (boxgrid.terrain.Value == (int)TerrainEnum.Wall) return false;
             if (boxgrid.terrain.Value == (int)TerrainEnum.Edge) return false;
-            if (boxgrid.gridStatus.Value == GridStatusEnum.AllyPiece) return false;
-            if (boxgrid.gridStatus.Value == GridStatusEnum.MonsterPiece) return false;
+            if (!ignoreUnits)
+            {
+                if (!boxgrid.IsEmpty()) return false;
+                if (boxgrid.gridStatus.Value == GridStatusEnum.AllyPiece) return false;
+                if (boxgrid.gridStatus.Value == GridStatusEnum.MonsterPiece) return false;
+            }
+
 
             return true;
         }
@@ -221,6 +233,21 @@ namespace Game
             }
             mGrids = null;
         }
-       
+
+        public List<BoxGrid> FreeGrids()
+        {
+            List<BoxGrid> freeGrids = new List<BoxGrid>();
+            foreach (BoxGrid boxGrid in mGrids)
+            {
+                if (boxGrid.gridStatus == GridStatusEnum.Unoccupied && boxGrid.occupation == 0 &&
+                    (boxGrid.terrain == (int)TerrainEnum.Road || boxGrid.terrain == (int)TerrainEnum.RoadPlaceable ||
+                    boxGrid.terrain == (int)TerrainEnum.Fire || boxGrid.terrain == (int)TerrainEnum.Water ||
+                    boxGrid.terrain == (int)TerrainEnum.Poison))
+                {
+                    freeGrids.Add(boxGrid);
+                }
+            }
+            return freeGrids;
+        }
     }
 }
