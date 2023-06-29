@@ -15,5 +15,5 @@ MonoBehaviour:
   featureID: 26
   featureName: "\u62BD\u4E1D\u5265\u8327"
   featureDesc: "\u8DDD\u79BB\u4E0D\u5927\u4E8E4\u7684\u53CB\u519B\u83B7\u5F97100%\u529B\u91CF\u7684\u653B\u51FB\u529B\u52A0\u6210"
-  typeName: Cocooning
+  typeName: 
   icon: {fileID: 0}

@@ -13,13 +13,13 @@ MonoBehaviour:
   m_Name: MonsterSpawnMap1-1a
   m_EditorClassIdentifier: 
   spawnPoints:
-  - {x: 6, y: 16}
-  - {x: 6, y: 19}
-  - {x: 3, y: 19}
-  spawnProbability: 640000004b0000004b000000
-  spawnDuration: 960000009600000096000000
-  spawnCooldown: 140000001e00000028000000
+  - {x: 5, y: 20}
+  - {x: 6, y: 20}
+  - {x: 6, y: 17}
+  spawnProbability: 5a0000005a00000032000000
+  spawnDuration: d2000000d2000000b4000000
+  spawnCooldown: 050000000500000007000000
   monsterName:
   - HoundsOfTindalos
   - HoundsOfTindalos
-  - HoundsOfTindalos
+  - Ghast

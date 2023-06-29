@@ -14,14 +14,14 @@ namespace ShopBuyUI
     }
 	public partial class ShopBuyUI : UIPanel
 	{
-        
-        private int playerGold = 0;
-        private int buyCount = 1; // 物品购买数量
-        private int gridNum = 10; // 购买栏位上限
+        // TODO 读取玩家当前金币数量，暂时使用hardcode
+        public int playerGold = 50;
+        private int buyCount = 1;
+		private int gridNum = 10; // 购买栏位上限
 		private Dictionary<Button, Item> activeButtons = new Dictionary<Button, Item>();
 		private Item selectedItem = null;
 		private Button selectedButton = null;
-        private List<Item> buyItemList = new List<Item>(); // 已购买的item
+		public List<Item> buyItemList = new List<Item>(); // 已购买的item
         protected override void OnInit(IUIData uiData = null)
 		{
 			mData = uiData as ShopBuyUIData ?? new ShopBuyUIData();
@@ -29,9 +29,9 @@ namespace ShopBuyUI
             // 监听按钮点击，跳转panel
             ShopPanelChange.ChangeShopPanel(this, Close);
             // TODO: 读取玩家当前金币数量，暂时使用hardcode
-            playerGold = GameManager.Instance.playerMan.player.GetGold();
+            //playerGold = PlayerManager.Instance.player.GetGold();
 
-            UpdateAndShowShopItems();
+			UpdateAndShowShopItems();
 			ShowItemInfo();
 			CounterLogic();
 			buyItem();
@@ -65,7 +65,7 @@ namespace ShopBuyUI
 			int idx = 0;
             
 			// 玩家金币读取
-            TextGold.text = $": {playerGold}";
+            TextGold.text = $"金币: {playerGold}";
 			// 物品购买数量初始化
 			TextCount.text = $"{buyCount}";
 			// 初始化每个Item图标，数量，花费
@@ -197,7 +197,7 @@ namespace ShopBuyUI
             selectedItem.amount -= buyCount;
             selectedButton.transform.Find("ItemNum").GetComponent<TextMeshProUGUI>().text = selectedItem.amount.ToString();
 			playerGold -= buyCount * selectedItem.data.buyCost;
-            TextGold.text = $": {playerGold}";
+            TextGold.text = $"金币: {playerGold}";
 
 			// 重置
             buyCount = 1;

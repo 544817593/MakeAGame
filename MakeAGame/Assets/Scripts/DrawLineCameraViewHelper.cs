@@ -26,6 +26,7 @@ public class DrawLineCameraViewHelper: MonoBehaviour
     /// </summary>
     void OnDrawGizmos()
     {
+        Debug.Log("OnDrawGizmos");
         if (_camera == null)
         {
             _camera = this.GetComponent<Camera>();

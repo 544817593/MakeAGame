@@ -3,13 +3,9 @@ using System.Collections.Generic;
 using System.Threading;
 using DamageNumbersPro;
 using DG.Tweening;
-using PieceInfo;
 using QFramework;
 using Unity.VisualScripting;
-using UnityEditor;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
-using static UnityEngine.GraphicsBuffer;
 using static UnityEngine.UI.Image;
 using Random = System.Random;
 
@@ -84,7 +80,7 @@ namespace Game
         private new void Update()
         {
             base.Update();
-            if(!lockLife && currLife.Value > 0)
+            if(!lockLife && currLife.Value > 0.001f)
             {
                 float timeMultiplier = 0;
                 foreach(BoxGrid grid in pieceGrids)
@@ -94,7 +90,6 @@ namespace Game
                 timeMultiplier /= pieceGrids.Count;
                 currLife.Value -= Time.deltaTime * timeMultiplier;
             }
-
         }
 
         private void OnCurrLifeChanged(float e)
@@ -120,10 +115,9 @@ namespace Game
             //动画部分
             GameObject animGO = IdToSO.FindCardSOByID(card.charaID).GetAnim();
             if (animGO != null)
-            {
-                
+            {                
                 GameObject pieceAnim = GameObject.Instantiate(animGO);                
-                pieceAnimator = pieceAnim.GetComponent<Animator>();
+                animator = pieceAnim.GetComponent<Animator>();
                 pieceAnim.transform.SetParent(gameObject.transform);
                 pieceAnim.transform.localScale = animGO.transform.localScale * 0.1f;
                 pieceAnim.transform.localPosition = new Vector3(0, 0.25f, -0.25f); // 确保不会被棋盘遮住
@@ -184,8 +178,6 @@ namespace Game
             bool canMove = CheckIfCanMove(nextGrids);
             if (canMove)
             {
-                this.SendEvent<SpecialitiesMoveCheckEvent>(new SpecialitiesMoveCheckEvent() { piece = this, boxgrid = nextGrids[0] });
-
                 // 数据变化
                 foreach (var oldGrid in pieceGrids) oldGrid.occupation = 0;
                 pieceGrids = nextGrids;
@@ -202,8 +194,36 @@ namespace Game
             }
         }
 
+        /// <summary>
+        /// 根据当前方向，获取下次移动后将占据的格子，不做任何筛选
+        /// 移动到了MovementSystem下面
+        /// </summary>
+        /// <returns></returns>
+        //private List<BoxGrid> GetNextGrids()
+        //{
+        //    int rowDiff = direction == DirEnum.Top ? -1 : direction == DirEnum.Down ? 1 : 0;
+        //    int colDiff = direction == DirEnum.Left ? -1 : direction == DirEnum.Right ? 1 : 0;
+
+        //    int nextRow;
+        //    int nextCol;
+        //    List<BoxGrid> nextGrids = new List<BoxGrid>();
+        //    var mapGrids = mapSystem.Grids();
+        //    foreach (var crtGrid in pieceGrids)
+        //    {
+        //        nextRow = crtGrid.row + rowDiff;
+        //        nextCol = crtGrid.col + colDiff;
+        //        // 超出地图边界的情况
+        //        if (nextCol < 0 || nextCol >= mapSystem.mapCol || nextRow < 0 || nextRow >= mapSystem.mapRow)
+        //            continue;
+                
+        //        nextGrids.Add(mapGrids[nextRow, nextCol]);
+        //    }
+
+        //    return nextGrids;
+        //}
+
         // 每个棋子可能不一样的，检查某个格子是否可以移动上去的方法
-        protected override bool CheckIfOneGridCanMove(BoxGrid grid, bool ignoreUnits = false)
+        protected override bool CheckIfOneGridCanMove(BoxGrid grid)
         {
             if (!base.CheckIfOneGridCanMove(grid))
                 return false;
@@ -248,18 +268,15 @@ namespace Game
             var nextPos = GetGridsCenterPos();
 
             // 如果有动画，则播放动画并启动移动协程，否则直接更改怪物位置
-            if (pieceAnimator != null)
+            if (animator != null)
             {
-                pieceAnimator.SetBool("isMove", true);
+                animator.SetBool("isMove", true);
                 movementCoroutine = StartCoroutine(MoveToTarget(nextPos));
             }
             else
             {
                 transform.DOMove(nextPos, 0.3f).OnComplete(OnMoveFinish);
             }
-
-            // 棋子在移动前可能因为回头攻击被转向
-            PieceFlip(direction);
         }
 
 
@@ -276,34 +293,16 @@ namespace Game
         {
             Debug.Log($"piece {this.ToString()} is about to attack");
             // this.SendEvent<PieceAttackReadyEvent>();
-            if (pieceAnimator != null)
-            {
-                foreach (AnimatorControllerParameter parameter in pieceAnimator.parameters)
-                {
-                    if (parameter.name == "isAttack")
-                    {
-                        StartCoroutine(PlayAttackAnimByAction(this));
-                        break;
-                    }
-                }
-            }
             this.SendCommand<PieceAttackCommand>(new PieceAttackCommand(this));
         }
         
-        public override bool Hit(int damage, ViewPieceBase attacker)
+        public override bool Hit(int damage)
         {
-            this.SendEvent<PieceHitReadyEvent>(new PieceHitReadyEvent { piece = this });
+            this.SendEvent<PieceHitReadyEvent>();
 
             hp.Value -= damage;
             Debug.Log($"Piece Hit, damage: {damage} hp: {hp}");
             MonsterDamageNumber.Spawn(this.Position(), damage);
-            // 播放受击动画
-            GameObject anim = ((Monster)attacker).data.GetAttackAnim();
-            if (anim != null)
-            {               
-                StartCoroutine(PlayAttackAnimByMarking(GameObject.Instantiate(anim, this.transform)));
-            }          
-
             this.SendEvent<PieceHitFinishEvent>(new PieceHitFinishEvent { piece = this });
 
             return hp <= 0;
@@ -371,34 +370,16 @@ namespace Game
         private void MouseUp()
         {
             Debug.Log("mouse up piece");
-            if (itemController.isMarking && itemController.markingType == typeof(ViewPiece))
+            if (itemController.isMarking)
             {
                 ItemController.Instance.markerFunction(this);
                 itemController.CancelMarking();
                 itemController.AfterUseCombatItem(itemController.markerItem);
             }
-            else if (itemController.isMarking && itemController.markingType != typeof(ViewPiece))
-            {
-                GameManager.Instance.soundMan.Play_cursor_click_invalid_sound();
-            }
             else
             {
-                GameManager.Instance.soundMan.Play_click_sound();
                 this.SendCommand<ChangePieceDirectionCommand>(new ChangePieceDirectionCommand());
             }
-        }
-
-        private void MouseEnter()
-        {
-            Debug.Log("mouse enter piece");
-            UIKit.OpenPanel<PieceInfoPanel>();
-            UIKit.GetPanel<PieceInfoPanel>().LoadPieceData(this);
-        }
-
-        private void MouseExit()
-        {
-            Debug.Log("mouse exit piece");
-            UIKit.ClosePanel<PieceInfoPanel>();
         }
 
         /// <summary>
@@ -416,75 +397,4 @@ namespace Game
                 collider2d.enabled = isEnable;
         }
     }
-
-#if UNITY_EDITOR
-    /// <summary>
-    /// 棋子类自定义Inspector，显示部分关键信息
-    /// </summary>
-    [CustomEditor(typeof(ViewPiece))]
-    public class ViewPieceEditor : Editor
-    {
-        public List<FeatureEnum> _properties;
-        public List<DirEnum> _dirs;
-        private (int, int) _position;
-
-        private void OnEnable()
-        {
-            // 获取特殊类型的 BindableProperty
-            _properties = ((ViewPiece)target).features?.Value;
-            _dirs = ((ViewPiece)target).dirs.Value;
-            _position = (((ViewPiece)target).pieceGrids[0].row, ((ViewPiece)target).pieceGrids[0].col);
-
-        }
-
-        public override void OnInspectorGUI()
-        {
-            base.OnInspectorGUI();
-            EditorGUILayout.LabelField("", GUILayout.Height(10));
-            EditorGUILayout.LabelField("Bindable Properties:");
-            var viewPiece = (ViewPiece)target;
-            viewPiece.moveSpeed.Value = EditorGUILayout.FloatField("Move Speed", viewPiece.moveSpeed.Value);
-            viewPiece.hp.Value = EditorGUILayout.IntField("HP", viewPiece.hp.Value);
-            viewPiece.maxHp.Value = EditorGUILayout.IntField("Max HP", viewPiece.maxHp.Value);
-            viewPiece.atkSpeed.Value = EditorGUILayout.FloatField("Attack Speed", viewPiece.atkSpeed.Value);
-            viewPiece.atkDmg.Value = EditorGUILayout.FloatField("Attack Damage", viewPiece.atkDmg.Value);
-            viewPiece.defense.Value = EditorGUILayout.FloatField("Defense", viewPiece.defense.Value);
-            viewPiece.accuracy.Value = EditorGUILayout.FloatField("Accuracy", viewPiece.accuracy.Value);
-            viewPiece.atkRange.Value = EditorGUILayout.IntField("Attack Range", viewPiece.atkRange.Value);
-            viewPiece.inCombat = EditorGUILayout.Toggle("In Combat", viewPiece.inCombat);
-            viewPiece.isAttacking.Value = EditorGUILayout.Toggle("Is Attacking", viewPiece.isAttacking.Value);
-            viewPiece.isDying.Value = EditorGUILayout.Toggle("Is Dying", viewPiece.isDying.Value);
-
-            // 特性
-            for (int i = 0; i < _properties.Count; i++)
-            {
-                _properties[i] = (FeatureEnum)EditorGUILayout.EnumPopup("Property " + i, _properties[i]);
-            }
-
-            // 可移动方向
-            for (int i = 0; i < _dirs.Count; i++)
-            {
-                _dirs[i] = (DirEnum)EditorGUILayout.EnumPopup("Direction " + i, _dirs[i]);
-            }
-
-            // 怪物坐标
-            int x = _position.Item1;
-            int y = _position.Item2;
-            EditorGUILayout.BeginHorizontal();
-            EditorGUILayout.PrefixLabel("Piece position");
-            x = EditorGUILayout.IntField(x);
-            y = EditorGUILayout.IntField(y);
-            EditorGUILayout.EndHorizontal();
-            _position = (x, y);
-
-            // 更新 SerializedObject，以便可以显示和编辑脚本中的值
-            serializedObject.Update();
-           
-            // 应用 SerializedObject 的更改
-            serializedObject.ApplyModifiedProperties();
-        }
-
-    }
-
-#endif
 }

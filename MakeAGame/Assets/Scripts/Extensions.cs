@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using QFramework;
-using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Game
@@ -26,16 +25,6 @@ namespace Game
         /// </summary>
         public static List<DirEnum> rightDirs = new List<DirEnum>()
             { DirEnum.Topright, DirEnum.Right, DirEnum.Downright };
-
-        public static Dictionary<BuffType, string> buffToName = new Dictionary<BuffType, string>() 
-        {
-            { BuffType.Confusion, "混乱"},
-            { BuffType.Poison, "中毒"},
-            { BuffType.Drowning, "溺水"},
-            { BuffType.Terrian_Poison, "毒沼"},
-            { BuffType.Terrian_Fire, "炽焰"},
-            { BuffType.Terrian_Water, "水潭"},
-        };
 
         /// <summary>
         /// 获取角色信息so
@@ -69,7 +58,7 @@ namespace Game
         /// <returns></returns>
         public static Sprite GetRaritySprite(RarityEnum rarity)
         {
-            Sprite sp = Resources.Load<Sprite>($"Sprites/Cards/Rarity/Card_Rarity_{(int)rarity+1}");
+            Sprite sp = Resources.Load<Sprite>($"Sprites/Cards/Rarity/Card_Rarity_{(int)rarity}");
             return sp;
         }
 
@@ -158,17 +147,6 @@ namespace Game
             return iconFileName;
         }
 
-        private const string RelicIconResFolder = "Sprites/Relics";
-        public static Sprite GetRelicSpriteByID(int id)
-        {
-            string spriteName = Extensions.GetFileWithTail(RelicIconResFolder, $"{id}", "png");
-            if (string.IsNullOrEmpty(spriteName))
-            {
-                return null;
-            }
-            return Resources.Load<Sprite>($@"{RelicIconResFolder}/{spriteName}");
-        }
-
         public static string GetDeathFuncTypeName(int charaID)
         {
             return IdToSO.FindCardSOByID(charaID).deathFuncName;
@@ -179,54 +157,8 @@ namespace Game
             switch (so.relicID)
             {
                 case 1: return new Relic1(so);
-                case 3: return new Relic3(so);
-                case 4: return new Relic4(so);
-                case 5: return new Relic5(so);
                 default: return null;
             }
-        }
-
-        /// <summary>
-        /// 返还以x,y为基础的射程内所有坐标
-        /// </summary>
-        /// <param name="x"></param>
-        /// <param name="y"></param>
-        /// <param name="range"></param>
-        /// <returns>List of coordinates that are in range of target</returns>
-        public static List<(int, int)> GetCoordinatesInRange(int x, int y, int range)
-        {
-            List<(int, int)> gridsInRange = new List<(int, int)>();
-            for (int xCord = x - range; xCord < x + range + 1; xCord++)
-            {
-                for (int yCord = y - range; yCord < y + range + 1; yCord++)
-                {
-                    if (MathF.Abs(yCord - y) + MathF.Abs(xCord - x) <= range)
-                    {
-                        gridsInRange.Add((xCord, yCord));
-                    }                      
-                }               
-            }
-            return gridsInRange;
-        }
-
-        /// <summary>
-        /// 在初始格子一定范围内有没有一个为特定类型的的格子
-        /// </summary>
-        /// <param name="grid">初始格子</param>
-        /// <param name="range">范围</param>
-        /// <param name="gridStatus">目标格子种类</param>
-        /// <returns></returns>
-        public static bool HasGridTypeInRange(BoxGrid grid, int range, TerrainEnum gridStatus)
-        {
-            List<(int, int)> gridCoordinates = GetCoordinatesInRange(grid.row, grid.col, range);
-            BoxGrid[,] map = GameEntry.Interface.GetSystem<IMapSystem>().Grids();
-            foreach((int,int) coordinate in gridCoordinates)
-            {
-                // 格子出界直接跳过
-                if (coordinate.Item1 < 0 || coordinate.Item2 < 0 || coordinate.Item1 > map.GetLength(0) || coordinate.Item2 > map.GetLength(1)) continue;
-                if (map[coordinate.Item1, coordinate.Item2].terrain == (int)gridStatus) return true;
-            }
-            return false;
         }
     }
 }

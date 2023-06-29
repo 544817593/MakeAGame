@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 37395424}
   - component: {fileID: 37395425}
+  - component: {fileID: 1535455737606632882}
   m_Layer: 5
   m_Name: CardPosition2
   m_TagString: Untagged
@@ -45,6 +46,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 37395423}
   m_CullTransparentMesh: 1
+--- !u!114 &1535455737606632882
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 37395423}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d8cac0a88f2d87c428511e43079e8ab3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hoverSound: {fileID: 8300000, guid: 19057c8424312ff4487cf39496c239d8, type: 3}
+  clickSound: {fileID: 0}
 --- !u!1 &91281048
 GameObject:
   m_ObjectHideFlags: 0
@@ -193,8 +208,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: <
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 6c128d3be1b8ef24189281db25a8429b, type: 2}
-  m_sharedMaterial: {fileID: 2796157871205810586, guid: 6c128d3be1b8ef24189281db25a8429b, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -459,6 +474,7 @@ GameObject:
   m_Component:
   - component: {fileID: 261364809}
   - component: {fileID: 261364810}
+  - component: {fileID: 8322985710730916213}
   m_Layer: 5
   m_Name: CardPosition1
   m_TagString: Untagged
@@ -494,6 +510,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 261364808}
   m_CullTransparentMesh: 1
+--- !u!114 &8322985710730916213
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 261364808}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d8cac0a88f2d87c428511e43079e8ab3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hoverSound: {fileID: 8300000, guid: 19057c8424312ff4487cf39496c239d8, type: 3}
+  clickSound: {fileID: 0}
 --- !u!1 &345024400
 GameObject:
   m_ObjectHideFlags: 0
@@ -759,6 +789,7 @@ GameObject:
   m_Component:
   - component: {fileID: 402049185}
   - component: {fileID: 402049186}
+  - component: {fileID: 4322834128243888248}
   m_Layer: 5
   m_Name: CardPosition7
   m_TagString: Untagged
@@ -794,6 +825,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 402049184}
   m_CullTransparentMesh: 1
+--- !u!114 &4322834128243888248
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 402049184}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d8cac0a88f2d87c428511e43079e8ab3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hoverSound: {fileID: 8300000, guid: 19057c8424312ff4487cf39496c239d8, type: 3}
+  clickSound: {fileID: 0}
 --- !u!1 &431715991
 GameObject:
   m_ObjectHideFlags: 0
@@ -864,8 +909,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 637fe139cb978d440b2de1ec89b35f46, type: 3}
-  m_Type: 0
+  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -958,6 +1003,7 @@ GameObject:
   m_Component:
   - component: {fileID: 472371409}
   - component: {fileID: 472371410}
+  - component: {fileID: 7886028007128174560}
   m_Layer: 5
   m_Name: CardPosition10
   m_TagString: Untagged
@@ -993,6 +1039,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 472371408}
   m_CullTransparentMesh: 1
+--- !u!114 &7886028007128174560
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 472371408}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d8cac0a88f2d87c428511e43079e8ab3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hoverSound: {fileID: 8300000, guid: 19057c8424312ff4487cf39496c239d8, type: 3}
+  clickSound: {fileID: 0}
 --- !u!1 &504195083
 GameObject:
   m_ObjectHideFlags: 0
@@ -1003,6 +1063,7 @@ GameObject:
   m_Component:
   - component: {fileID: 504195084}
   - component: {fileID: 504195085}
+  - component: {fileID: 5359414094739548569}
   m_Layer: 5
   m_Name: CardPosition3
   m_TagString: Untagged
@@ -1038,6 +1099,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 504195083}
   m_CullTransparentMesh: 1
+--- !u!114 &5359414094739548569
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 504195083}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d8cac0a88f2d87c428511e43079e8ab3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hoverSound: {fileID: 8300000, guid: 19057c8424312ff4487cf39496c239d8, type: 3}
+  clickSound: {fileID: 0}
 --- !u!1 &509287291
 GameObject:
   m_ObjectHideFlags: 0
@@ -1297,6 +1372,7 @@ GameObject:
   m_Component:
   - component: {fileID: 755242213}
   - component: {fileID: 755242214}
+  - component: {fileID: 6498180276888708789}
   m_Layer: 5
   m_Name: CardPosition5
   m_TagString: Untagged
@@ -1332,6 +1408,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 755242212}
   m_CullTransparentMesh: 1
+--- !u!114 &6498180276888708789
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 755242212}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d8cac0a88f2d87c428511e43079e8ab3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hoverSound: {fileID: 8300000, guid: 19057c8424312ff4487cf39496c239d8, type: 3}
+  clickSound: {fileID: 0}
 --- !u!1 &905264094
 GameObject:
   m_ObjectHideFlags: 0
@@ -1342,6 +1432,7 @@ GameObject:
   m_Component:
   - component: {fileID: 905264095}
   - component: {fileID: 905264096}
+  - component: {fileID: 1261267445111123531}
   m_Layer: 5
   m_Name: CardPosition6
   m_TagString: Untagged
@@ -1377,6 +1468,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 905264094}
   m_CullTransparentMesh: 1
+--- !u!114 &1261267445111123531
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 905264094}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d8cac0a88f2d87c428511e43079e8ab3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hoverSound: {fileID: 8300000, guid: 19057c8424312ff4487cf39496c239d8, type: 3}
+  clickSound: {fileID: 0}
 --- !u!1 &915920646
 GameObject:
   m_ObjectHideFlags: 0
@@ -1447,8 +1552,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 10d8f0fabb222c04dae85a5b0306a05d, type: 3}
-  m_Type: 0
+  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -1759,8 +1864,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\u9053\u5177"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 6c128d3be1b8ef24189281db25a8429b, type: 2}
-  m_sharedMaterial: {fileID: 2796157871205810586, guid: 6c128d3be1b8ef24189281db25a8429b, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: dade95e5ac59a194eb5672a363f74f5e, type: 2}
+  m_sharedMaterial: {fileID: -5556213747566866917, guid: dade95e5ac59a194eb5672a363f74f5e, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -2010,6 +2115,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1059001473}
   - component: {fileID: 1059001474}
+  - component: {fileID: 2650642945412318713}
   m_Layer: 5
   m_Name: CardPosition4
   m_TagString: Untagged
@@ -2045,6 +2151,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1059001472}
   m_CullTransparentMesh: 1
+--- !u!114 &2650642945412318713
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1059001472}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d8cac0a88f2d87c428511e43079e8ab3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hoverSound: {fileID: 8300000, guid: 19057c8424312ff4487cf39496c239d8, type: 3}
+  clickSound: {fileID: 0}
 --- !u!1 &1065727436
 GameObject:
   m_ObjectHideFlags: 0
@@ -2197,8 +2317,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 0 / 0
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 6c128d3be1b8ef24189281db25a8429b, type: 2}
-  m_sharedMaterial: {fileID: 2796157871205810586, guid: 6c128d3be1b8ef24189281db25a8429b, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -2428,8 +2548,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: '>'
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 6c128d3be1b8ef24189281db25a8429b, type: 2}
-  m_sharedMaterial: {fileID: 2796157871205810586, guid: 6c128d3be1b8ef24189281db25a8429b, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -2693,6 +2813,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1743778005}
   - component: {fileID: 1743778006}
+  - component: {fileID: 5258849727664950465}
   m_Layer: 5
   m_Name: CardPosition9
   m_TagString: Untagged
@@ -2728,6 +2849,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1743778004}
   m_CullTransparentMesh: 1
+--- !u!114 &5258849727664950465
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1743778004}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d8cac0a88f2d87c428511e43079e8ab3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hoverSound: {fileID: 8300000, guid: 19057c8424312ff4487cf39496c239d8, type: 3}
+  clickSound: {fileID: 0}
 --- !u!1 &1752124616
 GameObject:
   m_ObjectHideFlags: 0
@@ -2738,6 +2873,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1752124617}
   - component: {fileID: 1752124618}
+  - component: {fileID: 7683118416211128016}
   m_Layer: 5
   m_Name: CardPosition8
   m_TagString: Untagged
@@ -2773,6 +2909,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1752124616}
   m_CullTransparentMesh: 1
+--- !u!114 &7683118416211128016
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1752124616}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d8cac0a88f2d87c428511e43079e8ab3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hoverSound: {fileID: 8300000, guid: 19057c8424312ff4487cf39496c239d8, type: 3}
+  clickSound: {fileID: 0}
 --- !u!1 &1922025042
 GameObject:
   m_ObjectHideFlags: 0
@@ -2841,8 +2991,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\u5361\u724C"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 6c128d3be1b8ef24189281db25a8429b, type: 2}
-  m_sharedMaterial: {fileID: 2796157871205810586, guid: 6c128d3be1b8ef24189281db25a8429b, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: dade95e5ac59a194eb5672a363f74f5e, type: 2}
+  m_sharedMaterial: {fileID: -5556213747566866917, guid: dade95e5ac59a194eb5672a363f74f5e, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -3209,8 +3359,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\u653B\u51FB\u529B"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 6c128d3be1b8ef24189281db25a8429b, type: 2}
-  m_sharedMaterial: {fileID: 2796157871205810586, guid: 6c128d3be1b8ef24189281db25a8429b, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: dade95e5ac59a194eb5672a363f74f5e, type: 2}
+  m_sharedMaterial: {fileID: -5556213747566866917, guid: dade95e5ac59a194eb5672a363f74f5e, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -3361,8 +3511,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\u901F\u5EA6"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 6c128d3be1b8ef24189281db25a8429b, type: 2}
-  m_sharedMaterial: {fileID: 2796157871205810586, guid: 6c128d3be1b8ef24189281db25a8429b, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: dade95e5ac59a194eb5672a363f74f5e, type: 2}
+  m_sharedMaterial: {fileID: -5556213747566866917, guid: dade95e5ac59a194eb5672a363f74f5e, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -3513,8 +3663,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\u540D\u5B57"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 6c128d3be1b8ef24189281db25a8429b, type: 2}
-  m_sharedMaterial: {fileID: 2796157871205810586, guid: 6c128d3be1b8ef24189281db25a8429b, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: dade95e5ac59a194eb5672a363f74f5e, type: 2}
+  m_sharedMaterial: {fileID: -5556213747566866917, guid: dade95e5ac59a194eb5672a363f74f5e, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -3665,8 +3815,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\u884C\u52A8\u65B9\u5411"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 6c128d3be1b8ef24189281db25a8429b, type: 2}
-  m_sharedMaterial: {fileID: 2796157871205810586, guid: 6c128d3be1b8ef24189281db25a8429b, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: dade95e5ac59a194eb5672a363f74f5e, type: 2}
+  m_sharedMaterial: {fileID: -5556213747566866917, guid: dade95e5ac59a194eb5672a363f74f5e, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -3801,7 +3951,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06415f5559be5f74a8c30dad423324d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cardList: []
   Ref: {fileID: 1960231054}
   Card: {fileID: 345024403}
   Item: {fileID: 1922313645}
@@ -3893,8 +4042,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: New Text
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 6c128d3be1b8ef24189281db25a8429b, type: 2}
-  m_sharedMaterial: {fileID: 2796157871205810586, guid: 6c128d3be1b8ef24189281db25a8429b, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: dade95e5ac59a194eb5672a363f74f5e, type: 2}
+  m_sharedMaterial: {fileID: -5556213747566866917, guid: dade95e5ac59a194eb5672a363f74f5e, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -4045,8 +4194,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: New Text
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 6c128d3be1b8ef24189281db25a8429b, type: 2}
-  m_sharedMaterial: {fileID: 2796157871205810586, guid: 6c128d3be1b8ef24189281db25a8429b, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: dade95e5ac59a194eb5672a363f74f5e, type: 2}
+  m_sharedMaterial: {fileID: -5556213747566866917, guid: dade95e5ac59a194eb5672a363f74f5e, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -4197,8 +4346,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\u8840\u91CF"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 6c128d3be1b8ef24189281db25a8429b, type: 2}
-  m_sharedMaterial: {fileID: 2796157871205810586, guid: 6c128d3be1b8ef24189281db25a8429b, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: dade95e5ac59a194eb5672a363f74f5e, type: 2}
+  m_sharedMaterial: {fileID: -5556213747566866917, guid: dade95e5ac59a194eb5672a363f74f5e, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -4349,8 +4498,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\u653B\u901F"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 6c128d3be1b8ef24189281db25a8429b, type: 2}
-  m_sharedMaterial: {fileID: 2796157871205810586, guid: 6c128d3be1b8ef24189281db25a8429b, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: dade95e5ac59a194eb5672a363f74f5e, type: 2}
+  m_sharedMaterial: {fileID: -5556213747566866917, guid: dade95e5ac59a194eb5672a363f74f5e, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -4501,8 +4650,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\u5C04\u7A0B"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 6c128d3be1b8ef24189281db25a8429b, type: 2}
-  m_sharedMaterial: {fileID: 2796157871205810586, guid: 6c128d3be1b8ef24189281db25a8429b, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: dade95e5ac59a194eb5672a363f74f5e, type: 2}
+  m_sharedMaterial: {fileID: -5556213747566866917, guid: dade95e5ac59a194eb5672a363f74f5e, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []

@@ -23,7 +23,6 @@ namespace Game
         public delegate void MarkerFunction(ViewPieceBase piece); // 标记模式下成功标记后所执行的委托类
         public MarkerFunction markerFunction; // 实际委托变量
         public Item markerItem; // 标记模式下所使用的物品
-        public Type markingType; // 标记模式下需要标记的单位类
 
         public int sanCostIncreaseProtection = 0; // 不会为卡牌永久增加混沌值损耗次数
         public int deathDestroyProtection = 0; // 死面牌不会被摧毁次数
@@ -257,7 +256,6 @@ namespace Game
                     if (rand > 14)
                     {
                         viewBagCard.card.deathEnhancement.extraDamageEffect = true;
-                        viewBagCard.card.deathFunc.deathEnhanceTypeList.Add(DeathEnhanceTypeEnum.RandDamageOnMap);
                         break;
                     }
                     AfterUseMerchantItem(item, viewBagCard, false);
@@ -505,13 +503,11 @@ namespace Game
                 case "深蓝色羽毛笔":
                     markerFunction = Navy_Quill_Pen;
                     markerItem = e.item;
-                    markingType = typeof(Monster);
                     ActivateMarkingMode();
                     return;
                 case "浅蓝色羽毛笔":
                     markerFunction = Light_Navy_Quill_Pen;
                     markerItem = e.item;
-                    markingType = typeof(ViewPiece);
                     ActivateMarkingMode();
                     return;
                 case "炼金沙":
@@ -536,13 +532,11 @@ namespace Game
         private void Navy_Quill_Pen(ViewPieceBase piece)
         {
             GameManager.Instance.buffMan.AddBuff(new BuffNavyQuillPen(piece as Monster));
-            GameManager.Instance.soundMan.Play_cursor_click_success_sound();
         }
 
         private void Light_Navy_Quill_Pen(ViewPieceBase piece)
         {
             GameManager.Instance.buffMan.AddBuff(new BuffLightNavyQuillPen(piece as ViewPiece));
-            GameManager.Instance.soundMan.Play_cursor_click_success_sound();
         }
 
         /// <summary>
@@ -582,7 +576,6 @@ namespace Game
         {
             isMarking = false;
             Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
-            GameManager.Instance.soundMan.Play_cursor_click_cancel_sound();
         }
 
         /// <summary>

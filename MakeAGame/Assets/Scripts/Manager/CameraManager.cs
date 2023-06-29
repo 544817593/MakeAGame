@@ -16,7 +16,7 @@ public class CameraManager : MonoBehaviour
         // 确保单例
         if (instance != null && instance != this)
         {
-            //Destroy(gameObject);
+            Destroy(gameObject);
         }
         else
         {

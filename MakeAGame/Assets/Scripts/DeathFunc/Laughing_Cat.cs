@@ -10,12 +10,10 @@ namespace Game
     /// </summary>
     public class Laughing_Cat: DeathFuncBase
     {
-        float duration = 15f;
         public Laughing_Cat()
         {
             area.width = 3;
             area.height = 3;
-            deathEnhanceTypeList.Add(DeathEnhanceTypeEnum.Duration);
         }
 
         public override void OnExecute(List<BoxGrid> grids)
@@ -34,7 +32,12 @@ namespace Game
                 Monster monster = pieceSystem.getMonsterById(grid.occupation);
                 if (monster != null)
                 {
-                    duration = EnhanceDeathDuration(duration);
+                    float duration = 15f;
+                    if(viewCard.card.deathEnhancement.statusTimeIncrease != 0)
+                    {
+                        duration += viewCard.card.deathEnhancement.statusTimeIncrease;
+                    }
+                    Debug.Log("爱笑猫添加buff");
                     GameManager.Instance.buffMan.AddBuff(new BuffConfusion(monster, duration));
                 }
             }

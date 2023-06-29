@@ -15,22 +15,7 @@ namespace Game
         public List<float> crtParams = new List<float>();
         
         public bool isActive = false;   // 当前是否激活（是否在监听）
-
-        private bool isRunOut;
-        public bool IsRunOut
-        {
-            get { return isRunOut;}
-            set
-            {
-                if (value == true)
-                {
-                    Debug.Log($"relic {so.relicName} run out");
-                    var sys = GameEntry.Interface.GetSystem<IRelicSystem>();
-                    sys.UnregisterOneRelic(this);
-                }
-                isRunOut = value;
-            }
-        } // 是否已经用完了，永久不再生效
+        public bool isRunOut = false;   // 是否已经用完了，永久不再生效
 
         protected RelicBase(SORelic so)
         {

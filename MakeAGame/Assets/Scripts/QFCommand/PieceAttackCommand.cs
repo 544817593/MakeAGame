@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using QFramework;
 using UnityEngine;
@@ -36,13 +35,10 @@ namespace Game
                     boxgrids = defender.pieceGrids
                 };
                 this.SendEvent<SpecialitiesDefendCheckEvent>(defEvent);
-                // 攻击棋子可能需要转向
-                attacker.PieceFlip(defender);
-                bool isDead = defender.Hit(damage, attacker);
-
+                
+                bool isDead = defender.Hit(damage);
                 if (isDead)
                 {
-                    this.SendEvent<SpecialitiesPieceDieEvent>(new SpecialitiesPieceDieEvent { viewPiece = defender });
                     toDiePieces.Add(defender);
                 }
             }

@@ -74,10 +74,7 @@ namespace Game
         /// <returns></returns>
         Card DrawCard();
 
-        /// <summary>
-        /// 在玩家属性改变后更新卡牌数据
-        /// </summary>
-        void UpdateCardStats(PlayerStatsEnum stat, int value);
+
 
     }
 
@@ -105,7 +102,6 @@ namespace Game
             SOItemBase Type_DMinorEnhancementPotion = Resources.Load<SOItemBase>("ScriptableObjects/Items/Type-D Minor Enhancement Potion");
             SOItemBase LightNavyQuillPen = Resources.Load<SOItemBase>("ScriptableObjects/Items/Light-Navy Quill Pen");
             SOItemBase NavyQuillPen = Resources.Load<SOItemBase>("ScriptableObjects/Items/Navy Quill Pen");
-            SOItemBase EPotion = Resources.Load<SOItemBase>("ScriptableObjects/Items/Type-E Minor Enhancement Potion");
             AddItem(new Item { amount = 2, data = MinorSapphirePotion });
             AddItem(new Item { amount = 1, data = MinorSapphirePotion });
             AddItem(new Item { amount = 1, data = IntermediateSapphirePotion });
@@ -113,7 +109,6 @@ namespace Game
             AddItem(new Item { amount = 1, data = Type_DMinorEnhancementPotion });
             AddItem(new Item { amount = 4, data = LightNavyQuillPen });
             AddItem(new Item { amount = 3, data = NavyQuillPen });
-            AddItem(new Item { amount = 2, data = EPotion });
 
 
 
@@ -178,11 +173,11 @@ namespace Game
                 {
                     UIKit.GetPanel<BagUIPanel>().CardDescription.Hide();
                 };
-   
+
+           
             cardBagList.Value.Add(cardItem);
-           // Debug.LogError(cardBagList.Value.Count);
-            //ShuffleCard();
-            UIKit.GetPanel<BagUIPanel>().RefreshLayout();
+            ShuffleCard();
+            UIKit.GetPanel<BagUIPanel>().UpdateLayout();
         }
         public List<ViewBagCard> GetBagCardList()
         {
@@ -214,7 +209,6 @@ namespace Game
         {
             var useItemEvent = new UseItemEvent { item = item };
             GameEntry.Interface.SendCommand(new UseItemCommand(useItemEvent));
-            GameManager.Instance.soundMan.Play_itemUse_sound();
         }
 
         public void ShuffleCard()
@@ -236,28 +230,6 @@ namespace Game
             return card;
         }
 
-        public void UpdateCardStats(PlayerStatsEnum stat, int value)
-        {
-
-            foreach (ViewBagCard viewBagCard in cardBagList.Value)
-            {
-                SOCharacterInfo so = IdToSO.FindCardSOByID(viewBagCard.card.charaID);
-                if (stat == so.atkSpdBonus.stat)
-                {
-                    viewBagCard.card.atkSpd += value * so.atkSpdBonus.multiple;
-                }
-                if (stat == so.atkBonus.stat)
-                {
-                    viewBagCard.card.damage += value * so.atkBonus.multiple;
-                }
-                if (stat == so.hpBonus.stat)
-                {
-                    viewBagCard.card.hp += (int)(value * so.hpBonus.multiple);
-                    viewBagCard.card.maxHp += (int)(value * so.hpBonus.multiple);
-                }
-                viewBagCard.card.sanCost += value * so.sanCostBonus.multiple;
-            }
-        }
     }
 }
 

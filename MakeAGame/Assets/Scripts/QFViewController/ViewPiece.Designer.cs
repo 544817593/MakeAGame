@@ -18,8 +18,6 @@ namespace Game
             mouseHelper = touchArea.AddComponent<TriggerHelper>();
             mouseHelper.OnMouseDownEvent = MouseDown;
             mouseHelper.OnMouseUpEvent = MouseUp;
-            mouseHelper.OnMouseEnterEvent = MouseEnter;
-            mouseHelper.OnMouseExitEvent = MouseExit;
         }
     }
 }

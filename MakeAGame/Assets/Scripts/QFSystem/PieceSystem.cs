@@ -49,7 +49,6 @@ namespace Game
         private ViewPiece lastSpawnedFriend;
         private ViewPiece lastSpawnedInvestigator;
         private Monster lastSpawnedMonster;
-        private bool CheckControl = false;
 
         protected override void OnInit()
         {
@@ -166,11 +165,12 @@ namespace Game
             var pieceScreenPos = Camera.main.WorldToScreenPoint(viewPB.transform.position);
             viewDirectionWheel.gameObject.transform.localPosition = Extensions.ScreenToUIPos(pieceScreenPos);
             viewDirectionWheel.gameObject.SetActive(true);
+
             if (viewPiece.card.charaName == "弗朗西斯·维兰德·瑟斯顿")
             {
-                CheckControl = true;
+                Dialogue dialogue = GameObject.Find("Dialogue")?.GetComponent<Dialogue>();
+                if (dialogue != null) dialogue.getControl = true;
             }
-            else { CheckControl = false; }
         }
         
         void CheckDirectionWheelExist()
@@ -184,8 +184,6 @@ namespace Game
 
         public void ChangePieceDirection()
         {
-            if (ItemController.Instance.isMarking) return;
-
             Debug.Log($"ChangePieceDirection ret1: {crtSelectedPiece == null} ret2: {viewDirectionWheel.crtDirection == DirEnum.None}");
 
             // 无效操作
@@ -195,7 +193,7 @@ namespace Game
             else
             {
                 var newDirection = viewDirectionWheel.crtDirection;
-                if (crtSelectedPiece.pieceAnimator != null)
+                if (crtSelectedPiece.animator != null)
                 {
                     crtSelectedPiece.PieceFlip(newDirection);
                 }
@@ -203,7 +201,6 @@ namespace Game
                 // 替换当前方向的资源图片
                 Sprite curDirection = Resources.Load<Sprite>(ViewDirectionWheel.CurDirectionDict[crtSelectedPiece.direction]);
                 crtSelectedPiece.gameObject.transform.Find("CurMoveDirection").GetComponent<SpriteRenderer>().sprite = curDirection;
-                GameManager.Instance.soundMan.Play_ui_click_success_sound();
                 Debug.Log($"change piece direction to {newDirection}");
               
             }
@@ -211,20 +208,6 @@ namespace Game
             viewDirectionWheel.gameObject.SetActive(false);
             viewDirectionWheel.crtDirection = DirEnum.None;
             crtSelectedPiece = null;
-           
-            Dialogue dialogue = GameObject.Find("Dialogue")?.GetComponent<Dialogue>();
-            if (dialogue != null&& dialogue.popName == "弗朗西斯·维兰德·瑟斯顿")
-            {
-                if (CheckControl == true)
-                {
-                    dialogue.getControl = true;
-                }
-                else
-                {
-                    dialogue.getControl = false;
-                }
-                dialogue.InGameControl();
-            }
         }
 
         public int GetPieceDist(ViewPieceBase vpb1, ViewPieceBase vpb2)
