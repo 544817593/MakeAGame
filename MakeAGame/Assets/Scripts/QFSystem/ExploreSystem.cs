@@ -50,7 +50,7 @@ namespace Game
                     var newGrid = gridGenerator.CreateGrid(i, j, root);
 
                     // 地图格子真正赋值数据的地方
-                    // newGrid.terrain.Value = data.mapTerrain[i, j];
+                    newGrid.terrain.Value = data.mapTerrain[i, j];
                     // newGrid.timeMultiplier.Value = data.mapTimeMultiplier[i, j];
                     // newGrid.edgeRes.Value = data.edgeResources[i, j];
 
@@ -93,6 +93,11 @@ namespace Game
             GetNextPos(dir, out nextRow, out nextCol);
             // Debug.Log($"next row: {nextRow} col: {nextCol}");
             if (nextRow < 0 || nextRow >= mGrids.GetLength(0) || nextCol < 0 || nextCol >= mGrids.GetLength(1))
+            {
+                return false;
+            }
+
+            if (mGrids[nextRow, nextCol].terrain.Value == (int)TerrainEnum.Wall)
             {
                 return false;
             }

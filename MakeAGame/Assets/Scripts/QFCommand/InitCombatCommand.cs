@@ -69,8 +69,8 @@ namespace Game
             this.GetSystem<IRelicSystem>().StartCountTime();
             
             // 遗物test
-            var so = IdToSO.FindRelicSOByID(5);
-            this.GetSystem<IRelicSystem>().AddRelic(so);
+            // var so = IdToSO.FindRelicSOByID(5);
+            // this.GetSystem<IRelicSystem>().AddRelic(so);
             
             this.SendEvent<RoomCombatStartEvent>();
         }

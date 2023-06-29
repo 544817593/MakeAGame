@@ -77,10 +77,27 @@ namespace Game
         public bool hit; // 是否命中
     }
 
+    public class RelicAttackCheckEvent
+    {
+        public ViewPieceBase attacker;
+        public ViewPieceBase target;
+        public int damage;
+        public bool hit;
+    }
+
     /// <summary>
     /// 受到伤害时计算完伤害和命中后进行特性检测
     /// </summary>
     public class SpecialitiesDefendCheckEvent
+    {
+        public ViewPieceBase attacker; // 攻击方
+        public ViewPieceBase target; // 防守方
+        public bool isMagic; // 伤害是否为魔法伤害
+        public int damage; // 伤害
+        public List<BoxGrid> boxgrids; // 受到攻击的格子(单位可能并非1*1)
+    }
+    
+    public class RelicDefendCheckEvent
     {
         public ViewPieceBase attacker; // 攻击方
         public ViewPieceBase target; // 防守方

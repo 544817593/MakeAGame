@@ -290,7 +290,7 @@ namespace Game
         public override void Attack()
         {
             Debug.Log($"monster {this.pieceId.ToString()} is about to attack");
-            this.SendEvent<PieceAttackReadyEvent>();
+            // this.SendEvent<PieceAttackReadyEvent>();
             if (pieceAnimator != null)
             {
                 foreach (AnimatorControllerParameter parameter in pieceAnimator.parameters)

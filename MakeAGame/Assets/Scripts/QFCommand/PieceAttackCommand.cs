@@ -30,12 +30,25 @@ namespace Game
                 var atkEvent = new SpecialitiesAttackCheckEvent()
                     {attacker = attacker, damage = (int) damage, hit = isHit, target = defender};
                 this.SendEvent<SpecialitiesAttackCheckEvent>(atkEvent);
+
+                var relicAtkEvent = new RelicAttackCheckEvent()
+                    {attacker = attacker, damage = atkEvent.damage, hit = atkEvent.hit, target = defender};
+                this.SendEvent<RelicAttackCheckEvent>(relicAtkEvent);
+                
                 var defEvent = new SpecialitiesDefendCheckEvent()
                 {
-                    attacker = attacker, target = defender, isMagic = false, damage = (int)atkEvent.damage, // todo isMagic咋判断的
+                    attacker = attacker, target = defender, isMagic = false, damage = (int)relicAtkEvent.damage, // todo isMagic咋判断的
                     boxgrids = defender.pieceGrids
                 };
                 this.SendEvent<SpecialitiesDefendCheckEvent>(defEvent);
+                
+                var relicDefEvent = new RelicDefendCheckEvent()
+                {
+                    attacker = attacker, target = defender, isMagic = false, damage = (int)defEvent.damage, // todo isMagic咋判断的
+                    boxgrids = defender.pieceGrids
+                };
+                this.SendEvent<RelicDefendCheckEvent>(relicDefEvent);
+                
                 // 攻击棋子可能需要转向
                 attacker.PieceFlip(defender);
                 bool isDead = defender.Hit(damage, attacker);

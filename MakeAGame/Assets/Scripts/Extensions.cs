@@ -182,6 +182,11 @@ namespace Game
                 case 3: return new Relic3(so);
                 case 4: return new Relic4(so);
                 case 5: return new Relic5(so);
+                case 6: return new Relic6(so);
+                case 7: return new Relic7(so);
+                case 8: return new Relic8(so);
+                case 9: return new Relic9(so);
+                case 10: return new Relic10(so);
                 default: return null;
             }
         }
