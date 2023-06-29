@@ -28,6 +28,6 @@ MonoBehaviour:
   properties: 
   dirs: 
   specialFeatures: 2300000024000000250000002600000027000000
-  anim: {fileID: 8253708198573104093, guid: 51e8e158b71cd6c4c9ab174064a92fe1, type: 3}
+  anim: {fileID: 2553981541356224761, guid: 51e8e158b71cd6c4c9ab174064a92fe1, type: 3}
   attackAnim: {fileID: 0}
   starMarker: {fileID: 21300000, guid: 440a049c22388044b834b5caf5a50c57, type: 3}

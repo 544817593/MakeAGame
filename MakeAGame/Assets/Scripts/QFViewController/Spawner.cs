@@ -186,7 +186,7 @@ namespace Game
                 GameObject monsterAnim = Instantiate(animGO);
                 piece.GetComponent<Monster>().pieceAnimator = monsterAnim.GetComponent<Animator>();
                 monsterAnim.transform.SetParent(piece.transform);
-                monsterAnim.transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
+                monsterAnim.transform.localScale = 0.1f * animGO.transform.localScale;
                 monsterAnim.transform.localPosition = new Vector3(0, 0.25f, -0.25f); // 确保不会被棋盘遮住
                 monsterAnim.transform.localRotation = animGO.transform.localRotation;
                 monster.isFacingRight = false;
