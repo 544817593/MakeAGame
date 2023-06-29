@@ -41,6 +41,7 @@ namespace Game
         public float currLife { get;  set; }
         public List<FeatureEnum> features { get;  set; }
         public float accuracy { get; set; }
+        public List<DeathEnhanceTypeEnum> deathEnhanceTypeList { get; set; }
 
         public DeathFuncBase deathFunc;
 
@@ -65,6 +66,47 @@ namespace Game
                 healthIncrease = _healthIncrease;
                 statusTimeIncrease = _statusTimeIncrease;
                 extraDamageEffect = _extraDamageEffect;
+            }
+            public override string ToString()
+            {
+                string damageStr = "";
+                string healStr = "";
+                string statusStr = "";
+                string effectStr = "";
+                int enhanceCount = 0;
+                // 如果DeathEnhancement包含更多属性，这里也要增加到-1数量
+                string[] comma = new string[3]; 
+                if (damageIncrease != 0)
+                {
+                    damageStr = $"+{damageIncrease}伤害";
+                    enhanceCount++;
+                }
+                if(healthIncrease != 0)
+                {
+                    healStr = $"+{healthIncrease}回复量";
+                    enhanceCount++;
+                }
+                if (statusTimeIncrease != 0)
+                {
+                    statusStr = $"+{statusTimeIncrease}秒持续时间";
+                    enhanceCount++;
+                }
+                if (extraDamageEffect != false)
+                {
+                    effectStr = "对随机三个敌人造成恢复量的伤害";
+                    enhanceCount++;
+                }
+                for(int i = 0; i < enhanceCount - 1; ++i)
+                {
+                    comma[i] = ",";
+                }
+                // 如果没有强化死面，返回空
+                if(enhanceCount == 0)
+                {
+                    return "";
+                }
+                // 空字符串会自动跳过
+                return $"({damageStr}{comma[0]}{healStr}{comma[1]}{statusStr}{comma[2]}{effectStr})";
             }
         }
 
@@ -103,6 +145,7 @@ namespace Game
             features = so.features;
             accuracy = so.accuracy;
             deathFunc = new DeathFuncBase();
+            deathEnhanceTypeList = so.deathEnhanceTypeEnums;
             PrintData();
         }
 

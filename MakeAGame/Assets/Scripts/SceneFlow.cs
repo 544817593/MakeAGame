@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace Game
 {
-    public class SceneFlow : MonoBehaviour
+    public class SceneFlow : MonoBehaviour, ICanGetSystem
     {
       public static  SceneFlow instance = null;
         public List<RoomEnum> roomList;
@@ -55,6 +55,16 @@ namespace Game
             {
                 NpcSceneCount++;
             }
+            else if(m_room == RoomEnum.Merchant && ShopSystem.enterRoomTime != 0)
+            {
+                Debug.LogError($"enterRoomTime {ShopSystem.enterRoomTime}");
+                this.GetSystem<IShopSystem>().resetSystem();
+                ShopSystem.enterRoomTime++;
+            }
+            else if (m_room == RoomEnum.Merchant && ShopSystem.enterRoomTime == 0)
+            {
+                ShopSystem.enterRoomTime++;
+            }
 
             GameManager.Instance.ResumeGame();
             
@@ -73,6 +83,11 @@ namespace Game
         private void ExitRoom(string roomName)
         {
             StartCoroutine(GameManager.Instance.gameSceneMan.UnloadScene(roomName));
+        }
+
+        public IArchitecture GetArchitecture()
+        {
+            return GameEntry.Interface;
         }
     }
 }

@@ -24,6 +24,7 @@ MonoBehaviour:
   moveSpd: 4
   defend: 0
   deathFuncName: Failure
+  deathEnhanceTypeEnums: 02000000
   features: 0b000000
   specialFeatures: 
   pieceSprite: {fileID: 21300000, guid: 706b1c62cb78c3e45b62875133d9a0fa, type: 3}

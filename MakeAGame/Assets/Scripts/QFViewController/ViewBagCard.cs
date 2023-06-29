@@ -14,6 +14,7 @@ namespace Game
     {
         // 卡牌数据
         public Card card;
+        public string enhanceDeathDescription;
         public float normalScale = 0.08f;   // 缩放系数
         public float largeScale = 0.16f;
         public Action OnTouchAction;    // 点击时触发的事件
@@ -46,6 +47,7 @@ namespace Game
 
         public void InitView()
         {
+            UpdateEnhanceDeathDescription();
             imgRarity.sprite = Extensions.GetRaritySprite(card.rarity);
             imgCharacter.sprite = card.cardSprite;
             tmpSanCost.text = card.sanCost.ToString();
@@ -54,7 +56,7 @@ namespace Game
             tmpDamage.text = card.damage.ToString();
             tmpDefend.text = card.defend.ToString();
             tmpName.text = card.charaName;
-            tmpDesc.text = card.deathFuncDesc;
+            tmpDesc.text = card.deathFuncDesc + enhanceDeathDescription;
             
             for(int i = 0; i < card.features.Count; i++)
             {
@@ -65,7 +67,13 @@ namespace Game
                 featureTouchArea[i].gameObject.SetActive(false);
             }
         }
-        
+
+        public void UpdateEnhanceDeathDescription()
+        {
+            enhanceDeathDescription = card.deathEnhancement.ToString();
+        }
+
+
         void OnFocus()
         {
             GameManager.Instance.soundMan.Play_Hover_Zoom();

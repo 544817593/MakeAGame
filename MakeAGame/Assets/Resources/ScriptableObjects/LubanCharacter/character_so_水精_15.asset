@@ -24,6 +24,7 @@ MonoBehaviour:
   moveSpd: 3.5
   defend: 1
   deathFuncName: Water_Wizard
+  deathEnhanceTypeEnums: 02000000
   features: 0f000000
   specialFeatures: 23000000
   pieceSprite: {fileID: 21300000, guid: 8be110749dff3954fb9c83877ee08670, type: 3}

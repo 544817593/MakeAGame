@@ -21,3 +21,5 @@ MonoBehaviour:
   description: "\u6807\u8BB0\u4E00\u4E2A\u53CB\u519B\uFF0C\u6BCF\u5F53\u4ED6\u53D7\u5230\u4F24\u5BB3\u65F6\uFF0C\u83B7\u5F972\u91D1\u5E01"
   rarity: 0
   enhanceLevel: 0
+  deathEnhanceTypeEnums: 
+  itemUsePlaces: 02000000

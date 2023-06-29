@@ -31,6 +31,8 @@ namespace Game
         public float defend;            // 防御力
         [FoldoutGroup("Card Information")]
         public string deathFuncName;    // 死面功能类名
+        [FoldoutGroup("Card Information")]
+        public List<DeathEnhanceTypeEnum> deathEnhanceTypeEnums;    // 死面功能类名
 
         [FoldoutGroup("Features", true)]
         public List<FeatureEnum> features;// 特性

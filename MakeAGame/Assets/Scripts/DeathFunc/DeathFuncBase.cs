@@ -12,7 +12,6 @@ namespace Game
     {
         public SelectArea area = new SelectArea();
         public ViewCard viewCard;
-        public List<DeathEnhanceTypeEnum> deathEnhanceTypeList = new List<DeathEnhanceTypeEnum>();
 
         public DeathFuncBase()
         {

@@ -257,7 +257,7 @@ namespace Game
                     if (rand > 14)
                     {
                         viewBagCard.card.deathEnhancement.extraDamageEffect = true;
-                        viewBagCard.card.deathFunc.deathEnhanceTypeList.Add(DeathEnhanceTypeEnum.RandDamageOnMap);
+                        viewBagCard.card.deathEnhanceTypeList.Add(DeathEnhanceTypeEnum.RandDamageOnMap);
                         break;
                     }
                     AfterUseMerchantItem(item, viewBagCard, false);
@@ -336,6 +336,7 @@ namespace Game
             {
                 viewBagCard.card.SetNameAfterEnhancement(item.data.enhanceLevel);
                 viewBagCard.card.SetEnhancement(item.data.enhanceLevel + 1);
+                //viewBagCard.UpdateEnhanceDeathDescription();
                 viewBagCard.InitView(); // 刷新卡牌样式
             }
             // 物品数量的更新逻辑在强化脚本里，ShopEnhanceUI.cs

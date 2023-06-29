@@ -24,6 +24,7 @@ MonoBehaviour:
   moveSpd: 5
   defend: 0
   deathFuncName: Abigal_Miller
+  deathEnhanceTypeEnums: 01000000
   features: 0500000015000000
   specialFeatures: 1f00000020000000
   pieceSprite: {fileID: 21300000, guid: 978b64b6f784d4beda0ca86099689d05, type: 3}

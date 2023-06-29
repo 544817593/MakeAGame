@@ -24,6 +24,7 @@ MonoBehaviour:
   moveSpd: 4
   defend: 0
   deathFuncName: Raven
+  deathEnhanceTypeEnums: 03000000
   features: 0d00000013000000
   specialFeatures: 21000000
   pieceSprite: {fileID: 21300000, guid: 105f35ff06a0fd44daa2b6649d213e3a, type: 3}
