@@ -24,12 +24,12 @@ namespace DialogueUI
 		
 		protected override void OnOpen(IUIData uiData = null)
 		{
-			GameEntry.Interface.SendCommand<SelectMapEndCommand>(new SelectMapEndCommand(null, true));
+			// GameEntry.Interface.SendCommand<SelectMapEndCommand>(new SelectMapEndCommand(null, true));
 		}
 		
 		protected override void OnShow()
 		{
-			GameEntry.Interface.SendCommand<SelectMapEndCommand>(new SelectMapEndCommand(null, true));
+			// GameEntry.Interface.SendCommand<SelectMapEndCommand>(new SelectMapEndCommand(null, true));
 		}
 		
 		protected override void OnHide()
