@@ -48,10 +48,10 @@ namespace Game
             // this.GetSystem<IRelicSystem>().AddRelic(so);
 
             // 遗物测试
-            var so = IdToSO.FindRelicSOByID(1);
-            this.GetSystem<IRelicSystem>().AddRelic(so);
-            so = IdToSO.FindRelicSOByID(10);
-            this.GetSystem<IRelicSystem>().AddRelic(so);
+            // var so = IdToSO.FindRelicSOByID(1);
+            // this.GetSystem<IRelicSystem>().AddRelic(so);
+            // so = IdToSO.FindRelicSOByID(10);
+            // this.GetSystem<IRelicSystem>().AddRelic(so);
             // so = IdToSO.FindRelicSOByID(5);
             // this.GetSystem<IRelicSystem>().AddRelic(so);
             
