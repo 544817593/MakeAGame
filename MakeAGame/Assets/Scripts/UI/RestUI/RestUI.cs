@@ -29,7 +29,10 @@ namespace RestUI
         // 每页显示的元素索引区间[lowerIndex, upperIndex]
         private int upperIndex = gridNum - 1;
         private int lowerIndex = 0;
-
+        private int rollDicetime = 1;
+        private string choosePropertyString = "无";
+        private PlayerStatsEnum chooseProperty = PlayerStatsEnum.None;
+        private int diceSum = 0;
         protected override void OnInit(IUIData uiData = null)
 		{
 			mData = uiData as RestUIData ?? new RestUIData();
@@ -46,14 +49,17 @@ namespace RestUI
             //mData.skillSystem.AddEquippedSkills(SkillNameEnum.None);
             //mData.skillSystem.AddEquippedSkills(SkillNameEnum.None);
 
-
+            rollDicetime = 1;
             UnlockedSkillsList = mData.skillSystem.GetUnlockedSkills();
             EquippedSkillsList = mData.skillSystem.GetEquippedSkillsList();
-            ChangeSkillPanel.gameObject.SetActive(false);
+            
+            InitView();
             AllButtonListen();
         }
-		
-		protected override void OnOpen(IUIData uiData = null)
+
+        
+
+        protected override void OnOpen(IUIData uiData = null)
 		{
 		}
 		
@@ -68,6 +74,27 @@ namespace RestUI
 		protected override void OnClose()
 		{
         }
+
+        private void InitView()
+        {
+            RollDiceTime.text = $"当前投掷机会：{rollDicetime}";
+            BuffInfo.text = $"当前选择属性：{choosePropertyString}";
+            ChangeSkillPanel.gameObject.SetActive(false);
+            RulesCanvas.gameObject.SetActive(false);
+            ChoosePropertyCanvas.gameObject.SetActive(false);
+            DiceResultSuccess.gameObject.SetActive(false);
+            DiceResultFail.gameObject.SetActive(false);
+            RefreshStats();
+        }
+
+        private void RefreshStats()
+        {
+            StrengthText.text = $"力量：{GameManager.Instance.playerMan.player.GetStats(PlayerStatsEnum.Strength)}";
+            SpiritText.text = $"精神：{GameManager.Instance.playerMan.player.GetStats(PlayerStatsEnum.Spirit)}";
+            SkillText.text = $"技巧：{GameManager.Instance.playerMan.player.GetStats(PlayerStatsEnum.Skill)}";
+            StaminaText.text = $"体力：{GameManager.Instance.playerMan.player.GetStats(PlayerStatsEnum.Stamina)}";
+            ChrismaText.text = $"魅力：{GameManager.Instance.playerMan.player.GetStats(PlayerStatsEnum.Charisma)}";
+        }
         /// <summary>
         /// 全部按钮监听
         /// </summary>
@@ -77,73 +104,150 @@ namespace RestUI
 			// 摇骰子按钮监听，执行摇骰子逻辑，替换显示的骰子图
             BtnRollDice.onClick.AddListener(() =>
             {
-				List<int> randNumList = new List<int>();
-				// 摇6个骰子
-				for(int i = 1; i <= 6; ++i)
-				{
-                    int randNum = RollDiceFunc(0, 3);
-                    randNumList.Add(randNum);
-                }
-				int idx = 0;
-                foreach(Transform transform in AllDice.GetComponentInChildren<Transform>())
-				{
-                    //Debug.Log(transform.gameObject.name);
-					Assert.IsTrue(idx < randNumList.Count);
-                    transform.GetComponent<Image>().sprite = Resources.Load<Sprite>($"Sprites/Rest/{randNumList[idx]}");
-					idx++;
+                if(rollDicetime > 0 && chooseProperty != PlayerStatsEnum.None)
+                {
+                    List<int> randNumList = new List<int>();
+                    // 摇6个骰子
+                    for (int i = 1; i <= 6; ++i)
+                    {
+                        int randNum = RollDiceFunc(0, 3);
+                        randNumList.Add(randNum);
+                        diceSum += randNum;
+                    }
+                    int idx = 0;
+                    foreach (Transform transform in AllDice.GetComponentInChildren<Transform>())
+                    {
+                        //Debug.Log(transform.gameObject.name);
+                        Assert.IsTrue(idx < randNumList.Count);
+                        transform.GetComponent<Image>().sprite = Resources.Load<Sprite>($"Sprites/Rest/{randNumList[idx]}");
+                        idx++;
+                    }
+                    rollDicetime--;
+                    RollDiceTime.text = $"当前投掷机会：{rollDicetime}";
+                    // 判定成功 选择的属性+1
+                    if(diceSum <= GameManager.Instance.playerMan.player.GetStats(chooseProperty))
+                    {
+                        GameManager.Instance.playerMan.player.ModifyStats(chooseProperty, 1);
+                        DiceResultSuccess.gameObject.SetActive(true);
+                        DiceResultFail.gameObject.SetActive(false);
+                        RefreshStats();
+                    }
+                    else // 判定失败
+                    {
+                        DiceResultSuccess.gameObject.SetActive(false);
+                        DiceResultFail.gameObject.SetActive(true);
+                    }
+                    
                 }
             });
-
 			// 点击切换技能按钮，设置为active
             BtnChangeSkill.onClick.AddListener(() =>
 			{
 				ChangeSkillPanel.gameObject.SetActive(true);
-                // 点击关闭切换技能页面，设置为inactive
-                CloseChangeSkillPanel.onClick.AddListener(() =>
-                {
-                    ChangeSkillPanel.gameObject.SetActive(false);
-                });
-				// 如果1号位装备了技能，点击后卸下当前技能
-				CurAbility01.onClick.AddListener(() =>
-				{
-					if(CurAbility01.GetComponent<Image>().sprite != Resources.Load<Sprite>("Sprites/Abilities/技能-圆盘"))
-					{
-                        CurAbility01.GetComponent<Image>().sprite = Resources.Load<Sprite>("Sprites/Abilities/技能-圆盘");
-                        EquippedSkillsList[0] = SkillNameEnum.None;
-					}
-					else
-					{
-						Debug.Log("当前位置没有装备技能");
-					}
-				});
-                // 如果2号位装备了技能，点击后卸下当前技能
-                CurAbility02.onClick.AddListener(() =>
-                {
-                    if (CurAbility02.GetComponent<Image>().sprite != Resources.Load<Sprite>("Sprites/Abilities/技能-圆盘"))
-                    {
-                        CurAbility02.GetComponent<Image>().sprite = Resources.Load<Sprite>("Sprites/Abilities/技能-圆盘");
-                        EquippedSkillsList[1] = SkillNameEnum.None;
-                    }
-                    else
-                    {
-                        Debug.Log("当前位置没有装备技能");
-                    }
-                });
-                RefreshLayout();
+                RefreshSkillPanelLayout();
             });
-
-			// 点击离开房间，关闭当前panel
+            // 点击关闭切换技能页面，设置为inactive
+            CloseChangeSkillPanel.onClick.AddListener(() =>
+            {
+                ChangeSkillPanel.gameObject.SetActive(false);
+            });
+            // 如果1号位装备了技能，点击后卸下当前技能
+            CurAbility01.onClick.AddListener(() =>
+            {
+                if (CurAbility01.GetComponent<Image>().sprite != Resources.Load<Sprite>("Sprites/Abilities/技能-圆盘"))
+                {
+                    CurAbility01.GetComponent<Image>().sprite = Resources.Load<Sprite>("Sprites/Abilities/技能-圆盘");
+                    EquippedSkillsList[0] = SkillNameEnum.None;
+                }
+                else
+                {
+                    Debug.Log("当前位置没有装备技能");
+                }
+            });
+            // 如果2号位装备了技能，点击后卸下当前技能
+            CurAbility02.onClick.AddListener(() =>
+            {
+                if (CurAbility02.GetComponent<Image>().sprite != Resources.Load<Sprite>("Sprites/Abilities/技能-圆盘"))
+                {
+                    CurAbility02.GetComponent<Image>().sprite = Resources.Load<Sprite>("Sprites/Abilities/技能-圆盘");
+                    EquippedSkillsList[1] = SkillNameEnum.None;
+                }
+                else
+                {
+                    Debug.Log("当前位置没有装备技能");
+                }
+            });
+            // 点击离开房间，关闭当前panel
             BtnLeaveRoom.onClick.AddListener(() =>
             {
                 CloseSelf();
                 GameObject.Find("GameSceneManager")?.transform.GetComponent<Game.SceneFlow>().LoadRoom();
+            });
+            // 规则介绍按钮
+            BtnRules.onClick.AddListener(() =>
+            {
+                if (!RulesCanvas.gameObject.activeInHierarchy)
+                {
+                    RulesCanvas.gameObject.SetActive(true);
+                }
+                else
+                {
+                    RulesCanvas.gameObject.SetActive(false);
+                }
+            });
+            // 选择属性按钮
+            BtnChooseProperty.onClick.AddListener(() => 
+            {
+                if (!ChoosePropertyCanvas.gameObject.activeInHierarchy)
+                {
+                    ChoosePropertyCanvas.gameObject.SetActive(true);
+                }
+                else
+                {
+                    ChoosePropertyCanvas.gameObject.SetActive(false);
+                }
+            });
+            // 关闭选择属性canvas
+            CloseChooseProperty.onClick.AddListener(() =>
+            {
+                ChoosePropertyCanvas.gameObject.SetActive(false);
+            });
+            Strength.onClick.AddListener(() =>
+            {
+                chooseProperty = PlayerStatsEnum.Strength;
+                choosePropertyString = "力量";
+                BuffInfo.text = $"当前选择属性：{choosePropertyString}";
+            });
+            Spirit.onClick.AddListener(() =>
+            {
+                chooseProperty = PlayerStatsEnum.Spirit;
+                choosePropertyString = "精神";
+                BuffInfo.text = $"当前选择属性：{choosePropertyString}";
+            });
+            Skill.onClick.AddListener(() =>
+            {
+                chooseProperty = PlayerStatsEnum.Spirit;
+                choosePropertyString = "技巧";
+                BuffInfo.text = $"当前选择属性：{choosePropertyString}";
+            });
+            Stamina.onClick.AddListener(() =>
+            {
+                chooseProperty = PlayerStatsEnum.Spirit;
+                choosePropertyString = "体力";
+                BuffInfo.text = $"当前选择属性：{choosePropertyString}";
+            });
+            Chrisma.onClick.AddListener(() =>
+            {
+                chooseProperty = PlayerStatsEnum.Spirit;
+                choosePropertyString = "魅力";
+                BuffInfo.text = $"当前选择属性：{choosePropertyString}";
             });
         }
 
         /// <summary>
         /// 切换技能面板的初始化和刷新
         /// </summary>
-        public void RefreshLayout()
+        private void RefreshSkillPanelLayout()
         {
             totalPage = UnlockedSkillsList.Count != 0 ? (int)Math.Ceiling((double)UnlockedSkillsList.Count / gridNum) : 1;
             TextPageNum.text = $" {curPage} / {totalPage}";
@@ -222,7 +326,7 @@ namespace RestUI
                 {
                     curPage++;
                     UpdateIndex();
-                    RefreshLayout();
+                    RefreshSkillPanelLayout();
                 }
 
             });
@@ -236,11 +340,10 @@ namespace RestUI
                 {
                     curPage--;
                     UpdateIndex();
-                    RefreshLayout();
+                    RefreshSkillPanelLayout();
                 }
             });
         }
-
         /// <summary>
         /// 在[lowerBound, upperBound)范围内随机选择一个整数，不包含upperBound
         /// </summary>

@@ -5,7 +5,7 @@ using QFramework;
 
 namespace RestUI
 {
-	// Generate Id:81daf20f-5b56-4067-b2e7-70c0377ed5db
+	// Generate Id:ea8aa9f8-4557-4373-9fe3-c83ee6570e37
 	public partial class RestUI
 	{
 		public const string Name = "RestUI";
@@ -14,6 +14,8 @@ namespace RestUI
 		public UnityEngine.UI.Button ShopNPC;
 		[SerializeField]
 		public UnityEngine.UI.Image Player;
+		[SerializeField]
+		public TMPro.TextMeshProUGUI RollDiceTime;
 		[SerializeField]
 		public TMPro.TextMeshProUGUI BuffInfo;
 		[SerializeField]
@@ -36,6 +38,40 @@ namespace RestUI
 		public UnityEngine.UI.Button BtnChangeSkill;
 		[SerializeField]
 		public UnityEngine.UI.Button BtnLeaveRoom;
+		[SerializeField]
+		public UnityEngine.UI.Button BtnRules;
+		[SerializeField]
+		public UnityEngine.UI.Button BtnChooseProperty;
+		[SerializeField]
+		public TMPro.TextMeshProUGUI DiceResultSuccess;
+		[SerializeField]
+		public TMPro.TextMeshProUGUI DiceResultFail;
+		[SerializeField]
+		public Canvas RulesCanvas;
+		[SerializeField]
+		public Canvas ChoosePropertyCanvas;
+		[SerializeField]
+		public UnityEngine.UI.Button Strength;
+		[SerializeField]
+		public TMPro.TextMeshProUGUI StrengthText;
+		[SerializeField]
+		public UnityEngine.UI.Button Spirit;
+		[SerializeField]
+		public TMPro.TextMeshProUGUI SpiritText;
+		[SerializeField]
+		public UnityEngine.UI.Button Skill;
+		[SerializeField]
+		public TMPro.TextMeshProUGUI SkillText;
+		[SerializeField]
+		public UnityEngine.UI.Button Stamina;
+		[SerializeField]
+		public TMPro.TextMeshProUGUI StaminaText;
+		[SerializeField]
+		public UnityEngine.UI.Button Chrisma;
+		[SerializeField]
+		public TMPro.TextMeshProUGUI ChrismaText;
+		[SerializeField]
+		public UnityEngine.UI.Button CloseChooseProperty;
 		[SerializeField]
 		public RectTransform ChangeSkillPanel;
 		[SerializeField]
@@ -81,6 +117,7 @@ namespace RestUI
 		{
 			ShopNPC = null;
 			Player = null;
+			RollDiceTime = null;
 			BuffInfo = null;
 			AllDice = null;
 			Dice01 = null;
@@ -92,6 +129,23 @@ namespace RestUI
 			BtnRollDice = null;
 			BtnChangeSkill = null;
 			BtnLeaveRoom = null;
+			BtnRules = null;
+			BtnChooseProperty = null;
+			DiceResultSuccess = null;
+			DiceResultFail = null;
+			RulesCanvas = null;
+			ChoosePropertyCanvas = null;
+			Strength = null;
+			StrengthText = null;
+			Spirit = null;
+			SpiritText = null;
+			Skill = null;
+			SkillText = null;
+			Stamina = null;
+			StaminaText = null;
+			Chrisma = null;
+			ChrismaText = null;
+			CloseChooseProperty = null;
 			ChangeSkillPanel = null;
 			CurAbilityBackground = null;
 			CurAbility01 = null;
