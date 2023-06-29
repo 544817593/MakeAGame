@@ -33,6 +33,8 @@ namespace Game
         public string deathFuncName;    // 死面功能类名
         [FoldoutGroup("Card Information")]
         public List<DeathEnhanceTypeEnum> deathEnhanceTypeEnums;    // 死面功能类名
+        //[FoldoutGroup("Card Information")]
+        //public List<AudioTypeEnum> ;    // 死面功能类名
 
         [FoldoutGroup("Features", true)]
         public List<FeatureEnum> features;// 特性
@@ -57,6 +59,8 @@ namespace Game
         public float life;              // 寿命
         [FoldoutGroup("Piece Information")]
         public GameObject anim;         // 动画预设体
+        [FoldoutGroup("Piece Information")]
+        public GameObject attackAnim;         // 攻击动画预设体
 
         [FoldoutGroup("Player Stat Bonus", true)]
         public PlayerBonus sanCostBonus;    // 精神消耗玩家属性加成
@@ -70,6 +74,18 @@ namespace Game
         public GameObject GetAnim()
         {
             return anim;
+        }
+
+        public GameObject GetAttackAnim()
+        {
+            if (attackAnim != null) 
+            { 
+                return attackAnim;
+            }
+            else
+            {
+                return null;
+            }
         }
 
         [Serializable]

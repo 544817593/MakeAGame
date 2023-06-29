@@ -13,6 +13,7 @@ public class GameManager : MonoBehaviour
     public PlayerManager playerMan;
     public GameSceneManager gameSceneMan;
     public BuffManager buffMan;
+    public AudioManager soundMan;
 
     /// <summary>
     /// GM的初始化以及获取GM的getter
