@@ -312,6 +312,14 @@ namespace Game
             hp.Value -= damage;
             Debug.Log($"Monster Hit, damage: {damage} hp: {hp.Value}");
             MonsterDamageNumber.Spawn(this.Position(), damage);
+            if(data.moveAudioType != AudioTypeEnum.Human)
+            {
+                GameManager.Instance.soundMan.Play_rand_hit_sound();
+            }
+            else
+            {
+                GameManager.Instance.soundMan.Play_rand_humanHit_sound();
+            }
             // 播放受击动画
             GameObject anim = IdToSO.FindCardSOByID(attacker.generalId)?.GetAttackAnim();
             if (anim != null)

@@ -198,6 +198,7 @@ namespace Game
             {
                 // 暂时跳一下表示没动成
                 transform.DOJump(transform.position, 1, 1, 0.3f);
+                GameManager.Instance.soundMan.Play_move_fail_sound();
                 Debug.Log("move is canceled because check failed");
             }
         }
@@ -297,6 +298,14 @@ namespace Game
             hp.Value -= damage;
             Debug.Log($"Piece Hit, damage: {damage} hp: {hp}");
             MonsterDamageNumber.Spawn(this.Position(), damage);
+            if (card.so.moveAudioType != AudioTypeEnum.Human)
+            {
+                GameManager.Instance.soundMan.Play_rand_hit_sound();
+            }
+            else
+            {
+                GameManager.Instance.soundMan.Play_rand_humanHit_sound();
+            }
             // 播放受击动画
             GameObject anim = ((Monster)attacker).data.GetAttackAnim();
             if (anim != null)

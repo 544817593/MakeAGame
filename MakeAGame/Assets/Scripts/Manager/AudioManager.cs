@@ -37,9 +37,23 @@ public class AudioManager : MonoBehaviour
     public AudioClip mollusk_move_sound;
     public AudioClip twoLegs_move_sound;
     public AudioClip fourLegs_move_sound;
+    public AudioClip move_fail_sound;
+    public AudioClip piece_death_sound;
+
+    public AudioClip alienation1_sound;
+    public AudioClip alienation2_sound;
+    public AudioClip focus1_sound;
+    public AudioClip focus2_sound;
+
+    public AudioClip hit_sound1;
+    public AudioClip hit_sound2;
+    public AudioClip hit_sound3;
+    public AudioClip hit_sound4;
+    public AudioClip hit_sound5;
+    public AudioClip humanHit_sound1;
+    public AudioClip humanHit_sound2;
     public void Play_Room_Bgm()
     {
-       
         AudioKit.PlayMusic(room_bgm);
     }
     public void Play_Combat_Bgm()
@@ -160,4 +174,101 @@ public class AudioManager : MonoBehaviour
         }
         return null;
     }
+    public void Play_move_fail_sound()
+    {
+        AudioKit.PlaySound(move_fail_sound);
+    }
+    public void Play_piece_death_sound()
+    {
+        AudioKit.PlaySound(piece_death_sound);
+    }
+    public void Play_alienation1_sound()
+    {
+        AudioKit.PlaySound(alienation1_sound);
+    }
+    public void Play_alienation2_sound()
+    {
+        AudioKit.PlaySound(alienation2_sound);
+    }
+    public void Play_focus1_sound()
+    {
+        AudioKit.PlaySound(focus1_sound);
+    }
+    public void Play_focus2_sound()
+    {
+        AudioKit.PlaySound(focus2_sound);
+    }
+
+    public void Play_rand_hit_sound()
+    {
+        int num = UnityEngine.Random.Range(1, 6);
+        if(num == 1)
+        {
+            Play_hit_sound1();
+        }
+        else if(num == 2)
+        {
+            Play_hit_sound2();
+        }
+        else if (num == 3)
+        {
+            Play_hit_sound3();
+        }
+        else if (num == 4)
+        {
+            Play_hit_sound4();
+        }
+        else if (num == 5)
+        {
+            Play_hit_sound5();
+        }
+    }
+    public void Play_rand_humanHit_sound()
+    {
+        int num = UnityEngine.Random.Range(1, 3);
+        if (num == 1)
+        {
+            Play_humanHit_sound1();
+        }
+        else if (num == 2)
+        {
+            Play_humanHit_sound2();
+        }
+    }
+    public void Play_hit_sound1()
+    {
+        AudioKit.PlaySound(hit_sound1);
+    }
+    public void Play_hit_sound2()
+    {
+        AudioKit.PlaySound(hit_sound2);
+    }
+    public void Play_hit_sound3()
+    {
+        AudioKit.PlaySound(hit_sound3);
+    }
+    public void Play_hit_sound4()
+    {
+        AudioKit.PlaySound(hit_sound4);
+    }
+    public void Play_hit_sound5()
+    {
+        AudioKit.PlaySound(hit_sound5);
+    }
+    public void Play_humanHit_sound1()
+    {
+        AudioKit.PlaySound(humanHit_sound1);
+    }
+    public void Play_humanHit_sound2()
+    {
+        AudioKit.PlaySound(humanHit_sound2);
+    }
+
+    //public AudioClip hit_sound1;
+    //public AudioClip hit_sound2;
+    //public AudioClip hit_sound3;
+    //public AudioClip hit_sound4;
+    //public AudioClip hit_sound5;
+    //public AudioClip humanHit_sound1;
+    //public AudioClip humanHit_sound2;
 }

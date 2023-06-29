@@ -19,7 +19,7 @@ public class SOMonsterBase : ScriptableObject
     public int width;   // 怪物的宽
     public int height;  // 怪物的长
     // public (int,int) pieceSize; // 怪物的尺寸
-    public AudioTypeEnum moveAudioType;
+    public AudioTypeEnum moveAudioType; // 怪物的类型，用来匹配移动音效
     public List<FeatureEnum> properties; // 特性
     public List<DirEnum> dirs; // 可移动方向
     public List<FeatureEnum> specialFeatures; // 额外属性

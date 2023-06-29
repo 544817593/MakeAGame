@@ -341,7 +341,7 @@ namespace Game
                 grid.gridStatus.Value = GridStatusEnum.Unoccupied;
             }
             pieceGrids.Clear();
-            
+            GameManager.Instance.soundMan.Play_piece_death_sound();
             Destroy(gameObject);
         }
 

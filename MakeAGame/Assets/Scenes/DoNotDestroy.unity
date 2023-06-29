@@ -313,6 +313,19 @@ MonoBehaviour:
   mollusk_move_sound: {fileID: 8300000, guid: 25f30785d4df71c439289f5d70023c5c, type: 3}
   twoLegs_move_sound: {fileID: 8300000, guid: 8253b80209a32fe4d9bd2eae6cab3b1c, type: 3}
   fourLegs_move_sound: {fileID: 8300000, guid: b279c1a3d14fc7b48937f0aa9d1af661, type: 3}
+  move_fail_sound: {fileID: 8300000, guid: c195c0ebdb2abcb4bade43feec4e0a58, type: 3}
+  piece_death_sound: {fileID: 8300000, guid: 7bd1e248799f0704ebda418b1d22234d, type: 3}
+  alienation1_sound: {fileID: 8300000, guid: 3eefdf19d06dab04783a68381cc9a3c4, type: 3}
+  alienation2_sound: {fileID: 8300000, guid: 9233ed002f83d4649aabbe8b2eb152f5, type: 3}
+  focus1_sound: {fileID: 8300000, guid: 55ccb6ffaed38ef498f9538e4380c6c0, type: 3}
+  focus2_sound: {fileID: 8300000, guid: 59f0555146261a547a6ecf724b56d2bf, type: 3}
+  hit_sound1: {fileID: 8300000, guid: 93d419c697ab48f40a505acb87be5a20, type: 3}
+  hit_sound2: {fileID: 8300000, guid: 233e18785a8024e49afffc30d92c7c9c, type: 3}
+  hit_sound3: {fileID: 8300000, guid: c6e3fff6318b65e4a9cdf856f3286349, type: 3}
+  hit_sound4: {fileID: 8300000, guid: d3e8f14d9966974469a82166ec29e609, type: 3}
+  hit_sound5: {fileID: 8300000, guid: 73305b841bd42044ca5b17a4873eaf69, type: 3}
+  humanHit_sound1: {fileID: 8300000, guid: 92a6789398dd0f74688d428eacb2d5ca, type: 3}
+  humanHit_sound2: {fileID: 8300000, guid: 383e03bcbbdb8b24197eef2575d4e0cd, type: 3}
 --- !u!1 &1031550308
 GameObject:
   m_ObjectHideFlags: 0

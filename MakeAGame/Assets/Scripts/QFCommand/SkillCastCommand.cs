@@ -26,16 +26,19 @@ namespace Game
                 case SkillNameEnum.None:
                     break;
                 case SkillNameEnum.Alienation1:
+                    GameManager.Instance.soundMan.Play_alienation1_sound();
                     Alienation1 alienation1 = new Alienation1();
                     Alienation.alienationLevel = 1;
                     alienation1.SkillStart(GameObject.FindGameObjectWithTag("PauseButton"), 1);
                     break;
                 case SkillNameEnum.Alienation2:
+                    GameManager.Instance.soundMan.Play_alienation2_sound();
                     Alienation2 alienation2 = new Alienation2();
                     Alienation.alienationLevel = 2;
                     alienation2.SkillStart(GameObject.FindGameObjectWithTag("PauseButton"), 2);
                     break;
                 case SkillNameEnum.Focus1:
+                    GameManager.Instance.soundMan.Play_focus1_sound();
                     this.SendEvent(new SkillLockCameraEvent()
                     {
                         cameraDist = GameManager.Instance.camMan.GetMinScrollLimit(),
@@ -44,6 +47,7 @@ namespace Game
                     GameManager.Instance.playerMan.player.SetTurnPieceCount(10); // 棋子移动次数10
                     break;
                 case SkillNameEnum.Focus2:
+                    GameManager.Instance.soundMan.Play_focus2_sound();
                     this.SendEvent(new SkillLockCameraEvent()
                     {
                         cameraDist = GameManager.Instance.camMan.GetMinScrollLimit(),
