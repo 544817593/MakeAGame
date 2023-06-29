@@ -16,11 +16,11 @@ MonoBehaviour:
   characterName: "\u732B\u5934\u9E70"
   rarity: 0
   cardPack: 1
-  sanCost: 55
+  sanCost: 35
   deathFuncDescription: "\u9009\u62E93*3\u7684\u683C\u5B50\u5E76\u5C06\u4ED6\u4EEC\u7684\u65F6\u95F4\u6D41\u901D\u901F\u7387\u53D8\u4E3A\u6162\uFF0C\u6301\u7EED30\u79D2\u3002"
   cardSprite: {fileID: 21300000, guid: 234d3cf59154ac6419ccc6df0d5edc13, type: 3}
   hp: 25
-  attack: 2
+  attack: 3
   moveSpd: 5
   defend: 0
   deathFuncName: Owl

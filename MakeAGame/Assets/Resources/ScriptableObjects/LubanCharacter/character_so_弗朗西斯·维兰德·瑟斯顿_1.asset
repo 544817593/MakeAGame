@@ -16,7 +16,7 @@ MonoBehaviour:
   characterName: "\u5F17\u6717\u897F\u65AF\xB7\u7EF4\u5170\u5FB7\xB7\u745F\u65AF\u987F"
   rarity: 4
   cardPack: 1
-  sanCost: 75
+  sanCost: 50
   deathFuncDescription: "\u5728\u5F53\u524D\u4F4D\u7F6E\u653E\u7F6E\u4E00\u4E2A\u4E0D\u53EF\u6467\u6BC1\u7684\u969C\u788D\u7269\uFF0C\u83B7\u5F97\u4E00\u5F20\u5F17\u6717\u897F\u65AF\u3002"
   cardSprite: {fileID: 21300000, guid: ec65f1dd324e5fa4794bf6ced379c3d6, type: 3}
   hp: 50
@@ -48,5 +48,5 @@ MonoBehaviour:
     stat: 1
     multiple: 1
   atkSpdBonus:
-    stat: 1
-    multiple: 0.1
+    stat: 0
+    multiple: 0

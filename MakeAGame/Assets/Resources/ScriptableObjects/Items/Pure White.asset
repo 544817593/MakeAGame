@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: acc015c2671ef67429c4b70efb47cc33, type: 3}
+  m_Name: Pure White
+  m_EditorClassIdentifier: 
+  itemUseTime: 3
+  volume: 0
+  itemName: "\u7EAF\u767D\u6C14\u606F"
+  sprite: {fileID: 21300000, guid: 2a1a92cfbcda77848ba41e87ea3b8141, type: 3}
+  buyCost: 0
+  sellPrice: 0
+  description: "\u8574\u85CF\u7740\u4E30\u6C9B\u751F\u547D\u529B\u7684\u4E00\u53E3\u5410\u606F\uFF0C\u4E0D\u77E5\u6765\u6E90\u4E8E\u4F55\u5904\u3002"
+  rarity: 0
+  enhanceLevel: 0
+  deathEnhanceTypeEnums: 
+  itemUsePlaces: 

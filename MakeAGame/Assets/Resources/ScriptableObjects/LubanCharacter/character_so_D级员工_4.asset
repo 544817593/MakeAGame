@@ -16,11 +16,11 @@ MonoBehaviour:
   characterName: "D\u7EA7\u5458\u5DE5"
   rarity: 0
   cardPack: 1
-  sanCost: 40
+  sanCost: 20
   deathFuncDescription: "\u5BF93*3\u7684\u683C\u5B50\u9020\u621015\u70B9\u4F24\u5BB3\u3002"
   cardSprite: {fileID: 21300000, guid: 4642b727eab0c3c47a05b02fc9a2bb54, type: 3}
   hp: 15
-  attack: 3
+  attack: 4
   moveSpd: 7
   defend: 0
   deathFuncName: D_Ranked_Staff
