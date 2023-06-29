@@ -57,7 +57,7 @@ namespace Game
             }
             else if(m_room == RoomEnum.Merchant && ShopSystem.enterRoomTime != 0)
             {
-                Debug.LogError($"enterRoomTime {ShopSystem.enterRoomTime}");
+                Debug.Log($"enterRoomTime {ShopSystem.enterRoomTime}");
                 this.GetSystem<IShopSystem>().resetSystem();
                 ShopSystem.enterRoomTime++;
             }

@@ -5,6 +5,7 @@ using Game;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine.Assertions;
+using PackOpen;
 
 namespace ShopBuyUI
 {
@@ -91,7 +92,6 @@ namespace ShopBuyUI
 					{
 						texts.gameObject.GetComponent<TextMeshProUGUI>().text = itemInList.data.buyCost.ToString();
 					}
-
 				}
 				// 加入activeButtons dictionary
 				activeButtons.Add(curItem.GetComponent<Button>(), itemInList);
@@ -180,7 +180,15 @@ namespace ShopBuyUI
 				else
 				{
 					// 物品入包，更新所有相关内容
-					addItemToAllList(selectedItem.data, buyCount);
+					if(selectedItem.data.itemName != "卡包")
+					{
+                        addItemToAllList(selectedItem.data, buyCount);
+					}
+					else
+					{
+						UIKit.OpenPanel<UIOpenPackPanel>();
+						UIKit.GetPanel<UIOpenPackPanel>().transform.SetAsLastSibling();
+                    }
 					UpdateViewAfterBuy();
 				}
 			});

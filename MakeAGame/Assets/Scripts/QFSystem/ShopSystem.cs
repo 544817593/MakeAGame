@@ -66,6 +66,10 @@ namespace Game
             
             foreach (SOItemBase item in IdToSO.soItemList)
             {
+                if (item.itemName == "卡包" || item.itemName == "纯白气息")
+                {
+                    continue;
+                }
                 if (item.rarity == 0 || item.rarity == 1)
                 {
                     selectedSOItemList.Add(item);
@@ -121,11 +125,19 @@ namespace Game
 
             foreach (SOItemBase item in IdToSO.soItemList)
             {
+                if(item.itemName == "卡包" || item.itemName == "纯白气息")
+                {
+                    continue;
+                }
                 if (item.rarity == 0 || item.rarity == 1)
                 {
                     selectedSOItemList.Add(item);
                 }
             }
+
+            // 陈列出售列表固定加入卡包和纯白气息
+            AddShopItemWithoutCall(new Item { amount = 1, data = Resources.Load<SOItemBase>("ScriptableObjects/Items/CardPack") });
+            AddShopItemWithoutCall(new Item { amount = 1, data = Resources.Load<SOItemBase>("ScriptableObjects/Items/Pure White") });
             // 洗牌算法，打乱列表后选择RandMonsterCount个数作为monster列表中的index
             // 创建一个包含0, 1, 2,..., pieceSystem.pieceEnemyList.Count - 1的list
             // 从头开始，每轮循环从[当前index, 总长度)的范围内随机选1个index, 将随机选择的index位置的值和当前位置的值互换，进行下一轮循环
