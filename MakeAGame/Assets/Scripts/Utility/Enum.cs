@@ -178,14 +178,6 @@ public enum DeathEnhanceTypeEnum
 }
 
 /// <summary>
-/// 物品的使用场景
-/// </summary>
-public enum ItemUsePlace
-{
-    None, Shop, Combat
-}
-
-/// <summary>
 /// viewpiecebase的种类，用来匹配移动的音效
 /// </summary>
 public enum AudioTypeEnum

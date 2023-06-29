@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7630559374989468049}
   - component: {fileID: 6711372327323548685}
+  - component: {fileID: 2259106439740345451}
   m_Layer: 0
   m_Name: ItemSlotTemplate
   m_TagString: Untagged
@@ -85,6 +86,20 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &2259106439740345451
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 207067270515694963}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d8cac0a88f2d87c428511e43079e8ab3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hoverSound: {fileID: 8300000, guid: a3e1e3871063e124b937ee983dcc61c0, type: 3}
+  clickSound: {fileID: 0}
 --- !u!1 &462445723898899789
 GameObject:
   m_ObjectHideFlags: 0
@@ -145,9 +160,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
+  m_Maskable: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -573,7 +588,6 @@ GameObject:
   - component: {fileID: 2863395787116324170}
   - component: {fileID: 7595727538298035927}
   - component: {fileID: 256585838743369531}
-  - component: {fileID: 441195849639643478}
   m_Layer: 0
   m_Name: Image
   m_TagString: Untagged
@@ -623,9 +637,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
+  m_Maskable: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -639,20 +653,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &441195849639643478
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6440945615024967889}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d8cac0a88f2d87c428511e43079e8ab3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hoverSound: {fileID: 8300000, guid: a3e1e3871063e124b937ee983dcc61c0, type: 3}
-  clickSound: {fileID: 0}
 --- !u!1 &7917511189314490646
 GameObject:
   m_ObjectHideFlags: 0
@@ -713,9 +713,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
+  m_Maskable: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []

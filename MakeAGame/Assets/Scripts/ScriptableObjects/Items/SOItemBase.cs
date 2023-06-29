@@ -17,7 +17,6 @@ public class SOItemBase : ScriptableObject
     // 假如enhanceLevel为0，那么卡牌便是从+0到+1
     public int enhanceLevel;
     public List<DeathEnhanceTypeEnum> deathEnhanceTypeEnums; // 可强化的死面牌类型
-    public List<ItemUsePlace> itemUsePlaces; // 物品使用场景
     protected PlayerManager playerManager;
 
 }

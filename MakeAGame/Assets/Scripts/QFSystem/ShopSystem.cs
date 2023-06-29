@@ -71,9 +71,11 @@ namespace Game
                     selectedSOItemList.Add(item);
                 }
             }
-            // 洗牌算法，打乱列表后选择RandMonsterCount个数作为monster列表中的index
-            // 创建一个包含0, 1, 2,..., pieceSystem.pieceEnemyList.Count - 1的list
-            // 从头开始，每轮循环从[当前index, 总长度)的范围内随机选1个index, 将随机选择的index位置的值和当前位置的值互换，进行下一轮循环
+
+            // 陈列出售列表固定加入卡包和纯白气息
+            AddShopItemWithoutCall(new Item { amount = 1, data = Resources.Load<SOItemBase>("ScriptableObjects/Items/CardPack") });
+            AddShopItemWithoutCall(new Item { amount = 1, data = Resources.Load<SOItemBase>("ScriptableObjects/Items/Pure White") });
+            // 洗牌算法，从所有白色和绿色物品中选择wantedItemsNum个陈列出售
             int wantedItemsNum = 10; // 一共想要陈列的物品数量
             List<int> numbers = Enumerable.Range(0, selectedSOItemList.Count - 1).ToList();
             for (int i = 0; i < numbers.Count; i++)
@@ -90,7 +92,7 @@ namespace Game
             // 能在商店使用的物品加到list中
             foreach (var item in this.GetSystem<IInventorySystem>().GetItemList())
             {
-                if (item.data.itemUsePlaces.Contains(ItemUsePlace.Shop))
+                if (item.data.itemUseTime == ItemUseTimeEnum.Merchant)
                 {
                     AddEnhanceBagItem(item);
                 }
@@ -143,7 +145,7 @@ namespace Game
             // 能在商店使用的物品加到list中
             foreach (var item in this.GetSystem<IInventorySystem>().GetItemList())
             {
-                if (item.data.itemUsePlaces.Contains(ItemUsePlace.Shop))
+                if (item.data.itemUseTime == ItemUseTimeEnum.Merchant)
                 {
                     AddEnhanceBagItem(item);
                 }

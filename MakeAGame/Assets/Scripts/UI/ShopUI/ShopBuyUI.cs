@@ -225,7 +225,7 @@ namespace ShopBuyUI
 			// 因为真实背包中没有包含这个物品，就新创建物品
             mData.inventorySystem.AddItem(new Item { amount = amount, data = itemData });
 			mData.shopSystem.GetAllBagItemList().Add(new Item { amount = amount, data = itemData });
-			if (itemData.itemUsePlaces.Contains(ItemUsePlace.Shop))
+			if (itemData.itemUseTime == ItemUseTimeEnum.Merchant)
 			{
                 mData.shopSystem.GetEnhanceBagItemList().Add(new Item { amount = amount, data = itemData });
             }

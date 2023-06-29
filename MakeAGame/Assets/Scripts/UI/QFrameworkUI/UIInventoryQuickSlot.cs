@@ -114,7 +114,7 @@ namespace InventoryQuickslotUI
 				itemSlotRectTransform.anchoredPosition = new Vector2(x * itemSlotCellSize, y * itemSlotCellSize - 25);
 				Image image = itemSlotRectTransform.Find("Image").GetComponent<Image>();
 				image.sprite = item.data.sprite;
-                UIEventHelper mouseHelper = image.AddComponent<UIEventHelper>();
+                UIEventHelper mouseHelper = itemSlotRectTransform.AddComponent<UIEventHelper>();
                 mouseHelper.OnUIPointEnter = () => MouseEnter(item);
                 mouseHelper.OnUIPointExit = () => MouseExit(item);
                 itemSlotRectTransform.Find("ItemAmount").GetComponent<TextMeshProUGUI>().text = "x" + item.amount.ToString();
