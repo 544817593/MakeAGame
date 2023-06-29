@@ -353,6 +353,7 @@ GameObject:
   - component: {fileID: 236863244}
   - component: {fileID: 1443967959}
   - component: {fileID: 3130847203780822944}
+  - component: {fileID: 5209614058894068763}
   m_Layer: 5
   m_Name: CardDescription
   m_TagString: Untagged
@@ -449,6 +450,27 @@ MonoBehaviour:
   CustomComponentName: CardDescribtion
   CustomComment: 
   mComponentName: UnityEngine.UI.Image
+--- !u!223 &5209614058894068763
+Canvas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 236863242}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_RenderMode: 2
+  m_Camera: {fileID: 0}
+  m_PlaneDistance: 100
+  m_PixelPerfect: 0
+  m_ReceivesEvents: 1
+  m_OverrideSorting: 1
+  m_OverridePixelPerfect: 0
+  m_SortingBucketNormalizedSize: 0
+  m_AdditionalShaderChannelsFlag: 25
+  m_SortingLayerID: -243424905
+  m_SortingOrder: 0
+  m_TargetDisplay: 0
 --- !u!1 &261364808
 GameObject:
   m_ObjectHideFlags: 0
@@ -808,6 +830,7 @@ GameObject:
   - component: {fileID: 431715994}
   - component: {fileID: 431715993}
   - component: {fileID: 5725350576152533250}
+  - component: {fileID: 6826149167309031570}
   m_Layer: 5
   m_Name: BtnPrePage
   m_TagString: Untagged
@@ -948,6 +971,27 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hoverSound: {fileID: 0}
   clickSound: {fileID: 8300000, guid: ef22665e53f3978448535fcdb996ed75, type: 3}
+--- !u!223 &6826149167309031570
+Canvas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 431715991}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_RenderMode: 2
+  m_Camera: {fileID: 0}
+  m_PlaneDistance: 100
+  m_PixelPerfect: 0
+  m_ReceivesEvents: 1
+  m_OverrideSorting: 1
+  m_OverridePixelPerfect: 0
+  m_SortingBucketNormalizedSize: 0
+  m_AdditionalShaderChannelsFlag: 0
+  m_SortingLayerID: -243424905
+  m_SortingOrder: 0
+  m_TargetDisplay: 0
 --- !u!1 &472371408
 GameObject:
   m_ObjectHideFlags: 0
@@ -1222,6 +1266,7 @@ GameObject:
   - component: {fileID: 662458550}
   - component: {fileID: 662458552}
   - component: {fileID: 662458551}
+  - component: {fileID: 1631237847371884751}
   m_Layer: 5
   m_Name: BackUI
   m_TagString: Untagged
@@ -1287,6 +1332,27 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!223 &1631237847371884751
+Canvas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 662458549}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_RenderMode: 2
+  m_Camera: {fileID: 0}
+  m_PlaneDistance: 100
+  m_PixelPerfect: 0
+  m_ReceivesEvents: 1
+  m_OverrideSorting: 1
+  m_OverridePixelPerfect: 0
+  m_SortingBucketNormalizedSize: 0
+  m_AdditionalShaderChannelsFlag: 0
+  m_SortingLayerID: -243424905
+  m_SortingOrder: 0
+  m_TargetDisplay: 0
 --- !u!1 &755242212
 GameObject:
   m_ObjectHideFlags: 0
@@ -1391,6 +1457,7 @@ GameObject:
   - component: {fileID: 915920649}
   - component: {fileID: 915920648}
   - component: {fileID: 6070021325207557502}
+  - component: {fileID: 6826149167309031571}
   m_Layer: 5
   m_Name: BtnNextPage
   m_TagString: Untagged
@@ -1531,6 +1598,27 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hoverSound: {fileID: 0}
   clickSound: {fileID: 8300000, guid: ef22665e53f3978448535fcdb996ed75, type: 3}
+--- !u!223 &6826149167309031571
+Canvas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 915920646}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_RenderMode: 2
+  m_Camera: {fileID: 0}
+  m_PlaneDistance: 100
+  m_PixelPerfect: 0
+  m_ReceivesEvents: 1
+  m_OverrideSorting: 1
+  m_OverridePixelPerfect: 0
+  m_SortingBucketNormalizedSize: 0
+  m_AdditionalShaderChannelsFlag: 0
+  m_SortingLayerID: -243424905
+  m_SortingOrder: 0
+  m_TargetDisplay: 0
 --- !u!1 &920820537
 GameObject:
   m_ObjectHideFlags: 0
@@ -2140,6 +2228,7 @@ GameObject:
   - component: {fileID: 1099427992}
   - component: {fileID: 1099427991}
   - component: {fileID: 1099427990}
+  - component: {fileID: 6826149167309031569}
   m_Layer: 5
   m_Name: TextPageNum
   m_TagString: Untagged
@@ -2280,6 +2369,27 @@ MonoBehaviour:
   CustomComponentName: PageNumber
   CustomComment: 
   mComponentName: TMPro.TextMeshProUGUI
+--- !u!223 &6826149167309031569
+Canvas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1099427988}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_RenderMode: 2
+  m_Camera: {fileID: 0}
+  m_PlaneDistance: 100
+  m_PixelPerfect: 0
+  m_ReceivesEvents: 1
+  m_OverrideSorting: 1
+  m_OverridePixelPerfect: 0
+  m_SortingBucketNormalizedSize: 0
+  m_AdditionalShaderChannelsFlag: 0
+  m_SortingLayerID: -243424905
+  m_SortingOrder: 0
+  m_TargetDisplay: 0
 --- !u!1 &1117729988
 GameObject:
   m_ObjectHideFlags: 0
@@ -3758,7 +3868,7 @@ GameObject:
   m_Component:
   - component: {fileID: 420514660410653709}
   - component: {fileID: -8545740999949244148}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: BagUIPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}

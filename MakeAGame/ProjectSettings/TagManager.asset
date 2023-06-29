@@ -19,7 +19,7 @@ TagManager:
   - AllyPiece
   - EnemyPiece
   - BoxGrid
-  - 
+  - Bag
   - 
   - 
   - 
@@ -59,4 +59,7 @@ TagManager:
     locked: 0
   - name: AlwaysTopUI
     uniqueID: 2661011715
+    locked: 0
+  - name: Bag
+    uniqueID: 2239634987
     locked: 0

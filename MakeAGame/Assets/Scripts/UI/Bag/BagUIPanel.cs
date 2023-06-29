@@ -55,6 +55,10 @@ namespace BagUI
 				m_bag?.SetIsOpenFalse();
 				GameManager.Instance.ResumeGame();
 				Hide();
+				if (UIKit.GetPanel<UIHandCard>()?.m_close == true)
+				{
+					UIKit.GetPanel<UIHandCard>()?.OpenHandCard();
+				}
 			});
 		}
 		

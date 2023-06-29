@@ -145,6 +145,7 @@ GameObject:
   m_Component:
   - component: {fileID: 397166624}
   - component: {fileID: 397166625}
+  - component: {fileID: 2428638177109096380}
   m_Layer: 5
   m_Name: SlotPosition
   m_TagString: Untagged
@@ -198,6 +199,27 @@ MonoBehaviour:
   CustomComponentName: SlotPosition
   CustomComment: 
   mComponentName: RectTransform
+--- !u!223 &2428638177109096380
+Canvas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 397166623}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_RenderMode: 2
+  m_Camera: {fileID: 0}
+  m_PlaneDistance: 100
+  m_PixelPerfect: 0
+  m_ReceivesEvents: 1
+  m_OverrideSorting: 1
+  m_OverridePixelPerfect: 0
+  m_SortingBucketNormalizedSize: 0
+  m_AdditionalShaderChannelsFlag: 0
+  m_SortingLayerID: -243424905
+  m_SortingOrder: 0
+  m_TargetDisplay: 0
 --- !u!1 &495168614
 GameObject:
   m_ObjectHideFlags: 0
@@ -211,7 +233,7 @@ GameObject:
   - component: {fileID: 495168617}
   - component: {fileID: 7773302239271995444}
   m_Layer: 5
-  m_Name: ItemPosition9
+  m_Name: ItemPositio10
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -306,6 +328,7 @@ GameObject:
   - component: {fileID: 806339576}
   - component: {fileID: 806339575}
   - component: {fileID: 3390184131266126293}
+  - component: {fileID: 8655539528944520987}
   m_Layer: 5
   m_Name: BtnPrePage
   m_TagString: Untagged
@@ -362,8 +385,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
+  m_Sprite: {fileID: 21300000, guid: 637fe139cb978d440b2de1ec89b35f46, type: 3}
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -446,6 +469,27 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hoverSound: {fileID: 0}
   clickSound: {fileID: 8300000, guid: ef22665e53f3978448535fcdb996ed75, type: 3}
+--- !u!223 &8655539528944520987
+Canvas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 806339573}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_RenderMode: 2
+  m_Camera: {fileID: 0}
+  m_PlaneDistance: 100
+  m_PixelPerfect: 0
+  m_ReceivesEvents: 1
+  m_OverrideSorting: 1
+  m_OverridePixelPerfect: 0
+  m_SortingBucketNormalizedSize: 0
+  m_AdditionalShaderChannelsFlag: 25
+  m_SortingLayerID: -243424905
+  m_SortingOrder: 0
+  m_TargetDisplay: 0
 --- !u!1 &971025582
 GameObject:
   m_ObjectHideFlags: 0
@@ -1146,6 +1190,7 @@ GameObject:
   - component: {fileID: 1122168010}
   - component: {fileID: 1122168012}
   - component: {fileID: 1122168011}
+  - component: {fileID: 2811933242046255166}
   m_Layer: 5
   m_Name: BackUI
   m_TagString: Untagged
@@ -1211,6 +1256,27 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!223 &2811933242046255166
+Canvas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1122168009}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_RenderMode: 2
+  m_Camera: {fileID: 0}
+  m_PlaneDistance: 100
+  m_PixelPerfect: 0
+  m_ReceivesEvents: 1
+  m_OverrideSorting: 1
+  m_OverridePixelPerfect: 0
+  m_SortingBucketNormalizedSize: 0
+  m_AdditionalShaderChannelsFlag: 0
+  m_SortingLayerID: -243424905
+  m_SortingOrder: 0
+  m_TargetDisplay: 0
 --- !u!1 &1312393002
 GameObject:
   m_ObjectHideFlags: 0
@@ -1574,6 +1640,7 @@ GameObject:
   - component: {fileID: 1403616441}
   - component: {fileID: 1403616440}
   - component: {fileID: 5509267546054148427}
+  - component: {fileID: 7718999189050166435}
   m_Layer: 5
   m_Name: BtnNextPage
   m_TagString: Untagged
@@ -1630,8 +1697,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
+  m_Sprite: {fileID: 21300000, guid: 10d8f0fabb222c04dae85a5b0306a05d, type: 3}
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -1714,6 +1781,27 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hoverSound: {fileID: 0}
   clickSound: {fileID: 8300000, guid: ef22665e53f3978448535fcdb996ed75, type: 3}
+--- !u!223 &7718999189050166435
+Canvas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1403616438}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_RenderMode: 2
+  m_Camera: {fileID: 0}
+  m_PlaneDistance: 100
+  m_PixelPerfect: 0
+  m_ReceivesEvents: 1
+  m_OverrideSorting: 1
+  m_OverridePixelPerfect: 0
+  m_SortingBucketNormalizedSize: 0
+  m_AdditionalShaderChannelsFlag: 25
+  m_SortingLayerID: -243424905
+  m_SortingOrder: 0
+  m_TargetDisplay: 0
 --- !u!1 &1550581274
 GameObject:
   m_ObjectHideFlags: 0
@@ -2290,6 +2378,7 @@ GameObject:
   - component: {fileID: 1810908520}
   - component: {fileID: 1810908519}
   - component: {fileID: 1810908518}
+  - component: {fileID: 2467598799542031608}
   m_Layer: 5
   m_Name: TextPageNum
   m_TagString: Untagged
@@ -2430,6 +2519,27 @@ MonoBehaviour:
   CustomComponentName: PageNumber
   CustomComment: 
   mComponentName: TMPro.TextMeshProUGUI
+--- !u!223 &2467598799542031608
+Canvas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1810908516}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_RenderMode: 2
+  m_Camera: {fileID: 0}
+  m_PlaneDistance: 100
+  m_PixelPerfect: 0
+  m_ReceivesEvents: 1
+  m_OverrideSorting: 1
+  m_OverridePixelPerfect: 0
+  m_SortingBucketNormalizedSize: 0
+  m_AdditionalShaderChannelsFlag: 25
+  m_SortingLayerID: -243424905
+  m_SortingOrder: 0
+  m_TargetDisplay: 0
 --- !u!1 &1962012954
 GameObject:
   m_ObjectHideFlags: 0
@@ -2844,13 +2954,13 @@ GameObject:
   m_Component:
   - component: {fileID: 2915898392405766100}
   - component: {fileID: -4926939235062099213}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: ItemUIPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2915898392405766100
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3262,7 +3372,7 @@ MonoBehaviour:
   m_spriteAsset: {fileID: 0}
   m_tintAllSprites: 0
   m_StyleSheet: {fileID: 0}
-  m_TextStyleHashCode: 0
+  m_TextStyleHashCode: -1183493901
   m_overrideHtmlColors: 0
   m_faceColor:
     serializedVersion: 2

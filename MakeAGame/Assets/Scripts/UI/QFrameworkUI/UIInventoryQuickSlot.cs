@@ -28,10 +28,16 @@ namespace InventoryQuickslotUI
 			mData = uiData as UIInventoryQuickSlotData ?? new UIInventoryQuickSlotData();
 			CombatSceneButton.onClick.AddListener(() => 
 			{
-				GameManager.Instance.PauseGame();
+				if (UIKit.GetPanel<UIHandCard>().m_close == false)
+				{
+					UIKit.GetPanel<UIHandCard>().CloseHandCard();
+				}
+				
 				UIKit.ShowPanel<BagUIPanel>();
 				UIKit.GetPanel<BagUIPanel>().RefreshLayout();
-	
+				
+
+
 			});
 
         }
@@ -75,6 +81,11 @@ namespace InventoryQuickslotUI
             {
                 GameEntry.Interface.GetSystem<IInventorySystem>().UseItem(mData.inventory.GetItemList()[4]);
             }
+			if(UIKit.GetPanel<UIHandCard>().m_close == true)
+            {
+				GameManager.Instance.PauseGame();
+
+			}
         }
 
 		private void RefreshInventoryItems()

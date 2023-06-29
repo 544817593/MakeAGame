@@ -441,6 +441,8 @@ MonoBehaviour:
   mOtherPanels:
   - PanelName: UIConsolePanel
     Level: 2
+  - PanelName: BagUIPanel
+    Level: 2
 --- !u!4 &2109788523
 Transform:
   m_ObjectHideFlags: 0

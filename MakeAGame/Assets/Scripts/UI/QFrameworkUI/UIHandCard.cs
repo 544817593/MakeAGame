@@ -22,7 +22,7 @@ namespace Game
 		public ViewDirectionWheel viewDirectionWheel;
 		
 		private Animator anim;
-
+		public bool m_close;
 		private List<ViewCard> viewCardsList;	// 手牌列表
 		private List<Transform> cardPosList = new List<Transform>();	// 手牌默认位置列表
 
@@ -46,7 +46,7 @@ namespace Game
 
 			viewDirectionWheel = new ViewDirectionWheel(transform.Find("DirectionWheel").gameObject);
 			viewDirectionWheel.gameObject.SetActive(false);
-			
+			m_close = false;
 			PieceIcon.gameObject.SetActive(false);
 			
 			anim = GetComponent<Animator>();
@@ -204,7 +204,19 @@ namespace Game
 				}
             }
         }
-		
+
+		public void CloseHandCard()
+        {
+			anim.Play("Close");
+			m_close = true;
+
+        }
+		public void OpenHandCard()
+		{
+			anim.Play("Open");
+			m_close = false;
+
+		}
 		private void Update()
 		{
 			// todo 优化 不要在update里写if

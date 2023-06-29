@@ -5,6 +5,8 @@ using Game;
 using System.Collections.Generic;
 using System;
 using TMPro;
+using ItemInfo;
+using Unity.VisualScripting;
 namespace ItemUI
 {
 	public class ItemUIPanelData : UIPanelData
@@ -32,17 +34,26 @@ namespace ItemUI
             {
                 CheckBag m_bag = GameObject.Find("Bag")?.GetComponent<CheckBag>();
                 m_bag?.SetIsOpenFalse();
+                GameManager.Instance.ResumeGame();
                 Hide();
+                if (UIKit.GetPanel<UIHandCard>()?.m_close == true)
+                {
+                    UIKit.GetPanel<UIHandCard>()?.OpenHandCard();
+                }
             });
         }
 		
 		protected override void OnOpen(IUIData uiData = null)
 		{
-		}
+            
+
+        }
 		
 		protected override void OnShow()
 		{
-		}
+            
+
+        }
 		
 		protected override void OnHide()
 		{
@@ -62,23 +73,28 @@ namespace ItemUI
                 foreach (Transform transform in SlotPosition.GetComponentInChildren<Transform>(includeInactive: true))
                 {
                     GameObject curItem = transform.gameObject;
-                 
-                    if (idx < bagItemList.Count)
+                 UIEventHelper mouseHelper = curItem.AddComponent<UIEventHelper>();
+                if (idx < bagItemList.Count)
                     {
                         Item itemInList = bagItemList[idx];
                         curItem.SetActive(true);
                         curItem.GetComponent<Image>().sprite = itemInList.data.sprite;
-                        foreach (Transform texts in curItem.GetComponentInChildren<Transform>())
+                        mouseHelper.OnUIPointEnter = () => MouseEnter(itemInList);
+                        mouseHelper.OnUIPointExit = () => MouseExit(itemInList);
+                    foreach (Transform texts in curItem.GetComponentInChildren<Transform>())
                         {
                             //Debug.Log(texts.gameObject.name);
                             if (texts.gameObject.name == "Amount")
                             {
                                 texts.gameObject.GetComponent<TextMeshProUGUI>().text = itemInList.amount.ToString();
                             }
-                        }
-                       
                        
                     }
+
+                  
+                   
+
+                }
                     else
                     {
                         curItem.GetComponent<Image>().sprite = null;
@@ -95,7 +111,14 @@ namespace ItemUI
                     idx++;
                 }
         }
-
+        private void MouseEnter(Item item)
+        {
+            
+        }
+        private void MouseExit(Item item)
+        {
+            
+        }
         private void UpdateIndex()
         {
             
