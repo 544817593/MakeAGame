@@ -184,3 +184,9 @@ public enum ItemUsePlace
 {
     None, Shop, Combat
 }
+
+public enum AudioTypeEnum
+{
+    None, Human, Bird, FlyBug, Mollusk //软体动物
+        , TwoLegs, FourLegs
+}
