@@ -263,12 +263,4 @@ public class AudioManager : MonoBehaviour
     {
         AudioKit.PlaySound(humanHit_sound2);
     }
-
-    //public AudioClip hit_sound1;
-    //public AudioClip hit_sound2;
-    //public AudioClip hit_sound3;
-    //public AudioClip hit_sound4;
-    //public AudioClip hit_sound5;
-    //public AudioClip humanHit_sound1;
-    //public AudioClip humanHit_sound2;
 }

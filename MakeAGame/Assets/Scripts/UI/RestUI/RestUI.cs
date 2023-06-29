@@ -36,22 +36,19 @@ namespace RestUI
             // please add init code here
 
             //测试数据用
-            foreach(SkillNameEnum skillName in SkillSystem.skillIDNameDic.Keys)
-            {
-                if(skillName != SkillNameEnum.None)
-                {
-                    mData.skillSystem.UnlockSkill(skillName);
-                }
-            }
-            mData.skillSystem.AddEquippedSkills(SkillNameEnum.None);
-            mData.skillSystem.AddEquippedSkills(SkillNameEnum.None);
+            //foreach(SkillNameEnum skillName in SkillSystem.skillIDNameDic.Keys)
+            //{
+            //    if(skillName != SkillNameEnum.None)
+            //    {
+            //        mData.skillSystem.UnlockSkill(skillName);
+            //    }
+            //}
+            //mData.skillSystem.AddEquippedSkills(SkillNameEnum.None);
+            //mData.skillSystem.AddEquippedSkills(SkillNameEnum.None);
 
 
             UnlockedSkillsList = mData.skillSystem.GetUnlockedSkills();
             EquippedSkillsList = mData.skillSystem.GetEquippedSkillsList();
-            //Sprite x = Resources.Load<Sprite>("Sprites/Rest/0");
-            //Debug.Log(x != null);
-            //Dice01.sprite = x;
             ChangeSkillPanel.gameObject.SetActive(false);
             AllButtonListen();
         }
@@ -66,11 +63,11 @@ namespace RestUI
 		
 		protected override void OnHide()
 		{
-		}
+        }
 		
 		protected override void OnClose()
 		{
-		}
+        }
         /// <summary>
         /// 全部按钮监听
         /// </summary>
@@ -109,11 +106,10 @@ namespace RestUI
 				// 如果1号位装备了技能，点击后卸下当前技能
 				CurAbility01.onClick.AddListener(() =>
 				{
-					if(CurAbility01.GetComponent<Image>().sprite != null)
+					if(CurAbility01.GetComponent<Image>().sprite != Resources.Load<Sprite>("Sprites/Abilities/技能-圆盘"))
 					{
-                        // TODO: 需要一个格子的背景图替换
-                        CurAbility01.GetComponent<Image>().sprite = null;
-						EquippedSkillsList[0] = SkillNameEnum.None;
+                        CurAbility01.GetComponent<Image>().sprite = Resources.Load<Sprite>("Sprites/Abilities/技能-圆盘");
+                        EquippedSkillsList[0] = SkillNameEnum.None;
 					}
 					else
 					{
@@ -123,10 +119,9 @@ namespace RestUI
                 // 如果2号位装备了技能，点击后卸下当前技能
                 CurAbility02.onClick.AddListener(() =>
                 {
-                    if (CurAbility02.GetComponent<Image>().sprite != null)
+                    if (CurAbility02.GetComponent<Image>().sprite != Resources.Load<Sprite>("Sprites/Abilities/技能-圆盘"))
                     {
-                        // TODO: 需要一个格子的背景图替换
-                        CurAbility02.GetComponent<Image>().sprite = null;
+                        CurAbility02.GetComponent<Image>().sprite = Resources.Load<Sprite>("Sprites/Abilities/技能-圆盘");
                         EquippedSkillsList[1] = SkillNameEnum.None;
                     }
                     else
@@ -181,7 +176,6 @@ namespace RestUI
                         }
                         else if (CurAbility01.GetComponent<Image>().sprite == null)
                         {
-                            //EquippedSkillsList[0] = UnlockedSkillsList[unlockSkillToIdx[curbtn]];
                             mData.skillSystem.ChangeEquippedSkillsList(0, UnlockedSkillsList[unlockSkillToIdx[curbtn]]);
                             CurAbility01.GetComponent<Image>().sprite = curbtn.GetComponent<Image>().sprite;
                         }
