@@ -37,7 +37,6 @@ public class CombatDialogueControl : MonoBehaviour, IController, ICanSendEvent
         }
         else if(SceneFlow.combatSceneCount == 2)
         {
-            Debug.LogError("战斗场景2");
             m_gameObject.SetActive(true);
             m_gameObject.GetComponent<Dialogue>().ink_file = AssetDatabase.LoadAssetAtPath<TextAsset>("Assets/Scripts/Dialogue/Chapter1.3.json");
             GameManager.Instance.PauseGame();

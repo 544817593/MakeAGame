@@ -39,7 +39,6 @@ public static class PackProbability
             drawResult = RarityEnum.Blue; // 蓝色稀有度
         }
 
-
         while (true) // 循环抽卡，直到抽到的卡牌符合稀有度要求
         {
             rndNum = Random.Range(1, numCardsInPack[cardPack] + 1); // 在卡包的卡牌数量内选择卡牌
@@ -57,7 +56,6 @@ public static class PackProbability
             // 卡牌id对应到卡牌稀有度，匹配需要的稀有度跳出循环
             if (IdToSO.FindCardSOByID(cardId).rarity == drawResult) break;
 
-            break;
         }
 
         return cardId;

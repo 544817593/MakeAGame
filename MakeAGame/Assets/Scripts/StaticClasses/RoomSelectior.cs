@@ -155,6 +155,11 @@ public static class RoomSelector
 
         // Demo版本没有战斗场景池，暂时加到5个战斗房
         if (combatRooms == 4) rooms.Add(RoomEnum.Combat);
+        for (int i = 0; i < rooms.Count; i++)
+        {
+            Debug.LogError(rooms[i].ToString());
+        }
+        
         return rooms;
     }
 }
