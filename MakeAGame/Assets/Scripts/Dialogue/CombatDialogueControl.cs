@@ -37,7 +37,7 @@ public class CombatDialogueControl : MonoBehaviour, IController, ICanSendEvent
         }
         else if(SceneFlow.combatSceneCount == 2)
         {
-            Debug.LogError("战斗场景2获胜");
+            Debug.LogError("战斗场景2");
             m_gameObject.SetActive(true);
             m_gameObject.GetComponent<Dialogue>().ink_file = AssetDatabase.LoadAssetAtPath<TextAsset>("Assets/Scripts/Dialogue/Chapter1.3.json");
             GameManager.Instance.PauseGame();
@@ -70,9 +70,10 @@ public class CombatDialogueControl : MonoBehaviour, IController, ICanSendEvent
     }
     private void OnNormalCombatVictoryEvent()
     {
+        Debug.LogError("Normal combat victory event trigger");
         GameManager.Instance.PauseGame();
         UIKit.HideAllPanel();
-        UIKit.ShowPanel<RewardUI.RewardUIPanel>();
+        UIKit.OpenPanel<RewardUI.RewardUIPanel>();
     }
 
 }
