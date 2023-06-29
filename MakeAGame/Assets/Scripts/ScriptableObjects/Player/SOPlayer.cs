@@ -128,9 +128,11 @@ namespace Game
         /// 改变玩家五维其中之一
         /// </summary>
         /// <param name="stats">需要改变的属性，力量，精神，技巧，体力，魅力</param>
-        /// <param name="amount">要改变的数值</param>
+        /// <param name="amount">要+=的额度</param>
         public void ModifyStats(PlayerStatsEnum stats, int amount)
         {
+            GameEntry.Interface.GetSystem<IInventorySystem>().UpdateCardStats(stats, amount);
+            GameEntry.Interface.GetSystem<IHandCardSystem>().UpdateCardStats(stats, amount);
             switch (stats)
             {
                 case PlayerStatsEnum.Strength: strength += amount; return;
@@ -139,10 +141,13 @@ namespace Game
                 case PlayerStatsEnum.Stamina: stamina += amount; return;
                 case PlayerStatsEnum.Charisma: chrisma += amount; return;
             }
+
         }
 
         public void SetStartStats(PlayerStatsEnum stats, int amount)
         {
+            GameEntry.Interface.GetSystem<IInventorySystem>().UpdateCardStats(stats, amount - GetStats(stats));
+            GameEntry.Interface.GetSystem<IHandCardSystem>().UpdateCardStats(stats, amount - GetStats(stats));
             switch (stats)
             {
                 case PlayerStatsEnum.Strength: strength = amount; return;
@@ -152,6 +157,7 @@ namespace Game
                 case PlayerStatsEnum.Charisma: chrisma = amount; return;
             }
         }
+
         public void SetStats()
         {
             strength = 0;
@@ -159,6 +165,15 @@ namespace Game
             skill = 0;
             stamina = 0;
             chrisma = 0;
+        }
+
+        /// <summary>
+        /// 返还玩家五维总和
+        /// </summary>
+        /// <returns></returns>
+        public int GetSumStats()
+        {
+            return (strength + spirit + skill + stamina + chrisma);
         }
 
     }

@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace Game
 {
     /// <summary>
@@ -7,4 +9,6 @@ namespace Game
     {
         public float drawCardCooldown;
     }
+
+
 }
