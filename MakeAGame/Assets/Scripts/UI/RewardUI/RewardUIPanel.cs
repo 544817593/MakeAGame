@@ -88,10 +88,7 @@ namespace RewardUI
 		}
 		private void LoadScene()
 		{
-			if (SceneFlow.combatSceneCount == 1)
-            {
-				GameManager.Instance.ResumeGame();
-            }
+			
 				
 			GameObject.Find("GameSceneManager")?.transform.GetComponent<Game.SceneFlow>().LoadRoom();
 

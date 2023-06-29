@@ -39,6 +39,7 @@ public class Attributes : MonoBehaviour
 
     public void AddPoint()
     {
+        GameManager.Instance.soundMan.Play_Add();
         if (currentP >= 1 && currentP <= 9 && totalPoint.total_Point > 0)
         {
             currentP++;
@@ -48,7 +49,7 @@ public class Attributes : MonoBehaviour
     }
     public void MinusPoint()
     {
-
+        GameManager.Instance.soundMan.Play_Minus();
         if (currentP > 1 && currentP <= 10)
         {
             currentP--;

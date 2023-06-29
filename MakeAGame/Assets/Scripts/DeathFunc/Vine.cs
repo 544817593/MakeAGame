@@ -10,6 +10,8 @@ namespace Game
     /// </summary>
     public class Vine: DeathFuncBase
     {
+        float duration = 3f;
+
         public Vine()
         {
             area.width = 1;
@@ -25,12 +27,8 @@ namespace Game
             {
                 return;
             }
-            
-            float duration = 3f;
-            if (viewCard.card.deathEnhancement.statusTimeIncrease != 0)
-            {
-                duration += viewCard.card.deathEnhancement.statusTimeIncrease;
-            }
+
+            duration = EnhanceDeathDuration(duration);
 
             var pieceSystem = this.GetSystem<IPieceSystem>();
             foreach (BoxGrid grid in grids)

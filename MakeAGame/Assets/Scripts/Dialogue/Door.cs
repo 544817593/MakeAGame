@@ -31,6 +31,7 @@ public class Door : MonoBehaviour
     }
     private void OnMouseDown()
     {
+        GameManager.Instance.soundMan.Play_Door_sound();
         Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
         LoadScene();
        
