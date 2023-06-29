@@ -28,7 +28,7 @@ namespace Game
             // 遍历传入的grid，召唤魔虫
             foreach (BoxGrid grid in grids)
             {
-                if (grid.occupation != 0) {
+                if (grid.occupation == 0) {
                     Debug.Log("生成魔虫");
                     this.GetSystem<IPieceSystem>().AddPieceFriend(viewCard.card, grids);
                 }
