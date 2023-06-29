@@ -81,7 +81,7 @@ namespace ItemUI
                         Item itemInList = bagItemList[idx];
                         curItem.SetActive(true);
                         curItem.GetComponent<Image>().sprite = itemInList.data.sprite;
-                    activeItem.Add(transform, itemInList);
+                   //activeItem.Add(transform, itemInList);
                     foreach (Transform texts in curItem.GetComponentInChildren<Transform>())
                         {
                             //Debug.Log(texts.gameObject.name);
