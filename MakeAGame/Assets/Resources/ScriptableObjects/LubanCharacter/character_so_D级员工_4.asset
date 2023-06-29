@@ -14,14 +14,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterID: 4
   characterName: "D\u7EA7\u5458\u5DE5"
-  rarity: 0
+  rarity: 1
   cardPack: 1
-  sanCost: 40
+  sanCost: 20
   deathFuncDescription: "\u5BF93*3\u7684\u683C\u5B50\u9020\u621015\u70B9\u4F24\u5BB3\u3002"
   cardSprite: {fileID: 21300000, guid: 4642b727eab0c3c47a05b02fc9a2bb54, type: 3}
-  hp: 15
+  hp: 25
   attack: 3
-  moveSpd: 7
+  moveSpd: 3.5
   defend: 0
   deathFuncName: D_Ranked_Staff
   deathEnhanceTypeEnums: 01000000
@@ -31,15 +31,14 @@ MonoBehaviour:
   width: 1
   height: 1
   moveDirections: 01000000020000000300000004000000
-  attackSpd: 3
+  attackSpd: 2
   accuracy: 0.6
   attackRange: 1
-  life: 60
+  life: 999
   anim: {fileID: 2345747205422007050, guid: 909a20cf1f2432e429a3f3bd8ddfda5e, type: 3}
-  attackAnim: {fileID: 1928717799986723943, guid: f989c74d1df8cee478cd4ecda18527d1, type: 3}
   sanCostBonus:
     stat: 6
-    multiple: -1
+    multiple: -0.04
   hpBonus:
     stat: 4
     multiple: 2

@@ -42,20 +42,11 @@ namespace Game
             new_rooms.Value.Add(RoomEnum.NPC);
             new_rooms.Value.Add(RoomEnum.Combat);
             new_rooms.Value.Add(RoomEnum.Combat);
-            
-            new_rooms.Value.Add(RoomEnum.Explore); // todo 探索房 test
-            
             ran_rooms.Value = RoomSelector.GenerateRooms();
             for (int i = 0; i < ran_rooms.Value.Count; i++)
             {
                 new_rooms.Value.Add(ran_rooms.Value[i]);
             }
-            // 游戏流程第一章随机房生成后面
-            new_rooms.Value.Add(RoomEnum.Merchant);
-            new_rooms.Value.Add(RoomEnum.Rest);
-            // 这个是BOSS房
-            new_rooms.Value.Add(RoomEnum.Combat); 
-
         }
 
         public List<RoomEnum> GetRooms()

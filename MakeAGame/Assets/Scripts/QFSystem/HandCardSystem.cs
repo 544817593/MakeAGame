@@ -24,11 +24,6 @@ namespace Game
         /// 把手牌返回背包
         /// </summary>
         void ReturnHandCardToBag();
-
-        /// <summary>
-        /// 在玩家属性改变后更新卡牌数据
-        /// </summary>
-        void UpdateCardStats(PlayerStatsEnum stat, int value);
     }
     
     public class HandCardSystem: AbstractSystem, IHandCardSystem, ICanSendCommand
@@ -71,8 +66,7 @@ namespace Game
             for (int i = handCardList.Value.Count - 1; i >= 0; i--)
             {
                 ViewCard viewCard = handCardList.Value[i];
-               
-                UIKit.GetPanel<BagUI.BagUIPanel>().AddCard(viewCard.card);
+                this.GetSystem<IInventorySystem>().SpawnBagCardInBag(viewCard.card);
                 this.SendCommand(new SubHandCardCommand(viewCard));
             }
         }
@@ -131,28 +125,6 @@ namespace Game
         public List<ViewCard> GetHandCardList()
         {
             return handCardList;
-        }
-
-        public void UpdateCardStats(PlayerStatsEnum stat, int value)
-        {
-            foreach (ViewCard viewCard in handCardList.Value)
-            {
-                SOCharacterInfo so = IdToSO.FindCardSOByID(viewCard.card.charaID);
-                if (stat == so.atkSpdBonus.stat)
-                {
-                    viewCard.card.atkSpd += value * so.atkSpdBonus.multiple;
-                }
-                if (stat == so.atkBonus.stat)
-                {
-                    viewCard.card.damage += value * so.atkBonus.multiple;
-                }
-                if (stat == so.hpBonus.stat)
-                {
-                    viewCard.card.hp += (int)(value * so.hpBonus.multiple);
-                    viewCard.card.maxHp += (int)(value * so.hpBonus.multiple);
-                }
-                viewCard.card.sanCost += value * so.sanCostBonus.multiple;
-            }
         }
 
         public IArchitecture GetArchitecture()

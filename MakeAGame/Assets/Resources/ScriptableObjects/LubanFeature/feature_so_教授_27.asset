@@ -15,5 +15,5 @@ MonoBehaviour:
   featureID: 27
   featureName: "\u6559\u6388"
   featureDesc: "\u8BE5\u5361\u724C\u5728\u573A\u65F6\uFF0C\u73A9\u5BB6\u653E\u5165\u7684\u68CB\u5B50\u83B7\u5F97200%\u4F53\u8D28\u7684\u6700\u5927\u751F\u547D\u503C\u52A0\u6210\u3002"
-  typeName: Doctor
+  typeName: 
   icon: {fileID: 0}

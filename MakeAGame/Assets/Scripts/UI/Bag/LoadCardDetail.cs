@@ -24,7 +24,7 @@ public class LoadCardDetail : MonoBehaviour
         result = null;
         feature = null;
         rarity = Vcard.rarity;
-        m_BagUI.Image.sprite =Extensions.GetRaritySprite(rarity) ;
+        m_BagUI.Image.sprite = Game.Extensions.GetRaritySprite(rarity) ;
           
         m_BagUI.CharName.text = Vcard.charaName.ToString();
         //m_BagUI.SizeData.text = card..pieceSize.ToString();

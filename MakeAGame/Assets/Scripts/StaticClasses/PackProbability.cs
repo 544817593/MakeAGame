@@ -17,12 +17,12 @@ public static class PackProbability
     public static int DrawCard(int cardPack, bool isGreen = false, bool isBlue = false)
     {
         int cardId;
-        int rndNum = Random.Range(1, 101); // 随机数
+        int number = Random.Range(1, 101); // 随机数
         RarityEnum drawResult = 0; // 结果稀有度，0为白，1为绿等等
 
         foreach (int rarityValue in rarity)
         {
-            if (rndNum > rarityValue)
+            if (number > rarityValue)
             {
                 drawResult++;
                 continue;
@@ -42,16 +42,16 @@ public static class PackProbability
 
         while (true) // 循环抽卡，直到抽到的卡牌符合稀有度要求
         {
-            rndNum = Random.Range(1, numCardsInPack[cardPack] + 1); // 在卡包的卡牌数量内选择卡牌
+            number = Random.Range(1, numCardsInPack[cardPack] + 1); // 在卡包的卡牌数量内选择卡牌
 
             // 使卡牌ID对应csv文档行数
             if (cardPack == 0)
             {
-                cardId = rndNum;
+                cardId = number + 1;
             }
             else
             {
-                cardId = rndNum + 1 + numCardsInPack[cardPack];
+                cardId = number + 1 + numCardsInPack[cardPack];
             }
 
             // 卡牌id对应到卡牌稀有度，匹配需要的稀有度跳出循环

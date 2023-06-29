@@ -15,5 +15,5 @@ MonoBehaviour:
   featureID: 34
   featureName: "\u85E4\u8513"
   featureDesc: "\u88AB\u653B\u51FB\u5230\u7684\u654C\u4EBA\u79FB\u52A8\u901F\u5EA6\u51CF\u534A\uFF0C\u6301\u7EED3\u79D2\u3002"
-  typeName: Vine
+  typeName: 
   icon: {fileID: 0}

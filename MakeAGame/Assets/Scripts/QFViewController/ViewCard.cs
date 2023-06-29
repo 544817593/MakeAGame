@@ -170,6 +170,7 @@ namespace Game
         #region 右键点击 死面
 
         private bool isInDeathFunc;
+        public DeathFuncBase deathFunc;
         void OnRightClick()
         {
             if (!isInDeathFunc && Input.GetMouseButtonUp(1))  // 右键
@@ -196,12 +197,12 @@ namespace Game
 
                 Type methodType = Type.GetType("Game." + deathFuncName);
                 var obj = methodType.Assembly.CreateInstance("Game." + deathFuncName);
-                card.deathFunc = obj as DeathFuncBase;
-                card.deathFunc.viewCard = this;
+                deathFunc = obj as DeathFuncBase;
+                deathFunc.viewCard = this;
 
                 SelectMapStartCommand comm = new SelectMapStartCommand();
                 // comm.area = new SelectArea() {width = card.width, height = card.height, selectStage = MapSelectStage.IsPutDeathFunc};
-                comm.area = card.deathFunc.area;
+                comm.area = deathFunc.area;
                 this.SendCommand<SelectMapStartCommand>(comm);
             }
         }
@@ -216,7 +217,7 @@ namespace Game
                     isInDeathFunc = false;
                     OnUpdate = null;
                     this.SendCommand<SelectMapEndCommand>(new SelectMapEndCommand(this, true));
-                    card.deathFunc = null;
+                    deathFunc = null;
                     return;
                 }
             }
@@ -228,18 +229,10 @@ namespace Game
                     isInDeathFunc = false;
                     OnUpdate = null;
                     this.SendCommand<SelectMapEndCommand>(new SelectMapEndCommand(this, false));
-                    card.deathFunc = null;
+                    deathFunc = null;
                     Dialogue dialogue = GameObject.Find("Dialogue")?.GetComponent<Dialogue>();
                     if (dialogue != null && dialogue.waitForInGamecontrol == true)
-                    {   if(card.charaName == "D级员工" && dialogue.popName == "弗朗西斯·维兰德·瑟斯顿")
-                        {
-                            dialogue.getControl = true;
-                        }
-                        
-                        else { dialogue.getControl = false; }
-                        dialogue.InGameControl();
-                    }
-                   
+                    { dialogue.getControl = true; }
                     return;
                 }
                 
@@ -262,20 +255,12 @@ namespace Game
             }
 
             this.SendCommand(new PutPieceCommand(this, e.pieceGrids));
-            Dialogue dialogue = GameObject.Find("Dialogue")?.GetComponent<Dialogue>();
-            if (dialogue != null)
+            if (e.viewCard.card.charaName == "弗朗西斯·维兰德·瑟斯顿")
             {
-                if (e.viewCard.card.charaName == dialogue.popName)
-                {
-                     dialogue.getControl = true;
-                }
-                else
-                {
-                    dialogue.getControl = false;
-                }
-                dialogue.InGameControl();
-            }
+                Dialogue dialogue = GameObject.Find("Dialogue")?.GetComponent<Dialogue>();
+                if (dialogue != null) dialogue.getControl = true;
 
+            }
             // todo 手牌使用后的后续处理（此时已经移出手牌系统并隐藏），如返回背包、销毁...
             Debug.Log("after card use as life card");
             this.GetSystem<IInventorySystem>().SpawnBagCardInBag(e.viewCard.card);

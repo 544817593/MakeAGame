@@ -10,8 +10,6 @@ namespace Game
     /// </summary>
     public class Raven: DeathFuncBase
     {
-        float duration = 40f;
-
         public Raven()
         {
             area.width = 4;
@@ -28,7 +26,11 @@ namespace Game
                 return;
             }
 
-            duration = EnhanceDeathDuration(duration);
+            float duration = 40f;
+            if (viewCard.card.deathEnhancement.statusTimeIncrease != 0)
+            {
+                duration += viewCard.card.deathEnhancement.statusTimeIncrease;
+            }
 
             foreach (BoxGrid grid in grids)
             {

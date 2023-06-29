@@ -45,6 +45,9 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: UI
+    uniqueID: 4051542391
+    locked: 0
   - name: Game
     uniqueID: 1152440149
     locked: 0
@@ -53,9 +56,6 @@ TagManager:
     locked: 0
   - name: Piece
     uniqueID: 358138923
-    locked: 0
-  - name: UI
-    uniqueID: 4051542391
     locked: 0
   - name: AlwaysTopUI
     uniqueID: 2661011715

@@ -21,7 +21,6 @@ namespace Game
         protected DamageNumberMesh TerrianPoisonDamageNumber;
         protected DamageNumberMesh TerrianWaterDamageNumber;
         protected DamageNumberMesh MagicDamageNumber;
-        protected DamageNumberMesh HealNumber;
         // protected Transform healthBar;
 
         protected IMapSystem mapSystem;
@@ -32,7 +31,7 @@ namespace Game
 
         public DirEnum direction = DirEnum.None;
         public bool inCombat; // 是否在战斗中(挨打或者攻击)
-        public List<BuffType> listBuffs = new List<BuffType>();    // 目前身上起效的buff
+        public List<BuffType> listBuffs;    // 目前身上起效的buff
 
         public Action<PieceMoveReadyEvent> OnPieceMoveReady;
         public Action<PieceMoveFinishEvent> OnPieceMoveFinish;
@@ -40,7 +39,7 @@ namespace Game
         public Action<PieceAttackEndEvent> OnPieceAttackEnd;
         public Action<PieceUnderAttackEvent> OnPieceUnderAttack;
 
-        public Animator pieceAnimator; // 动画组件
+        public Animator animator; // 动画组件
         protected Coroutine movementCoroutine; // 移动协程
         public bool isFacingRight = true; // 棋子目前预设体是否朝向右侧
 
@@ -110,7 +109,6 @@ namespace Game
             TerrianPoisonDamageNumber = Resources.Load("Prefabs/Damage Number Prefab/Terrian Poison Damage").GetComponent<DamageNumberMesh>();
             TerrianWaterDamageNumber = Resources.Load("Prefabs/Damage Number Prefab/Terrian Water Damage").GetComponent<DamageNumberMesh>();
             MagicDamageNumber = Resources.Load("Prefabs/Damage Number Prefab/Magic Damage").GetComponent<DamageNumberMesh>();
-            HealNumber = Resources.Load("Prefabs/Damage Number Prefab/Heal").GetComponent<DamageNumberMesh>();
 
             timeStop = false;
         }
@@ -194,17 +192,16 @@ namespace Game
             foreach (var grid in pieceGrids)
             {
                 centerPos += grid.transform.position;
-                
             }
             centerPos /= pieceGrids.Count;
             return centerPos;
         }
         
-        protected virtual bool CheckIfOneGridCanMove(BoxGrid grid, bool ignoreUnits = false)
+        protected virtual bool CheckIfOneGridCanMove(BoxGrid grid)
         {
             // 通用判断
             // 1.是否格子已被占用，且不是自己当前占用的格子
-            if (!pieceGrids.Contains(grid) && !mapSystem.GridCanMoveTo(grid, ignoreUnits))
+            if (!pieceGrids.Contains(grid) && !mapSystem.GridCanMoveTo(grid))
                 return false;
 
             // 某些判断...
@@ -220,7 +217,7 @@ namespace Game
         /// <param name="newGridTransPos">新位置</param>
         /// <param name="duration">持续时间</param>
         /// <returns></returns>
-        protected IEnumerator MoveToTarget(Vector3 newGridTransPos, float duration = 1f)
+        protected IEnumerator MoveToTarget(Vector3 newGridTransPos, float duration = 0.5f)
         {
             Vector3 startPosition = transform.position;
             float elapsedTime = 0f;
@@ -232,9 +229,9 @@ namespace Game
                 yield return null;
             }
 
-            if (pieceAnimator != null)
+            if (animator != null)
             {
-                pieceAnimator.SetBool("isMove", false);
+                animator.SetBool("isMove", false);
             }
 
             movementCoroutine = null;
@@ -254,7 +251,7 @@ namespace Game
         }
 
         // 受到攻击，返回是否死亡
-        public virtual bool Hit(int damage, ViewPieceBase attacker)
+        public virtual bool Hit(int damage)
         {
             // 收到攻击数据...
             // 进行各种效果计算...
@@ -262,25 +259,16 @@ namespace Game
             return false;
         }
 
-        public float GetDamageNumScale(int num)
-        {
-            float scale = 1f;
-            scale += num * 0.01f;
-            return scale;
-        }
-
-        // 受到棋子以外的东西的伤害，死面之类的，包含掉血后的死亡检查
+        // 受到棋子以外的东西的伤害，地块，死面之类的，包含掉血后的死亡检查
         public void TakeDamage(int damage)
         { 
             hp.Value -= damage;
-            MagicDamageNumber.SetScale(GetDamageNumScale(damage));
             MagicDamageNumber.Spawn(this.Position(), damage);
             if (hp <= 0)
             {
-                this.SendEvent<SpecialitiesPieceDieEvent>(new SpecialitiesPieceDieEvent { viewPiece = this });
                 this.GetSystem<IPieceBattleSystem>().EndBattle(this); // 不确定是不是需要
                 // 再从棋子系统中注销
-                this.GetSystem<IPieceSystem>().RemovePiece(this);         
+                this.GetSystem<IPieceSystem>().RemovePiece(this);
                 // 最后处理自身的死亡
                 Die();
             }
@@ -291,23 +279,17 @@ namespace Game
             hp.Value -= damage;
             if (terrian == TerrainEnum.Fire)
             {
-                TerrianFireDamageNumber.SetScale(GetDamageNumScale(damage));
                 TerrianFireDamageNumber.Spawn(this.Position(), damage);
-            }
-            else if(terrian == TerrainEnum.Poison)
+            }else if(terrian == TerrainEnum.Poison)
             {
-                TerrianPoisonDamageNumber.SetScale(GetDamageNumScale(damage));
                 TerrianPoisonDamageNumber.Spawn(this.Position(), damage);
-            }
-            else if(terrian == TerrainEnum.Water)
+            }else if(terrian == TerrainEnum.Water)
             {
-                TerrianWaterDamageNumber.SetScale(GetDamageNumScale(damage));
                 TerrianWaterDamageNumber.Spawn(this.Position(), damage);
             }
             
             if (hp <= 0)
             {
-                this.SendEvent<SpecialitiesPieceDieEvent>(new SpecialitiesPieceDieEvent { viewPiece = this });
                 this.GetSystem<IPieceBattleSystem>().EndBattle(this); // 不确定是不是需要
                 // 再从棋子系统中注销
                 this.GetSystem<IPieceSystem>().RemovePiece(this);
@@ -315,19 +297,6 @@ namespace Game
                 Die();
             }
         }
-
-        public void Heal(int healNum)
-        {
-            if(healNum + hp.Value > maxHp.Value)
-            {
-                healNum = maxHp.Value - hp.Value;
-            }
-            Debug.Log($"Heal {healNum}");
-            hp.Value += healNum;
-            HealNumber.SetScale(GetDamageNumScale(healNum));
-            HealNumber.Spawn(this.Position(), healNum);
-        }
-
         public virtual void Die()
         {
             state = new PieceStateIdle(this);
@@ -351,37 +320,16 @@ namespace Game
             if (isFacingRight && Extensions.leftDirs.Contains(newDir) ||
                 !isFacingRight && Extensions.rightDirs.Contains(newDir))
             {
-                Vector3 currentEulerAngles = pieceAnimator.transform.eulerAngles;
+                Vector3 currentEulerAngles = animator.transform.eulerAngles;
                 Vector3 newEulerAngles = new Vector3(
                     currentEulerAngles.x,
                     (currentEulerAngles.y + 180) % 360,
                     currentEulerAngles.z
                 );
-                pieceAnimator.transform.rotation = Quaternion.Euler(newEulerAngles);
+                animator.transform.rotation = Quaternion.Euler(newEulerAngles);
                 isFacingRight = !isFacingRight;
             }
 
-        }
-
-        /// <summary>
-        /// 攻击时可能需要旋转棋子预设体的朝向
-        /// </summary>
-        /// <param name="defender">挨打棋子</param>
-        public void PieceFlip(ViewPieceBase defender)
-        {
-            if (pieceAnimator == null) return;
-            if ((isFacingRight && defender.pieceGrids[0].col < pieceGrids[0].col) ||
-                (!isFacingRight && defender.pieceGrids[0].col > pieceGrids[0].col))
-            {
-                Vector3 currentEulerAngles = pieceAnimator.transform.eulerAngles;
-                Vector3 newEulerAngles = new Vector3(
-                    currentEulerAngles.x,
-                    (currentEulerAngles.y + 180) % 360,
-                    currentEulerAngles.z
-                );
-                pieceAnimator.transform.rotation = Quaternion.Euler(newEulerAngles);
-                isFacingRight = !isFacingRight;
-            }
         }
 
         protected virtual void OnMoveReadyEvent(PieceMoveReadyEvent e)
@@ -423,44 +371,6 @@ namespace Game
         public void SetTouchAreaEnable(bool isEnable)
         {
             
-        }
-
-        /// <summary>
-        /// 以在挨打方头上播放标记动画的形式展示攻击
-        /// </summary>
-        /// <param name="animationInstance"></param>
-        /// <returns></returns>
-        protected IEnumerator PlayAttackAnimByMarking(GameObject animationInstance)
-        {
-            yield return new WaitForSeconds(0.2f);
-            animationInstance.transform.localScale = new Vector3(0.2f, 0.2f, 0.2f);
-            animationInstance.transform.localPosition = new Vector3(-0.5f, 2, 0);
-
-            // 等待动画播放完毕
-            yield return new WaitForSeconds(animationInstance.GetComponentInChildren<Animator>()
-                .runtimeAnimatorController.animationClips[0].length);
-
-            // 销毁实例化的预制体
-            GameObject.Destroy(animationInstance);
-        }
-
-        /// <summary>
-        /// 以播放攻击方自身攻击动画的形式展示攻击
-        /// </summary>
-        /// <param name="attacker"></param>
-        /// <returns></returns>
-        protected IEnumerator PlayAttackAnimByAction(ViewPieceBase attacker)
-        {
-            if (attacker != null)
-            {
-                attacker.pieceAnimator?.SetBool("isAttack", true);
-            }
-            yield return new WaitForSeconds(attacker.pieceAnimator.GetCurrentAnimatorStateInfo(0).length);
-            if (attacker != null)
-            {
-                attacker.pieceAnimator?.SetBool("isAttack", false);
-            }
-            yield return null;
         }
 
         public IArchitecture GetArchitecture()

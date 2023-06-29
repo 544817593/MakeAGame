@@ -223,7 +223,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1152440149
-  m_SortingLayer: 1
+  m_SortingLayer: 2
   m_SortingOrder: 2
   m_Sprite: {fileID: 21300000, guid: 40f15df27661d524ab18132e07ae7edd, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -326,8 +326,6 @@ MonoBehaviour:
   m_Pack: {fileID: 0}
   m_checkControl: {fileID: 0}
   m_showGift: {fileID: 0}
-  popName: 
-  bgPath: "UI/IntroUI/\u521D\u59CB\u754C\u9762-\u80CC\u666F\u56FE"
   canContinue: 0
   pauseD: 0
   d_finish: 0
@@ -338,6 +336,9 @@ MonoBehaviour:
   nextLine: 0
   waitForPass: 0
   showGift: 0
+  controlTime: 5
+  victory: 0
+  wait_event: 0
   npc: {fileID: 165551005}
   backGround: {fileID: 843423549}
 --- !u!114 &8393797
@@ -437,6 +438,7 @@ GameObject:
   - component: {fileID: 393170825}
   - component: {fileID: 393170826}
   - component: {fileID: 393170827}
+  - component: {fileID: 393170828}
   m_Layer: 0
   m_Name: Bag
   m_TagString: Untagged
@@ -492,6 +494,20 @@ MonoBehaviour:
   defaultCursor: {fileID: 2800000, guid: 25af01249f2f1f6478d7ef5e0bae0146, type: 3}
   checkCursor: {fileID: 2800000, guid: 1457c50796ac90b4b83f2ac43e9a48c5, type: 3}
   isOpen: 0
+--- !u!114 &393170828
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 393170824}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d8cac0a88f2d87c428511e43079e8ab3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hoverSound: {fileID: 0}
+  clickSound: {fileID: 8300000, guid: f4f6a3539700ba248bfca964b854f34f, type: 3}
 --- !u!1 &577182333
 GameObject:
   m_ObjectHideFlags: 0
@@ -591,7 +607,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1152440149
-  m_SortingLayer: 1
+  m_SortingLayer: 2
   m_SortingOrder: 2
   m_Sprite: {fileID: 21300000, guid: aafa45f62dac06a4cbec754db23a0cd6, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -857,7 +873,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1152440149
-  m_SortingLayer: 1
+  m_SortingLayer: 2
   m_SortingOrder: 2
   m_Sprite: {fileID: 21300000, guid: 4e3560810f8e93e459e2946c737b5527, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -1013,7 +1029,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1152440149
-  m_SortingLayer: 1
+  m_SortingLayer: 2
   m_SortingOrder: 2
   m_Sprite: {fileID: 21300000, guid: 976d1c850238ae847b8836360f92717d, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -1143,7 +1159,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1152440149
-  m_SortingLayer: 1
+  m_SortingLayer: 2
   m_SortingOrder: 2
   m_Sprite: {fileID: 21300000, guid: e491261005847fc43b0f40d9bbced96d, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -1278,6 +1294,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2048947738}
   - component: {fileID: 2048947737}
+  - component: {fileID: 2048947736}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -1285,6 +1302,14 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!81 &2048947736
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2048947735}
+  m_Enabled: 1
 --- !u!20 &2048947737
 Camera:
   m_ObjectHideFlags: 0

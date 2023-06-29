@@ -97,7 +97,6 @@ namespace Game
                     kvp.Value.gameObject.GetComponent<Image>().sprite = Resources.Load<Sprite>(ClickDirectionDict[kvp.Key]);
                 }
             }
-            GameManager.Instance.soundMan.Play_wheel_hover_sound();
         }
         private void onMouseExitBtn(GameObject directionObj)
         {

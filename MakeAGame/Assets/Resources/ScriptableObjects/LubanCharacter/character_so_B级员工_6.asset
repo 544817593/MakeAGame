@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterID: 6
   characterName: "B\u7EA7\u5458\u5DE5"
-  rarity: 2
+  rarity: 3
   cardPack: 1
   sanCost: 20
   deathFuncDescription: "\u5BF94*4\u7684\u683C\u5B50\u9020\u621025\u70B9\u4F24\u5BB3\uFF0C20%\u7684\u6982\u7387\u83B7\u5F97\u4E00\u5F20C\u7EA7\u5458\u5DE5\u3002"
@@ -36,7 +36,6 @@ MonoBehaviour:
   attackRange: 1
   life: 999
   anim: {fileID: 5105131249176448643, guid: 714d4e2bfb233664bae8e76bd528f797, type: 3}
-  attackAnim: {fileID: 1928717799986723943, guid: f989c74d1df8cee478cd4ecda18527d1, type: 3}
   sanCostBonus:
     stat: 6
     multiple: -0.06

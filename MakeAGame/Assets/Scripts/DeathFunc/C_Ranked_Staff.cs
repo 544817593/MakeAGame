@@ -35,7 +35,7 @@ namespace Game
                 if (pieceSystem.IsPieceMonster(grid.occupation))
                 {
                     Monster monster = pieceSystem.getMonsterById(grid.occupation);
-                    monster.TakeDamage(EnhanceDeathDamage(damage));
+                    monster.TakeDamage(damage);
                 }
             }
 

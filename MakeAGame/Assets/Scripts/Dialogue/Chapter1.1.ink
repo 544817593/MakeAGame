@@ -16,7 +16,7 @@ VAR CheckControl = true
 【混沌牌】，它们处于生死的交界处，能对生死牌造成各种影响。#speaker: 引导者 
 
 
-现在，*左键*拖拽你的调查员*弗朗西斯*登场！#speaker: 引导者 #controlG: 操作 #pop: 高亮
+现在，*左键*拖拽你的调查员*弗朗西斯*登场！#speaker: 引导者 #controlG: 操作
 {
 -CheckControl == true:  
 ->FirstCondition 
@@ -38,7 +38,7 @@ VAR CheckControl = true
 他们的能力你可以将鼠标悬浮在其上看到，其余的你就要自己摸索了——喂！实习生！你有没有在认真听讲？。#speaker: 引导者
 
 调查员是你最珍贵的朋友，只有让他们存活着探索完整个屋子，到达右上角的门时，你才算胜利，也就是——通关！#speaker: 引导者 #wait:等待
-弗朗西斯看起来陷入了苦战。现在，*右键*拖拽你的卡牌放置过去。#speaker: 引导者 #controlG: 操作 
+弗朗西斯看起来陷入了苦战。现在，*右键*拖拽你的卡牌放置过去。#speaker: 引导者  #controlG: 操作
  {
  -CheckControl == true:
 ->ThirdCondition

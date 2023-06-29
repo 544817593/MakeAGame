@@ -778,7 +778,7 @@ public class BuffLightNavyQuillPen : BuffToPiece, ICanRegisterEvent
         {
             if (e.piece == target)
             { 
-                PlayerManager.Instance.player.AddGold(2);
+                PlayerManager.Instance.player.AddGold(2); 
             }
         }
         );
@@ -834,10 +834,7 @@ public class BuffNavyQuillPen : BuffToPiece, ICanRegisterEvent
             if (e.piece == target && e.attacker != null)
             {
                 e.attacker.hp.Value += (int)(e.damage * 0.1f);
-                if (e.attacker.hp > e.attacker.maxHp) 
-                { 
-                    e.attacker.hp = e.attacker.maxHp; 
-                }
+                if (e.attacker.hp > e.attacker.maxHp) e.attacker.hp = e.attacker.maxHp;
             }
         }
         );

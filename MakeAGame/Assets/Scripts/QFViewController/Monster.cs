@@ -100,8 +100,6 @@ namespace Game
                 return;
             }
 
-            this.SendEvent<SpecialitiesMoveCheckEvent>(new SpecialitiesMoveCheckEvent() { piece = this, boxgrid = mapSystem.Grids()[nextLTCorr.Item1, nextLTCorr.Item2] });
-
             // 更新数据
             int diffR = nextLTCorr.Item1 - leftTopGridPos.Value.Item1;
             int diffC = nextLTCorr.Item2 - leftTopGridPos.Value.Item2;
@@ -115,21 +113,12 @@ namespace Game
             {
                 oldGrid.occupation = 0;
                 oldGrid.gridStatus.Value = GridStatusEnum.Unoccupied;
-                //if (data.monsterId == 9998 && oldGrid.timeMultiplier == TimeMultiplierEnum.Superfast && SceneFlow.combatSceneCount == 2 )
-                //{
-                //    if(GameObject.Find("CombatSceneController").GetComponent<CombatDialogueControl>().active == true)
-                //    {
-                //        GameObject.Find("CombatSceneController").GetComponent<CombatDialogueControl>().start_dialogue = true;
-                //    }
-                    
-                //}
             }
             pieceGrids = nextGrids;
             foreach (var newGrid in pieceGrids)
             {
                 newGrid.occupation = pieceId;
                 newGrid.gridStatus.Value = GridStatusEnum.MonsterPiece;
-               
             }
 
             leftTopGridPos.Value = nextLTCorr;
@@ -177,8 +166,6 @@ namespace Game
             List<BoxGrid> aStarPath = PathFinding.FindPath(original.Item1, original.Item2,
                 currentTarget.pieceGrids[0].row, currentTarget.pieceGrids[0].col, this);
 
-            DirEnum newDirection = DirEnum.None;
-
             // 路径存在
             if (aStarPath != null && aStarPath.Count != 0)
             {
@@ -190,36 +177,20 @@ namespace Game
                 }
 
                 // 设置移动方向
-                newDirection = movementSystem.NeighbourBoxGridsToDir(this.GetSystem<IMapSystem>().Grids()
+                DirEnum newDirection = movementSystem.NeighbourBoxGridsToDir(this.GetSystem<IMapSystem>().Grids()
                     [leftTopGridPos.Value.Item1, leftTopGridPos.Value.Item2], aStarPath[1]);
-                
+                PieceFlip(newDirection);
+                direction = newDirection;
+
+                // 更新想要去的格子
+                positionAfterMovement = this.GetSystem<IMovementSystem>().CalculateNextPosition(original, direction);
+                // nextIntendPos = positionAfterMovement;
+                return positionAfterMovement;
             }
-            // 路径不存在
             else
             {
-                BoxGrid boxGrid = PathFinding.FindGridClosestToTarget(original.Item1, original.Item2, 
-                    currentTarget.pieceGrids[0].row, currentTarget.pieceGrids[0].col, this);
-
-                // 场景显示路线
-                Color randColor = UnityEngine.Random.ColorHSV();
-                Debug.DrawLine(transform.position - new Vector3(0, 0, 0.3f), boxGrid.transform.position - new Vector3(0, 0, 0.3f), randColor, 3f);
-
-                newDirection = movementSystem.NeighbourBoxGridsToDir(this.GetSystem<IMapSystem>().Grids()
-                    [leftTopGridPos.Value.Item1, leftTopGridPos.Value.Item2], boxGrid);
-            }
-
-            if (newDirection == DirEnum.None)
-            {
-                Debug.Log("寻路算法觉得怪物" + pieceId + "原地不动最合理");
                 return (-1, -1);
             }
-
-            PieceFlip(newDirection);
-            direction = newDirection;
-
-            // 更新想要去的格子
-            positionAfterMovement = this.GetSystem<IMovementSystem>().CalculateNextPosition(original, direction);
-            return positionAfterMovement;
         }
 
         /// <summary>
@@ -229,7 +200,7 @@ namespace Game
         /// <param name="currentX"></param>
         /// <param name="currentY"></param>
         /// <returns></returns>
-        public bool CheckIfMovable(DirEnum curMoveDir, int currentX, int currentY, bool ignoreUnits = false)
+        public bool CheckIfMovable(DirEnum curMoveDir, int currentX, int currentY)
         {
             if (isAttacking)
             {
@@ -242,7 +213,7 @@ namespace Game
             if (!movementSystem.MovementBaseCheck(intendPos)) return false;
             // 对下一步的格子做检查
             BoxGrid grid = mapSystem.Grids()[intendPos.Item1, intendPos.Item2];
-            if (!CheckIfOneGridCanMove(grid, ignoreUnits)) return false;
+            if (!CheckIfOneGridCanMove(grid)) return false;
 
             return true;
         }
@@ -269,19 +240,15 @@ namespace Game
             var nextPos = GetGridsCenterPos();
 
             // 如果有动画，则播放动画并启动移动协程，否则直接更改怪物位置
-            if (pieceAnimator != null)
+            if (animator != null)
             {
-                pieceAnimator.SetBool("isMove", true);
+                animator.SetBool("isMove", true);
                 movementCoroutine = StartCoroutine(MoveToTarget(nextPos));
             }
             else
             {
                 transform.DOMove(nextPos, 0.3f).OnComplete(OnMoveFinish);
             }
-
-            // 棋子在移动前可能因为回头攻击被转向
-            PieceFlip(direction);
-
 
         }
 
@@ -291,35 +258,16 @@ namespace Game
         {
             Debug.Log($"monster {this.pieceId.ToString()} is about to attack");
             this.SendEvent<PieceAttackReadyEvent>();
-            if (pieceAnimator != null)
-            {
-                foreach (AnimatorControllerParameter parameter in pieceAnimator.parameters)
-                {
-                    if (parameter.name == "isAttack")
-                    {
-                        StartCoroutine(PlayAttackAnimByAction(this));
-                        break;
-                    }
-                }
-            }
             this.SendCommand<PieceAttackCommand>(new PieceAttackCommand(this));
         }
 
-        public override bool Hit(int damage, ViewPieceBase attacker)
+        public override bool Hit(int damage)
         {
-            this.SendEvent<PieceHitReadyEvent>(new PieceHitReadyEvent { piece = this });
+            this.SendEvent<PieceHitReadyEvent>();
 
             hp.Value -= damage;
             Debug.Log($"Monster Hit, damage: {damage} hp: {hp.Value}");
             MonsterDamageNumber.Spawn(this.Position(), damage);
-            // 播放受击动画
-            GameObject anim = IdToSO.FindCardSOByID(attacker.generalId)?.GetAttackAnim();
-            if (anim != null)
-            {               
-                StartCoroutine(PlayAttackAnimByMarking(GameObject.Instantiate(anim, this.transform)));
-            }       
-            
-            
             this.SendEvent<PieceHitFinishEvent>(new PieceHitFinishEvent { piece = this });
 
             return hp.Value <= 0;
@@ -363,15 +311,11 @@ namespace Game
         private void MouseUp()
         {
             Debug.Log("mouse up monster");
-            if (itemController.isMarking && itemController.markingType == typeof(Monster))
+            if (itemController.isMarking)
             {
                 ItemController.Instance.markerFunction(this);
                 itemController.CancelMarking();
                 itemController.AfterUseCombatItem(itemController.markerItem);
-            }
-            else if(itemController.isMarking && itemController.markingType != typeof(Monster))
-            {
-                GameManager.Instance.soundMan.Play_cursor_click_invalid_sound();
             }
         }
         private void MouseEnter()
@@ -398,7 +342,7 @@ namespace Game
 
 #if UNITY_EDITOR
 /// <summary>
-/// 怪物类自定义Inspector，显示部分关键以及ScriptableObject内的信息
+/// 怪物类自定义Inspector，显示ScriptableObject内的信息
 /// </summary>
 [CustomEditor(typeof(Monster))]
 public class MonsterEditor : Editor
