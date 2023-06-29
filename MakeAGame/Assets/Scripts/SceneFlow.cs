@@ -6,13 +6,14 @@ using System.Linq;
 
 namespace Game
 {
-    public class SceneFlow : MonoBehaviour
+    public class SceneFlow : MonoBehaviour, ICanGetSystem
     {
       public static  SceneFlow instance = null;
         public List<RoomEnum> roomList;
         public static string Pre_Room = "Intro";
         public static int combatSceneCount =0 ;
         public static int NpcSceneCount = 0;
+        public static int totalRoomCount = 0;
         // Start is called before the first frame update
         void Start()
         {
@@ -37,31 +38,57 @@ namespace Game
         {
             RoomEnum m_room = roomList[0];
             roomList.RemoveAt(0);
-            //UIKit.CloseAllPanel();
             UIKit.HideAllPanel();
             UIKit.ClosePanel<DialogueUI.DialoguePanel?>();
-            if(Pre_Room == RoomEnum.Combat.ToString())
+            if (Pre_Room == RoomEnum.Combat.ToString())
             {
                 IMapSystem mapSystem = GameEntry.Interface.GetSystem<IMapSystem>();
                 mapSystem.SetNUllMap();
                 
             }
-            if(m_room == RoomEnum.Combat)
+            if (m_room == RoomEnum.Combat)
             {
               
                 combatSceneCount++;
-            }else if (m_room == RoomEnum.NPC)
+            }
+            else if (m_room == RoomEnum.NPC)
             {
                 NpcSceneCount++;
             }
+            else if(m_room == RoomEnum.Merchant && ShopSystem.enterRoomTime != 0)
+            {
+                Debug.LogError($"enterRoomTime {ShopSystem.enterRoomTime}");
+                this.GetSystem<IShopSystem>().resetSystem();
+                ShopSystem.enterRoomTime++;
+            }
+            else if (m_room == RoomEnum.Merchant && ShopSystem.enterRoomTime == 0)
+            {
+                ShopSystem.enterRoomTime++;
+            }
 
             GameManager.Instance.ResumeGame();
-            StartCoroutine(GameManager.Instance.gameSceneMan.LoadScene(m_room.ToString(), false));
-            StartCoroutine(GameManager.Instance.gameSceneMan.UnloadScene(Pre_Room));
             
+            
+            EnterRoom(m_room);
+            ExitRoom(Pre_Room);
+
             Pre_Room = m_room.ToString();
-            
-        }    
+        }
+
+        private void EnterRoom(RoomEnum room)
+        {
+            StartCoroutine(GameManager.Instance.gameSceneMan.LoadScene(room.ToString(), false));
+        }
+
+        private void ExitRoom(string roomName)
+        {
+            StartCoroutine(GameManager.Instance.gameSceneMan.UnloadScene(roomName));
+        }
+
+        public IArchitecture GetArchitecture()
+        {
+            return GameEntry.Interface;
+        }
     }
 }
     

@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56ecb282cab14c5d8106ae3ec684c67e, type: 3}
+  m_Name: "feature_so_\u6BCD\u795E\u7684\u795D\u798F_40"
+  m_EditorClassIdentifier: 
+  featureID: 40
+  featureName: "\u6BCD\u795E\u7684\u795D\u798F"
+  featureDesc: "\u9996\u6B21\u751F\u547D\u4F4E\u4E8E25%\u540E\uFF0C\u62B5\u89E6\u548C\u89E6\u987B\u9020\u6210\u4F24\u5BB3\u65F6\u53EF\u4EE5\u6CBB\u7597\u9ED1\u5C71\u7F8A\u5E7C\u4ED425%\u7684\u4F24\u5BB3\u91CF\u3002"
+  typeName: MomBless
+  icon: {fileID: 0}

@@ -5,6 +5,7 @@ using UnityEngine;
 public class SOMonsterBase : ScriptableObject
 {
     // pieceSize
+    public string monsterName;
     public Sprite monsterSprite; // 立绘
     public float moveSpeed; // 移动速度
     public int maxHp; // 最大生命值
@@ -20,9 +21,24 @@ public class SOMonsterBase : ScriptableObject
     // public (int,int) pieceSize; // 怪物的尺寸
     public List<FeatureEnum> properties; // 特性
     public List<DirEnum> dirs; // 可移动方向
+    public List<FeatureEnum> specialFeatures; // 额外属性
+    public GameObject anim; // 角色动画
+    public GameObject attackAnim; // 攻击动画
 
-   public virtual GameObject GetChildAnim()
+   public GameObject GetAnim()
     {
-        return null;
+        return anim;
+    }
+
+    public GameObject GetAttackAnim()
+    {
+        if (attackAnim != null)
+        {
+            return attackAnim;
+        }
+        else
+        {
+            return null;
+        }
     }
 }

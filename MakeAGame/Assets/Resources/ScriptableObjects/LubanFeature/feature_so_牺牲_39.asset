@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56ecb282cab14c5d8106ae3ec684c67e, type: 3}
+  m_Name: "feature_so_\u727A\u7272_39"
+  m_EditorClassIdentifier: 
+  featureID: 39
+  featureName: "\u727A\u7272"
+  featureDesc: "\u9996\u6B21\u751F\u547D\u503C\u4F4E\u4E8E50%\u540E\uFF0C\u53D7\u5230\u653B\u51FB\u65F6\u3010\u5B55\u80B2\u3011\u5C06\u4E0D\u4F1A\u518D\u88AB\u5EF6\u7F13\uFF0C\u4E14\u51B7\u5374\u65F6\u95F4\u964D\u4E3A3\u79D2\u3002\u6BCF\u5F53\u573A\u4E0A\u89E6\u987B\u8D85\u8FC710\u4E2A\u65F6\uFF0C\u5BF9\u6240\u6709\u89E6\u987B\u9020\u6210\u5F53\u524D\u751F\u547D\u503C50%\u7684\u4F24\u5BB3\uFF0C\u5E76\u56DE\u590D10%\u7684\u751F\u547D\u503C\uFF0C\u589E\u52A010%\u7684\u653B\u51FB\u529B\u3002"
+  typeName: Sacrifice
+  icon: {fileID: 0}

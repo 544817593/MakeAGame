@@ -11,6 +11,7 @@ namespace ShopBuyUI
 	public class ShopBuyUIData : UIPanelData
 	{
         public IShopSystem shopSystem = GameEntry.Interface.GetSystem<IShopSystem>();
+        public IInventorySystem inventorySystem = GameEntry.Interface.GetSystem<IInventorySystem>();
     }
 	public partial class ShopBuyUI : UIPanel
 	{
@@ -21,7 +22,6 @@ namespace ShopBuyUI
 		private Dictionary<Button, Item> activeButtons = new Dictionary<Button, Item>();
 		private Item selectedItem = null;
 		private Button selectedButton = null;
-		public List<Item> buyItemList = new List<Item>(); // 已购买的item
         protected override void OnInit(IUIData uiData = null)
 		{
 			mData = uiData as ShopBuyUIData ?? new ShopBuyUIData();
@@ -57,7 +57,7 @@ namespace ShopBuyUI
 		/// </summary>
         private void UpdateAndShowShopItems()
         {
-			List<Item> shopItemList = mData.shopSystem.GetshopItemList();
+			List<Item> shopItemList = mData.shopSystem.GetShopItemList();
 			if (shopItemList.Count > ShopGridPanel.GetComponentInChildren<Transform>(includeInactive: true).childCount) 
 			{
 				Debug.LogError($"商店购买栏位上限为{gridNum}，超过上限，只能显示数组中倒数{gridNum}种物品");
@@ -110,7 +110,7 @@ namespace ShopBuyUI
 			{
 				btn.onClick.AddListener(() =>
 				{
-					TextItemInfo.text = activeButtons[btn].data.description;
+					TextItemInfo.text = $"{activeButtons[btn].data.itemName}: {activeButtons[btn].data.description}";
 					selectedItem = activeButtons[btn];
 					selectedButton = btn;
                 });
@@ -180,7 +180,7 @@ namespace ShopBuyUI
 				else
 				{
 					// 物品入包，更新所有相关内容
-					buyItemList.Add(new Item { amount = buyCount, data = selectedItem.data });
+					addItemToAllList(selectedItem.data, buyCount);
 					UpdateViewAfterBuy();
 				}
 			});
@@ -202,13 +202,33 @@ namespace ShopBuyUI
 			// 重置
             buyCount = 1;
             TextCount.text = $"{buyCount}";
-			//selectedItem = null;
-			//selectedButton = null;
-			//TextItemInfo.text = null;
             //可能需要amount == 0后移除shopItemList，activeButtons中对应的元素？
 
             //Debug.Log($"{mData.shopSystem.GetshopItemList()[0].amount}");
         }
-
+		/// <summary>
+		/// 购买物品同步到所有list中
+		/// </summary>
+		/// <param name="itemData"></param>
+		/// <param name="amount"></param>
+		private void addItemToAllList(SOItemBase itemData, int amount)
+		{
+			// 检查真实背包中是否包含这个物品，包含的话叠加数量
+            foreach(var item in mData.inventorySystem.GetItemList())
+			{
+				if(item.data.itemName == itemData.itemName)
+				{
+					item.amount += amount;
+                    return;
+                }
+			}
+			// 因为真实背包中没有包含这个物品，就新创建物品
+            mData.inventorySystem.AddItem(new Item { amount = amount, data = itemData });
+			mData.shopSystem.GetAllBagItemList().Add(new Item { amount = amount, data = itemData });
+			if (itemData.itemUsePlaces.Contains(ItemUsePlace.Shop))
+			{
+                mData.shopSystem.GetEnhanceBagItemList().Add(new Item { amount = amount, data = itemData });
+            }
+        }
     }
 }

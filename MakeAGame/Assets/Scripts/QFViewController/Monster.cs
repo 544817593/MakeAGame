@@ -8,6 +8,7 @@ using System.Collections;
 using DamageNumbersPro;
 using Unity.VisualScripting;
 using UnityEditor.Search;
+using PieceInfo;
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
@@ -59,6 +60,8 @@ namespace Game
             
             mouseHelper.OnMouseDownEvent = MouseDown;
             mouseHelper.OnMouseUpEvent = MouseUp;
+            mouseHelper.OnMouseEnterEvent = MouseEnter;
+            mouseHelper.OnMouseExitEvent = MouseExit;
         }
 
         public override void SetGrids(List<BoxGrid> grids)
@@ -315,7 +318,18 @@ namespace Game
                 itemController.AfterUseCombatItem(itemController.markerItem);
             }
         }
-        
+        private void MouseEnter()
+        {
+            Debug.Log("mouse enter piece");
+            UIKit.OpenPanel<PieceInfoPanel>();
+            UIKit.GetPanel<PieceInfoPanel>().LoadPieceData(this);
+        }
+
+        private void MouseExit()
+        {
+            Debug.Log("mouse exit piece");
+            UIKit.ClosePanel<PieceInfoPanel>();
+        }
         public void SetColliderEnable(bool isEnable)
         {
             if(collider2d != null)  // 可能刚放下的情况

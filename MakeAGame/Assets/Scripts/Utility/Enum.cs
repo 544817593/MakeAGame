@@ -39,7 +39,9 @@ public enum FeatureEnum
     None, Anthropologist, Writer, Hydrophobia, Insomnia, Psychologist, Dominant,
     SolitaryHero, Determined, Toxicologist, Camouflaged, Bloodthirsty, MagicResistant,
     Airborne, AnimalKiller, Aquatic, Feline, SoundSensitive, TinyCreature, Avian,
-    Rodent, Human, Lazy, Laborer, Greedy
+    Rodent, Human, Lazy, Laborer, Greedy, Cocooning, Doctor, Study, ThroughKey, Unshakable,
+    Affinity, LoveCrazy, Insight, Vine, WaterHeal, Bred, Contradict, PoisonSource, Sacrifice, 
+    MomBless
 }
 
 /// <summary>
@@ -140,4 +142,20 @@ public enum RarityEnum
 public enum CardPackEnum
 {
     None, Base, Warrior
+}
+
+/// <summary>
+/// 死面的类型，用来检查是否可以被对应道具强化
+/// </summary>
+public enum DeathEnhanceTypeEnum
+{
+    None, Damage, Heal, Duration, RandDamageOnMap, FeatureRemove
+}
+
+/// <summary>
+/// 物品的使用场景
+/// </summary>
+public enum ItemUsePlace
+{
+    None, Shop, Combat
 }
