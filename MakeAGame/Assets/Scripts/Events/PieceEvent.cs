@@ -6,7 +6,10 @@ namespace Game
 
     #region 移动相关
 
-    public struct PieceMoveReadyEvent   // 移动前
+    /// <summary>
+    /// 移动前 （只是冷却时间到了准备移动，未经过任何判定）
+    /// </summary>
+    public struct PieceMoveReadyEvent
     {
         public ViewPieceBase viewPieceBase;
     }
@@ -49,7 +52,7 @@ namespace Game
     
     public class PieceHitReadyEvent // 即将受到攻击
     {
-        
+        public ViewPieceBase piece;
     }
     
     public class PieceHitFinishEvent    // 受击处理完毕
@@ -87,8 +90,7 @@ namespace Game
     }
 
     /// <summary>
-    /// 移动时进行特性检测
-    /// 移动位置计算完，但实际移动生效前进行检测，因为海洋恐惧症可能阻止移动
+    /// 移动时进行的特性检测，已经判定完且可以移动，在实际移动前生效
     /// </summary>
     public class SpecialitiesMoveCheckEvent
     {
@@ -105,6 +107,23 @@ namespace Game
         // 二者一个为null
         public ViewPieceBase piece; // 棋子
         public bool isTargetMonster; // 棋子是否为怪物
+    }
+
+    /// <summary>
+    /// 死面牌释放时的特性/额外属性检查
+    /// </summary>
+    public class SpecialitiesDeathExecuteEvent
+    {
+        public ViewCard viewCard;
+        public List<BoxGrid> grids;
+    }
+
+    /// <summary>
+    /// 棋子死亡时的特性/额外属性检查
+    /// </summary>
+    public class SpecialitiesPieceDieEvent
+    {
+        public ViewPieceBase viewPiece;
     }
 
     #endregion
