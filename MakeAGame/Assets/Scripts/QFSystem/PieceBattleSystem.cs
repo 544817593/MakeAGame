@@ -125,6 +125,7 @@ namespace Game
         {
             bool pieceHasBattle = dictBattle.ContainsKey(viewPiece);
             List<ViewPieceBase> opponents = pieceHasBattle ? dictBattle[viewPiece] : null;
+            if (opponents != null && opponents.Count >= 1) return null;  // 限制攻击个数1
             
             int atkDist = viewPiece.atkRange;
             List<ViewPieceBase> toAttackPieces = new List<ViewPieceBase>();
@@ -137,6 +138,7 @@ namespace Game
                 if (pieceSystem.GetPieceDist(viewPiece, monster) <= atkDist)
                 {
                     toAttackPieces.Add(monster);
+                    break;  // 限制攻击个数1
                 }
             }
 
@@ -152,7 +154,8 @@ namespace Game
         {
             bool pieceHasBattle = dictBattle.ContainsKey(monster);
             List<ViewPieceBase> opponents = pieceHasBattle ? dictBattle[monster] : null;
-            
+            if (opponents != null && opponents.Count >= 1) return null;  // 限制攻击个数1
+
             int atkDist = monster.data.atkRange;
             List<ViewPieceBase> toAttackPieces = new List<ViewPieceBase>();
             foreach (var viewPiece in pieceSystem.pieceFriendList)
@@ -164,6 +167,7 @@ namespace Game
                 if (pieceSystem.GetPieceDist(monster, viewPiece) <= atkDist)
                 {
                     toAttackPieces.Add(viewPiece);
+                    break;  // 限制攻击个数1
                 }
             }
 
