@@ -29,7 +29,7 @@ public class NPCSceneControl : MonoBehaviour
 
         if (SceneFlow.NpcSceneCount == 1)
         {
-            m_gameObject.GetComponent<Dialogue>().ink_file = Resources.Load<TextAsset>("Assets/Scripts/Dialogue/Chapter1.2.json");
+            m_gameObject.GetComponent<Dialogue>().ink_file = Resources.Load<TextAsset>("Dialogue/Chapter1.2");
             m_gameObject.GetComponent<Dialogue>().m_checkControl = m_checkControl;
             m_gameObject.GetComponent<Dialogue>().m_showGift = m_showGift;
             m_gameObject.GetComponent<Dialogue>().bgPath = "Sprites/SceneBackground/吟游诗人";
@@ -47,13 +47,13 @@ public class NPCSceneControl : MonoBehaviour
             switch (x)
             {
                 case 0:
-                    m_gameObject.GetComponent<Dialogue>().ink_file = Resources.Load<TextAsset>("Assets/Scripts/Dialogue/NPC1.json");
+                    m_gameObject.GetComponent<Dialogue>().ink_file = Resources.Load<TextAsset>("Dialogue/NPC1");
                     break;
                 case 1:
-                    m_gameObject.GetComponent<Dialogue>().ink_file = Resources.Load<TextAsset>("Assets/Scripts/Dialogue/NPC2.json");
+                    m_gameObject.GetComponent<Dialogue>().ink_file = Resources.Load<TextAsset>("Dialogue/NPC2");
                     break;
                 case 2:
-                    m_gameObject.GetComponent<Dialogue>().ink_file = Resources.Load<TextAsset>("Assets/Scripts/Dialogue/NPC3.json");
+                    m_gameObject.GetComponent<Dialogue>().ink_file = Resources.Load<TextAsset>("Dialogue/NPC3");
                     break;
                     
             }
