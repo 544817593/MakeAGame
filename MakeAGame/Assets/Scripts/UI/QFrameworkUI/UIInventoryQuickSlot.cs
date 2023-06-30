@@ -27,6 +27,7 @@ namespace InventoryQuickslotUI
         protected override void OnInit(IUIData uiData = null)
 		{
 			mData = uiData as UIInventoryQuickSlotData ?? new UIInventoryQuickSlotData();
+			
 			CombatSceneButton.onClick.AddListener(() => 
 			{
 				if (UIKit.GetPanel<UIHandCard>().m_close == false)
@@ -35,8 +36,8 @@ namespace InventoryQuickslotUI
 				}
 				
 				UIKit.OpenPanel<BagUIPanel>();
-				UIKit.GetPanel<BagUIPanel>().RefreshLayout();
-				
+
+				//UIKit.GetPanel<BagUIPanel>().RefreshLayout();
 
 
 

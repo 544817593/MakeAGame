@@ -40,9 +40,9 @@ namespace Game
             roomList.RemoveAt(0);
             UIKit.HideAllPanel();
             UIKit.ClosePanel<DialogueUI.DialoguePanel?>();
-            //UIKit.ClosePanel<InventoryQuickslotUI.UIInventoryQuickSlot?>();
-            //UIKit.ClosePanel<Game.UIHandCard?>();
-            
+           
+           
+
 
             if (Pre_Room == RoomEnum.Combat.ToString())
             {
@@ -82,6 +82,7 @@ namespace Game
         private void EnterRoom(RoomEnum room)
         {
             StartCoroutine(GameManager.Instance.gameSceneMan.LoadScene(room.ToString(), false));
+           
         }
 
         private void ExitRoom(string roomName)

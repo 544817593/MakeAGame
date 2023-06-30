@@ -173,7 +173,7 @@ namespace Game
    
             cardBagList.Value.Add(cardItem);
            // Debug.LogError(cardBagList.Value.Count);
-            //ShuffleCard();
+            ShuffleCard();
             UIKit.GetPanel<BagUIPanel>().RefreshLayout();
         }
         public List<ViewBagCard> GetBagCardList()
@@ -225,6 +225,10 @@ namespace Game
             var index = cardBagList.Value.Count - 1;
             var card = (Card)cardBagList.Value[index].card.Clone();
             cardBagList.Value.RemoveAt(index);
+            //UIKit.GetPanel<BagUIPanel>().RefreshLayout();
+            
+          
+            
             return card;
         }
 
