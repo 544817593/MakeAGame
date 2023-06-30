@@ -34,7 +34,7 @@ namespace InventoryQuickslotUI
 					UIKit.GetPanel<UIHandCard>().CloseHandCard();
 				}
 				
-				UIKit.ShowPanel<BagUIPanel>();
+				UIKit.OpenPanel<BagUIPanel>();
 				UIKit.GetPanel<BagUIPanel>().RefreshLayout();
 				
 

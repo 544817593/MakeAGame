@@ -188,11 +188,15 @@ namespace ShopBuyUI
 					{
 						UIKit.OpenPanel<UIOpenPackPanel>();
 						UIKit.GetPanel<UIOpenPackPanel>().transform.SetAsLastSibling();
+						
                     }
+					
 					UpdateViewAfterBuy();
 				}
 			});
 		}
+
+        
         /// <summary>
         /// Item存放的地方有，activeButtons，shopItemList，selectedItem，其中一个的数据改变会连带剩余位置一起改变
         /// 更新 1.物品剩余数量 2. 玩家剩余金币 
@@ -210,10 +214,11 @@ namespace ShopBuyUI
 			// 重置
             buyCount = 1;
             TextCount.text = $"{buyCount}";
-            //可能需要amount == 0后移除shopItemList，activeButtons中对应的元素？
+			//可能需要amount == 0后移除shopItemList，activeButtons中对应的元素？
 
-            //Debug.Log($"{mData.shopSystem.GetshopItemList()[0].amount}");
-        }
+			//Debug.Log($"{mData.shopSystem.GetshopItemList()[0].amount}");
+			
+		}
 		/// <summary>
 		/// 购买物品同步到所有list中
 		/// </summary>

@@ -147,7 +147,7 @@ public class Dialogue : ViewController
         if (m_Pack?.openFinish == true)
         {
             pauseD = false;
-            UIKit.HidePanel<UIOpenPackPanel>();
+            UIKit.ClosePanel<UIOpenPackPanel>();
 
         }
         if (m_checkControl?.c_finish == true)

@@ -2,9 +2,9 @@
 VAR CheckCharisma = "false"
 VAR CheckP = "false"
 ==NPC3==
-一个穿着西装的稻草人竖立在房间的正中间，叼着烟斗，摇摇晃晃地，让人不禁疑惑它是怎么立在那里的。
+一个穿着西装的稻草人竖立在房间的正中间，叼着烟斗，摇摇晃晃地，让人不禁疑惑它是怎么立在那里的。#speaker: 稻草人
 ...... #speaker: 稻草人
-你好.  #player：Dead
+你好。#speaker: Dead
 ...... #speaker: 稻草人
 它一言不发，就像一具尸体。
 ->Choice

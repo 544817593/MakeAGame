@@ -1,28 +1,31 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Ink.Runtime;
+using UnityEngine.UI;
 using QFramework;
 using DialogueUI;
-using UnityEngine.UI;
-using UnityEditor;
-using Ink.Runtime;
-public class CheckControl : MonoBehaviour
+using Game;
+
+public class NPCROOMNUM : MonoBehaviour
 {
-    
-    public CapsuleCollider2D m_Col;
+    public TextAsset ink_file;
     public GameObject dialogueP;
-    public GameObject controlm;
+    public BoxCollider2D m_Col;
     public Texture2D defaultCursor;
     public Texture2D newCursor;
     Dialogue m_Dialogue;
-    public bool c_finish;
+    private bool _alreadytalk;
     // Start is called before the first frame update
     void Start()
     {
+
         m_Dialogue = dialogueP.GetComponent<Dialogue>();
+     
         m_Col.enabled = false;
-        c_finish = false;
+        _alreadytalk = false;
         Cursor.SetCursor(defaultCursor, Vector2.zero, CursorMode.ForceSoftware);
+
     }
 
     // Update is called once per frame
@@ -33,23 +36,22 @@ public class CheckControl : MonoBehaviour
 
     void ActiveNpc()
     {
-        if(m_Dialogue != null && m_Dialogue.waitForControl)
-        {
-            m_Col.enabled = true;
-        }
-        else { m_Col.enabled = false; }
+       
+            if (m_Dialogue != null && m_Dialogue.d_finish == true)
+            {
+                m_Col.enabled = true;
+            }
+       
+
+
     }
+
     private void OnMouseDown()
     {
         Cursor.SetCursor(defaultCursor, Vector2.zero, CursorMode.ForceSoftware);
-        c_finish = true;
-      
+        LoadDialogue();
 
-            UIKit.GetPanel<DialoguePanel>().NPC.GetComponent<Image>().sprite = gameObject.GetComponent<SpriteRenderer>().sprite;
-            m_Dialogue.ShowBG(3);
-            m_Dialogue.npc.SetActive(false);
-            UIKit.ShowPanel<DialoguePanel>();
-       
+        _alreadytalk = true;
 
     }
     private void OnMouseEnter()
@@ -61,6 +63,23 @@ public class CheckControl : MonoBehaviour
     {
         Cursor.SetCursor(defaultCursor, Vector2.zero, CursorMode.ForceSoftware);
     }
+    public void LoadDialogue()
+    {
+        UIKit.GetPanel<DialoguePanel>().NPC.GetComponent<Image>().sprite = gameObject.GetComponent<SpriteRenderer>().sprite;
+        m_Dialogue.npc.SetActive(false);
+        m_Dialogue.ShowBG(3);
+        dialogueP.SetActive(true);
+        UIKit.ShowPanel<DialoguePanel>();
+        m_Dialogue.ink_file = ink_file;
+        m_Dialogue.story = new Story(ink_file.text);
 
-   
+        if (_alreadytalk == true)
+        {
+            m_Dialogue.story.ChoosePathString("New");
+        }
+       
+
+    }
+
 }
+
