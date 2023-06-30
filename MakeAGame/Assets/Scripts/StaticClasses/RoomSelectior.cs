@@ -24,14 +24,14 @@ public static class RoomSelector
     public static List<RoomEnum> GenerateRooms()
     {
         // 总最小/最大房间数量
-        int minRooms = 8;
-        int maxRooms = 10;
+        int minRooms = 7;
+        int maxRooms = 9;
 
         // 随机选择房间数量
         int numRooms = rng.Next(minRooms, maxRooms + 1);
 
         // 每个房间可最大最小的数量
-        int maxExploreRoom = 2;
+        int maxExploreRoom = 1;
         int maxMerchantRoom = 2;
         int maxCombatRoom = 5;
         int minExploreRoom = 1;

@@ -31,3 +31,4 @@ MonoBehaviour:
   specialFeatures: 
   anim: {fileID: 1935927658568041128, guid: 197e764ae9e2d7c42a81bf9b32ff99e2, type: 3}
   attackAnim: {fileID: 4589919203660116812, guid: 339d117f996141c48ac0e039b9e41dac, type: 3}
+  dropGold: 1

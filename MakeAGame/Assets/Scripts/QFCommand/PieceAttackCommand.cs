@@ -56,6 +56,7 @@ namespace Game
                 if (isDead)
                 {
                     this.SendEvent<SpecialitiesPieceDieEvent>(new SpecialitiesPieceDieEvent { viewPiece = defender });
+                    if (defender is Monster) GameManager.Instance.playerMan.player.AddGold(((Monster)defender).data.dropGold);
                     toDiePieces.Add(defender);
                 }
             }

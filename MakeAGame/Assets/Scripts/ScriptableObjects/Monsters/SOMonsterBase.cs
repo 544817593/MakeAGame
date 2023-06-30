@@ -25,6 +25,7 @@ public class SOMonsterBase : ScriptableObject
     public List<FeatureEnum> specialFeatures; // 额外属性
     public GameObject anim; // 角色动画
     public GameObject attackAnim; // 攻击动画
+    public int dropGold; // 金币掉落
 
    public GameObject GetAnim()
     {

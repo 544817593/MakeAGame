@@ -16,10 +16,9 @@ MonoBehaviour:
   volume: 0
   itemName: "\u6D45\u84DD\u8272\u7FBD\u6BDB\u7B14"
   sprite: {fileID: 21300000, guid: 12334e44beaed9f489554166bb7bf3ad, type: 3}
-  buyCost: 0
-  sellPrice: 0
+  buyCost: 15
+  sellPrice: 8
   description: "\u6807\u8BB0\u4E00\u4E2A\u53CB\u519B\uFF0C\u6BCF\u5F53\u4ED6\u53D7\u5230\u4F24\u5BB3\u65F6\uFF0C\u83B7\u5F972\u91D1\u5E01"
   rarity: 0
   enhanceLevel: 0
   deathEnhanceTypeEnums: 
-  itemUsePlaces: 02000000

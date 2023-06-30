@@ -13,11 +13,9 @@ MonoBehaviour:
   m_Name: MonsterSpawnMap1-9a
   m_EditorClassIdentifier: 
   spawnPoints:
-  - {x: 5, y: 6}
   - {x: 5, y: 9}
-  spawnProbability: 6400000064000000
-  spawnDuration: 1400000014000000
-  spawnCooldown: 1400000014000000
+  spawnProbability: 64000000
+  spawnDuration: 14000000
+  spawnCooldown: 14000000
   monsterName:
   - DarkYoung
-  - Ghast

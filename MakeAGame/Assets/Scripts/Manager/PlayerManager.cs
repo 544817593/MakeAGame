@@ -30,7 +30,11 @@ public class PlayerManager : MonoBehaviour
         // 把自身赋予GM
         GameManager.Instance.playerMan = this;
         player.SetStats();
+        player.AddGold(-player.GetGold());
+        player.AddSanRegenSpeed(-player.GetSanRegenSpeed() + 1);
+        player.SetTurnPieceCount(5);
         inventory = GameEntry.Interface.GetSystem<InventorySystem>();
+
     }
 
 

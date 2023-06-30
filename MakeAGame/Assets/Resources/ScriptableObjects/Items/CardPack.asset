@@ -16,7 +16,7 @@ MonoBehaviour:
   volume: 0
   itemName: "\u5361\u5305"
   sprite: {fileID: 21300000, guid: 23c2e5ac1741e664ca7956432f01ad9d, type: 3}
-  buyCost: 0
+  buyCost: 20
   sellPrice: 0
   description: "\u5305\u542B\u4E94\u5F20\u5361\u724C"
   rarity: 0
