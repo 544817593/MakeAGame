@@ -98,7 +98,7 @@ namespace Game
             UIKit.OpenPanel<BagUIPanel>();
             UIKit.HidePanel<BagUIPanel>();
 
-            // 测试用代码
+            // 初始道具
             SOItemBase IntermediateSapphirePotion = Resources.Load<SOItemBase>("ScriptableObjects/Items/Intermediate Sapphire Potion");
             SOItemBase MinorSapphirePotion = Resources.Load<SOItemBase>("ScriptableObjects/Items/Minor Sapphire Potion");
             SOItemBase MinorEmeraldPotion = Resources.Load<SOItemBase>("ScriptableObjects/Items/Minor Emerald Potion");
