@@ -44,7 +44,8 @@ namespace Game
                         cameraDist = GameManager.Instance.camMan.GetMinScrollLimit(),
                         duration = 10f
                     });
-                    GameManager.Instance.playerMan.player.SetTurnPieceCount(10); // 棋子移动次数10
+                    GameManager.Instance.playerMan.player.SetTurnPieceCount
+                        (GameManager.Instance.playerMan.player.GetTurnPieceCount() + 3); // 探索房移动次数3
                     break;
                 case SkillNameEnum.Focus2:
                     GameManager.Instance.soundMan.Play_focus2_sound();
@@ -53,7 +54,8 @@ namespace Game
                         cameraDist = GameManager.Instance.camMan.GetMinScrollLimit(),
                         duration = 10f
                     });
-                    GameManager.Instance.playerMan.player.SetTurnPieceCount(20); // 棋子移动次数20
+                    GameManager.Instance.playerMan.player.SetTurnPieceCount
+                        (GameManager.Instance.playerMan.player.GetTurnPieceCount() + 5); // 探索房移动次数5
                     break;
             }
         }

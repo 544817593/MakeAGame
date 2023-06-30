@@ -16,10 +16,9 @@ MonoBehaviour:
   volume: 0
   itemName: "G-\u578B\u521D\u7EA7\u5F3A\u5316\u836F\u5242"
   sprite: {fileID: 21300000, guid: f80a00646f3366c449d70218b33bdac9, type: 3}
-  buyCost: 0
-  sellPrice: 0
+  buyCost: 3
+  sellPrice: 2
   description: "\u5C06\u4E00\u5F20\u5177\u6709\u6301\u7EED\u6548\u679C\u7684\u6B7B\u9762\u724C\u53D8\u4E3A+1\uFF0C\u540C\u65F6\u5176\u6301\u7EED\u65F6\u95F4\u589E\u52A05\u79D2"
   rarity: 0
   enhanceLevel: 0
   deathEnhanceTypeEnums: 03000000
-  itemUsePlaces: 01000000
