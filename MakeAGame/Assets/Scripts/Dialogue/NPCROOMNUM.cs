@@ -14,6 +14,7 @@ public class NPCROOMNUM : MonoBehaviour
     public BoxCollider2D m_Col;
     public Texture2D defaultCursor;
     public Texture2D newCursor;
+    public GameObject m_door;
     Dialogue m_Dialogue;
     private bool _alreadytalk;
     // Start is called before the first frame update
@@ -32,6 +33,7 @@ public class NPCROOMNUM : MonoBehaviour
     void Update()
     {
         ActiveNpc();
+
     }
 
     void ActiveNpc()
@@ -40,6 +42,7 @@ public class NPCROOMNUM : MonoBehaviour
             if (m_Dialogue != null && m_Dialogue.d_finish == true)
             {
                 m_Col.enabled = true;
+            m_door.SetActive(true);
             }
        
 
@@ -50,7 +53,7 @@ public class NPCROOMNUM : MonoBehaviour
     {
         Cursor.SetCursor(defaultCursor, Vector2.zero, CursorMode.ForceSoftware);
         LoadDialogue();
-
+        m_door.SetActive(false);
         _alreadytalk = true;
 
     }
@@ -67,7 +70,8 @@ public class NPCROOMNUM : MonoBehaviour
     {
         UIKit.GetPanel<DialoguePanel>().NPC.GetComponent<Image>().sprite = gameObject.GetComponent<SpriteRenderer>().sprite;
         m_Dialogue.npc.SetActive(false);
-        m_Dialogue.ShowBG(3);
+        m_Dialogue.bgPath = "Sprites/SceneBackground/修女";
+        m_Dialogue.ShowBG(2);
         dialogueP.SetActive(true);
         UIKit.ShowPanel<DialoguePanel>();
         m_Dialogue.ink_file = ink_file;

@@ -14,6 +14,8 @@ public class NPCSceneControl : MonoBehaviour
     GameObject NPC1;
     [SerializeField]
     GameObject NPC2;
+    [SerializeField]
+    GameObject NPC3;
     public CheckControl m_checkControl;
     public ShowGift m_showGift;
     public bool NoIntroNPC = false;
@@ -23,7 +25,8 @@ public class NPCSceneControl : MonoBehaviour
         m_door.SetActive(false);
         NPC1.SetActive(false);
         NPC2.SetActive(false);
-        
+        NPC3.SetActive(false);
+
         if (SceneFlow.NpcSceneCount == 1)
         {
             m_gameObject.GetComponent<Dialogue>().ink_file = AssetDatabase.LoadAssetAtPath<TextAsset>("Assets/Scripts/Dialogue/Chapter1.2.json");
@@ -79,6 +82,7 @@ public class NPCSceneControl : MonoBehaviour
         {
 
             NPC2.SetActive(true);
+            NPC3.SetActive(true);
             NPC1.SetActive(false);
             NoIntroNPC = false;
 

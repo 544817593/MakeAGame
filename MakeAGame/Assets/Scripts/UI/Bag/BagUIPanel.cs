@@ -31,11 +31,16 @@ namespace BagUI
 
 		protected override void OnInit(IUIData uiData = null)
 		{
+			
+		}
+		
+		protected override void OnOpen(IUIData uiData = null)
+		{
 			mData = uiData as BagUIPanelData ?? new BagUIPanelData();
 			// please add init code here
 			mCardRoot = SlotPosition.GetComponent<Transform>();
 			cardList = mData.inventorySystem.GetBagCardList();
-			
+
 			var rootChilds = mCardRoot.GetComponentInChildren<Transform>(includeInactive: true);
 			foreach (Transform cardPos in rootChilds)
 			{
@@ -43,8 +48,9 @@ namespace BagUI
 			}
 			BagUIChange.ChangeBagPanel(this, Card);
 			BagUIChange.ChangeBagPanel(this, Item);
-			RefreshLayout();
+			
 			updateIndex();
+			RefreshLayout();
 			//UpdateLayout();
 
 			pageChange();
@@ -60,29 +66,18 @@ namespace BagUI
 					UIKit.GetPanel<UIHandCard>()?.OpenHandCard();
 				}
 			});
-		}
-		
-		protected override void OnOpen(IUIData uiData = null)
-		{
-			RefreshLayout();
-			//UpdateLayout();
-			updateIndex();
-			
+
 		}
 		
 		protected override void OnShow()
 		{
-			RefreshLayout();
-			//UpdateLayout();
-			updateIndex();
+			
 			
 		}
 		
 		protected override void OnHide()
 		{
-			RefreshLayout();
-			//UpdateLayout();
-			updateIndex();
+			
 			
 		}
 		
@@ -93,6 +88,7 @@ namespace BagUI
       
         public void RefreshLayout()
 		{
+			
 			totalPage = cardList.Count != 0 ? (int)Math.Ceiling((double)cardList.Count / gridNum) : 1;
 			// 页数显示
 			TextPageNum.text = $" {curPage} / {totalPage}";
@@ -113,27 +109,28 @@ namespace BagUI
 					v_card.gameObject.SetActive(false);
 				}
 				idx++;
+				
 			}
 
 		}
+
+		public void RemoveCardFromBag()
+        {
+
+        }
+
 		//public void UpdateLayout()
   //      {
 			
 		//	int minIndex = Mathf.Min(cardList.Count, mListSlotPosition.Count);
 		//	int index;
 			
-		//		for (index = 0; index < cardList.Count+1; index++)
-		//		{
-		//			cardList[index].transform.SetParent(SlotPosition.transform);
-		//			cardList[index].transform.position = mListSlotPosition[index].transform.position;
-		//			cardList[index].transform.GetComponent<Canvas>().sortingLayerName = "UI";
-				
-		//	}
-		//		//// 牌被抽走后在背包的显示里清除(此时bagCardList已经更新完毕)
-		//		//for (index = minIndex; index < mListSlotPosition.Count; index++)
-		//		//{
-		//		//	mListSlotPosition[index].transform.DestroyChildren();
-  //  //            }
+		
+		////		//// 牌被抽走后在背包的显示里清除(此时bagCardList已经更新完毕)
+		//for (index = minIndex; index < mListSlotPosition.Count; index++)
+		//{
+		//		mListSlotPosition[index].transform.DestroySelf();
+  //      }
 		//	RefreshLayout();
 
 		//	updateIndex();
@@ -145,7 +142,7 @@ namespace BagUI
 		//	//	cardList[i].transform.position = mListSlotPosition[i].transform.position;
 		//	//}
 
-		//}
+		
 
 		public void AddCard(Card cardData)
         {
