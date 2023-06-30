@@ -1,104 +1,130 @@
 ManifestFileVersion: 0
-CRC: 4184823988
+CRC: 1487713075
 AssetBundleManifest:
   AssetBundleInfos:
     Info_0:
-      Name: assetobj_prefab
-      Dependencies: {}
-    Info_1:
-      Name: imageprefabb_prefab
-      Dependencies:
-        Dependency_0: b_png
-    Info_2:
-      Name: uibasicpanel_prefab
-      Dependencies: {}
-    Info_3:
-      Name: uiconsolepanel_prefab
-      Dependencies: {}
-    Info_4:
-      Name: c_png
-      Dependencies: {}
-    Info_5:
-      Name: uiopenpackpanel_prefab
-      Dependencies:
-        Dependency_0: baguipanel_prefab
-    Info_6:
-      Name: assetobj 3_prefab
-      Dependencies: {}
-    Info_7:
-      Name: imageprefaba_prefab
-      Dependencies:
-        Dependency_0: a_png
-    Info_8:
-      Name: dialoguepanel_prefab
-      Dependencies: {}
-    Info_9:
-      Name: uipanelwithimageprefab_prefab
-      Dependencies: {}
-    Info_10:
-      Name: b_png
-      Dependencies: {}
-    Info_11:
-      Name: assetobj 2_prefab
-      Dependencies: {}
-    Info_12:
-      Name: uistackpanel2_prefab
-      Dependencies: {}
-    Info_13:
       Name: textureexample1_png
       Dependencies: {}
-    Info_14:
+    Info_1:
       Name: uimultipanel_prefab
       Dependencies: {}
-    Info_15:
+    Info_2:
+      Name: uiconsolepanel_prefab
+      Dependencies: {}
+    Info_3:
+      Name: shopbuyui_prefab
+      Dependencies: {}
+    Info_4:
+      Name: pause_prefab
+      Dependencies: {}
+    Info_5:
+      Name: iteminfopanel_prefab
+      Dependencies: {}
+    Info_6:
       Name: spriteatlas_spriteatlas
       Dependencies: {}
-    Info_16:
+    Info_7:
+      Name: baguipanel_prefab
+      Dependencies: {}
+    Info_8:
+      Name: uiinventoryquickslot_prefab
+      Dependencies: {}
+    Info_9:
       Name: imageprefabc_prefab
       Dependencies:
         Dependency_0: c_png
-    Info_17:
-      Name: sceneres_unity
-      Dependencies: {}
-    Info_18:
-      Name: a_png
-      Dependencies: {}
-    Info_19:
-      Name: uihandcard_prefab
-      Dependencies: {}
-    Info_20:
-      Name: assetobj 1_prefab
-      Dependencies: {}
-    Info_21:
-      Name: uistackpanel1_prefab
-      Dependencies: {}
-    Info_22:
-      Name: uiabilitypanel_prefab
-      Dependencies: {}
-    Info_23:
-      Name: uiinventoryquickslot_prefab
-      Dependencies: {}
-    Info_24:
-      Name: shopbuyui_prefab
-      Dependencies: {}
-    Info_25:
-      Name: shopmainui_prefab
-      Dependencies: {}
-    Info_26:
-      Name: rewarduipanel_prefab
-      Dependencies: {}
-    Info_27:
-      Name: baguipanel_prefab
-      Dependencies: {}
-    Info_28:
+    Info_10:
       Name: shopsellui_prefab
       Dependencies: {}
-    Info_29:
-      Name: shopenhanceui_prefab
+    Info_11:
+      Name: sceneres_unity
       Dependencies: {}
-    Info_30:
+    Info_12:
+      Name: a_png
+      Dependencies: {}
+    Info_13:
+      Name: pieceinfopanel_prefab
+      Dependencies: {}
+    Info_14:
+      Name: assetobj 1_prefab
+      Dependencies: {}
+    Info_15:
+      Name: uistackpanel1_prefab
+      Dependencies: {}
+    Info_16:
+      Name: uicardrewardpanel_prefab
+      Dependencies: {}
+    Info_17:
+      Name: rewarduipanel_prefab
+      Dependencies: {}
+    Info_18:
+      Name: assetobj_prefab
+      Dependencies: {}
+    Info_19:
+      Name: alldiceuipanel_prefab
+      Dependencies: {}
+    Info_20:
+      Name: uihandcard_prefab
+      Dependencies: {}
+    Info_21:
+      Name: imageprefabb_prefab
+      Dependencies:
+        Dependency_0: b_png
+    Info_22:
+      Name: shopmainui_prefab
+      Dependencies: {}
+    Info_23:
+      Name: uibasicpanel_prefab
+      Dependencies: {}
+    Info_24:
+      Name: itemuipanel_prefab
+      Dependencies: {}
+    Info_25:
+      Name: uirelic_prefab
+      Dependencies: {}
+    Info_26:
+      Name: uiabilitypanel_prefab
+      Dependencies: {}
+    Info_27:
+      Name: dialoguepanel_prefab
+      Dependencies: {}
+    Info_28:
+      Name: c_png
+      Dependencies: {}
+    Info_29:
       Name: restui_prefab
       Dependencies: {}
+    Info_30:
+      Name: assetobj 3_prefab
+      Dependencies: {}
     Info_31:
-      Name: alldiceuipanel_prefab
+      Name: uiexplore_prefab
+      Dependencies: {}
+    Info_32:
+      Name: imageprefaba_prefab
+      Dependencies:
+        Dependency_0: a_png
+    Info_33:
+      Name: shopenhanceui_prefab
+      Dependencies: {}
+    Info_34:
+      Name: itemshopinfopanel_prefab
+      Dependencies: {}
+    Info_35:
+      Name: uiopenpackpanel_prefab
+      Dependencies: {}
+    Info_36:
+      Name: uipanelwithimageprefab_prefab
+      Dependencies: {}
+    Info_37:
+      Name: skill_infopanel_prefab
+      Dependencies: {}
+    Info_38:
+      Name: b_png
+      Dependencies: {}
+    Info_39:
+      Name: assetobj 2_prefab
+      Dependencies: {}
+    Info_40:
+      Name: uistackpanel2_prefab
       Dependencies: {}

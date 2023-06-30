@@ -1,12 +1,12 @@
 ManifestFileVersion: 0
-CRC: 3374297748
+CRC: 3980124748
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 9ff3bfca017018cfcaaebb4207acfece
+    Hash: a905d524a4da97cca4b68650726ada4b
   TypeTreeHash:
     serializedVersion: 2
-    Hash: 949e0b7e682ba798e87c434d6692a23f
+    Hash: da780b456ef4f1edf1726eb22684caca
 HashAppended: 0
 ClassTypes:
 - Class: 1
@@ -33,8 +33,6 @@ ClassTypes:
   Script: {fileID: 11500000, guid: 0d51f3a7c41ab0346b49ae50d456bece, type: 3}
 - Class: 115
   Script: {instanceID: 0}
-- Class: 128
-  Script: {instanceID: 0}
 - Class: 213
   Script: {instanceID: 0}
 - Class: 222
@@ -56,12 +54,6 @@ SerializeReferenceClassIdentifiers:
   ClassName: TMPro.TMP_FontFeatureTable
 - AssemblyName: Unity.TextMeshPro
   ClassName: TMPro.TMP_FontWeightPair
-- AssemblyName: Unity.TextMeshPro
-  ClassName: TMPro.TMP_GlyphAdjustmentRecord
-- AssemblyName: Unity.TextMeshPro
-  ClassName: TMPro.TMP_GlyphPairAdjustmentRecord
-- AssemblyName: Unity.TextMeshPro
-  ClassName: TMPro.TMP_GlyphValueRecord
 - AssemblyName: Unity.TextMeshPro
   ClassName: TMPro.VertexGradient
 - AssemblyName: UnityEngine.CoreModule

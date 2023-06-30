@@ -1,12 +1,12 @@
 ManifestFileVersion: 0
-CRC: 1931423123
+CRC: 1377034385
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 26b2ca18818eacafc7a5d6930d63cfb9
+    Hash: feea2a5efd90e64b6b8a95e8592e8374
   TypeTreeHash:
     serializedVersion: 2
-    Hash: d558b2714624b1389f5bf24a5bdc8fa4
+    Hash: 4e02908da8007d27a024db6a3ba2bdd5
 HashAppended: 0
 ClassTypes:
 - Class: 1
@@ -45,8 +45,6 @@ ClassTypes:
   Script: {fileID: 11500000, guid: 0d51f3a7c41ab0346b49ae50d456bece, type: 3}
 - Class: 115
   Script: {instanceID: 0}
-- Class: 128
-  Script: {instanceID: 0}
 - Class: 213
   Script: {instanceID: 0}
 - Class: 222
@@ -68,12 +66,6 @@ SerializeReferenceClassIdentifiers:
   ClassName: TMPro.TMP_FontFeatureTable
 - AssemblyName: Unity.TextMeshPro
   ClassName: TMPro.TMP_FontWeightPair
-- AssemblyName: Unity.TextMeshPro
-  ClassName: TMPro.TMP_GlyphAdjustmentRecord
-- AssemblyName: Unity.TextMeshPro
-  ClassName: TMPro.TMP_GlyphPairAdjustmentRecord
-- AssemblyName: Unity.TextMeshPro
-  ClassName: TMPro.TMP_GlyphValueRecord
 - AssemblyName: Unity.TextMeshPro
   ClassName: TMPro.TMP_InputField/OnChangeEvent
 - AssemblyName: Unity.TextMeshPro
