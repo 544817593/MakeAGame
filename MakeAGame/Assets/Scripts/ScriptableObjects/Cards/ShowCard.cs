@@ -157,7 +157,7 @@ namespace PackOpen
 			if (m_ui.Number_Of_Packs == 0)
 			{
 				m_ui.openFinish = true;
-				m_ui.Hide();
+				m_ui.CloseSelf();
 				PackModel.finish.RegisterWithInitValue(finish =>
 				{
 					finish = m_ui.openFinish;

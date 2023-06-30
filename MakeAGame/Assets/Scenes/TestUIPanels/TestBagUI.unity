@@ -891,18 +891,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: BagUIPanel
       objectReference: {fileID: 0}
-    - target: {fileID: 6826149167309031569, guid: 1ef17e3a36c55d243bb301b6d54414fd, type: 3}
-      propertyPath: m_AdditionalShaderChannelsFlag
-      value: 25
-      objectReference: {fileID: 0}
-    - target: {fileID: 6826149167309031570, guid: 1ef17e3a36c55d243bb301b6d54414fd, type: 3}
-      propertyPath: m_AdditionalShaderChannelsFlag
-      value: 25
-      objectReference: {fileID: 0}
-    - target: {fileID: 6826149167309031571, guid: 1ef17e3a36c55d243bb301b6d54414fd, type: 3}
-      propertyPath: m_AdditionalShaderChannelsFlag
-      value: 25
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1ef17e3a36c55d243bb301b6d54414fd, type: 3}
 --- !u!224 &6826149167309031565 stripped

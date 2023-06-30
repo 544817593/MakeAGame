@@ -5,6 +5,7 @@ using Ink.Runtime;
 using UnityEngine.UI;
 using QFramework;
 using DialogueUI;
+using Game;
 
 public class NPC : MonoBehaviour
 {
@@ -27,6 +28,7 @@ public class NPC : MonoBehaviour
         m_Col.enabled = false;
         _alreadytalk = false;
         Cursor.SetCursor(defaultCursor, Vector2.zero, CursorMode.ForceSoftware);
+       
     }
 
     // Update is called once per frame
@@ -37,11 +39,19 @@ public class NPC : MonoBehaviour
 
     void ActiveNpc()
     {
-        if (m_Dialogue != null && m_Dialogue.d_finish == true && _checkBag.isOpen ==false)
+        if (GameManager.Instance.gameSceneMan.GetCurrentSceneName() != "Intro")
+        {
+            if (m_Dialogue != null && m_Dialogue.d_finish == true)
+            {
+                m_Col.enabled = true;
+            }
+        }else if (m_Dialogue != null && m_Dialogue.d_finish == true && _checkBag.isOpen ==false)
         {
             m_Col.enabled = true;
         }
         else { m_Col.enabled = false; }
+        
+
     }
 
     private void OnMouseDown()

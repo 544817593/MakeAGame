@@ -40,6 +40,7 @@ namespace Game
             roomList.RemoveAt(0);
             UIKit.HideAllPanel();
             UIKit.ClosePanel<DialogueUI.DialoguePanel?>();
+            UIKit.ClosePanel<InventoryQuickslotUI.UIInventoryQuickSlot?>();
             if (Pre_Room == RoomEnum.Combat.ToString())
             {
                 IMapSystem mapSystem = GameEntry.Interface.GetSystem<IMapSystem>();

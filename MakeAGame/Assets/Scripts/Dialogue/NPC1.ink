@@ -3,7 +3,7 @@
 VAR CheckSprite = "false"
 VAR CheckStrength = "False"
 ==NPC1==
-嗷呜......呜呜......
+嗷呜......呜呜......#speaker: 猎犬
 你看到一只廷达罗斯猎犬趴在地板上。见到你的到来，它从喉咙深处发出了微弱的悲鸣声，间又夹杂着粗犷的低吼，显然是在警告你不要靠近，却又十分害怕。#speaker: 猎犬
 ->Choice
 ==Choice==

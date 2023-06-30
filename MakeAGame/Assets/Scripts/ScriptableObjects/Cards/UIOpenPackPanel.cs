@@ -118,7 +118,6 @@ namespace PackOpen
 				Pack.Hide();
 
 			}
-
 			Number_Of_Packs--;
 			
 		}
