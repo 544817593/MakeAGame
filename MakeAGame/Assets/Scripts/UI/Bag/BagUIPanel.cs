@@ -105,9 +105,7 @@ namespace BagUI
 				}
 				else
 				{
-					Debug.LogError(idx);
-					Debug.LogError(lowerIndex);
-					Debug.LogError(upperIndex);
+					
 					v_card.gameObject.SetActive(false);
 				}
 				idx++;
