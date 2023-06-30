@@ -40,7 +40,10 @@ namespace Game
             roomList.RemoveAt(0);
             UIKit.HideAllPanel();
             UIKit.ClosePanel<DialogueUI.DialoguePanel?>();
-            UIKit.ClosePanel<InventoryQuickslotUI.UIInventoryQuickSlot?>();
+            //UIKit.ClosePanel<InventoryQuickslotUI.UIInventoryQuickSlot?>();
+            //UIKit.ClosePanel<Game.UIHandCard?>();
+            
+
             if (Pre_Room == RoomEnum.Combat.ToString())
             {
                 IMapSystem mapSystem = GameEntry.Interface.GetSystem<IMapSystem>();
@@ -49,7 +52,7 @@ namespace Game
             }
             if (m_room == RoomEnum.Combat)
             {
-              
+               
                 combatSceneCount++;
             }
             else if (m_room == RoomEnum.NPC)

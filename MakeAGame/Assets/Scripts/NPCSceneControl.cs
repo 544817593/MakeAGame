@@ -23,7 +23,7 @@ public class NPCSceneControl : MonoBehaviour
         m_door.SetActive(false);
         NPC1.SetActive(false);
         NPC2.SetActive(false);
-        Debug.LogError(SceneFlow.NpcSceneCount);
+        
         if (SceneFlow.NpcSceneCount == 1)
         {
             m_gameObject.GetComponent<Dialogue>().ink_file = AssetDatabase.LoadAssetAtPath<TextAsset>("Assets/Scripts/Dialogue/Chapter1.2.json");

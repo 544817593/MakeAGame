@@ -75,6 +75,7 @@ namespace Game
                 UIKit.GetPanel<BagUI.BagUIPanel>().AddCard(viewCard.card);
                 this.SendCommand(new SubHandCardCommand(viewCard));
             }
+            UIKit.ClosePanel < BagUI.BagUIPanel > ();
         }
 
         public bool AddCard(Card cardData)
