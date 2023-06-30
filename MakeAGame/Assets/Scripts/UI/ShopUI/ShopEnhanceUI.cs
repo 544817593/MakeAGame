@@ -7,7 +7,6 @@ using System;
 using TMPro;
 using UnityEngine.Assertions;
 using Unity.VisualScripting;
-using static UnityEditor.Progress;
 using ItemInfo;
 using ItemShopInfoPanel;
 

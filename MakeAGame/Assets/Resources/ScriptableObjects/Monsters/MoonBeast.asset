@@ -17,7 +17,7 @@ MonoBehaviour:
   moveSpeed: 5
   maxHp: 300
   atkSpeed: 2
-  atkDmg: 21
+  atkDmg: 5
   defense: 4
   accuracy: 0.8
   rarity: 3

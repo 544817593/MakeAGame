@@ -21,33 +21,32 @@ public class CombatDialogueControl : MonoBehaviour, IController, ICanSendEvent
     // Start is called before the first frame update
     void Start()
     {
-        
         if (SceneFlow.combatSceneCount == 1)
         {       
             m_gameObject.SetActive(true);
             UIKit.GetPanel<DialoguePanel>().NPC.GetComponent<Image>().sprite = Resources.Load<Sprite>("UI/NPC/弗朗西斯");
             UIKit.GetPanel<DialoguePanel>().NPC.GetComponent<Image>().LocalScale(0.5f, 1.0f, 1f);
-            m_gameObject.GetComponent<Dialogue>().ink_file = AssetDatabase.LoadAssetAtPath<TextAsset>("Assets/Scripts/Dialogue/Chapter1.1.json");
+            m_gameObject.GetComponent<Dialogue>().ink_file = Resources.Load<TextAsset>("Assets/Scripts/Dialogue/Chapter1.1.json");
             m_gameObject.GetComponent<Dialogue>().popName = "弗朗西斯·维兰德·瑟斯顿";
             GameManager.Instance.PauseGame();
             UIKit.HidePanel<UIHandCard>();
            
-            this.RegisterEvent<CombatVictoryEvent>(e => OnCombatVictoryEvent());
+            this.RegisterEvent<CombatVictoryEvent>(e => OnCombatVictoryEvent()).UnRegisterWhenGameObjectDestroyed(this);
 
         }
         else if(SceneFlow.combatSceneCount == 2)
         {
             m_gameObject.SetActive(true);
-            m_gameObject.GetComponent<Dialogue>().ink_file = AssetDatabase.LoadAssetAtPath<TextAsset>("Assets/Scripts/Dialogue/Chapter1.3.json");
+            m_gameObject.GetComponent<Dialogue>().ink_file = Resources.Load<TextAsset>("Assets/Scripts/Dialogue/Chapter1.3.json");
             GameManager.Instance.PauseGame();
             UIKit.HidePanel<UIHandCard>();
-            this.RegisterEvent<CombatVictoryEvent>(e => OnNormalCombatVictoryEvent());
+            this.RegisterEvent<CombatVictoryEvent>(e => OnNormalCombatVictoryEvent()).UnRegisterWhenGameObjectDestroyed(this);
         }
         else
         {
             ResKit.Init();
             m_gameObject.SetActive(false);
-            this.RegisterEvent<CombatVictoryEvent>(e => OnNormalCombatVictoryEvent());
+            this.RegisterEvent<CombatVictoryEvent>(e => OnNormalCombatVictoryEvent()).UnRegisterWhenGameObjectDestroyed(this);
         }
     }
 
@@ -69,7 +68,6 @@ public class CombatDialogueControl : MonoBehaviour, IController, ICanSendEvent
     }
     private void OnNormalCombatVictoryEvent()
     {
-        Debug.LogError("Normal combat victory event trigger");
         GameManager.Instance.PauseGame();
         UIKit.HideAllPanel();
         UIKit.OpenPanel<RewardUI.RewardUIPanel>();

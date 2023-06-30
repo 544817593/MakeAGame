@@ -5,9 +5,7 @@ using DamageNumbersPro;
 using DG.Tweening;
 using PieceInfo;
 using QFramework;
-using Unity.VisualScripting;
 using UnityEditor;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using static UnityEngine.GraphicsBuffer;
 using static UnityEngine.UI.Image;
@@ -346,7 +344,6 @@ namespace Game
             if (e.viewPieceBase.generalId == 0 &&
                 e.viewPieceBase.pieceGrids[0].terrain.Value == (int)TerrainEnum.Door)
             {
-                Debug.LogError("获胜");
                 this.SendEvent<CombatVictoryEvent>(new CombatVictoryEvent());
             }
 

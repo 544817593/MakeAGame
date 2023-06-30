@@ -7,8 +7,6 @@ using System.Collections.Generic;
 using Game;
 using Unity.VisualScripting;
 using Skill_Info;
-using static UnityEditor.Progress;
-using UnityEditor.Experimental.GraphView;
 
 namespace InventoryQuickslotUI
 {

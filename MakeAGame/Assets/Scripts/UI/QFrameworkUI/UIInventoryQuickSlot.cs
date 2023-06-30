@@ -7,7 +7,6 @@ using ItemUI;
 using System;
 using TMPro;
 using ItemInfo;
-using static UnityEditor.Progress;
 using Unity.VisualScripting;
 
 namespace InventoryQuickslotUI

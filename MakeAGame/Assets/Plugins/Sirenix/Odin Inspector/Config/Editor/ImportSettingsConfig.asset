@@ -9,13 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ca2d7a39a8289164d9d0d98e3169ff2e, type: 3}
-  m_Name: MonsterSpawnMap1-9a
+  m_Script: {fileID: 188390376, guid: a4865f1ab4504ed8a368670db22f409c, type: 3}
+  m_Name: ImportSettingsConfig
   m_EditorClassIdentifier: 
-  spawnPoints:
-  - {x: 5, y: 6}
-  spawnProbability: 64000000
-  spawnDuration: 14000000
-  spawnCooldown: 14000000
-  monsterName:
-  - DarkYoung
+  automateBeforeBuild: 1
