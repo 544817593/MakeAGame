@@ -19,9 +19,9 @@ MonoBehaviour:
   sanCost: 20
   deathFuncDescription: "\u5BF94*4\u7684\u683C\u5B50\u9020\u621025\u70B9\u4F24\u5BB3\uFF0C20%\u7684\u6982\u7387\u83B7\u5F97\u4E00\u5F20C\u7EA7\u5458\u5DE5\u3002"
   cardSprite: {fileID: 21300000, guid: 943a4851b209b184dae4226598f2aed6, type: 3}
-  hp: 50
-  attack: 4
-  moveSpd: 2.5
+  hp: 20
+  attack: 5
+  moveSpd: 5
   defend: 2
   deathFuncName: B_Ranked_Staff
   deathEnhanceTypeEnums: 01000000
@@ -32,21 +32,21 @@ MonoBehaviour:
   width: 1
   height: 1
   moveDirections: 01000000020000000300000004000000
-  attackSpd: 1.7
+  attackSpd: 3
   accuracy: 0.8
   attackRange: 1
-  life: 999
+  life: 70
   anim: {fileID: 5105131249176448643, guid: 714d4e2bfb233664bae8e76bd528f797, type: 3}
   attackAnim: {fileID: 1928717799986723943, guid: f989c74d1df8cee478cd4ecda18527d1, type: 3}
   sanCostBonus:
     stat: 6
-    multiple: -0.06
+    multiple: -1
   hpBonus:
     stat: 4
-    multiple: 3
+    multiple: 2
   atkBonus:
     stat: 0
     multiple: 0
   atkSpdBonus:
     stat: 5
-    multiple: 0.01
+    multiple: -0.1

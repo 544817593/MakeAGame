@@ -35,7 +35,7 @@ MonoBehaviour:
   attackSpd: 99999
   accuracy: 0
   attackRange: 3
-  life: 999
+  life: 100
   anim: {fileID: 417943869309911086, guid: 52e84ac094288b941a4df5c54f70f842, type: 3}
   attackAnim: {fileID: 0}
   sanCostBonus:
@@ -43,7 +43,7 @@ MonoBehaviour:
     multiple: 0
   hpBonus:
     stat: 2
-    multiple: 10
+    multiple: 5
   atkBonus:
     stat: 0
     multiple: 0

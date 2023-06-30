@@ -16,13 +16,13 @@ MonoBehaviour:
   characterName: "\u4F26\u9053\u592B\xB7\u5361\u7279"
   rarity: 4
   cardPack: 1
-  sanCost: 90
+  sanCost: 50
   deathFuncDescription: "\u5F53\u524D\u4F4D\u7F6E\u7684\u65F6\u95F4\u6D41\u901D\u901F\u7387\u6C38\u4E45-0.5\uFF0C\u83B7\u5F97\u4E00\u5F20\u4F26\u9053\u592B\u3002"
   cardSprite: {fileID: 21300000, guid: 5f4a88c2cc41c5640b1c4942a60d8dc8, type: 3}
   hp: 35
-  attack: 0
-  moveSpd: 1
-  defend: 0
+  attack: 2
+  moveSpd: 6
+  defend: 1
   deathFuncName: Randolph_Carter
   deathEnhanceTypeEnums: 
   moveAudioType: 1
@@ -32,10 +32,10 @@ MonoBehaviour:
   width: 1
   height: 1
   moveDirections: 01000000020000000300000004000000
-  attackSpd: 1.25
+  attackSpd: 2
   accuracy: 0.7
-  attackRange: 2
-  life: 999
+  attackRange: 3
+  life: 105
   anim: {fileID: 5878722406761387808, guid: f2eaa584e3fe6ad4da84a93a2368b9e5, type: 3}
   attackAnim: {fileID: 0}
   sanCostBonus:
@@ -49,4 +49,4 @@ MonoBehaviour:
     multiple: 0
   atkSpdBonus:
     stat: 3
-    multiple: 0.05
+    multiple: -0.1

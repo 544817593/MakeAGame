@@ -13,9 +13,21 @@ MonoBehaviour:
   m_Name: MonsterSpawnMap1-5a
   m_EditorClassIdentifier: 
   spawnPoints:
+  - {x: 4, y: 9}
+  - {x: 6, y: 13}
+  - {x: 6, y: 4}
+  - {x: 9, y: 16}
+  - {x: 9, y: 8}
+  - {x: 8, y: 10}
   - {x: 9, y: 12}
-  spawnProbability: 64000000
-  spawnDuration: 14000000
-  spawnCooldown: 05000000
+  spawnProbability: 64000000640000006400000064000000320000003200000032000000
+  spawnDuration: f0000000f00000006400000064000000f0000000f0000000f0000000
+  spawnCooldown: 3c0000003c00000032000000320000003c0000003c0000003c000000
   monsterName:
+  - StarVampire
+  - StarVampire
+  - HoundsOfTindalos
+  - HoundsOfTindalos
+  - Ghast
+  - Ghast
   - Ghast

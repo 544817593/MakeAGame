@@ -30,7 +30,7 @@ namespace Game
             {
                 if (grid.occupation == 0) {
                     Debug.Log("生成魔虫");
-                    this.GetSystem<IPieceSystem>().AddPieceFriend(viewCard.card, grids);
+                    this.GetSystem<IPieceSystem>().AddPieceFriend(viewCard.card, new List<BoxGrid>() { grid });
                 }
             }
 

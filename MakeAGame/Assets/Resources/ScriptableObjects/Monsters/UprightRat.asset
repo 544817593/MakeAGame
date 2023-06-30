@@ -19,7 +19,7 @@ MonoBehaviour:
   atkSpeed: 2
   atkDmg: 3
   defense: 1
-  accuracy: 75
+  accuracy: 0.75
   rarity: 0
   atkRange: 1
   monsterId: 9998

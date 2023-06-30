@@ -16,13 +16,13 @@ MonoBehaviour:
   characterName: "\u5931\u8D25\u54C1"
   rarity: 0
   cardPack: 1
-  sanCost: 30
+  sanCost: 45
   deathFuncDescription: "\u4E3A\u4E00\u4E2A\u53CB\u65B9\u5355\u4F4D\u6062\u590D35\u70B9\u751F\u547D\u503C\u3002"
   cardSprite: {fileID: 21300000, guid: 3a222082b03b6f940851d39cfd4a1359, type: 3}
-  hp: 10
-  attack: 4
-  moveSpd: 4
-  defend: 0
+  hp: 25
+  attack: 2
+  moveSpd: 6
+  defend: 2
   deathFuncName: Failure
   deathEnhanceTypeEnums: 02000000
   moveAudioType: 5
@@ -32,18 +32,18 @@ MonoBehaviour:
   width: 1
   height: 1
   moveDirections: 01000000020000000300000004000000
-  attackSpd: 2
+  attackSpd: 3
   accuracy: 0.8
   attackRange: 1
-  life: 999
+  life: 70
   anim: {fileID: 2665300380114651598, guid: 58655d13e090e0f449fd55543390d5e5, type: 3}
   attackAnim: {fileID: 0}
   sanCostBonus:
     stat: 6
-    multiple: -0.05
+    multiple: -1
   hpBonus:
     stat: 4
-    multiple: 4
+    multiple: 3
   atkBonus:
     stat: 3
     multiple: 1

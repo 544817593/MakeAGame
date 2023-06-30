@@ -14,19 +14,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   monsterName: "\u661F\u4E4B\u7CBE"
   monsterSprite: {fileID: 21300000, guid: dfc1aecce30cf5649b0e255aef98f0d5, type: 3}
-  moveSpeed: 5
-  maxHp: 180
-  atkSpeed: 2.5
-  atkDmg: 15
-  defense: 4
-  accuracy: 80
+  moveSpeed: 6
+  maxHp: 25
+  atkSpeed: 3
+  atkDmg: 3
+  defense: 2
+  accuracy: 1
   rarity: 2
   atkRange: 1
   monsterId: 9995
   width: 1
   height: 1
   moveAudioType: 4
-  properties: 
+  properties: 0a0000000b000000
   dirs: 04000000020000000300000001000000
   specialFeatures: 
   anim: {fileID: 685128172593742579, guid: 7925d004f510bf54dbb243f958dfa226, type: 3}

@@ -17,9 +17,9 @@ MonoBehaviour:
   moveSpeed: 4
   maxHp: 10
   atkSpeed: 2
-  atkDmg: 5
+  atkDmg: 6
   defense: 0
-  accuracy: 50
+  accuracy: 0.5
   rarity: 1
   atkRange: 3
   monsterId: 9993

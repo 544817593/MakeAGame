@@ -21,7 +21,7 @@ MonoBehaviour:
   cardSprite: {fileID: 21300000, guid: e528f7ac9dd9ef144800f3217df33cec, type: 3}
   hp: 30
   attack: 0
-  moveSpd: 6
+  moveSpd: 8
   defend: 2
   deathFuncName: Vine
   deathEnhanceTypeEnums: 03000000
@@ -32,10 +32,10 @@ MonoBehaviour:
   width: 2
   height: 1
   moveDirections: 0400000002000000
-  attackSpd: 1
+  attackSpd: 3
   accuracy: 1
   attackRange: 2
-  life: 999
+  life: 120
   anim: {fileID: 2561219391890680551, guid: 9c8d74c10dd6c8e44961ee53ff5fbeba, type: 3}
   attackAnim: {fileID: 6177507344615619238, guid: 18c7eb3632049ff45a711adc6a178be1, type: 3}
   sanCostBonus:
@@ -43,7 +43,7 @@ MonoBehaviour:
     multiple: 0
   hpBonus:
     stat: 2
-    multiple: 10
+    multiple: 5
   atkBonus:
     stat: 0
     multiple: 0

@@ -797,7 +797,7 @@ public class FeatureController : MonoBehaviour, IController
 
 
     /// <summary>
-    /// 穿越银匙之门：每10秒获得1点改变行动方向的机会。
+    /// 穿越银匙之门：每50秒获得1点探索房改变行动方向的机会。
     /// </summary>
     /// <param name="piece"></param>
     /// <returns></returns>
@@ -806,7 +806,7 @@ public class FeatureController : MonoBehaviour, IController
         while (piece.hp > 0)
         {
             PlayerManager.Instance.player.SetTurnPieceCount(PlayerManager.Instance.player.GetTurnPieceCount() + 1);
-            yield return new WaitForSeconds(10f);
+            yield return new WaitForSeconds(50f);
         }
     }
 

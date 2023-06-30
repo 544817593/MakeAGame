@@ -16,12 +16,12 @@ MonoBehaviour:
   characterName: "\u5471\u5471\u86D9"
   rarity: 0
   cardPack: 1
-  sanCost: 24
+  sanCost: 15
   deathFuncDescription: "\u4F7F\u4E00\u4E2A\u6218\u6597\u4E2D\u7684\u654C\u65B9\u5355\u4F4D\u653B\u901F\u6C38\u4E45-0.3\uFF08\u6700\u4F4E0.1\uFF09\uFF0C\u5982\u679C\u8BE5\u5355\u4F4D\u5BF9\u58F0\u97F3\u654F\u611F\uFF0C\u5219\u5728\u8BE5\u573A\u6218\u6597\u4E2D\u989D\u5916-0.3\u3002"
   cardSprite: {fileID: 21300000, guid: c6ee5ddac5646604197c29a32d25b5ec, type: 3}
   hp: 20
   attack: 3
-  moveSpd: 2
+  moveSpd: 3
   defend: 0
   deathFuncName: Quack_Frog
   deathEnhanceTypeEnums: 
@@ -32,10 +32,10 @@ MonoBehaviour:
   width: 1
   height: 1
   moveDirections: 0100000003000000
-  attackSpd: 2
+  attackSpd: 2.5
   accuracy: 0.8
   attackRange: 1
-  life: 999
+  life: 40
   anim: {fileID: 1017564794953715825, guid: 48f24513d415b8148ac7eecc04ee3c21, type: 3}
   attackAnim: {fileID: 1827162301391317813, guid: 20888fc292814e149b1ede247fc19f59, type: 3}
   sanCostBonus:
@@ -49,4 +49,4 @@ MonoBehaviour:
     multiple: 1
   atkSpdBonus:
     stat: 5
-    multiple: 0.02
+    multiple: -0.1

@@ -15,18 +15,18 @@ MonoBehaviour:
   monsterName: "\u51B7\u86DB"
   monsterSprite: {fileID: 21300000, guid: 7f01198f900dd0c439b13dfa060bed78, type: 3}
   moveSpeed: 4
-  maxHp: 180
-  atkSpeed: 2
-  atkDmg: 7.5
+  maxHp: 15
+  atkSpeed: 3
+  atkDmg: 4
   defense: 0
-  accuracy: 100
+  accuracy: 1
   rarity: 2
   atkRange: 2
   monsterId: 9994
   width: 1
   height: 1
   moveAudioType: 6
-  properties: 
+  properties: 09000000
   dirs: 04000000020000000300000001000000
   specialFeatures: 
   anim: {fileID: 5435279239406528900, guid: 29fe5d4fc9e20a049beb4da71688491d, type: 3}

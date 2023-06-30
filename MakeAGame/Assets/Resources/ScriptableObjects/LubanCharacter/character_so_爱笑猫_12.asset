@@ -16,12 +16,12 @@ MonoBehaviour:
   characterName: "\u7231\u7B11\u732B"
   rarity: 0
   cardPack: 1
-  sanCost: 30
+  sanCost: 25
   deathFuncDescription: "\u4F7F3*3\u683C\u5B50\u5185\u7684\u654C\u4EBA\u6DF7\u4E7115\u79D2\uFF0C\u6DF7\u4E71\u4E2D\u7684\u654C\u4EBA\u5C06\u968F\u673A\u79FB\u52A8\u3002"
   cardSprite: {fileID: 21300000, guid: 5cedf358da0974042b6ea3b7ff50ef25, type: 3}
   hp: 18
   attack: 2
-  moveSpd: 2
+  moveSpd: 4
   defend: 0
   deathFuncName: Laughing_Cat
   deathEnhanceTypeEnums: 03000000
@@ -32,15 +32,15 @@ MonoBehaviour:
   width: 1
   height: 1
   moveDirections: 01000000020000000300000004000000
-  attackSpd: 3.3
+  attackSpd: 3.5
   accuracy: 0.8
   attackRange: 1
-  life: 999
+  life: 50
   anim: {fileID: 957386048066178094, guid: 9c0751bb44fdc5644963dc980d0b507f, type: 3}
   attackAnim: {fileID: 1145642090740680389, guid: 26fc95fcb8eb33c4f9007855cee425b8, type: 3}
   sanCostBonus:
     stat: 6
-    multiple: -0.1
+    multiple: -1
   hpBonus:
     stat: 0
     multiple: 0
@@ -49,4 +49,4 @@ MonoBehaviour:
     multiple: 1
   atkSpdBonus:
     stat: 5
-    multiple: 0.04
+    multiple: -0.2

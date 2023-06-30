@@ -13,9 +13,17 @@ MonoBehaviour:
   m_Name: MonsterSpawnMap1-4a
   m_EditorClassIdentifier: 
   spawnPoints:
+  - {x: 3, y: 8}
+  - {x: 3, y: 14}
   - {x: 4, y: 10}
-  spawnProbability: 64000000
-  spawnDuration: 14000000
-  spawnCooldown: 05000000
+  - {x: 8, y: 6}
+  - {x: 8, y: 14}
+  spawnProbability: 6400000064000000640000003200000032000000
+  spawnDuration: b4000000b4000000b40000009600000096000000
+  spawnCooldown: 5a0000005a0000005a0000001e0000001e000000
   monsterName:
-  - StarVampire
+  - LengSpider
+  - LengSpider
+  - Ghast
+  - UprightRat
+  - UprightRat
