@@ -932,11 +932,11 @@ public class FeatureController : MonoBehaviour, IController
 
                 if (overHalfHealth)
                 {
-                    darkYoungBirthTimer = 5f;
+                    darkYoungBirthTimer = 25f;
                 }
                 else
                 {
-                    darkYoungBirthTimer = 3f;
+                    darkYoungBirthTimer = 20f;
                 }
             }
 
@@ -963,7 +963,7 @@ public class FeatureController : MonoBehaviour, IController
 
             
             spriteRenderer.sortingLayerName = "UI";
-            yield return new WaitForSeconds(3f);
+            yield return new WaitForSeconds(5f);
             // 标记的棋子还活着
             if (initialPiece != null)
             {
@@ -1004,7 +1004,7 @@ public class FeatureController : MonoBehaviour, IController
                 }
             }
             nonPoisonGrids[UnityEngine.Random.Range(0, nonPoisonGrids.Count)].terrain.Value = (int)TerrainEnum.Poison;
-            yield return new WaitForSeconds(5f);
+            yield return new WaitForSeconds(10f);
 
         }
     }

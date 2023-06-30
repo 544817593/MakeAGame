@@ -13,9 +13,21 @@ MonoBehaviour:
   m_Name: MonsterSpawnMap1-8a
   m_EditorClassIdentifier: 
   spawnPoints:
-  - {x: 6, y: 13}
-  spawnProbability: 64000000
-  spawnDuration: 14000000
-  spawnCooldown: 05000000
+  - {x: 4, y: 8}
+  - {x: 6, y: 8}
+  - {x: 8, y: 8}
+  - {x: 5, y: 13}
+  - {x: 7, y: 13}
+  - {x: 3, y: 16}
+  - {x: 9, y: 16}
+  spawnProbability: 64000000640000006400000032000000320000004b0000004b000000
+  spawnDuration: f0000000f0000000f0000000d2000000d2000000f0000000f0000000
+  spawnCooldown: 28000000280000002800000046000000460000001e0000001e000000
   monsterName:
+  - LengSpider
+  - LengSpider
+  - LengSpider
   - MoonBeast
+  - MoonBeast
+  - Ghast
+  - Ghast
