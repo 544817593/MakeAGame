@@ -68,13 +68,14 @@ namespace Game
 			SetCrtSanityToMaxSan();
 
 			#region 测试按钮
-
+			ButtonAddCardTest.gameObject.SetActive(true);
 			ButtonAddCardTest.onClick.AddListener(() =>
 			{
 				var randomInfo = IdToSO.GetRandomCardSO();
 				GameEntry.Interface.SendCommand<AddHandCardCommand>(new AddHandCardCommand(new Card(randomInfo.characterID)));
 			});
-			ButtonSubCardTest.onClick.AddListener(() =>
+            ButtonSubCardTest.gameObject.SetActive(true);
+            ButtonSubCardTest.onClick.AddListener(() =>
 			{
 				if (handCardSystem.handCardList.Value.Count > 0)
 				{

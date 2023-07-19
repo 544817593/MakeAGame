@@ -38,4 +38,58 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Rest.unity
     guid: bd1ac3d8a19e60b438f97bef65563bc4
+  - enabled: 1
+    path: Assets/Scenes/Test/ConsolePanelTest.unity
+    guid: 8fc8f2d071db95445b2d47f821bb92ba
+  - enabled: 1
+    path: Assets/Scenes/Test/ConsoleTest.unity
+    guid: c6e5c7eb50fb94b56b59d2593e03dd21
+  - enabled: 1
+    path: Assets/Scenes/Test/ExploreUITest.unity
+    guid: a6707a41e36de412ea90acf553b7e649
+  - enabled: 1
+    path: Assets/Scenes/Test/HandCardUITest.unity
+    guid: f4262071ca1d94432b4cdc9f510c0321
+  - enabled: 1
+    path: Assets/Scenes/Test/LubanLoadScene.unity
+    guid: b234274ccc6274d2d890b51eb08c8d39
+  - enabled: 1
+    path: Assets/Scenes/Test/MapGenerateTest.unity
+    guid: 656bf5304637b1346b91f74e4f82e4d9
+  - enabled: 1
+    path: Assets/Scenes/TestUIPanels/TestAllDiceUIPanel.unity
+    guid: 5b3d63a159526d141ba8c51134972f4a
+  - enabled: 1
+    path: Assets/Scenes/TestUIPanels/TestBagUI.unity
+    guid: b9971856c7280734d9bec75f0922593d
+  - enabled: 1
+    path: Assets/Scenes/TestUIPanels/TestDialoguePanel.unity
+    guid: 67cb9e756d4387342834127bc5c91e43
+  - enabled: 1
+    path: Assets/Scenes/TestUIPanels/TestItemUIPanel.unity
+    guid: 464f047086c6e0445b9aaed820fbaac9
+  - enabled: 1
+    path: Assets/Scenes/TestUIPanels/TestRelicUIPanel.unity
+    guid: 7e07077f37c2045ca973f4cc7f67e234
+  - enabled: 1
+    path: Assets/Scenes/TestUIPanels/TestRewardUIPanel.unity
+    guid: c24f3425f3bfa7c4e8b6c8c35486bb65
+  - enabled: 1
+    path: Assets/Scenes/TestUIPanels/TestShopEnhance.unity
+    guid: cbb8237d3feeb114a8b506011005c29e
+  - enabled: 1
+    path: Assets/Scenes/TestUIPanels/TestShopSell.unity
+    guid: 8ec10f4538a7e984cab6b753fee18dd9
+  - enabled: 1
+    path: Assets/Scenes/TestUIPanels/TestUIAbilityPanel.unity
+    guid: 8255c7ab82d9757448fb8c20742fbad0
+  - enabled: 1
+    path: Assets/Scenes/TestUIPanels/TestUICardRewardPanel.unity
+    guid: fa3b1afc27fb63c47b3b53116a3d647c
+  - enabled: 1
+    path: Assets/Scenes/TestUIPanels/TestUIInventoryQuickSlot.unity
+    guid: 32a3fd3f002611047b1c28604c1da322
+  - enabled: 1
+    path: Assets/Scenes/TestUIPanels/TestUIOpenPackPanel.unity
+    guid: d64a5d9874150d241975a6b7720b8fa8
   m_configObjects: {}

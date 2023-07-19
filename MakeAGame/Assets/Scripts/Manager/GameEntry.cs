@@ -9,7 +9,7 @@ namespace Game
     /// </summary>
     public class GameEntry : Architecture<GameEntry>
     {
-        public bool isDev = false;  // 是否为开发测试模式
+        public bool isDev = true;  // 是否为开发测试模式
         
         protected override void Init()
         {
